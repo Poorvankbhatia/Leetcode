@@ -40,7 +40,6 @@ public class WiggleSort {
         Integer temp = array[i];
         array[i]=array[j];
         array[j]=temp;
-        System.out.println(Arrays.toString(array));
     }
 
 }
