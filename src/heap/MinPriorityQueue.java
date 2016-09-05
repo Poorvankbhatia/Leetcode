@@ -19,7 +19,7 @@ public class MinPriorityQueue<Item extends Comparable<? super Item>> implements 
         for(int i=0;i<capacity;i++) {
             pq[i+1] = temp[i];
         }
-        for(int k=0;k<size/2;k++) {
+        for(int k=size/2;k>=1;k--) {
             sink(k);
         }
     }

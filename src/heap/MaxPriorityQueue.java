@@ -7,7 +7,7 @@ import java.util.NoSuchElementException;
  * Created by poorvank on 05/09/16.
  */
 @SuppressWarnings("unchecked")
-public class MaxPriorityQueue<Item extends Comparable<Item>> implements Iterable<Item> {
+public class MaxPriorityQueue<Item extends Comparable<? super Item>> implements Iterable<Item> {
 
     private Item[] pq;
     private int size;
@@ -17,7 +17,7 @@ public class MaxPriorityQueue<Item extends Comparable<Item>> implements Iterable
         pq = (Item[]) new Comparable[capacity+1];
         System.arraycopy(temp, 0, pq, 1, capacity);
         size = capacity;
-        for (int i=size/2;i>=0;i--) {
+        for (int i=size/2;i>=1;i--) {
             sink(i);
         }
 
