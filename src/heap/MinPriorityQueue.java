@@ -76,7 +76,24 @@ public class MinPriorityQueue<Item extends Comparable<? super Item>> implements 
 
     }
 
+    public int getSize() {
+        return size;
+    }
+
+    private void resize(int capacity) {
+        if(capacity>size) {
+            Item[] temp = (Item[]) new Comparable[capacity];
+            for(int i=1;i<=size;i++) {
+                temp[i] = pq[i];
+            }
+            pq = temp;
+        }
+    }
+
     public int insert(Item item){
+        if(getSize()>=pq.length-1) {
+            resize(2*pq.length);
+        }
         pq[++size] = item;
         return swim(size);
     }
@@ -110,9 +127,6 @@ public class MinPriorityQueue<Item extends Comparable<? super Item>> implements 
         }
 
         public Item next() {
-            if(!hasNext()) {
-                throw new NoSuchElementException();
-            }
             return copy.deleteMin();
         }
 
