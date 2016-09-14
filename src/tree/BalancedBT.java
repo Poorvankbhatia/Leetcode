@@ -14,16 +14,6 @@ package tree;
  */
 public class BalancedBT {
 
-    private static class TreeNode {
-        int val;
-        TreeNode left;
-        TreeNode right;
-
-        public TreeNode(int x) {
-            val = x;
-        }
-    }
-
     private static class Height {
         int val;
         public Height(int val) {

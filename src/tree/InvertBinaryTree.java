@@ -24,16 +24,6 @@ package tree;
  */
 public class InvertBinaryTree {
 
-    private static class TreeNode {
-        int val;
-        TreeNode left;
-        TreeNode right;
-
-        public TreeNode(int x) {
-            val = x;
-        }
-    }
-
     public TreeNode invertTree(TreeNode root) {
 
         if(root==null) {

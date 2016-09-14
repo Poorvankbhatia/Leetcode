@@ -25,16 +25,6 @@ import java.util.List;
  */
 public class BinaryTreePaths {
 
-    private static class TreeNode {
-        int val;
-        TreeNode left;
-        TreeNode right;
-
-        public TreeNode(int x) {
-            val = x;
-        }
-    }
-
     public List<String> binaryTreePaths(TreeNode root) {
 
         List<String> result = new ArrayList<>();

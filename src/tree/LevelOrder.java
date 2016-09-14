@@ -60,7 +60,7 @@ public class LevelOrder {
             TreeNode current = queue.remove();
             //Reached end of a level
             if(current==null) {
-                result.add(new ArrayList<>(intermediateList));
+                result.add(intermediateList);
                 intermediateList = new ArrayList<>();
                 if(!queue.isEmpty()) {
                     queue.add(null);
@@ -92,3 +92,10 @@ public class LevelOrder {
     }
 
 }
+
+
+/*
+
+Can also be done using 2 queues
+
+ */
