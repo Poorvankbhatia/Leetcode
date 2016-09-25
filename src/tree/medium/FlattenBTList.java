@@ -25,7 +25,9 @@ The flattened tree should look like:
 
  */
 
-package tree;
+package tree.medium;
+
+import tree.TreeNode;
 
 import java.util.Stack;
 

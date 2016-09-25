@@ -15,7 +15,9 @@ All root-to-leaf paths are:
 
  */
 
-package tree;
+package tree.easy;
+
+import tree.TreeNode;
 
 import java.util.ArrayList;
 import java.util.List;

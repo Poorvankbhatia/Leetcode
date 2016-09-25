@@ -17,7 +17,9 @@ to
 
  */
 
-package tree;
+package tree.easy;
+
+import tree.TreeNode;
 
 /**
  * Created by poorvank.b on 12/09/16.

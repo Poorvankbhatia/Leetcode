@@ -1,4 +1,6 @@
-package tree;
+package tree.easy;
+
+import tree.TreeNode;
 
 /**
  * Created by poorvank on 13/09/16.

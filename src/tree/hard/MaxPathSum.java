@@ -14,22 +14,14 @@ Given the below binary tree,
 Return 6.
 
  */
-package tree;
+package tree.hard;
+
+import tree.TreeNode;
 
 /**
  * Created by poorvank on 15/09/16.
  */
 public class MaxPathSum {
-
-    private static class TreeNode {
-        int val;
-        TreeNode left;
-        TreeNode right;
-
-        public TreeNode(int x) {
-            val = x;
-        }
-    }
 
     private static int finalResult  = Integer.MIN_VALUE;
 

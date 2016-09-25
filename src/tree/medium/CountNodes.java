@@ -7,7 +7,9 @@ and all nodes in the last level are as far left as possible. It can have between
 
 
  */
-package tree;
+package tree.medium;
+
+import tree.TreeNode;
 
 /**
  * Created by poorvank.b on 15/09/16.

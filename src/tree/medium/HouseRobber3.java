@@ -23,8 +23,10 @@ Example 2:
 Maximum amount of money the thief can rob = 4 + 5 = 9.
 
  */
-package tree;
+package tree.medium;
 
+
+import tree.TreeNode;
 
 /**
  * Created by poorvank on 17/09/16.

@@ -18,7 +18,7 @@ return its level order traversal as:
 
  */
 
-package tree;
+package tree.easy;
 
 import java.util.ArrayList;
 import java.util.LinkedList;

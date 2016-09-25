@@ -7,7 +7,9 @@ in which the depth of the two subtrees of every node never differ by more than 1
 
  */
 
-package tree;
+package tree.easy;
+
+import tree.TreeNode;
 
 /**
  * Created by poorvank on 13/09/16.

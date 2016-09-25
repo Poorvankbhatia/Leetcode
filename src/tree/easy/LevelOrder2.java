@@ -19,7 +19,9 @@ return its bottom-up level order traversal as:
 
  */
 
-package tree;
+package tree.easy;
+
+import tree.TreeNode;
 
 import java.util.*;
 

@@ -18,7 +18,9 @@ But the following [1,2,2,null,3,null,3] is not:
 
  */
 
-package tree;
+package tree.easy;
+
+import tree.TreeNode;
 
 /**
  * Created by poorvank on 13/09/16.

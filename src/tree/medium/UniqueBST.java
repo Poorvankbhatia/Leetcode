@@ -13,7 +13,7 @@ Given n = 3, there are a total of 5 unique BST's.
 
  */
 
-package tree;
+package tree.medium;
 
 /**
  * Created by poorvank on 24/09/16.
@@ -63,5 +63,26 @@ Summing over i gives the total number of binary search trees with n nodes.
 
 t(n) = (from i=1 to n)(Sum(t(i-1)*t(n-i));
 
+
+i=0, count[0]=1 //empty tree
+
+i=1, count[1]=1 //one tree
+
+i=2, count[2]=count[0]*count[1] // 0 is root
+            + count[1]*count[0] // 1 is root
+
+i=3, count[3]=count[0]*count[2] // 1 is root
+            + count[1]*count[1] // 2 is root
+            + count[2]*count[0] // 3 is root
+
+i=4, count[4]=count[0]*count[3] // 1 is root
+            + count[1]*count[2] // 2 is root
+            + count[2]*count[1] // 3 is root
+            + count[3]*count[0] // 4 is root
+..
+..
+..
+
+i=n, count[n] = sum(count[0..k]*count[k+1...n]) 0 <= k < n-1
 
  */

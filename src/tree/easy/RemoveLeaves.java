@@ -15,7 +15,9 @@ Returns [4, 5, 3], [2], [1].
 
 
  */
-package tree;
+package tree.easy;
+
+import tree.TreeNode;
 
 import java.util.ArrayList;
 import java.util.List;
