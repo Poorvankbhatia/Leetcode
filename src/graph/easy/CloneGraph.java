@@ -24,7 +24,9 @@ Visually, the graph looks like the following:
          \_/
 
  */
-package graph;
+package graph.easy;
+
+import graph.UndirectedGraphNode;
 
 import java.util.HashMap;
 
