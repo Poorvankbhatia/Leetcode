@@ -1,4 +1,4 @@
-package design;/*
+package design.easy;/*
 
 Design a hit counter which counts the number of hits received in the past 5 minutes.
 

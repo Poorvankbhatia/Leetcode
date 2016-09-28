@@ -7,7 +7,7 @@ check: Check if a number is available or not.
 release: Recycle or release a number.
 
  */
-package design;
+package design.medium;
 
 import java.util.HashSet;
 import java.util.LinkedList;

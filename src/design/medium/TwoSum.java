@@ -15,7 +15,7 @@ find(7) -> false
 
  */
 
-package design;
+package design.medium;
 
 import java.util.HashMap;
 import java.util.Set;

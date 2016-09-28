@@ -10,7 +10,7 @@ By calling next repeatedly until hasNext returns false, the order of elements re
 
 
 
-package design;
+package design.medium;
 
 import java.util.Iterator;
 import java.util.Queue;

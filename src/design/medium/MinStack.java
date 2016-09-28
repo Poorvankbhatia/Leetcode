@@ -18,7 +18,7 @@ minStack.getMin();   --> Returns -2.
 
 
  */
-package design;
+package design.medium;
 
 import java.util.LinkedList;
 

@@ -12,12 +12,12 @@ Now you call peek() and it returns 2, the next element. Calling next() after tha
 You call next() the final time and it returns 3, the last element. Calling hasNext() after that should return false.
 
  */
-package design;
+package design.medium;
 
 import java.util.Iterator;
 
 /**
- * Created by poorvank.b on 17/09/16.
+ * Created by poorvank on 17/09/16.
  */
 class PeekingIterator implements Iterator<Integer> {
 
