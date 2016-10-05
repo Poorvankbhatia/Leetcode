@@ -22,7 +22,7 @@ package tree.easy;
 import tree.TreeNode;
 
 /**
- * Created by poorvank.b on 12/09/16.
+ * Created by poorvank on 12/09/16.
  */
 public class InvertBinaryTree {
 
