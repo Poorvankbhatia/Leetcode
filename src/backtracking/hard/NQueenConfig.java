@@ -21,7 +21,7 @@ There exist two distinct solutions to the 4-queens puzzle:
 ]
 
  */
-package backtracking;
+package backtracking.hard;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -16,7 +16,7 @@ A solution set is:
 
  */
 
-package backtracking;
+package backtracking.medium;
 
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -1,4 +1,4 @@
-package backtracking;
+package backtracking.medium;
 
 /**
  * Created by poorvank on 26/08/16.

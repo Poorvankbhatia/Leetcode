@@ -14,7 +14,7 @@ For example, given n = 3, a solution set is:
 
  */
 
-package backtracking;
+package backtracking.medium;
 
 import java.util.ArrayList;
 import java.util.List;

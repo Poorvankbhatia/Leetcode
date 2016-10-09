@@ -14,7 +14,7 @@ A solution is ["cats and dog", "cat sand dog"].
 
  */
 
-package backtracking;
+package backtracking.hard;
 
 import java.util.*;
 

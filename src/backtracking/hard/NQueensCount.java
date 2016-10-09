@@ -1,5 +1,5 @@
 //return the total number of distinct solutions.
-package backtracking;
+package backtracking.hard;
 
 /**
  * Created by poorvank on 26/08/16.
