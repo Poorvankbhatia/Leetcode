@@ -10,7 +10,7 @@ You are given an API bool isBadVersion(version) which will return whether versio
 version. You should minimize the number of calls to the API.
 
  */
-package binarysearch;
+package binarysearch.easy;
 
 /**
  * Created by poorvank on 07/10/16.
