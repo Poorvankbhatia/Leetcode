@@ -10,7 +10,7 @@ You may assume that there will be only one unique solution.
 package backtracking.hard;
 
 /**
- * Created by poorvank on '.'8/10/16.
+ * Created by poorvank on 8/10/16.
  */
 public class SudokuSolver {
 
