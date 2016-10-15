@@ -1,4 +1,4 @@
-package backtracking.medium;
+package trie;
 
 /**
  * Created by poorvank on 26/08/16.

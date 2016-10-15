@@ -1,4 +1,7 @@
-package heap;
+package heap.hard;
+
+import heap.MaxPriorityQueue;
+import heap.MinPriorityQueue;
 
 /**
  * Created by poorvank on 06/09/16.

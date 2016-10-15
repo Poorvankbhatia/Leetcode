@@ -18,7 +18,9 @@ You may assume k is always valid, 1 ≤ k ≤ n2.
 
 
  */
-package heap;
+package heap.medium;
+
+import heap.MinPriorityQueue;
 
 /**
  * Created by poorvank on 08/09/16.
