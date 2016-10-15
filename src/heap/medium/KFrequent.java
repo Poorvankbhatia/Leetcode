@@ -1,4 +1,6 @@
-package heap;
+package heap.medium;
+
+import heap.MinPriorityQueue;
 
 import java.util.*;
 

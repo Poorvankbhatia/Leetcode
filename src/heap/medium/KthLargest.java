@@ -12,7 +12,9 @@ You may assume k is always valid, 1 ≤ k ≤ array's length.
 
 
  */
-package heap;
+package heap.medium;
+
+import heap.MaxPriorityQueue;
 
 import java.util.Arrays;
 
