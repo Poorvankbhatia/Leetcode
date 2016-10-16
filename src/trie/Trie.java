@@ -1,33 +1,41 @@
-
 package trie;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- * Created by poorvank.b on 15/10/16.
+ * Created by poorvank on 25/06/16.
  */
 
-class TrieNode {
-    public boolean value;
-    public TrieNode[] childArray = new TrieNode[26];
-    public TrieNode() {
-        this.value = false;
+
+public class Trie<Item> {
+
+    private static final int R = 26;
+    private Node root;
+    private int size;
+
+    private static class Node {
+        private Object value;
+        private Node[] childArray = new Node[R];
     }
-}
-
-public class Trie {
-
-    private TrieNode root;
-    private static final int R=26;
 
     public Trie() {
-        root = new TrieNode();
+        root = new Node();
+        size = 0;
     }
 
-    public Boolean search(String word) {
-        TrieNode x = get(word, root, 0);
-        return x != null && x.value;
+    public Item get(String key) {
+        Node x = get(root,key,0);
+        if(x!=null) {
+            if(x.value!=null) {
+                return (Item)x.value;
+            }
+        }
+        return null;
     }
 
-    private TrieNode get(String key,TrieNode x,int d) {
+
+    private Node get(Node x,String key,int d) {
         if(x==null) {
             return null;
         }
@@ -35,83 +43,153 @@ public class Trie {
             return x;
         }
         char c = key.charAt(d);
-        return get(key,x.childArray[c-'a'],d+1);
+        return get(x.childArray[c-'a'],key,d+1);
     }
 
-    public void insert(String word) {
-        root = put(word,root,0);
+    public boolean contains(String key) {
+        return get(key)!=null;
     }
 
+    public void put(String key,Item item) {
+        if (item==null) {
+            delete(key);
+        }
+        else {
+            root = put(root,key,0,item);
+        }
+    }
 
-    private TrieNode put(String key,TrieNode x,int d) {
+    private Node put(Node x,String key,int d,Item item) {
         if(x==null) {
-            x = new TrieNode();
+            x = new Node();
         }
         if(d==key.length()) {
-            x.value=true;
+            if(x.value==null) {
+                size++;
+            }
+            x.value = (item);
             return x;
         }
-
         char c = key.charAt(d);
-        x.childArray[c-'a']= put(key,x.childArray[c-'a'],d+1);
+        x.childArray[c-'a'] = put(x.childArray[c-'a'],key,d+1,item);
         return x;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    public boolean isEmpty() {
+        return getSize()==0;
+    }
+
+    public List<String> keys() {
+        return keysWithPrefix("");
+    }
+
+    public List<String> keysWithPrefix(String prefix) {
+        List<String> results = new ArrayList<>();
+        Node x = get(root,prefix,0);
+        collect(x,new StringBuilder(prefix),results);
+        return results;
+    }
+
+    private void collect(Node x,StringBuilder prefix,List<String> results) {
+        if(x==null) {
+            return;
+        }
+        if(x.value!=null) {
+            results.add(prefix.toString());
+        }
+        for (char c='a';c<='z';c++) {
+            prefix.append(c);
+            collect(x.childArray[c-'a'],prefix,results);
+            prefix.deleteCharAt(prefix.length()-1);
+        }
+    }
+
+    public List<String> allPrefixKeys(String query) {
+        List<String> list = new ArrayList<>();
+        collectAllPrefixKeys(root,query,new StringBuilder(),list,0);
+        return list;
+    }
+
+    private void collectAllPrefixKeys(Node x,String query,StringBuilder sb,List<String> list,int d) {
+
+        if(x==null) {
+            return;
+        }
+        if(x.value!=null)  {
+            list.add(sb.toString());
+        }
+
+        if(d == query.length()) {
+            return;
+        }
+
+        char c = query.charAt(d);
+        sb.append(c);
+        collectAllPrefixKeys(x.childArray[c-'a'],query,sb,list,d+1);
 
     }
 
-    public boolean startsWith(String prefix) {
+    public String longestPrefixOf(String key) {
+        int length = longestPrefixOf(root,key,0,-1);
+        if(length==-1) {
+            return null;
+        }
+        return key.substring(0,length);
+    }
 
-        TrieNode x = get(prefix,root,0);
-        return collect(x,new StringBuilder(prefix));
-
+    // returns the length of the longest string key in the subtrie
+    // rooted at x that is a prefix of the query string,
+    private int longestPrefixOf(Node x,String query,int d,int length) {
+        if(x==null) {
+            return length;
+        }
+        if(x.value!=null) {
+            length = d;
+        }
+        if(d==query.length()){
+            return length;
+        }
+        char c = query.charAt(d);
+        return longestPrefixOf(x.childArray[c-'a'],query,d+1,length);
     }
 
 
     public void delete(String key) {
-        root = delete(key,0,root);
+        root = delete(root,key,0);
     }
 
-    private TrieNode delete(String key,int d,TrieNode x) {
+    private Node delete(Node x,String key,int d) {
         if(x==null) {
             return null;
         }
-        if(x.value) {
-            x.value = false;
+        if(d==key.length()) {
+            if(x.value!=null) {
+                size--;
+            }
+            x.value = null;
         } else {
             char c = key.charAt(d);
-            x.childArray[c-'a'] = delete(key,d+1,x.childArray[c-'a']);
+            x.childArray[c-'a'] = delete(x.childArray[c-'a'],key,d+1);
         }
 
-        if(x.value) {
+        //Remove subtree rooted at x , iff entire subtree is empty
+        if(x.value!=null) {
             return x;
         }
-
-        for (char c='a';c<='z';c++) {
+        for (int c='a';c<='z';c++) {
             if(x.childArray[c-'a']!=null) {
                 return x;
             }
         }
 
         return null;
+
     }
 
-
-    private boolean collect(TrieNode x,StringBuilder prefix) {
-        if(x==null) {
-            return false;
-        }
-        if(x.value) {
-            return true;
-        }
-
-        for (char c='a';c<='z';c++) {
-            prefix.append(c);
-            if(collect(x.childArray[c-'a'],prefix)) {
-                return true;
-            }
-            prefix.deleteCharAt(prefix.length()-1);
-        }
-
-        return false;
-    }
 
 }
+
