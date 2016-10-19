@@ -1,4 +1,4 @@
-package trie;
+package trie.medium;
 
 /**
  * Created by poorvank on 26/08/16.

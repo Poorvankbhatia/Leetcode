@@ -22,7 +22,7 @@ All words contain only lowercase alphabetic characters.
 
  */
 
-package bfs;
+package bfsdfs.hard;
 
 import java.util.*;
 

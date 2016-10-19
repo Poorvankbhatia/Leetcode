@@ -17,7 +17,9 @@ Given words = ["oath","pea","eat","rain"] and board =
 Return ["eat","oath"].
 
  */
-package trie;
+package trie.hard;
+
+import trie.medium.Trie;
 
 import java.util.ArrayList;
 import java.util.List;
