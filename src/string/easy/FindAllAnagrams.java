@@ -1,11 +1,6 @@
 /*
 
-Find All Anagrams in a String My SubmissionsBack To Contest
-User Accepted: 235
-User Tried: 606
-Total Accepted: 280
-Total Submissions: 798
-Difficulty: Easy
+Find All Anagrams in a String 
 Given a string s and a non-empty string p, find all the start indices of p's anagrams in s.
 
 Strings consists of lowercase English letters only and the length of both strings s and p will not be larger than 20,100.
