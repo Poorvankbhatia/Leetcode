@@ -23,7 +23,7 @@ Only three moves are needed (remember each move increments two elements):
 [1,2,3]  =>  [2,3,3]  =>  [3,4,3]  =>  [4,4,4]
 
  */
-package arrays;
+package arrays.easy;
 
 /**
  * Created by poorvank.b on 06/11/16.

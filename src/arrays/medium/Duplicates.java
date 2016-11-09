@@ -14,7 +14,7 @@ Output:
 [2,3]
 
  */
-package arrays;
+package arrays.medium;
 
 import java.util.ArrayList;
 import java.util.List;
