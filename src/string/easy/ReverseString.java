@@ -15,7 +15,7 @@ Reduce them to a single space in the reversed string.
 
  */
 
-package string;
+package string.easy;
 
 /**
  * Created by poorvank on 02/09/16.
