@@ -33,6 +33,12 @@ public class MinPriorityQueue<Item extends Comparable<? super Item>> implements 
         this(1);
     }
 
+    public void reArrangeItems() {
+        for(int k=size/2;k>=1;k--) {
+            sink(k);
+        }
+    }
+
     public boolean isEmpty() {
         return size==0;
     }
