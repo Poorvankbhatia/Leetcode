@@ -1,11 +1,5 @@
 /*
 
-Minimum Moves to Equal Array Elements My SubmissionsBack To Contest
-User Accepted: 334
-User Tried: 763
-Total Accepted: 357
-Total Submissions: 905
-Difficulty: Easy
 Given a non-empty integer array of size n, find the minimum number of moves required to make all array elements equal,
 where a move is incrementing n - 1 elements by 1.
 
@@ -26,7 +20,7 @@ Only three moves are needed (remember each move increments two elements):
 package arrays.easy;
 
 /**
- * Created by poorvank.b on 06/11/16.
+ * Created by poorvank on 06/11/16.
  */
 public class MimimumMoves {
 
