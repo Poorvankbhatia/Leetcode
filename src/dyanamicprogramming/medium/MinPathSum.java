@@ -6,7 +6,7 @@ the sum of all numbers along its path.
 Note: You can only move either down or right at any point in time.
 
  */
-package dyanamicprogramming;
+package dyanamicprogramming.medium;
 
 /**
  * Created by poorvank on 11/09/16.

@@ -7,7 +7,7 @@ Given n = 2, return 91. (The answer should be the total numbers in the range of 
 
  */
 
-package dyanamicprogramming;
+package dyanamicprogramming.medium;
 
 /**
  * Created by poorvank on 23/08/16.

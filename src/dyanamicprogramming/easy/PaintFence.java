@@ -5,7 +5,7 @@ that no more than two adjacent fence posts have the same color. Return the total
 
 
  */
-package dyanamicprogramming;
+package dyanamicprogramming.easy;
 
 /**
  * Created by poorvank on 11/09/16.

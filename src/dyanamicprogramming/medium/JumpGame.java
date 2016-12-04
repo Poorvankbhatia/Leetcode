@@ -13,7 +13,7 @@ A = [3,2,1,0,4], return false.
 
  */
 
-package dyanamicprogramming;
+package dyanamicprogramming.medium;
 
 /**
  * Created by poorvank on 21/11/16.

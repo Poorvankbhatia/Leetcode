@@ -1,6 +1,4 @@
-package dyanamicprogramming;
-
-import java.util.Arrays;
+package dyanamicprogramming.easy;
 
 /**
  * Created by poorvank on 11/09/16.

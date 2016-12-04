@@ -12,7 +12,7 @@ A solution is ["cats and dog", "cat sand dog"].
 
  */
 
-package dyanamicprogramming;
+package dyanamicprogramming.hard;
 
 import java.util.*;
 

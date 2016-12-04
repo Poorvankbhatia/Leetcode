@@ -9,7 +9,7 @@ Given a list of non-negative integers representing the amount of money of each h
 maximum amount of money you can rob tonight without alerting the police.
 
  */
-package dyanamicprogramming;
+package dyanamicprogramming.easy;
 
 import java.util.Arrays;
 

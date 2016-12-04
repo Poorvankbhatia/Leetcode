@@ -14,7 +14,7 @@ There are many calls to sumRange function.
 
  */
 
-package dyanamicprogramming;
+package dyanamicprogramming.easy;
 
 
 /**

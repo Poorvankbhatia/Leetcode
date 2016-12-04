@@ -8,7 +8,7 @@ the bottom-right corner of the grid (marked 'Finish' in the diagram below).
 How many possible unique paths are there?
 
  */
-package dyanamicprogramming;
+package dyanamicprogramming.medium;
 
 /**
  * Created by poorvank on 11/09/16.
