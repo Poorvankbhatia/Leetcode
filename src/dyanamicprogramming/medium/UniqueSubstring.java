@@ -32,8 +32,8 @@ public class UniqueSubstring {
 
     public int findSubstringInWraproundString(String p) {
 
-        int[] count = new int[26];
-        int[] dp = new int[p.length()];
+        int[] countArr = new int[26];
+        int[] table = new int[p.length()];
 
 
         for (int i=0;i<p.length();i++) {
@@ -41,25 +41,26 @@ public class UniqueSubstring {
             int len = 1;
 
             if(i>0 && (p.charAt(i)-p.charAt(i-1)==1 || p.charAt(i-1)-p.charAt(i)==25)) {
-                len = 1+  dp[i-1];
+                len = 1+  table[i-1];
             }
 
-            dp[i] = len;
+            table[i] = len;
 
             int index = p.charAt(i)-'a';
             /*
              *       consider 'bcdc'
              *      count[1,2,3,Max(2,1))
              */
-            count[index] = Math.max(count[index],len);
+            countArr[index] = Math.max(countArr[index],len);
 
         }
 
-        int sum = 0;
-        for (int i = 0; i < 26; i++) {
-            sum += count[i];
-        }
-        return sum;
+       int result =0;
+       for (Integer n : countArr) {
+           result += n;
+       }
+
+       return result;
 
     }
 
