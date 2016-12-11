@@ -62,12 +62,21 @@ public class ValidateIPAddress {
 
     private boolean checkIPV4(String ipAddress) {
 
+        if(ipAddress.charAt(0)=='.' || ipAddress.charAt(ipAddress.length()-1)=='.') {
+            return false;
+        }
+
         String[] blocks = ipAddress.split("\\.");
         if(blocks.length<4 || blocks.length>4) {
             return false;
         }
         for (String s : blocks) {
-            if(isNumeric(s) && s.length()!=0 && s.charAt(0)!='0') {
+            if(isNumeric(s) && s.length()!=0 && Character.isLetterOrDigit(s.charAt(0)) && s.length()<4) {
+
+                if(s.length()>1 && s.charAt(0)=='0') {
+                    return false;
+                }
+
                 int n  = Integer.parseInt(s);
                 if(n<0 || n>255) {
                     return false;
@@ -97,6 +106,10 @@ public class ValidateIPAddress {
 
     private boolean checkIPV6(String ipAddress) {
 
+        if(ipAddress.charAt(0)==':' || ipAddress.charAt(ipAddress.length()-1)==':') {
+            return false;
+        }
+
         String[] blocks = ipAddress.split(":");
         if(blocks.length<2 || blocks.length>8) {
             return false;
@@ -109,7 +122,7 @@ public class ValidateIPAddress {
                     return false;
                 }
 
-                if(!isHexaDecimal(s)) {
+                if(!Character.isLetterOrDigit(s.charAt(0)) || !isHexaDecimal(s)) {
                     return false;
                 }
             } else {
@@ -132,7 +145,7 @@ public class ValidateIPAddress {
     }
 
     public static void main(String[] args) {
-        System.out.println(new ValidateIPAddress().validIPAddress("2001:db8:85a3:0::8a2E:0370:7334"));
+        System.out.println(new ValidateIPAddress().validIPAddress("15.16.-0.1"));
     }
 
 }
