@@ -22,7 +22,7 @@ One way is to shoot one arrow for example at x = 6 (bursting the balloons [2,8] 
 (bursting the other two balloons)
 
  */
-package greedy;
+package greedy.medium;
 
 import java.util.Arrays;
 
