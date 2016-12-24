@@ -51,11 +51,11 @@ public class NumMatrix {
             sumMatrix[0][j] = matrix[0][j] + sumMatrix[0][j-1];
         }
 
-        /*for (int i=1;i<rows;i++) {
+        for (int i=1;i<rows;i++) {
             for (int j=1;j<cols;j++) {
                 sumMatrix[i][j] = matrix[i][j] + sumMatrix[i-1][j] + sumMatrix[i][j-1] - sumMatrix[i-1][j-1];
             }
-        }*/
+        }
 
     }
 
