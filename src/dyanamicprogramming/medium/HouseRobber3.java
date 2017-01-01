@@ -23,7 +23,7 @@ Example 2:
 Maximum amount of money the thief can rob = 4 + 5 = 9.
 
  */
-package tree.medium;
+package dyanamicprogramming.medium;
 
 
 import tree.TreeNode;
