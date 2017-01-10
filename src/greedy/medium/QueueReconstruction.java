@@ -32,6 +32,11 @@ public class QueueReconstruction {
 
         Arrays.sort(people, (o1, o2) -> o1[0]!=o2[0]?-o1[0]+o2[0]:o1[1]-o2[1]);
 
+        for (int i=0;i<people.length;i++) {
+
+                System.out.println(people[i][0] + " " +  people[i][1]);
+
+        }
 
         List<int[]> list = new LinkedList<>();
         for (int[] p : people) {
@@ -44,6 +49,19 @@ public class QueueReconstruction {
 
         return list.toArray(new int[people.length][]);
 
+    }
+
+    public static void main(String[] args) {
+        int[][] arr = new int[][]  {
+                {7,0},
+                {4,4},
+                {7,1},
+                {5,0},
+                {6,1},
+                {5,2}
+        };
+
+        new QueueReconstruction().reconstructQueue(arr);
     }
 
 }
