@@ -20,7 +20,7 @@ Explanation:
 
 
  */
-package string;
+package string.easy;
 
 import java.util.HashMap;
 
