@@ -24,7 +24,7 @@ public class WiggleSort2 {
 
         Arrays.sort(a);
         int left,right,k=0;
-        if(a.length%2==0) {
+        if((a.length & 1)!=1) {
             //Last occurrence of left array
             left = (a.length/2)-1;
         } else {
@@ -39,7 +39,7 @@ public class WiggleSort2 {
         int[] result = new int[a.length];
 
         for (k=0;k<a.length;k++) {
-            if(k%2==0) {
+            if((k & 1)!=1) {
                 result[k] = a[left];
                 left--;
             } else {
