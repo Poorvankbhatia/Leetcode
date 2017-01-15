@@ -69,6 +69,7 @@ public class PartitionEqualSubsetSum {
 
     private boolean canPartitionDP(int[] nums,int sum,int n) {
 
+        //dpTable[i][j] indicates if we can make a sum of i, with j array elements
         boolean[][] dpTable = new boolean[sum+1][n+1];
 
         //Filling first row, if sum is zero than we can form 2 subsets having no element so marking it true

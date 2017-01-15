@@ -30,12 +30,12 @@ public class LongestPalindromicSubstring {
         if(n==0) {
             return "";
         }
-        boolean[][] table = new boolean[n+1][n+1];
+        boolean[][] table = new boolean[n][n];
 
         int maxLength = 1;
 
         //All sub strings of length 1 are palindromes
-        for (int i=0;i<=n;i++) {
+        for (int i=0;i<n;i++) {
             table[i][i] = true;
         }
 
@@ -71,6 +71,10 @@ public class LongestPalindromicSubstring {
         }
 
         return s.substring(start,start+maxLength);
+    }
+
+    public static void main(String[] args) {
+        System.out.println(new LongestPalindromicSubstring().longestPalindrome("babab"));
     }
 
 }

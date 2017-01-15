@@ -19,7 +19,7 @@ You may assume that you have an infinite number of each kind of coin.
 package dyanamicprogramming.medium;
 
 /**
- * Created by poorvank.b on 17/12/16.
+ * Created by poorvank on 17/12/16.
  */
 public class CoinChange {
 
