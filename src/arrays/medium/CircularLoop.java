@@ -19,7 +19,7 @@ Can you do it in O(n) time complexity and O(1) space complexity?
 package arrays.medium;
 
 /**
- * Created by poorvank.b on 09/11/16.
+ * Created by poorvank on 09/11/16.
  */
 public class CircularLoop {
 

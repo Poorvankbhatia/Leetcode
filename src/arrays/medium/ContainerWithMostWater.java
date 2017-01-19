@@ -11,7 +11,7 @@ Note: You may not slant the container.
 package arrays.medium;
 
 /**
- * Created by poorvank.b on 26/11/16.
+ * Created by poorvank on 26/11/16.
  */
 public class ContainerWithMostWater {
 
@@ -32,6 +32,12 @@ public class ContainerWithMostWater {
 
         return maxArea;
 
+    }
+
+
+    public static void main(String[] args) {
+        int[] height = new int[]{4,17,13,12};
+        System.out.println(new ContainerWithMostWater().maxArea(height));
     }
 
 }
