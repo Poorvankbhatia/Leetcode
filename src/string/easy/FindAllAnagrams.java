@@ -39,11 +39,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by poorvank.b on 07/11/16.
+ * Created by poorvank on 07/11/16.
  */
 public class FindAllAnagrams {
 
-    private int max = 256;
+    private int max = 26;
 
     private boolean compare(int[] patternCount,int[] textCount) {
         for (int i=0;i<max;i++) {
@@ -67,8 +67,8 @@ public class FindAllAnagrams {
         int[] textCount = new int[max];
 
         for (int i=0;i<p.length();i++) {
-            patternCount[p.charAt(i)]++;
-            textCount[s.charAt(i)]++;
+            patternCount[p.charAt(i)-'a']++;
+            textCount[s.charAt(i)-'a']++;
         }
 
         for (int i=p.length();i<s.length();i++) {
@@ -77,8 +77,8 @@ public class FindAllAnagrams {
                 list.add(i-p.length());
             }
 
-            textCount[s.charAt(i-p.length())]--;
-            textCount[s.charAt(i)]++;
+            textCount[s.charAt(i-p.length())-'a']--;
+            textCount[s.charAt(i)-'a']++;
 
         }
 
@@ -91,7 +91,7 @@ public class FindAllAnagrams {
     }
 
     public static void main(String[] args) {
-        System.out.println(new FindAllAnagrams().findAnagrams("abab","ab"));
+        System.out.println(new FindAllAnagrams().findAnagrams("abcba","ab"));
     }
 
 }

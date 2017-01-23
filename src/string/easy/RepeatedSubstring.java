@@ -29,6 +29,8 @@ package string.easy;
  */
 public class RepeatedSubstring {
 
+    private String pattern = "";
+
     public boolean repeatedSubstringPattern(String str) {
 
         if(null==str) {
@@ -57,6 +59,9 @@ public class RepeatedSubstring {
             }
         }
 
+        pattern = str.substring(0,l);
+        System.out.println(pattern);
+
         return true;
 
 
@@ -64,7 +69,7 @@ public class RepeatedSubstring {
 
     public static void main(String[] args) {
 
-        System.out.print(new RepeatedSubstring().repeatedSubstringPattern("ab"));
+        System.out.print(new RepeatedSubstring().repeatedSubstringPattern("abab"));
 
     }
 
