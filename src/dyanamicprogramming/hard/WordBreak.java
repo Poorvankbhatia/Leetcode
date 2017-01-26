@@ -69,40 +69,36 @@ public class WordBreak {
 
     private void processDictionary(Set<String> wordDict, ArrayList<String>[] dp,String s) {
 
+        int size = s.length();
         boolean[] validate = new boolean[s.length()+1];
         validate[0] = true;
 
-        for (int i=0;i<s.length();i++) {
+        for (int i=0;i<=size;i++) {
+            for (int j=0;j<i;j++) {
 
-            if(!validate[i]) {
-                continue;
-            }
-
-            for (String word: wordDict) {
-
-                int len = word.length();
-
-                if(i+len>s.length()) {
+                if(!validate[j]) {
                     continue;
                 }
 
-                String sub = s.substring(i,i+len);
-                if(sub.equals(word))  {
-                    if(dp[i+len]==null) {
-                        dp[i+len] = new ArrayList<>();
+                String check = s.substring(j,i);
+                if(wordDict.contains(check)) {
+                    validate[i] = true;
+                    if(dp[i]==null) {
+                        dp[i] = new ArrayList<>();
                     }
-                    dp[i+len].add(word);
-                    validate[i+len] = true;
+                    dp[i].add(check);
                 }
+
             }
         }
 
+        System.out.print("");
 
     }
 
     public static void main(String[] args) {
-        String str =  "aaaaaaa";
-        Set<String> set = new HashSet<>(Arrays.asList("aaaa","aa","a"));
+        String str =  "cars";
+        Set<String> set = new HashSet<>(Arrays.asList("ca","rs","car"));
         WordBreak wb = new WordBreak();
         System.out.println(wb.wordBreak(str,set));
     }

@@ -30,12 +30,21 @@ public class ConcatenatedWords {
         Set<String> preWords = new HashSet<>();
         Arrays.sort(words, (s1, s2) -> s1.length() - s2.length());
 
+        int max = 0;
+        String maxWord = "";
+
         for (String word : words) {
             if (possibleFormation(word, preWords)) {
+                if(word.length()>max) {
+                    max = word.length();
+                    maxWord = word;
+                }
                 result.add(word);
             }
             preWords.add(word);
         }
+
+        System.out.print("Longest word - " + maxWord);
 
         return result;
     }
@@ -57,7 +66,7 @@ public class ConcatenatedWords {
     }
 
     public static void main(String[] args) {
-        String[] words = new String[]{"reattempt","ed","attempt","reattempted","re"};
+        String[] words = new String[]{"cat", "cats", "catsdogcats", "catxdogcatsrat", "dog", "dogcatsdog", "hippopotamuses", "rat", "ratcat", "ratcatdog", "ratcatdogcat"};
 
         System.out.println(new ConcatenatedWords().findAllConcatenatedWordsInADict(words));
     }

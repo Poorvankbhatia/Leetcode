@@ -36,7 +36,7 @@ public class EditDistance {
             for (int j=0; j<=n; j++)
             {
                 // If first string is empty, only option is to
-                // isnert all characters of second string
+                // insert all characters of second string
                 if (i==0)
                     dp[i][j] = j;  // Min. operations = j
 
@@ -94,5 +94,10 @@ Replace: Recur for m-1 and n-1
 
 Time Complexity: O(m x n)
 Auxiliary Space: O(m x n)
+
+
+The time complexity of above solution is exponential. In worst case, we may end up doing O(3^m) operations.
+The worst case happens when none of characters of two strings match.
+
 
  */
