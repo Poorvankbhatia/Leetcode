@@ -79,4 +79,10 @@ public class MajorityElement {
 
     }
 
+
+    public static void main(String[] args) {
+        int[] arr = new int[]{1,1,1,1,2,3,3,2,2,2,3};
+        System.out.print(new MajorityElement().majorityElement(arr));
+    }
+
 }
