@@ -64,6 +64,7 @@ public class PalindromePairs {
                         list.add(keyVal);
                     }
                 } else {
+                    // for cases when we have single character strings
                     if(keyVal!=i) {
                         list.add(i);
                         list.add(keyVal);

@@ -42,7 +42,7 @@ import java.util.List;
  * Created by poorvank on 05/09/16.
  */
 
-
+@SuppressWarnings("unchecked")
 public class KPairsWithSmallestSums {
 
     private class Pair implements Comparable<Pair> {
@@ -86,11 +86,11 @@ public class KPairsWithSmallestSums {
 
         int x=0;
 
-        for (int i=0;i<nums1.length;i++) {
-            for (int j=0;j<nums2.length;j++) {
-                Pair p = new Pair(nums1[i],nums2[j]);
+        for (int aNums1 : nums1) {
+            for (int aNums2 : nums2) {
+                Pair p = new Pair(aNums1, aNums2);
                 newArr[x] = p;
-                if(x<k) {
+                if (x < k) {
                     maxPriorityQueue.insert(p);
                 }
                 x++;

@@ -85,4 +85,27 @@ Prove that for all integers n > 4, ( ( n-3 ) * 3 ) > n".
 
 This gives reason to the 3, and why we may want to consider special cases for preceding numbers.
 
+
+
+If we see some examples of this problems, we can easily observe following pattern.
+The maximum product can be obtained be repeatedly cutting parts of size 3 while size is greater than 4,
+keeping the last part as size of 2 or 3 or 4. For example, n = 10, the maximum product is obtained by 3, 3, 4. For n = 11,
+the maximum product is obtained by 3, 3, 3, 2.
+
+
+int maxProd(int n)
+{
+   // n equals to 2 or 3 must be handled explicitly
+   if (n == 2 || n == 3) return (n-1);
+
+   // Keep removing parts of size 3 while n is greater than 4
+   int res = 1;
+   while (n > 4)
+   {
+       n -= 3;
+       res *= 3; // Keep multiplying 3 to res
+   }
+   return (n * res); // The last part multiplied by previous parts
+}
+
  */

@@ -113,4 +113,17 @@ public class PartitionEqualSubsetSum {
 Time Complexity: O(sum*n)
 Auxiliary Space: O(sum*n)
 
+Without using space
+ boolean[] dp = new boolean[sum + 1];
+        // dp init
+        dp[0] = true;
+        // dp transition
+        for (int i = 1; i <= nums.length; i++) {
+            for (int j = sum; j >= nums[i-1]; j--) {
+                dp[j] = dp[j] || dp[j - nums[i-1]];
+            }
+        }
+        return dp[sum];
+
+
  */
