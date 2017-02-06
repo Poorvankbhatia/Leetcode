@@ -10,7 +10,7 @@ Each element in the result should appear as many times as it shows in both array
 The result can be in any order.
 
  */
-package hashing;
+package hashing.medium;
 
 import java.util.ArrayList;
 import java.util.HashMap;

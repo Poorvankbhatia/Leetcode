@@ -1,10 +1,4 @@
 /*
-
-Reverse Vowels of a String   QuestionEditorial Solution  My Submissions
-Total Accepted: 53637
-Total Submissions: 145730
-Difficulty: Easy
-Contributors: Admin
 Write a function that takes a string as input and reverse only the vowels of a string.
 
 Example 1:

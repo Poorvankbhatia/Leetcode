@@ -34,17 +34,19 @@ public class FindMode {
     private int currVal = 0;
     private int currCount = 0;
     private int maxCount = 0;
-    private int modeCount = 0;
+    private int index = 0;
 
-    private int[] modes;
+    private int[] result;
 
     public int[] findMode(TreeNode root) {
+        //1st pass
         inorder(root);
-        modes = new int[modeCount];
-        modeCount = 0;
+        result = new int[index];
+        index = 0;
         currCount = 0;
+        //2nd pass
         inorder(root);
-        return modes;
+        return result;
     }
 
     private void checkCurrentNode(int val) {
@@ -55,11 +57,11 @@ public class FindMode {
         currCount++;
         if (currCount > maxCount) {
             maxCount = currCount;
-            modeCount = 1;
+            index = 1;
         } else if (currCount == maxCount) {
-            if (modes != null)
-                modes[modeCount] = currVal;
-            modeCount++;
+            if (result != null)
+                result[index] = currVal;
+            index++;
         }
     }
 
@@ -91,7 +93,7 @@ the way to do it properly is to do two passes.
 One to find the highest number of occurrences of any value, and then a second pass to collect all values occurring that often.
 
 a (two-pass) solution that I think can rightfully be called O(1) space. Both passes keep track of the current value etc,
-and the second pass additionally collects the modes in the result array. I took the value handling out of the in-order
+and the second pass additionally collects the result in the result array. I took the value handling out of the in-order
 traversal into its own function for clarity.
 
 

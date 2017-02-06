@@ -10,7 +10,7 @@ Each element in the result must be unique.
 The result can be in any order.
 
  */
-package hashing;
+package hashing.medium;
 
 import java.util.Arrays;
 import java.util.HashSet;
