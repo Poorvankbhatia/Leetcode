@@ -22,17 +22,22 @@ public class CountNodes {
             return 0;
         }
 
-        int lHeight = getLeftHeight(root)+1;
-        int rHeight = getRightHeight(root)+1;
+        if(root.left==null && root.right==null) {
+            return 1;
+        }
+
+        int lHeight = getLeftHeight(root.left);
+        int rHeight = getRightHeight(root.right);
 
 
         if(lHeight==rHeight) {
+            int treeHeight = 1+ lHeight;
             /*
             Left bit shifting to multiply by any power of two and Right bit shifting to divide by any power of two.
             For example x = x * 2; can also be written as x<<1 or x = x*8 can be written as x<<3 (since 2 to the power of 3 is 8).
             Similarly x = x / 2; is x>>1 and so on.
              */
-            return (2<<(lHeight-1))-1;
+            return (2<<(treeHeight-1))-1;
         } else {
             return (1+countNodes(root.left) + countNodes(root.right));
         }
@@ -45,7 +50,7 @@ public class CountNodes {
         }
         int c = 0;
 
-        while (root.left!=null) {
+        while (root!=null) {
             c++;
             root = root.left;
         }
@@ -60,7 +65,7 @@ public class CountNodes {
         }
         int c = 0;
 
-        while (root.right!=null) {
+        while (root!=null) {
             c++;
             root = root.right;
         }
@@ -76,6 +81,9 @@ public class CountNodes {
 }
 
 /*
+
+In a complete binary tree of height 'h' there can be [2^(h-1) to  2^(h) - 1] nodes.
+ A complete binary tree can have 2^h minimum number nodes or 2^(h-1)-1 maximum number of nodes. (where tree with 1 node has height 1)
 
 If the height of the leftmost tree & right most tree is same. height is (2)^h -1;
 Else
