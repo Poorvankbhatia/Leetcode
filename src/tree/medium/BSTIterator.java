@@ -13,38 +13,37 @@ import tree.TreeNode;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 /**
  * Created by poorvank on 15/09/16.
  */
 public class BSTIterator {
 
-    private List<Integer> inorderList = new ArrayList<>();
-    private int index;
+    private Stack<TreeNode> stack = new Stack<>();
 
     public BSTIterator(TreeNode root) {
-        fillInorder(root);
-        index = 0;
+        while (root!=null) {
+            stack.push(root);
+            root = root.left;
+        }
     }
 
     public boolean hasNext() {
-        return index < inorderList.size();
+        return stack.size()>0;
     }
 
     public int next() {
-        int next =  inorderList.get(index);
-        index++;
-        return next;
-    }
-
-    private void fillInorder(TreeNode root) {
-        if(root==null) {
-            return;
+        TreeNode current = stack.pop();
+        int result = current.val;
+        if(current.right!=null) {
+            current = current.right;
+            while (current!=null) {
+                stack.push(current);
+                current = current.left;
+            }
         }
-
-        fillInorder(root.left);
-        inorderList.add(root.val);
-        fillInorder(root.right);
+        return result;
     }
 
     public static void main(String[] args) {
