@@ -33,31 +33,19 @@ public class ValidateBST {
     private List<Integer> list = new ArrayList<>();
 
     public boolean isValidBST(TreeNode root) {
-        inorder(root);
-        return isValidBSTUtil();
+        return isValidBSTUtil(root,Long.MIN_VALUE,Long.MAX_VALUE);
     }
 
 
-    private void inorder(TreeNode root) {
+    private boolean isValidBSTUtil(TreeNode root,long min,long max) {
 
         if(root==null) {
-            return;
+            return true;
         }
-        inorder(root.left);
-        list.add(root.val);
-        inorder(root.right);
-
-    }
-
-    private boolean isValidBSTUtil() {
-
-        for (int i=0;i<list.size()-1;i++) {
-            if(list.get(i+1)<list.get(i)) {
-                return false;
-            }
+        if(root.val>=max || root.val<=min) {
+            return false;
         }
-
-        return true;
+        return isValidBSTUtil(root.left,min,root.val) && isValidBSTUtil(root.right,root.val,max);
 
     }
 
