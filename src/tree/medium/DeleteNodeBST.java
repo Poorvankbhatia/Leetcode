@@ -60,20 +60,15 @@ public class DeleteNodeBST {
         } else {
 
             if (root.left == null && root.right == null) {
-                root = null;
-                return root;
+                return null;
             }
 
             if (root.left == null) {
-                TreeNode temp = root.right;
-                root = null;
-                return temp;
+                return root.right;
             }
 
             if (root.right == null) {
-                TreeNode temp = root.left;
-                root = null;
-                return temp;
+                return root.left;
             }
 
             TreeNode temp = inorderSucc(root.right);
@@ -90,7 +85,7 @@ public class DeleteNodeBST {
     private TreeNode inorderSucc(TreeNode root) {
 
         if (root == null) {
-            return root;
+            return null;
         }
 
         while (root.left != null) {
