@@ -22,16 +22,16 @@ public class PreInTree {
 
     private int preIndex;
 
-    private HashMap<Integer,Integer> posMap;
+    private HashMap<Integer,Integer> preMap;
 
     public TreeNode buildTree(int[] preorder, int[] inorder) {
 
         preIndex = 0;
 
-        posMap= new HashMap<>();
+        preMap = new HashMap<>();
 
         for (int i=0;i<inorder.length;i++) {
-            posMap.put(inorder[i],i);
+            preMap.put(inorder[i],i);
         }
 
         return buildTree(preorder,0,inorder.length-1);
@@ -46,7 +46,7 @@ public class PreInTree {
         }
 
         TreeNode root = new TreeNode(preOrder[preIndex++]);
-        int rootIndex = posMap.get(root.val);
+        int rootIndex = preMap.get(root.val);
 
         if(preIndex < preOrder.length) {
 
