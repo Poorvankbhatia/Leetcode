@@ -35,7 +35,7 @@ import tree.TreeNode;
 /**
  * Created by poorvank on 14/02/17.
  */
-public class BottomLeftTree {
+public class  BottomLeftTree {
 
     private int leftMostValue =0,max=0;
 
