@@ -79,7 +79,6 @@ circle by himself wrong, so this need to avoid.
 Details:
 for each index, check if it has a circle, if no circle set this to zero. Since if this index can't be a circle,
 then every index behind arrived here won't be a circle.
-The other situation I have write in the comments.
 
 
 

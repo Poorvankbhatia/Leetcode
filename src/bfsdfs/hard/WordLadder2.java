@@ -158,9 +158,9 @@ public class WordLadder2 {
 
     public static void main(String[] args) {
 
-        String beginWord =  "hot";
-        String endWord =  "dog";
-        Set<String> set = new HashSet<>(Arrays.asList("hot","dog"));
+        String beginWord =  "red";
+        String endWord =  "tax";
+        Set<String> set = new HashSet<>(Arrays.asList("ted","tex","red","tax","tad","den","rex","pee"));
         WordLadder2 wl = new WordLadder2();
         System.out.println(wl.findLadders(beginWord,endWord,set));
     }
