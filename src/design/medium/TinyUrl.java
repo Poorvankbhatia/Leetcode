@@ -8,10 +8,11 @@ import java.util.HashMap;
 public class TinyUrl {
 
     HashMap<Integer,String> map;
-    private static int id=1;
+    private static int id;
 
     public TinyUrl() {
         this.map = new HashMap<>();
+        id = 1;
     }
 
     // Encodes a URL to a shortened URL.
