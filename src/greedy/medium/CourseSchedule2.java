@@ -19,7 +19,7 @@ after you finished course 0. So one correct course order is [0,1,2,3]. Another c
 
  */
 
-package bfsdfs.medium;
+package greedy.medium;
 
 import java.util.*;
 
