@@ -108,4 +108,7 @@ public class WordAbbreviation {
 Club all the words with same abbreviation and then use to trie to differentiate.
 Same concept as shortest common prefix
 
+The time complexity will be O(nL) for building trie, O(nL) to resolve conflicts, O(n) to group words.
+ So the time complexity will be O(n(2L + 1). n is the number of words, and L is the average length of each words.
+
  */
