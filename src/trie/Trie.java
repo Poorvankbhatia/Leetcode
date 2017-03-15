@@ -50,6 +50,78 @@ public class Trie<Item> {
         return get(key)!=null;
     }
 
+
+    /*
+
+     Method used for Word Abbreviation problem
+
+     */
+
+    public String getAbbreviatedString(String key,Item item) {
+        StringBuilder sb = new StringBuilder();
+        getEntirePrefixWithValue(root,key,item,sb,0);
+        int length = sb.length();
+        if(key.length()-length>2) {
+            sb.append(key.length()-length-1).append(key.charAt(key.length()-1));
+            return sb.toString();
+        } else {
+            return key;
+        }
+    }
+
+    private void getEntirePrefixWithValue(Node x,String key,Item item,StringBuilder sb,int d) {
+
+        if(x==null) {
+            return;
+        } else {
+            if(x.value==item) {
+                return;
+            }
+        }
+        char c = key.charAt(d);
+        sb.append(c);
+        getEntirePrefixWithValue(x.childArray[c-'a'],key,item,sb,d+1);
+
+    }
+
+     /*
+
+     Method used for Word Abbreviation problem
+
+     */
+
+    public void putWithFrequency(String key,Item item) {
+        if(item==null) {
+            delete(key);
+        } else {
+            root = putWithFrequency(root,key,0,item);
+        }
+    }
+
+    private Node putWithFrequency(Node x,String key,int d,Item item) {
+        boolean wasPresent = true;
+        if(x==null) {
+            wasPresent = false;
+            x=new Node();
+            x.value = item;
+        } else if(x!=root) {
+            Integer value = (Integer) x.value;
+            value++;
+            x.value = value;
+        }
+        if(d==key.length()) {
+            if(!wasPresent) {
+                size++;
+            }
+            x.value = item;
+            return x;
+        }
+        char c = key.charAt(d);
+        x.childArray[c-'a'] = putWithFrequency(x.childArray[c-'a'],key,d+1,item);
+        return x;
+
+    }
+
     public void put(String key,Item item) {
         if (item==null) {
             delete(key);
