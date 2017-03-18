@@ -48,9 +48,15 @@ public class RegularExpression {
                     //Consider zero occurrences of character before *
                     dp[i][j] = dp[i][j-2];
                     /*
-                    Consider atleast one occurance of character before *
+                    Consider atleast one occurrence of character before *
                     p.charAt(j-2)=='.' for cases like .*
                     s.charAt(i-1)==p.charAt(j-2) for cases like s=xaa && p=xa*
+
+                        xa*
+                       x
+                       a
+                     When we consider one occurrence of a, rihjt before * char matches a in text
+                     so we get rid of the a in text and check if x and xa* match
                      */
                     if(p.charAt(j-2)=='.' || s.charAt(i-1)==p.charAt(j-2)) {
                         dp[i][j] = dp[i][j] || dp[i-1][j];

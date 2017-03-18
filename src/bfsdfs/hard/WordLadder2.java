@@ -102,6 +102,7 @@ public class WordLadder2 {
         Queue<Word> queue = new LinkedList<>();
         queue.add(new Word(beginWord,null,0));
 
+        //The shortest reach value is stored here
         int firstReach = -1;
         //Once a word is used , it should not be used again
         HashSet<String> usedWords = new HashSet<>();
@@ -145,9 +146,9 @@ public class WordLadder2 {
                 if(usedWords.contains(oneStepWords)) {
                     continue;
                 }
-                List<String> childList = new ArrayList<>(list);
-                childList.add(current.value);
-                Word newWord = new Word(oneStepWords,childList,current.level+1);
+                List<String> parentList = new ArrayList<>(list);
+                parentList.add(current.value);
+                Word newWord = new Word(oneStepWords,parentList,current.level+1);
                 queue.add(newWord);
             }
 
