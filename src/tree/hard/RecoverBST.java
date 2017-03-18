@@ -18,18 +18,15 @@ import tree.TreeNode;
  */
 public class RecoverBST {
 
-    private static TreeNode first,previous,last;
-
+    private static TreeNode first,previous,last,middle;
     public void recoverTree(TreeNode root) {
-        first=last=previous=null;
+        first=last=previous=middle=null;
 
         correctTreeUtil(root);
-
-
         if (first != null && last != null) {
             swap(first, last);
-        } else if (first != null && previous != null) {
-            swap(first, previous);
+        } else if (first != null && middle != null) {
+            swap(first, middle);
         }
 
 
@@ -53,7 +50,7 @@ public class RecoverBST {
 
                 if (first == null) {
                     first = previous;
-                    previous = root;
+                    middle = root;
                     System.out.println();
                 } else {
                     last = root;
