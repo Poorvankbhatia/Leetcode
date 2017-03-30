@@ -10,7 +10,7 @@ You may assume no duplicate exists in the array.
 
 
  */
-package binarysearch.hard;
+package binarysearch.medium;
 
 /**
  * Created by poorvank on 13/10/16.
