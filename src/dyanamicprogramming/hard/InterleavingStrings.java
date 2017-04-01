@@ -44,11 +44,15 @@ public class InterleavingStrings {
         for (int i=1;i<=s1.length();i++) {
             for (int j=1;j<=s2.length();j++) {
 
-                if(s3.charAt(i+j-1)!=s1.charAt(i-1) && s3.charAt(i+j-1)==s2.charAt(j-1)) {
+                char s1Char = s1.charAt(i-1);
+                char s2Char = s2.charAt(j-1);
+                char s3Char = s3.charAt(i+j-1);
+
+                if(s3Char!=s1Char && s3Char==s2Char) {
                     dpTable[i][j] = dpTable[i][j-1];
-                } else if(s3.charAt(i+j-1)==s1.charAt(i-1) && s3.charAt(i+j-1)!=s2.charAt(j-1)) {
+                } else if(s3Char==s1Char && s3Char!=s2Char) {
                     dpTable[i][j] = dpTable[i-1][j];
-                } else if(s3.charAt(i+j-1)==s1.charAt(i-1) && s3.charAt(i+j-1)==s2.charAt(j-1)) {
+                } else if(s3Char==s1Char && s3Char==s2Char) {
                     dpTable[i][j] = dpTable[i-1][j] || dpTable[i][j-1];
                 }
 
@@ -61,7 +65,7 @@ public class InterleavingStrings {
     }
 
     public static void main(String[] args) {
-        System.out.println(new InterleavingStrings().isInterleave("db","c","aabb"));
+        System.out.println(new InterleavingStrings().isInterleave("aa","ab","aaba"));
     }
 
 }
