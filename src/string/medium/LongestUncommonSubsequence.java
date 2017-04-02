@@ -39,15 +39,15 @@ public class LongestUncommonSubsequence {
 
         int maxlen = -1;
         for (int i = 0; i < n; i++) {
-            boolean uniq = true;
+            boolean unique = true;
             for (int j = 0; j < n; j++) {
                 if (i != j && isSubSequence(strs[i].toCharArray(), strs[j].toCharArray())) {
-                    uniq = false;
+                    unique = false;
                     break;
                 }
             }
-            if (uniq) {
-                maxlen = Math.max(maxlen, (int)strs[i].length());
+            if (unique) {
+                maxlen = Math.max(maxlen,strs[i].length());
             }
         }
 
@@ -55,6 +55,7 @@ public class LongestUncommonSubsequence {
 
     }
 
+    // Check if str1 is a subsequence of str 2
     private boolean isSubSequence(char str1[], char str2[]) {
         int j = 0;
         int m = str1.length;
