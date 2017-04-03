@@ -21,46 +21,34 @@ package dyanamicprogramming.medium;
  */
 public class DecodeWays {
 
-    public int numDecodings(String s) {
 
-        if(s.length()==0) {
+    public int numDecodings(String s) {
+        if(s == null || s.length() == 0) {
             return 0;
         }
-        if(s.length()==1) {
-            if(s.charAt(0)>'0') {
-                return 1;
-            } else {
-                return 0;
+        int n = s.length();
+        int[] dp = new int[n+1];
+        // Empty string can be decoded in one way.
+        dp[0] = 1;
+        dp[1] = s.charAt(0) != '0' ? 1 : 0;
+        for(int i = 2; i <= n; i++) {
+            int first = Integer.valueOf(s.substring(i-1, i));
+            int second = Integer.valueOf(s.substring(i-2, i));
+            // If the last digit is non-zero, recur for remaining (n-1) digits and add the result to total count.
+            if(first >= 1 && first <= 9) {
+                dp[i] += dp[i-1];
             }
-        }
-
-        int size = s.length();
-        int[] dp = new int[size+1];
-
-        //dp[i] indicates number of possible decodings for the ith character of the string
-        dp[0] = s.charAt(0)=='0'?0:1;
-        dp[1] = dp[0];
-
-        for (int i=2;i<=size;i++) {
-
-            dp[i] = 0;
-
-            if(s.charAt(i-1)>'0') {
-                dp[i] = dp[i-1];
-            }
-
-            if(/*for handling cases like 100*/(s.charAt(i-2)<'2' && s.charAt(i-2)>'0') || (s.charAt(i-2)=='2' && s.charAt(i-1)<'7')) {
+            //If the last two digits form a valid character (or smaller than 27), recur for remaining (n-2)
+            if(second >= 10 && second <= 26) {
                 dp[i] += dp[i-2];
             }
-
         }
-
-        return dp[size];
-
+        return dp[n];
     }
 
+
     public static void main(String[] args) {
-        System.out.println(new DecodeWays().numDecodings("122"));
+        System.out.println(new DecodeWays().numDecodings("100"));
     }
 
 }
