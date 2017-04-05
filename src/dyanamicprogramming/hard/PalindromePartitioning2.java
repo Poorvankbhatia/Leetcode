@@ -53,6 +53,7 @@ public class PalindromePartitioning2 {
             } else {
                 cut[i] = Integer.MAX_VALUE;
                 for (int j=0;j<i;j++) {
+                    //check if [j+1..i] is a palindrome.
                     if(isPalindrome[j+1][i] && cut[j]+1<cut[i]) {
                         cut[i] = cut[j]+1;
                     }

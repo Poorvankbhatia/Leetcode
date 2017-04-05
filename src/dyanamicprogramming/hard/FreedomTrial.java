@@ -81,6 +81,12 @@ public class FreedomTrial {
 
     }
 
+    public static void main(String[] args) {
+        String ring = "godding";
+        String key = "ding";
+        System.out.print(new FreedomTrial().findRotateSteps(ring,key));
+    }
+
 }
 
 /*
