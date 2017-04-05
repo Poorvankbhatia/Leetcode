@@ -53,6 +53,8 @@ public class LongestPalindromicSubSequence {
                     /*
                         If corner characters are not equal then longest palindromic sub sequence will be Max of
                         Removing of 1 character from end, or removing both the corner characters.
+                        dp[i+1][j] - > removing first character
+                        dp[i][j-1] - > removing last character
                      */
                     dp[i][j] = Math.max(Math.max(dp[i][j-1],dp[i+1][j]),1);
                 }

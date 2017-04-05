@@ -41,9 +41,9 @@ public class CoinChange {
         }
 
         for (int amountReq = 1;amountReq<=amount;amountReq++) {
-            for (int coinIndex=0;coinIndex<coins.length;coinIndex++) {
-                if(coins[coinIndex]<=amountReq) {
-                    dp[amountReq] = Math.min(dp[amountReq],dp[amountReq-coins[coinIndex]]+1);
+            for (int coin : coins) {
+                if (coin <= amountReq) {
+                    dp[amountReq] = Math.min(dp[amountReq], dp[amountReq - coin] + 1);
                 }
             }
         }

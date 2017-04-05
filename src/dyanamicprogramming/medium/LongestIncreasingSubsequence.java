@@ -70,7 +70,9 @@ public class LongestIncreasingSubsequence {
 
         for (int i = 1; i < nums.length; i++) {
             int pos = binarySearch(dp,len,nums[i]);
-            if (nums[i] < dp[pos]) dp[pos] = nums[i];
+            if (nums[i] < dp[pos]) {
+                dp[pos] = nums[i];
+            }
             if (pos > len) {
                 len = pos;
                 dp[len] = nums[i];
