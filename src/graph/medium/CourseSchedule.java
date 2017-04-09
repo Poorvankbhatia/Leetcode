@@ -17,7 +17,7 @@ There are a total of 2 courses to take. To take course 1 you should have finishe
 
 
  */
-package greedy.medium;
+package graph.medium;
 
 import java.util.*;
 

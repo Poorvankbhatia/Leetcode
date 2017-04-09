@@ -19,7 +19,7 @@ after you finished course 0. So one correct course order is [0,1,2,3]. Another c
 
  */
 
-package greedy.medium;
+package graph.medium;
 
 import java.util.*;
 
