@@ -75,6 +75,8 @@ public class CountNodes {
 
     public static void main(String[] args) {
         TreeNode root = new TreeNode(1);
+        root.left = new TreeNode(1);
+        root.right = new TreeNode(2);
         System.out.println(new CountNodes().countNodes(root));
     }
 
@@ -83,7 +85,7 @@ public class CountNodes {
 /*
 
 In a complete binary tree of height 'h' there can be [2^(h-1) to  2^(h) - 1] nodes.
- A complete binary tree can have 2^h minimum number nodes or 2^(h-1)-1 maximum number of nodes. (where tree with 1 node has height 1)
+ A complete binary tree can have 2^(h-1) minimum number nodes or 2^(h)-1 maximum number of nodes. (where tree with 1 node has height 1)
 
 If the height of the leftmost tree & right most tree is same. height is (2)^h -1;
 Else
