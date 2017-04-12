@@ -69,19 +69,19 @@ public class LongestConsecutivePath2 {
 
         if (left != null) {
             if (node.val - left.node.val == 1) {
-                current.increasing = Math.max(current.increasing, left.increasing + 1);
+                current.decreasing = Math.max(current.decreasing, left.decreasing + 1);
             }
             else if (left.node.val - node.val == 1) {
-                current.decreasing = Math.max(current.decreasing, left.decreasing + 1);
+                current.increasing = Math.max(current.increasing, left.increasing + 1);
             }
         }
 
         if (right != null) {
             if (node.val - right.node.val == 1) {
-                current.increasing = Math.max(current.increasing, right.increasing + 1);
+                current.decreasing = Math.max(current.decreasing, right.decreasing + 1);
             }
             else if (right.node.val - node.val == 1) {
-                current.decreasing = Math.max(current.decreasing, right.decreasing + 1);
+                current.increasing = Math.max(current.increasing, right.increasing + 1);
             }
         }
 

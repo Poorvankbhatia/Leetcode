@@ -60,4 +60,8 @@ public class UniqueBST2 {
         return list;
     }
 
+    public static void main(String[] args) {
+        new UniqueBST2().generateTrees(3);
+    }
+
 }

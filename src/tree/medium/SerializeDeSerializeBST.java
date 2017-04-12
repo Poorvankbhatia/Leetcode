@@ -40,7 +40,7 @@ public class SerializeDeSerializeBST {
         while (!stack.isEmpty()) {
 
             TreeNode popVal = stack.pop();
-            result.append(popVal.val+"_");
+            result.append(popVal.val).append("_");
 
             if(popVal.right!=null) {
                 stack.push(popVal.right);
