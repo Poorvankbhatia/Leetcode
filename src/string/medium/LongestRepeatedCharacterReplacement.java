@@ -80,14 +80,14 @@ public class LongestRepeatedCharacterReplacement {
     }
 
     public static void main(String[] args) {
-        System.out.println(new LongestRepeatedCharacterReplacement().characterReplacement("ABAA",0));
+        System.out.println(new LongestRepeatedCharacterReplacement().characterReplacement("AB",1));
     }
 
 }
 
 /*
 
-The problem is similar to longest substring with most K distinct characte. But this time, the constraint is we can only have
+The problem is similar to longest substring with most K distinct characters. But this time, the constraint is we can only have
  most K characters that is different with the most frequent character in the substring. For example in the sliding window:
 "ABBBAC" most frequent character is B with count 3, all other character is count as different to B,
     which is A and C, and the result is 2 + 1 = 3.
