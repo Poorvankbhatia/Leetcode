@@ -16,7 +16,7 @@ public class Atoi {
             return 0;
         }
 
-        str.trim();
+        str=str.trim();
 
         boolean negative = false;
 
