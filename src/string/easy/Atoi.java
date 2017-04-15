@@ -49,4 +49,9 @@ public class Atoi {
 
     }
 
+    public static void main(String[] args) {
+        String s = "98765456789098765";
+        System.out.println(new Atoi().myAtoi(s));
+    }
+
 }

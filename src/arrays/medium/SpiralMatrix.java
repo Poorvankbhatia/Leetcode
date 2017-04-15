@@ -55,11 +55,11 @@ public class SpiralMatrix {
 
     private void printTopRight(int[][] matrix,int x1,int y1,int x2,int y2,List<Integer> list) {
 
-        for (int j=x1;j<=y2;j++) {
+        for (int j=y1;j<=y2;j++) {
             list.add(matrix[x1][j]);
         }
 
-        for (int i=y1+1;i<=x2;i++) {
+        for (int i=x1+1;i<=x2;i++) {
             list.add(matrix[i][y2]);
         }
 

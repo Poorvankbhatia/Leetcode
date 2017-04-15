@@ -40,11 +40,11 @@ public class SpiralMatrix2 {
 
     private void fillTopRight(int[][] arr,int x1,int y1,int x2,int y2,int currentElement,int lastElement) {
 
-        for (int j=x1;j<=y2 && (currentElement<=lastElement);j++) {
+        for (int j=y1;j<=y2 && (currentElement<=lastElement);j++) {
             arr[x1][j] = currentElement++;
         }
 
-        for (int i=y1+1;i<=x2 && (currentElement<=lastElement);i++) {
+        for (int i=x1+1;i<=x2 && (currentElement<=lastElement);i++) {
             arr[i][y2] = currentElement++;
         }
 
@@ -71,7 +71,7 @@ public class SpiralMatrix2 {
     }
 
     public static void main(String[] args) {
-        int n = 5;
+        int n = 6;
         int[][] arr = new SpiralMatrix2().generateMatrix(n);
 
         for (int i=0;i<n;i++) {
