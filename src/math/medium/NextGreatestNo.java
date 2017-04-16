@@ -79,6 +79,6 @@ public class NextGreatestNo {
     }
 
     public static void main(String[] args) {
-        System.out.println(new NextGreatestNo().nextGreaterElement(12443322));
+        System.out.println(new NextGreatestNo().nextGreaterElement(1235942));
     }
 }

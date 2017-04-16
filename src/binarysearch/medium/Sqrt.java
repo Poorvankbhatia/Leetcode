@@ -5,58 +5,24 @@ package binarysearch.medium;
  */
 public class Sqrt {
 
-    public int mySqrt(int num) {
+    public int mySqrt(int x) {
 
-        if(num==1 || num==0) {
-            return num;
-        }
-
-        int end,start = 1;
-        int startSquare = 1;
-        int prevStart = 1;
-
-        while (startSquare<num && startSquare>0) {
-            prevStart = start;
-
-            if(startSquare<num) {
-                start = start*2;
-            }
-            startSquare = start*start;
-            if(startSquare==num) {
-                return start;
-            }
-        }
-
-        end = start;
-        start = prevStart;
-
-        int sqrt=1;
-        while (end-1>start) {
-
-            int mid = start + (end-start)/2;
-            int midSquare = (mid*mid);
-            if(midSquare==num) {
-                sqrt = mid;
-                break;
-                // In case the number square causes stackoverflow
-            } else if(midSquare>num || midSquare<0) {
-                //Just to handle conditin in case of non perfect squares
-                sqrt = mid-1;
-                end = mid;
+        if (0 == x) return 0;
+        int left = 1, right = x, ans=0;
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            if (mid <= x / mid) { // instead of (mid*mid <= x)  use (mid <= x / mid)
+                left = mid + 1;
+                ans = mid;
             } else {
-                start = mid;
-                sqrt = mid;
+                right = mid - 1;
             }
-
         }
-
-
-        return sqrt;
-
+        return ans;
     }
 
     public static void main(String[] args) {
-        System.out.println(new Sqrt().mySqrt(169));
+        System.out.println(new Sqrt().mySqrt(16765439));
     }
 
 }
