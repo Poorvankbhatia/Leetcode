@@ -53,7 +53,7 @@ public class WordLadder {
         fillMap(set,map);
 
         Queue<Cell> queue = new LinkedList<>();
-        queue.add(new Cell(beginWord,0));
+        queue.add(new Cell(beginWord,1));
         Set<String> usedWords = new HashSet<>();
 
         while (!queue.isEmpty()) {
@@ -61,7 +61,7 @@ public class WordLadder {
             Cell current = queue.poll();
 
             if(current.val.equals(endWord)) {
-                return current.level+1;
+                return current.level;
             }
 
             if(usedWords.contains(current.val)) {
@@ -102,15 +102,10 @@ public class WordLadder {
 
                     String newWord = new String(arr);
                     if(!newWord.equals(word) && wordList.contains(newWord)) {
-                        List<String> list;
-                        if(map.containsKey(word)) {
-                            list = map.get(word);
-                            list.add(newWord);
-                        } else {
-                            list = new ArrayList<>();
-                            list.add(newWord);
+                        if(!map.containsKey(word)) {
+                            map.put(word,new ArrayList<>());
                         }
-                        map.put(word,list);
+                        map.get(word).add(newWord);
                     }
 
                     arr[i] = temp;

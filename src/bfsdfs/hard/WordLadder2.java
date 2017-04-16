@@ -47,16 +47,22 @@ public class WordLadder2 {
         }
     }
 
-    public List<List<String>> findLadders(String beginWord, String endWord, Set<String> wordList) {
+    public List<List<String>> findLadders(String beginWord, String endWord, List<String> wordList) {
 
         List<List<String>> result = new ArrayList<>();
 
         HashMap<String,List<String>> wordMap = new HashMap<>();
 
+        Set<String> set = new HashSet<>(wordList);
+
+        if(!set.contains(beginWord)) {
+            set.add(beginWord);
+        }
+
         /*
             Preprocess entire list to find words which are only one character away.
          */
-        for (String word : wordList) {
+        for (String word : set) {
 
             for (int i = 0; i < word.length(); i++) {
                 char[] arr = word.toCharArray();
@@ -70,7 +76,7 @@ public class WordLadder2 {
                     if (str.equals(word)) {
                         continue;
                     }
-                    if (wordList.contains(str)) {
+                    if (set.contains(str)) {
                         if (wordMap.containsKey(word)) {
                             wordMap.get(word).add(str);
                         } else {
@@ -86,7 +92,7 @@ public class WordLadder2 {
             }
 
         }
-        ladderUtil(beginWord,endWord,wordList,result,wordMap);
+        ladderUtil(beginWord,endWord,set,result,wordMap);
         return result;
 
     }
@@ -100,7 +106,7 @@ public class WordLadder2 {
             wordList.add(endWord);
         }
         Queue<Word> queue = new LinkedList<>();
-        queue.add(new Word(beginWord,null,0));
+        queue.add(new Word(beginWord,null,1));
 
         //The shortest reach value is stored here
         int firstReach = -1;
@@ -123,9 +129,9 @@ public class WordLadder2 {
                 finalList.add(current.value);
                 if(firstReach==-1) {
                     result.add(finalList);
-                    firstReach = current.level;
+                    firstReach = current.level+1;
                 } else {
-                    if(current.level==firstReach) {
+                    if(current.level+1==firstReach) {
                         result.add(new ArrayList<>(finalList));
                     }
                 }
@@ -157,14 +163,14 @@ public class WordLadder2 {
 
     }
 
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
 
         String beginWord =  "red";
         String endWord =  "tax";
         Set<String> set = new HashSet<>(Arrays.asList("ted","tex","red","tax","tad","den","rex","pee"));
         WordLadder2 wl = new WordLadder2();
         System.out.println(wl.findLadders(beginWord,endWord,set));
-    }
+    }*/
 
 }
 
