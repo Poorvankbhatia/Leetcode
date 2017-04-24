@@ -63,8 +63,16 @@ public class ClosestPalindrome {
     }
 
     public static void main(String[] args) {
-        String s = "123";
+        String s = "100";
         System.out.println(new ClosestPalindrome().nearestPalindromic(s));
     }
 
 }
+
+/*
+
+We first need to find the higher palindrome and lower palidrome respectively. and return the one who has the least different with the input number.
+For the higher palindrome, the low limit is number + 1 while for the lower palindrome, the high limit is number - 1.
+
+
+ */
