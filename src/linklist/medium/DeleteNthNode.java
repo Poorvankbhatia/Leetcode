@@ -1,4 +1,4 @@
-package linklist;/*
+package linklist.medium;/*
 
 Given a linked list, remove the nth node from the end of list and return its head.
 
@@ -12,6 +12,8 @@ Given n will always be valid.
 Try to do this in one pass.
 
  */
+
+import linklist.ListNode;
 
 /**
  * Created by poorvank.b on 25/11/16.

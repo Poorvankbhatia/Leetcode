@@ -4,8 +4,9 @@ Given a singly linked list where elements are sorted in ascending order, convert
 
  */
 
-package linklist;
+package linklist.medium;
 
+import linklist.ListNode;
 import tree.TreeNode;
 
 /**

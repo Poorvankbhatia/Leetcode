@@ -1,4 +1,4 @@
-package linklist;
+package linklist.easy;
 
 /**
  * Created by poorvank.b on 01/12/16.

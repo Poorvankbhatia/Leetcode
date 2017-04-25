@@ -21,7 +21,7 @@ You may assume there are no cycles anywhere in the entire linked structure.
 Your code should preferably run in O(n) time and use only O(1) memory.
 
  */
-package linklist;
+package linklist.easy;
 
 /**
  * Created by poorvank on 24/02/17.
