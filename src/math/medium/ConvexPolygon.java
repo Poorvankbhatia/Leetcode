@@ -78,3 +78,29 @@ public class ConvexPolygon {
     }
 
 }
+
+/*
+
+Geometrically the cross product produces a vector that is orthogonal to the two vectors used for the calculation,
+as both of your vectors lie in the XY plane the result will only have a Z component.
+The Sign of that z component denotes wether that vector is looking up or down on the XY plane.
+That sign is dependend on AB being in clockwise or counter clockwise order from each other.
+That in turn means that the sign of z component shows you if the point you are looking at lies to the left or the right of the line that is on AB.
+
+So with the crossproduct of two vectors A and B being the vector
+
+AxB = (AyBz − AzBy, AzBx − AxBz, AxBy − AyBx)
+with Az and Bz being zero you are left with the third component of that vector
+
+AxBy - AyBx
+With A being the vector from point a to b, and B being the vector from point a to c means
+
+Ax = (b[x]-a[x])
+Ay = (b[y]-a[y])
+Bx = (c[x]-a[x])
+By = (c[y]-a[y])
+giving
+
+AxBy - AyBx = (b[x]-a[x])*(c[y]-a[y])-(b[y]-a[y])*(c[x]-a[x])
+
+ */
