@@ -13,7 +13,7 @@ Try to do this in one pass.
 
  */
 
-import linklist.ListNode;
+import linklist.easy.ListNode;
 
 /**
  * Created by poorvank.b on 25/11/16.
