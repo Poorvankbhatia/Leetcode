@@ -34,6 +34,7 @@ public class CircularLoop {
 
         for (int i=0;i<size;i++) {
             int slow = i;
+            //+ size is being done in case the first element is itself negative, hence not adding will make fast also negative
             int fast = (((slow+nums[slow])%size)+size)%size;
             boolean direction = (nums[slow] > 0);
 
@@ -52,6 +53,7 @@ public class CircularLoop {
                 slow = ((slow+nums[slow])%size+size)%size;
                 fast = ((fast+nums[fast])%size+size)%size;
 
+                // if we meet element with different directions, then the search fail
                 if(nums[fast] > 0 != direction)
                     break;
                 fast = ((fast+nums[fast])%size+size)%size;
@@ -59,7 +61,7 @@ public class CircularLoop {
             }
 
             // avoid the circle index is circle itself
-            if(fast == slow && fast != ((fast+nums[fast])%size+size)%size)
+            if(fast == slow && fast != ((fast+nums[fast])%size+size)%size )
                 return true;
             //set the current index as has been checked
             nums[i] = 0;
@@ -67,6 +69,12 @@ public class CircularLoop {
         }
 
         return false;
+    }
+
+
+    public static void main(String[] args) {
+        int[] arr = {3,1,2};
+        System.out.println(new CircularLoop().circularArrayLoop(arr));
     }
 
 
