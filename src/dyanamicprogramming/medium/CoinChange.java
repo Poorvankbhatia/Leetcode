@@ -62,8 +62,15 @@ public class CoinChange {
 
 /*
 
-Time complexity : O(S*n)O(S∗n). On each step the algorithm finds the next F(i) in n iterations,
-where 1<=i<=S Therefore in total the iterations are S*nS∗n.
+F(S) - minimum number of coins needed to make change for amount S using coin denominations [c0…c​n−1]
+
+ F(3)=min{F(3−c1),F(3−c2),F(3−c3)}+1
+       =min{F(3−1),F(3−2),F(3−3)}+1
+       =min{F(2),F(1),F(0)}+1
+       =min{1,1,0}+1=1
+
+Time complexity : O(S*n). On each step the algorithm finds the next F(i) in n iterations,
+where 1<=i<=S Therefore in total the iterations are S*n
 Space complexity : O(S) We use extra space for the memoization table.
 
 DO READ: https://leetcode.com/articles/coin-change/
