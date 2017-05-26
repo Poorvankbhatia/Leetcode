@@ -33,7 +33,7 @@ public class FileSystem {
 
     class File {
         boolean isFile = false;
-        Map<String, File> children = new HashMap<>();
+        Map<String, File> childFolders = new HashMap<>();
         String content = "";
     }
 
@@ -44,16 +44,16 @@ public class FileSystem {
     }
 
     public List<String> ls(String path) {
-        String[] dirs = path.split("/");
+        String[] directory = path.split("/");
         File node = root;
         List<String> result = new ArrayList<>();
         String name = "";
-        for (String dir : dirs) {
+        for (String dir : directory) {
             if (dir.length() == 0) continue;
-            if (!node.children.containsKey(dir)) {
+            if (!node.childFolders.containsKey(dir)) {
                 return result;
             }
-            node = node.children.get(dir);
+            node = node.childFolders.get(dir);
             name = dir;
         }
 
@@ -61,11 +61,12 @@ public class FileSystem {
             result.add(name);
         }
         else {
-            for (String key : node.children.keySet()) {
+            for (String key : node.childFolders.keySet()) {
                 result.add(key);
             }
         }
 
+        // For Lexicographic sorting
         Collections.sort(result);
 
         return result;
@@ -76,11 +77,11 @@ public class FileSystem {
         File node = root;
         for (String dir : dirs) {
             if (dir.length() == 0) continue;
-            if (!node.children.containsKey(dir)) {
+            if (!node.childFolders.containsKey(dir)) {
                 File file = new File();
-                node.children.put(dir, file);
+                node.childFolders.put(dir, file);
             }
-            node = node.children.get(dir);
+            node = node.childFolders.get(dir);
         }
     }
 
@@ -89,11 +90,11 @@ public class FileSystem {
         File node = root;
         for (String dir : dirs) {
             if (dir.length() == 0) continue;
-            if (!node.children.containsKey(dir)) {
+            if (!node.childFolders.containsKey(dir)) {
                 File file = new File();
-                node.children.put(dir, file);
+                node.childFolders.put(dir, file);
             }
-            node = node.children.get(dir);
+            node = node.childFolders.get(dir);
         }
         node.isFile = true;
         node.content += content;
@@ -104,11 +105,11 @@ public class FileSystem {
         File node = root;
         for (String dir : dirs) {
             if (dir.length() == 0) continue;
-            if (!node.children.containsKey(dir)) {
+            if (!node.childFolders.containsKey(dir)) {
                 File file = new File();
-                node.children.put(dir, file);
+                node.childFolders.put(dir, file);
             }
-            node = node.children.get(dir);
+            node = node.childFolders.get(dir);
         }
 
         return node.content;
