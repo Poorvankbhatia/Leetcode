@@ -26,7 +26,7 @@ package dyanamicprogramming.hard;
  */
 public class StudentAttendanceRecord2 {
 
-    int mod = 1000000007;
+    private int mod = 1000000007;
 
     public int checkRecord(int n) {
 
@@ -83,9 +83,9 @@ public class StudentAttendanceRecord2 {
             /*
             For an attendance record with length n - 1,
 
-            If its (n - 1)th charactor is 'P' ---- CAN add 'P'. ("PP")
-            If its (n - 1)th charactor is 'A' ---- CAN add 'P'. ("AP")
-            If its (n - 1)th charactor is 'L' ---- CAN add 'P'. ("LP")
+            If its (n - 1)th character is 'P' ---- CAN add 'P'. ("PP")
+            If its (n - 1)th character is 'A' ---- CAN add 'P'. ("AP")
+            If its (n - 1)th character is 'L' ---- CAN add 'P'. ("LP")
             which means
             endsWithP(n) = endsWithP(n - 1) + endsWithA(n - 1) + endsWithL(n - 1), n ≥ 2.
              */
@@ -93,13 +93,13 @@ public class StudentAttendanceRecord2 {
             endsWithP[i] = ((endsWithA[i-1]+endsWithP[i-1])%mod+endsWithL[i-1])%mod;
 
             /*
-                If its (n - 1)th charactor is 'P' ---- CAN add 'L'. ("PL")
-                If its (n - 1)th charactor is 'A' ---- CAN add 'L'. ("AL")
+                If its (n - 1)th character is 'P' ---- CAN add 'L'. ("PL")
+                If its (n - 1)th character is 'A' ---- CAN add 'L'. ("AL")
 
-                If its (n - 1)th charactor is 'L':
-                If its (n - 2)th charactor is 'A' ---- CAN add 'L'. ("ALL")
-                If its (n - 2)th charactor is 'P' ---- CAN add 'L'. ("PLL")
-                If its (n - 2)th charactor is 'L' ---- CAN NOT add 'L'. ("LLL" breaks the rule)
+                If its (n - 1)th character is 'L':
+                If its (n - 2)th character is 'A' ---- CAN add 'L'. ("ALL")
+                If its (n - 2)th character is 'P' ---- CAN add 'L'. ("PLL")
+                If its (n - 2)th character is 'L' ---- CAN NOT add 'L'. ("LLL" breaks the rule)
 
                 endsWithL(n) = endsWithA(n - 1) + endsWithP(n - 1) + endsWithA(n - 2) + endsWithP(n - 2), n ≥ 3
              */
@@ -110,10 +110,10 @@ public class StudentAttendanceRecord2 {
             /*
             For an attendance record with length n - 1, we can get
 
-            If its (n - 1)th charactor is 'P' and has no 'A' ---- CAN add 'L'.("PL")
-            If its (n - 1)th charactor is 'L' and has no 'A'.
-            If its (n - 2)th charactor is 'P' and has no 'A' ---- CAN add 'L'.("PLL")
-            If its (n - 2)th charactor is 'L' and has no 'A' ---- CAN NOT add 'L'.("LLL" breaks the rule.)
+            If its (n - 1)th character is 'P' and has no 'A' ---- CAN add 'L'.("PL")
+            If its (n - 1)th character is 'L' and has no 'A'.
+            If its (n - 2)th character is 'P' and has no 'A' ---- CAN add 'L'.("PLL")
+            If its (n - 2)th character is 'L' and has no 'A' ---- CAN NOT add 'L'.("LLL" breaks the rule.)
 
             endsWithLNoA(n) = endsWithPNoA(n - 1) + endsWithPNoA(n - 2), n ≥ 3.
              */
