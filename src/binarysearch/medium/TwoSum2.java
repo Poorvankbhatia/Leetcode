@@ -24,34 +24,33 @@ public class TwoSum2 {
 
         int[] result = new int[2];
 
-        for (int i=0;i<numbers.length;i++) {
-            int x = target-numbers[i];
-            if(!(x<0)) {
-                x = binarySearch(i+1,numbers.length-1,numbers,x);
-                if(x!=-1) {
-                    result[0] = i+1;
-                    result[1] = x+1;
-                }
+        for (int i = 0; i < numbers.length; i++) {
+            int x = target - numbers[i];
+
+            x = binarySearch(i + 1, numbers.length - 1, numbers, x);
+            if (x != -1) {
+                result[0] = i + 1;
+                result[1] = x + 1;
             }
+
         }
 
         return result;
 
     }
 
-    private int binarySearch(int start,int end,int[] arr,int target) {
+    private int binarySearch(int start, int end, int[] arr, int target) {
 
-        if (end>=start) {
+        if (end >= start) {
 
-            int mid = start + (end-start)/2;
+            int mid = start + (end - start) / 2;
 
-            if(arr[mid]==target) {
+            if (arr[mid] == target) {
                 return mid;
-            }
-            else if(arr[mid]<target) {
-                return binarySearch(mid+1,end,arr,target);
+            } else if (arr[mid] < target) {
+                return binarySearch(mid + 1, end, arr, target);
             } else {
-                return binarySearch(start,mid-1,arr,target);
+                return binarySearch(start, mid - 1, arr, target);
             }
 
         }
@@ -62,7 +61,7 @@ public class TwoSum2 {
 
     public static void main(String[] args) {
 
-        System.out.println(Arrays.toString(new TwoSum2().twoSum(new int[]{2, 3,4},6)));
+        System.out.println(Arrays.toString(new TwoSum2().twoSum(new int[]{-4, -2, -1, 3}, -3)));
 
     }
 
