@@ -40,12 +40,17 @@ public class TwoSum {
         Set<Integer> keys = map.keySet();
 
         for (Integer element : keys) {
-            if(map.containsKey(x-element)) {
-                int target = map.get(x-element);
-                if(target==x && map.get(target)<2) {
-                    continue;
-                }
-                return true;
+            int valueToFind = x-element;
+            // In case we have two same digits in the input array. and the sum to find is equal to their sum.
+            if(map.containsKey(valueToFind)) {
+                /*
+                    Simplified version of  :
+                    if(valueToFind==element) {
+                        return map.get(valueToFind)>1;
+                    }
+                    return true;
+                 */
+                return valueToFind != element || map.get(valueToFind) > 1;
             }
         }
 
@@ -53,6 +58,14 @@ public class TwoSum {
 
     }
 
+    public static void main(String[] args) {
+        int[] arr = {1,4,6,5,4};
+        TwoSum twoSum = new TwoSum();
+        for (int e : arr) {
+            twoSum.add(e);
+        }
+        System.out.println(twoSum.find(8));
+    }
 
 
 }
