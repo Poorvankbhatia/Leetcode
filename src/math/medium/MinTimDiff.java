@@ -11,7 +11,7 @@ The input time is legal and ranges from 00:00 to 23:59.
 
  */
 
-package math;
+package math.medium;
 
 import java.util.ArrayList;
 import java.util.Arrays;
