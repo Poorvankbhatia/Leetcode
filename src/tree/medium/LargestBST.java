@@ -17,8 +17,8 @@ public class LargestBST {
         int max;
         int min;
         boolean isBST;
-        int size;
-        int val;
+        int size; // Size of subtree
+        int val; // Size of largest BST which is subtree of current node
 
         public BSTInfo(int max, int min, boolean isBST, int size, int val) {
             this.max = max;
