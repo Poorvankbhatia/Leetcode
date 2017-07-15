@@ -93,4 +93,8 @@ so the answer should be (0 + 1)+(0 + 2)+ (0 + 1) = 4
 
 if we insert 7, the right-turning nodes are 1(0,1), 6(3,1), so answer should be (0 + 1) + (3 + 1) = 5
 
+worst time complexity is O(n^2). when processing input like n, n-1, ..., 2, 1.
+
+
+
  */
