@@ -67,6 +67,11 @@ public class CountNoSmaller {
         }
     }
 
+    public static void main(String[] args) {
+        int[] arr = new int[]{3,2,2,6,1};
+        System.out.println(new CountNoSmaller().countSmaller(arr));
+    }
+
 }
 
 /*
