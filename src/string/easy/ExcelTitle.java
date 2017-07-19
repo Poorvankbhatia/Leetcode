@@ -42,4 +42,9 @@ public class ExcelTitle {
 
     }
 
+    public static void main(String[] args) {
+        int n = 27;
+        System.out.print(new ExcelTitle().convertToTitle(n));
+    }
+
 }
