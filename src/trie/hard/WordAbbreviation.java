@@ -71,7 +71,7 @@ public class WordAbbreviation {
                 Trie<Integer> trie = new Trie<>();
                 for (Integer index : list) {
                     String s = dict.get(index);
-                    trie.putWithFrequency(s,1);
+                    trie.putWithFrequency(s);
                 }
                 for (Integer index : list) {
                     String abbreviation = trie.getAbbreviatedString(dict.get(index),1);

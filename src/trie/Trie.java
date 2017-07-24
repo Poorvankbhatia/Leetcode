@@ -90,20 +90,16 @@ public class Trie<Item> {
 
      */
 
-    public void putWithFrequency(String key,Item item) {
-        if(item==null) {
-            delete(key);
-        } else {
-            root = putWithFrequency(root,key,0,item);
-        }
+    public void putWithFrequency(String key) {
+        root = putWithFrequency(root, key, 0);
     }
 
-    private Node putWithFrequency(Node x,String key,int d,Item item) {
+    private Node putWithFrequency(Node x,String key,int d) {
         boolean wasPresent = true;
         if(x==null) {
             wasPresent = false;
             x=new Node();
-            x.value = item;
+            x.value = 1;
         } else if(x!=root) {
             Integer value = (Integer) x.value;
             value++;
@@ -113,11 +109,10 @@ public class Trie<Item> {
             if(!wasPresent) {
                 size++;
             }
-            x.value = item;
             return x;
         }
         char c = key.charAt(d);
-        x.childArray[c-'a'] = putWithFrequency(x.childArray[c-'a'],key,d+1,item);
+        x.childArray[c-'a'] = putWithFrequency(x.childArray[c-'a'],key,d+1);
         return x;
 
     }
