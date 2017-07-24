@@ -42,7 +42,7 @@ public class PalindromePairs {
         /*
 
         For every word we simply find all the words(Keys) whose prefix is that word &
-        all the words(Keys) which are the current wor prefixes
+        all the words(Keys) which are the current word prefixes
 
          */
 
