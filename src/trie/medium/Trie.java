@@ -61,7 +61,7 @@ public class Trie {
     public boolean startsWith(String prefix) {
 
         TrieNode x = get(prefix,root,0);
-        return collect(x,new StringBuilder(prefix));
+        return startsWithUtil(x);
 
     }
 
@@ -95,7 +95,7 @@ public class Trie {
     }
 
 
-    private boolean collect(TrieNode x,StringBuilder prefix) {
+    private boolean startsWithUtil(TrieNode x) {
         if(x==null) {
             return false;
         }
@@ -104,11 +104,9 @@ public class Trie {
         }
 
         for (char c='a';c<='z';c++) {
-            prefix.append(c);
-            if(collect(x.childArray[c-'a'],prefix)) {
+            if(startsWithUtil(x.childArray[c-'a'])) {
                 return true;
             }
-            prefix.deleteCharAt(prefix.length()-1);
         }
 
         return false;
