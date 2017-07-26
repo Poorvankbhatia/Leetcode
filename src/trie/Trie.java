@@ -175,6 +175,39 @@ public class Trie<Item> {
         }
     }
 
+    /*
+
+        Method used for Word Search 2 problem.
+
+     */
+
+    public boolean startsWith(String query) {
+        Node x = get(root,query,0);
+        return startsWithUtil(x);
+    }
+
+    private boolean startsWithUtil(Node x) {
+        if(x==null) {
+            return false;
+        }
+        if(x.value!=null) {
+            return true;
+        }
+        for (int c='a';c<='z';c++) {
+            if(startsWithUtil(x.childArray[c-'a'])) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /*
+
+        List Keys which are a prefix of this query/word/key.
+
+     */
+
     public List<String> allPrefixKeys(String query) {
         List<String> list = new ArrayList<>();
         collectAllPrefixKeys(root,query,new StringBuilder(),list,0);
