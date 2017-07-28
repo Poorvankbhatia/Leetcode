@@ -19,7 +19,7 @@ Return ["eat","oath"].
  */
 package trie.hard;
 
-import trie.medium.Trie;
+import trie.Trie;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,13 +31,13 @@ public class WordSearch2 {
 
     private final int[] xMove = {-1,0,1,0};
     private final int[] yMove = {0,1,0,-1};
-    Trie trie;
+    Trie<Boolean> trie;
 
     public List<String> findWords(char[][] board, String[] words) {
 
-        trie = new Trie();
+        trie = new Trie<>();
         for(String word: words) {
-            trie.insert(word);
+            trie.put(word,true);
         }
 
         int row = board.length;
@@ -62,7 +62,7 @@ public class WordSearch2 {
 
         sb.append(board[x][y]);
 
-        if(trie.search(sb.toString())) {
+        if(trie.get(sb.toString())!=null) {
             result.add(sb.toString());
             trie.delete(sb.toString());
         }
