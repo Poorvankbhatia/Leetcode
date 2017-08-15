@@ -33,6 +33,8 @@ import java.util.Map;
 /**
  * Created by poorvank.b on 15/08/17.
  */
+
+/*COPIED*/
 public class SplitArray {
 
     public boolean isPossible(int[] nums) {
