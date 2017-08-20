@@ -55,7 +55,7 @@ public class RegularExpression {
                         xa*
                        x
                        a
-                     When we consider one occurrence of a, rihjt before * char matches a in text
+                     When we consider one occurrence of a, right before * char matches a in text
                      so we get rid of the a in text and check if x and xa* match
                      */
                     if(p.charAt(j-2)=='.' || s.charAt(i-1)==p.charAt(j-2)) {
@@ -73,7 +73,7 @@ public class RegularExpression {
     }
 
     public static void main(String[] args) {
-        System.out.print(new RegularExpression().isMatch("abcccde","abc*de"));
+        System.out.print(new RegularExpression().isMatch("xa","xa*"));
     }
 
 }
