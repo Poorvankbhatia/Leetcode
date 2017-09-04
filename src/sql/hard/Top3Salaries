@@ -1,0 +1,71 @@
+/*
+
+The Employee table holds all employees. Every employee has an Id, and there is also a column for the department Id.
+
++----+-------+--------+--------------+
+| Id | Name  | Salary | DepartmentId |
++----+-------+--------+--------------+
+| 1  | Joe   | 70000  | 1            |
+| 2  | Henry | 80000  | 2            |
+| 3  | Sam   | 60000  | 2            |
+| 4  | Max   | 90000  | 1            |
+| 5  | Janet | 69000  | 1            |
+| 6  | Randy | 85000  | 1            |
++----+-------+--------+--------------+
+The Department table holds all departments of the company.
+
++----+----------+
+| Id | Name     |
++----+----------+
+| 1  | IT       |
+| 2  | Sales    |
++----+----------+
+Write a SQL query to find employees who earn the top three salaries in each of the department. For the above tables,
+ your SQL query should return the following rows.
+
++------------+----------+--------+
+| Department | Employee | Salary |
++------------+----------+--------+
+| IT         | Max      | 90000  |
+| IT         | Randy    | 85000  |
+| IT         | Joe      | 70000  |
+| Sales      | Henry    | 80000  |
+| Sales      | Sam      | 60000  |
++------------+----------+--------+
+
+ */
+
+-- Copied
+select d.Name Department, e1.Name Employee, e1.Salary
+from Employee e1
+  join Department d
+    on e1.DepartmentId = d.Id
+where 3 > (select count(distinct(e2.Salary))
+           from Employee e2
+           where e2.Salary > e1.Salary
+                 and e1.DepartmentId = e2.DepartmentId
+);
+
+/*
+
+Read about correlated sub queries here :http://beginner-sql-tutorial.com/sql-subquery.htm
+
+Now, for each row of the outer query:
+OuterDepartmentId, OuterEmployeeSalary is available to the inner query.
+The inner query will fetch all the salaries that are greater then OuterEmployeeSalary for
+department matching OuterDepartmentId and return a count of such distinct salaries
+
+This count can be 0,1 or 2
+
+if 0 -> that means there are no salaries greater then the OuterDepartmentSalary in that department.
+Hence, it is the greatest salary for that department. And outer query will include that OuterDepartmentId, OuterEmployeeSalary in the output.
+
+if 1 -> there is one salary bigger then OuterEmployeeSalary (it is the second largest salary)
+
+similarly for count 2, there are two larger salaries.
+
+Hope this helps.
+
+https://www.xaprb.com/blog/2006/12/07/how-to-select-the-firstleastmax-row-per-group-in-sql/
+
+ */
