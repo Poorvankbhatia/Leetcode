@@ -20,26 +20,27 @@ import java.util.List;
  * Created by poorvank on 01/12/16.
  */
 
-class Interval {
-    int start;
-    int end;
-
-    Interval() {
-        start = 0;
-        end = 0;
-    }
-
-    Interval(int s, int e) {
-        start = s;
-        end = e;
-    }
-
-    public String toString() {
-        return start+" "+end;
-    }
-}
 
 public class MergeIntervals {
+
+    private static class Interval {
+        int start;
+        int end;
+
+        Interval() {
+            start = 0;
+            end = 0;
+        }
+
+        Interval(int s, int e) {
+            start = s;
+            end = e;
+        }
+
+        public String toString() {
+            return start+" "+end;
+        }
+    }
 
     public List<Interval> merge(List<Interval> intervals) {
 
