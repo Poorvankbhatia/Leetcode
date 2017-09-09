@@ -61,7 +61,7 @@ number used [1 2], number added []
 can achieve 1~3
 
 Then we need to get 4 (3+1). Since nums[2]=5>4; we need to add a new number to get 4. The optimal solution is to add 4 directly.
- In this case, we could achieve maximumly 7, using [1,2,4].
+ In this case, we could achieve maximum 7, using [1,2,4].
 number used [1 2], number added [4]
 can achieve 1~7
 
@@ -76,7 +76,7 @@ number used [1 2 5 6], number added [4]
 can achieve 1~18
 
 Then we need to get 19 (18+1), Since nums[4]=20>19, we need to add a new number to get 19. The optimal solution is to add 19 directly.
- In this case, we could achieve maximumly 37.
+ In this case, we could achieve maximum 37.
 number used [1 2 5 6], number added [4 19]
 can achieve 1~37
 
