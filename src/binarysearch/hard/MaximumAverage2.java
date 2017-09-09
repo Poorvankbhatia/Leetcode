@@ -73,5 +73,7 @@ public class MaximumAverage2 {
 /*
 
 https://leetcode.com/articles/maximum-average-subarray-ii/
+ O(nlog(max_val-min_val))
+ check takes O(n) time and it is executed O(log(max_val-min_val)) times.
 
  */
