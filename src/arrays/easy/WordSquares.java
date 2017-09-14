@@ -70,7 +70,7 @@ Therefore, it is NOT a valid word square.
 
  */
 
-package arrays.Hard;
+package arrays.easy;
 
 import java.util.ArrayList;
 import java.util.List;
