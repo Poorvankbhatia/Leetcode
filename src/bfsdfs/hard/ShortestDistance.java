@@ -33,7 +33,9 @@ public class ShortestDistance {
         int m = grid.length;
         int n = grid[0].length;
 
+        // Distance array fills the distance of each "0"(house) from all the buildings
         int[][] distance = new int[m][n];
+        // Indicates if the house can be reached by all the buildings
         int[][] reach = new int[m][n];
         int numBuildings=0;
 
@@ -49,7 +51,7 @@ public class ShortestDistance {
             }
         }
 
-        // step 2: caluclate the minimum distance
+        // step 2: calculate the minimum distance
         int minDist = Integer.MAX_VALUE;
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
