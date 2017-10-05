@@ -76,3 +76,14 @@ public class ArrayNesting {
     }
 
 }
+
+/*
+Time complexity : O(n). Every element of the nums array will be considered atmost once.
+
+Without using space:
+
+Instead of making use of a separate array to keep track of the same, we can mark the visited elements in the original array nums itself.
+Since, the range of the elements can only be between 1 to 20,000, we can put a very large integer value Integer.MAX_VALUEInteger.
+MAX_VALUE at the position which has been visited. The rest process of traversals remains the same as in the last approach.
+
+ */
