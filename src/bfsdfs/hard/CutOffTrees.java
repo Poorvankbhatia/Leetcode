@@ -58,8 +58,6 @@ public class CutOffTrees {
 
         Map<Integer,Integer[]> map = new TreeMap<>();
 
-        int size = forest.size();
-
         int m = forest.size();
         int n = forest.get(0).size();
 
@@ -122,8 +120,8 @@ public class CutOffTrees {
 
     public static void main(String[] args) {
         List<Integer> list1 = Arrays.asList(1,2,0);
-        List<Integer> list2 = Arrays.asList(0,0,0);
-        List<Integer> list3 = Arrays.asList(8,6,5);
+        List<Integer> list2 = Arrays.asList(3,4,0);
+        List<Integer> list3 = Arrays.asList(7,5,6);
         List<List<Integer>> lists = new ArrayList<>();
         lists.add(list1);lists.add(list2);lists.add(list3);
         System.out.println(new CutOffTrees().cutOffTree(lists));
