@@ -38,7 +38,7 @@ public class IslandPerimeter {
 
         for (int i=0;i<rows;i++) {
             for (int j=0;j<cols;j++) {
-                if(grid[i][j]==1) {
+                if(grid[i][j]==1 && !visited[i][j]) {
                     return perimeterUtil(i,j,rows,cols,grid,visited);
                 }
             }
