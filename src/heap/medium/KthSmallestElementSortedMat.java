@@ -100,4 +100,8 @@ public class KthSmallestElementSortedMat {
 
 Time complexity  : O(n) + klog(n)
 
+Binary Search method:
+
+https://www.programcreek.com/2016/08/leetcode-kth-smallest-element-in-a-sorted-matrix-java/
+
  */
