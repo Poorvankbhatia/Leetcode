@@ -64,20 +64,58 @@ public class KthSmallestPairDifference {
         int n = nums.length;
         int count = 0;
         for (int i=0;i<n;i++) {
-            int j=i;
+            /*int j=i;
             while (j<n && nums[j]-nums[i]<=target) {
                 j++;
             }
-            count+=j-i-1;
+            count+=j-i-1;*/
+            int ceil = findCeil(nums,nums[i]+target,0,nums.length-1);
+            count+=ceil-i-1;
         }
 
+        System.out.println(count +" "+target);
         return count;
 
     }
 
+    /*
+    Returns pointer to “position of next higher number than num” if container contains 1 occurrence of num.
+    Returns pointer to “first position of next higher number than last occurrence of num” if
+    container contains multiple occurrence of num. Returns pointer to “position of next higher number than num” if container does not contain occurrence of num.
+     */
+    private int findCeil(int[] arr, int num, int low, int high) {
+
+        if (num >= arr[high]) {
+            return high+1;
+        }
+        if (num < arr[low]) {
+            return low;
+        }
+
+        int mid = low + (high - low) / 2;
+
+        if (arr[mid] <= num && arr[mid + 1] > num) {
+            return mid+1;
+        }
+
+        if(arr[mid]>num && arr[mid-1]<=num) {
+            return mid;
+        }
+
+         /* If x is greater than arr[mid], then either arr[mid + 1]
+          is ceiling of x or ceiling lies in arr[mid+1...high] */
+        else if (arr[mid] < num) {
+            return findCeil(arr, num, mid + 1, high);
+        }
+
+        return findCeil(arr, num, low, mid - 1);
+
+
+    }
+
     public static void main(String[] args) {
-        int[] arr = new int[]{1,3,4,5,9,13};
-        System.out.println(new KthSmallestPairDifference().smallestDistancePair(arr,4));
+        int[] arr = new int[]{1, 2, 3, 4};
+        System.out.println(new KthSmallestPairDifference().smallestDistancePair(arr,3));
     }
 
 }
@@ -85,5 +123,7 @@ public class KthSmallestPairDifference {
 /*
 
 O(NlogW+NlogN), where N is the length of nums, and W is equal to nums[nums.length - 1] - nums[0]
+
+O( n*logn + n*logn*logn). Sorting takes O(n*logn). After that the main binary search over low and high takes O(n*logn*logn) time because each call to the function
 
  */
