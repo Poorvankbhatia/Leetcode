@@ -52,30 +52,30 @@ public class UniqueBST {
  then for each choice of root node, there are n – 1 non-root nodes and these non-root nodes must be partitioned
  into those that are less than a chosen root and those that are greater than the chosen root.
 
-Let’s say node i is chosen to be the root. Then there are i – 1 nodes smaller than i and n – i nodes bigger than i.
+Let’s say node interval is chosen to be the root. Then there are interval – 1 nodes smaller than interval and n – interval nodes bigger than interval.
 For each of these two sets of nodes, there is a certain number of possible subtrees.
 
-Let t(n) be the total number of BSTs with n nodes. The total number of BSTs with i at the root is t(i – 1) t(n – i).
+Let t(n) be the total number of BSTs with n nodes. The total number of BSTs with interval at the root is t(interval – 1) t(n – interval).
 The two terms are multiplied together because the arrangements in the left and right subtrees are independent.
-That is, for each arrangement in the left tree and for each arrangement in the right tree, you get one BST with i at the root.
+That is, for each arrangement in the left tree and for each arrangement in the right tree, you get one BST with interval at the root.
 
-Summing over i gives the total number of binary search trees with n nodes.
+Summing over interval gives the total number of binary search trees with n nodes.
 
-t(n) = (from i=1 to n)(Sum(t(i-1)*t(n-i));
+t(n) = (from interval=1 to n)(Sum(t(interval-1)*t(n-interval));
 
 
-i=0, count[0]=1 //empty tree
+interval=0, count[0]=1 //empty tree
 
-i=1, count[1]=1 //one tree
+interval=1, count[1]=1 //one tree
 
-i=2, count[2]=count[0]*count[1] // 0 is root
+interval=2, count[2]=count[0]*count[1] // 0 is root
             + count[1]*count[0] // 1 is root
 
-i=3, count[3]=count[0]*count[2] // 1 is root
+interval=3, count[3]=count[0]*count[2] // 1 is root
             + count[1]*count[1] // 2 is root
             + count[2]*count[0] // 3 is root
 
-i=4, count[4]=count[0]*count[3] // 1 is root
+interval=4, count[4]=count[0]*count[3] // 1 is root
             + count[1]*count[2] // 2 is root
             + count[2]*count[1] // 3 is root
             + count[3]*count[0] // 4 is root
@@ -83,6 +83,6 @@ i=4, count[4]=count[0]*count[3] // 1 is root
 ..
 ..
 
-i=n, count[n] = sum(count[0..k]*count[k+1...n]) 0 <= k < n-1
+interval=n, count[n] = sum(count[0..k]*count[k+1...n]) 0 <= k < n-1
 
  */
