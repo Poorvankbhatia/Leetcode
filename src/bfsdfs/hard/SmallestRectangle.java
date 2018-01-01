@@ -77,6 +77,14 @@ public class SmallestRectangle {
         minAreaHelper(image, x + 1, y, visited);
     }
 
+    public static void main(String[] args) {
+        char[][] arr = new char[][] {
+                {'0','0','1','0'},
+                {'0','1','1','0'}
+        };
+        System.out.println(new SmallestRectangle().minArea(arr,0,2));
+    }
+
 }
 
 /*

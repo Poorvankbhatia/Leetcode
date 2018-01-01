@@ -68,7 +68,7 @@ public class ShortestDistance {
 
     private void shortestDistance(int[][] distance,int x,int y,int[][] reach,Queue<Integer> queue,int currentDistance,boolean[][] visited,int[][] grid) {
 
-        fill(distance,x, y, x, y,visited,queue, currentDistance, reach,grid);
+        fill(distance,x, x, y, y,visited,queue, currentDistance, reach,grid);
 
         int m = grid.length;
         int n = grid[0].length;
@@ -81,10 +81,10 @@ public class ShortestDistance {
                 int i = cord / n;
                 int j = cord % n;
 
-                fill(distance,x, y, i - 1, j, visited, queue, currentDistance, reach,grid);
-                fill(distance,x, y, i + 1, j, visited, queue, currentDistance, reach,grid);
-                fill(distance,x, y, i, j-1, visited, queue, currentDistance, reach,grid);
-                fill(distance,x, y, i, j+1, visited, queue, currentDistance, reach,grid);
+                fill(distance,i - 1,x, y, j, visited, queue, currentDistance, reach,grid);
+                fill(distance,i + 1,x, y, j, visited, queue, currentDistance, reach,grid);
+                fill(distance,i ,x, y,  j-1, visited, queue, currentDistance, reach,grid);
+                fill(distance,i, x, y, j+1, visited, queue, currentDistance, reach,grid);
             }
         }
 

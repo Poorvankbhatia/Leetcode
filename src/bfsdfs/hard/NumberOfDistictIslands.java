@@ -52,7 +52,6 @@ public class NumberOfDistictIslands {
         int m = grid.length;
         int n = grid[0].length;
         boolean[][] visited = new boolean[m][n];
-        int count=0;
 
         for (int i=0;i<m;i++) {
             for (int j=0;j<n;j++) {
