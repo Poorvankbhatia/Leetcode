@@ -73,7 +73,7 @@ public class CutOffTrees {
         Integer[] currentCoordinate = new Integer[]{0,0};
         for(Integer key : map.keySet()) {
             boolean[][] visited=new boolean[m][n];
-            int steps = minStepsRequired(map,currentCoordinate,map.get(key),visited,m,n,forest);
+            int steps = minStepsRequired(currentCoordinate,map.get(key),visited,m,n,forest);
             if(steps==-1) {
                 return -1;
             }
@@ -86,7 +86,7 @@ public class CutOffTrees {
 
     }
 
-    private int minStepsRequired(Map<Integer,Integer[]> map,Integer[] currentCoordinate,Integer[] finalCoordinate,boolean[][] visited,
+    private int minStepsRequired(Integer[] currentCoordinate,Integer[] finalCoordinate,boolean[][] visited,
                                  int m,int n,List<List<Integer>> forest) {
 
         Queue<Integer[]> queue = new LinkedList<>();
