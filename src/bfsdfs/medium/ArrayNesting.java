@@ -50,7 +50,7 @@ public class ArrayNesting {
              If visited before then the it must be less than the one which is already calculated.
              */
             if(!visited[i]) {
-                max = Math.max(dfs(i,i,nums,false,0,visited),max);
+                max = Math.max(dfs(nums,i,visited),max);
             }
         }
 
@@ -58,16 +58,14 @@ public class ArrayNesting {
 
     }
 
-    private int dfs(int start,int current,int[] nums,boolean flag,int count,boolean[] visited) {
-
-       visited[current] = true;
-
-        if(start==current && flag) {
-            return count;
+    private int dfs(int[] nums, int start, boolean[] visited) {
+        int i = start, count = 0;
+        while (count == 0 || i != start) {
+            visited[i] = true;
+            i = nums[i];
+            count++;
         }
-
-        return dfs(start,nums[current],nums,true,count+1,visited);
-
+        return count;
     }
 
     public static void main(String[] args) {
