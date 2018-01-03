@@ -24,9 +24,8 @@ package bfsdfs.medium;
  */
 public class SurroundedRegions {
 
-    //TODO
-   /* private int[] xMove = new int[]{0,1,-1,0};
-    private int[] yMOve = new int[]{1,0,0,-1};*/
+    private int[] xMove = new int[]{0,1,-1,0};
+    private int[] yMOve = new int[]{1,0,0,-1};
 
     public void solve(char[][] board) {
 
@@ -37,14 +36,15 @@ public class SurroundedRegions {
 
         int n = board[0].length;
 
+        boolean[][] visited = new boolean[m][n];
 
         for (int j=0;j<n;j++) {
 
             if(board[0][j]=='O') {
-                dfs(0,j,board);
+                dfs(0,j,board,visited);
             }
             if(board[m-1][j]=='O') {
-                dfs(m-1,j,board);
+                dfs(m-1,j,board,visited);
             }
 
         }
@@ -52,10 +52,10 @@ public class SurroundedRegions {
         for (int i=0;i<m;i++) {
 
             if(board[i][0]=='O') {
-                dfs(i,0,board);
+                dfs(i,0,board,visited);
             }
             if(board[i][n-1]=='O') {
-                dfs(i,n-1,board);
+                dfs(i,n-1,board,visited);
             }
 
         }
@@ -73,32 +73,25 @@ public class SurroundedRegions {
 
     }
 
-    private void dfs(int i,int j,char[][] board) {
+    private void dfs(int i,int j,char[][] board,boolean[][] visited) {
 
+
+        int m = board.length;
+        int n = board[0].length;
+
+        visited[i][j] = true;
 
         if(board[i][j]=='O') {
             board[i][j] = 'B';
         }
 
-        //TODO : This loop doesn't work. Figure out y?.. Gives stackoverflow error
-       /* for (int k=0;k<4;k++) {
+        for (int k=0;k<4;k++) {
             int nextX = i + xMove[k];
             int nextY = j + yMOve[k];
-            if(nextX>=0 && nextX<m && nextY>=0 && nextY<n && board[nextX][nextY]=='O') {
-                dfs(nextX,nextY,m,n,board);
+            if(nextX>=0 && nextX<m && nextY>=0 && nextY<n && board[nextX][nextY]=='O' && !visited[nextX][nextY]) {
+                dfs(nextX,nextY,board,visited);
             }
-        }*/
-
-        if (board[i][j] == 'O')
-            board[i][j] = 'B';
-        if (i > 1 && board[i-1][j] == 'O')
-            dfs(i-1, j,board);
-        if (i < board.length - 2 && board[i+1][j] == 'O')
-            dfs( i+1, j,board);
-        if (j > 1 && board[i][j-1] == 'O')
-            dfs( i, j-1,board);
-        if (j < board[i].length - 2 && board[i][j+1] == 'O' )
-            dfs(i, j+1,board);
+        }
 
     }
 
