@@ -27,6 +27,9 @@ package tree.hard;
 
 import tree.TreeLinkNode;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 /**
  * Created by poorvank on 27/09/16.
  */
@@ -39,64 +42,30 @@ public class PopulatingNextRight {
         }
     }
 
+
     private void connectUtil(TreeLinkNode root) {
 
-       root.next = null;
+        Queue<TreeLinkNode> queue = new LinkedList<>();
+        queue.add(root);
 
-       TreeLinkNode tempRoot = root;
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            for (int i=0;i<size;i++) {
+                TreeLinkNode node = queue.remove();
+                if(i==size-1) {
+                    node.next = null;
+                } else {
+                    node.next = queue.peek();
+                }
+                if(node.left!=null) {
+                    queue.add(node.left);
+                }
+                if(node.right!=null) {
+                    queue.add(node.right);
+                }
+            }
+        }
 
-       while (tempRoot!=null) {
-
-           TreeLinkNode temp = tempRoot;
-
-           while (temp!=null) {
-
-               if(temp.left!=null) {
-
-                   if(temp.right!=null) {
-                       temp.left.next = temp.right;
-                   } else {
-                       temp.left.next = getNextNode(temp.next);
-                   }
-
-               }
-
-               if(temp.right!=null) {
-                   temp.right.next = getNextNode(temp.next);
-               }
-
-               temp = temp.next;
-
-           }
-
-
-           if(tempRoot.left!=null) {
-               tempRoot = tempRoot.left;
-           } else if(tempRoot.right!=null) {
-               tempRoot = tempRoot.right;
-           } else {
-               tempRoot = tempRoot.next;
-           }
-
-       }
-
-    }
-
-    private TreeLinkNode  getNextNode(TreeLinkNode root) {
-
-       if(root!=null) {
-
-           if(root.left!=null) {
-               return root.left;
-           } else if(root.right!=null) {
-               return root.right;
-           } else {
-               return getNextNode(root.next);
-           }
-
-       }
-
-       return null;
     }
 
     public static void main(String[] args) {
