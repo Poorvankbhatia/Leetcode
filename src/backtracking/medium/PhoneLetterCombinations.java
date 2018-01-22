@@ -48,17 +48,19 @@ public class PhoneLetterCombinations {
         char c = digits.charAt(index);
         ArrayList<Character> arrayList = map.get(c);
 
-        for (Character ch : arrayList) {
-            sb.append(ch);
-            letterCombUtil(digits, index + 1, list, sb);
-            sb.deleteCharAt(sb.length() - 1);
+        if(arrayList!=null) {
+            for (Character ch : arrayList) {
+                sb.append(ch);
+                letterCombUtil(digits, index + 1, list, sb);
+                sb.deleteCharAt(sb.length() - 1);
+            }
         }
 
     }
 
     public static void main(String[] args) {
         PhoneLetterCombinations p = new PhoneLetterCombinations();
-        System.out.println(p.letterCombinations("443"));
+        System.out.println(p.letterCombinations("482"));
     }
 
 }
