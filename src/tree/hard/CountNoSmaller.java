@@ -96,5 +96,6 @@ if we insert 7, the right-turning nodes are 1(0,1), 6(3,1), so answer should be 
 worst time complexity is O(n^2). when processing input like n, n-1, ..., 2, 1.
 
 
+https://discuss.leetcode.com/topic/31554/11ms-java-solution-using-merge-sort-with-explanation
 
  */

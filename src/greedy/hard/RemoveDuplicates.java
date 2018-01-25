@@ -106,4 +106,6 @@ after one letter is determined in step 3, it need to be removed from the "last a
 should be ignored in the following steps
 in step 3, the beginning index of the search range should be the index of previous determined letter plus one
 
+https://discuss.leetcode.com/topic/43469/java-o-n-solution-using-stack-with-detail-explanation
+
  */
