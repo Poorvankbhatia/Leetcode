@@ -24,7 +24,7 @@ public class BasicCalculator {
     public int calculate(String s) {
 
         char[] arr = s.toCharArray();
-        Stack<Integer> valStack = new Stack<>();
+        Stack<Long> valStack = new Stack<>();
         Stack<Character> operatorStack = new Stack<>();
 
         for (int i=0;i<arr.length;i++) {
@@ -42,18 +42,18 @@ public class BasicCalculator {
                     i++;
                 }
                 i--;
-                valStack.push(Integer.parseInt(sb.toString()));
+                valStack.push(Long.parseLong(sb.toString()));
             } else if(arr[i]==')') {
                 while (operatorStack.peek()!='(') {
-                    int b = valStack.pop();
-                    int a = valStack.pop();
+                    long b = valStack.pop();
+                    long a = valStack.pop();
                     valStack.push(applyOperator(operatorStack.pop(), a, b));
                 }
                 operatorStack.pop();
             } else if(arr[i]=='+' || arr[i]=='-' || arr[i]=='/' || arr[i]=='*') {
                 while (!operatorStack.isEmpty() && hasPrecedence(arr[i],operatorStack.peek())) {
-                    int b = valStack.pop();
-                    int a = valStack.pop();
+                    long b = valStack.pop();
+                    long a = valStack.pop();
                     valStack.push(applyOperator(operatorStack.pop(), a, b));
                 }
 
@@ -63,13 +63,20 @@ public class BasicCalculator {
         }
 
         while (!operatorStack.empty()){
-            int b = valStack.pop();
-            int a = valStack.pop();
+            long b = valStack.pop();
+            long a = valStack.pop();
             valStack.push(applyOperator(operatorStack.pop(), a, b));
         }
 
         // Top of 'values' contains result, return it
-        return valStack.pop();
+        long v = valStack.pop();
+        if(v<=Integer.MIN_VALUE) {
+            return Integer.MIN_VALUE;
+        } else if(v>=Integer.MAX_VALUE) {
+            return Integer.MAX_VALUE;
+        } else {
+            return (int) v;
+        }
     }
 
     private boolean hasPrecedence(char op1, char op2) {
@@ -77,7 +84,7 @@ public class BasicCalculator {
     }
 
 
-    private int applyOperator(char op,int a,int b) {
+    private long applyOperator(char op,long a,long b) {
 
         switch (op) {
             case '+':
@@ -98,7 +105,7 @@ public class BasicCalculator {
 
     public static void main(String[] args) {
 
-        System.out.println(new BasicCalculator().calculate("(1+(4+5+2)-3)+(6+8)"));
+        System.out.println(new BasicCalculator().calculate("3*6*(6/9)"));
 
     }
 
