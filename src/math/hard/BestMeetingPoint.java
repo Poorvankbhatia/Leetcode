@@ -87,11 +87,11 @@ Suppose we have n people living on a straight street and they want to find somew
 
 Σ|x(i)-m|
 
-where enter image description here is the location of each house and enter image description here
+where x(i) is the location of each house and m
 is the meeting point. To minimize this problem, take the derivative of this equation. Each term will give you
 
-1, if enter image description here
--1, if enter image description here
+1, if m>xi
+-1, if m<xi
 To reach the minimum, the derivative must be 0. To make the derivative 0, the number of 1s and -1s must equal.
 
 If n is even, then m must be located between the middle two locations (Any locations between them will give you the minimum, not necessarily the median).
