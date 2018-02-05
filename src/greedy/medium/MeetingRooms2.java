@@ -12,7 +12,7 @@ import java.util.PriorityQueue;
 
 
 public class MeetingRooms2 {
-    private class Interval {
+    private static class Interval {
         int start;
         int end;
 
@@ -54,4 +54,10 @@ public class MeetingRooms2 {
 
         return count;
     }
+
+    public static void main(String[] args) {
+        Interval[] intervals = new Interval[]{new Interval(4,9),new Interval(5,7),new Interval(6,12)};
+        System.out.println(new MeetingRooms2().minMeetingRooms(intervals));
+    }
+
 }

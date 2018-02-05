@@ -73,6 +73,11 @@ public class NextClosestTime {
         }
     }
 
+    public static void main(String[] args) {
+        String s = "23:59";
+        System.out.println(new NextClosestTime().nextClosestTime(s));
+    }
+
 }
 
 /*
