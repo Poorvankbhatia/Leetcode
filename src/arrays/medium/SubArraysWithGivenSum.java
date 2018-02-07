@@ -40,3 +40,11 @@ public class SubArraysWithGivenSum {
     }
 
 }
+
+/*
+
+we know the key to solve this problem is SUM[i, j]. So if we know SUM[0, i - 1] and SUM[0, j],
+then we can easily get SUM[i, j]. To achieve this, we just need to go through the array,
+calculate the current sum and save number of all seen PreSum to a HashMap. Time complexity O(n), Space complexity O(n).
+
+ */
