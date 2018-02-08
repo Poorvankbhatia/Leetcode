@@ -18,35 +18,51 @@ public class InorderSuccessorBST {
             return null;
         }
 
-        if(p.right==null) {
-            return null;
-        }
+        if (p != null) {
 
-        TreeNode parent = null;
-        TreeNode current = root;
-        while (current!=null && current.val!=p.val) {
-            if(current.val>p.val) {
-                parent = current;
-                current = current.left;
-            } else {
-                current = current.right;
+            if (p.right != null) {
+                return minValue(p.right);
             }
+
+            TreeNode successor = null;
+
+            while (root != null) {
+
+                if (p.val < root.val) {
+                    successor = root;
+                    root = root.left;
+                } else if (p.val > root.val) {
+                    root = root.right;
+                } else {
+                    break;
+                }
+
+            }
+
+            return successor;
+
         }
 
-        if(current==null) {
-            return null;
+
+        return null;
+
+    }
+
+
+    private TreeNode minValue(TreeNode root) {
+
+        if (root != null) {
+
+            TreeNode current = root;
+
+            while (current.left != null) {
+                current = current.left;
+            }
+
+            return current;
         }
 
-        if(current.right==null) {
-            return parent;
-        }
-
-        current = current.right;
-        while (current.left!=null) {
-            current = current.left;
-        }
-
-        return current;
+        return null;
 
     }
 
