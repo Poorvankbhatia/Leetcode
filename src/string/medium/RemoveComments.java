@@ -1,4 +1,10 @@
+/*
 
+Given a C++ program, remove comments from it.
+The program source is an array where source[i] is the i-th line of the source code.
+This represents the result of splitting the original source code string by the newline character \n.
+
+ */
 package string.medium;
 
 import java.util.ArrayList;
