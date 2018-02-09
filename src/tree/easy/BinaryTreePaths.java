@@ -48,7 +48,7 @@ public class BinaryTreePaths {
             for (Integer i : paths) {
                 sb.append(i).append("->");
             }
-            result.add(sb.substring(0,sb.length()-2).toString());
+            result.add(sb.substring(0, sb.length() - 2));
         }
 
         fillList(root.left,new ArrayList<>(paths),result);
