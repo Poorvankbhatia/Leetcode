@@ -68,7 +68,7 @@ public class ConcatenatedWords {
     public static void main(String[] args) {
         String[] words = new String[]{"cat", "cats", "catsdogcats", "catxdogcatsrat", "dog", "dogcatsdog", "hippopotamuses", "rat", "ratcat", "ratcatdog", "ratcatdogcat"};
 
-        System.out.println(new ConcatenatedWords().findAllConcatenatedWordsInADict(words));
+        System.out.println(findAllConcatenatedWordsInADict(words));
     }
 
 }

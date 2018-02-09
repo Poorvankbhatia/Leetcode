@@ -13,6 +13,9 @@ For example, Given the following words in dictionary,
 ]
 The correct order is: "wertf".
 There are few points not clear :
+
+f-->t
+
 each word itself has no order, ie abc can not deduce the order of a, b ,c
 if any chars has not found and there is no dependence what then ?
 
