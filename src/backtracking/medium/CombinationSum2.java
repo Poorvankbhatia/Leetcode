@@ -34,12 +34,12 @@ public class CombinationSum2 {
 
         Arrays.sort(candidates);
         List<List<Integer>> lists = new ArrayList<>();
-        combinationSum2Util(candidates,target,0,lists,new ArrayList<>(),target);
+        combinationSum2Util(candidates,target,0,lists,new ArrayList<>());
         return lists;
     }
 
     private void combinationSum2Util(int[] candidates,int end,int arrayIndex,List<List<Integer>>
-            result,List<Integer> list,int targetValue) {
+            result,List<Integer> list) {
 
 
         if(end<0 || arrayIndex>candidates.length) {
@@ -57,7 +57,7 @@ public class CombinationSum2 {
                 continue;
             }
             list.add(candidates[i]);
-            combinationSum2Util(candidates,end-candidates[i],i+1,result,list,targetValue);
+            combinationSum2Util(candidates,end-candidates[i],i+1,result,list);
             list.remove(list.size()-1);
             lastCandidate = candidates[i];
         }

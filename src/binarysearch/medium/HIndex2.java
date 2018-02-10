@@ -23,6 +23,11 @@ public class HIndex2 {
         return n - l;
     }
 
+    public static void main(String[] args) {
+        int[] arr = new int[]{0,1,3,4,6,9};
+        System.out.println(new HIndex2().hIndex(arr));
+    }
+
 }
 
 /*
