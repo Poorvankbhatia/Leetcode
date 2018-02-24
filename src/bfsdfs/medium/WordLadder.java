@@ -26,61 +26,46 @@ import java.util.*;
  */
 public class WordLadder {
 
-    private class Cell {
-        String val;
-        int level;
-
-        public Cell(String val, int level) {
-            this.val = val;
-            this.level = level;
-        }
-    }
 
     public int ladderLength(String beginWord, String endWord, List<String> wordList) {
 
-        if(wordList==null || beginWord==null || endWord==null) {
+        if (wordList == null || beginWord == null || endWord == null) {
             return 0;
         }
 
-        HashMap<String,List<String>> map = new HashMap<>();
+        HashMap<String, List<String>> map = new HashMap<>();
 
         Set<String> set = new HashSet<>(wordList);
 
-        if(!set.contains(beginWord)) {
+        if (!set.contains(beginWord)) {
             set.add(beginWord);
         }
 
-        fillMap(set,map);
+        fillMap(set, map);
 
-        Queue<Cell> queue = new LinkedList<>();
-        queue.add(new Cell(beginWord,1));
-        Set<String> usedWords = new HashSet<>();
+        Queue<String> queue = new LinkedList<>();
+        queue.add(beginWord);
 
+        int level = 0;
         while (!queue.isEmpty()) {
 
-            Cell current = queue.poll();
-
-            if(current.val.equals(endWord)) {
-                return current.level;
-            }
-
-            if(usedWords.contains(current.val)) {
-                continue;
-            }
-
-            usedWords.add(current.val);
-            List<String> currentNeighbours = map.get(current.val);
-
-            if(currentNeighbours!=null) {
-                for (String neighbours : currentNeighbours) {
-                    if(usedWords.contains(neighbours)) {
-                        continue;
-                    }
-                    Cell newCell = new Cell(neighbours,current.level+1);
-                    queue.add(newCell);
+            int size = queue.size();
+            while (size > 0) {
+                String current = queue.poll();
+                if (current.equals(endWord)) {
+                    return level + 1; // Since we need to return the total transformation and not just jumps
                 }
+                List<String> neighbours = map.get(current);
+                if (neighbours != null) {
+                    for (String neighbour : neighbours) {
+                        queue.add(neighbour);
+                    }
+                }
+                map.remove(current);
+                size--;
             }
 
+            level++;
 
         }
 
@@ -88,22 +73,22 @@ public class WordLadder {
 
     }
 
-    private void fillMap(Set<String> wordList,HashMap<String,List<String>> map) {
+    private void fillMap(Set<String> wordList, HashMap<String, List<String>> map) {
 
         for (String word : wordList) {
 
-            for (int i=0;i<word.length();i++) {
+            for (int i = 0; i < word.length(); i++) {
 
                 char[] arr = word.toCharArray();
-                for (char c ='a';c<='z';c++) {
+                for (char c = 'a'; c <= 'z'; c++) {
 
                     char temp = arr[i];
                     arr[i] = c;
 
                     String newWord = new String(arr);
-                    if(!newWord.equals(word) && wordList.contains(newWord)) {
-                        if(!map.containsKey(word)) {
-                            map.put(word,new ArrayList<>());
+                    if (!newWord.equals(word) && wordList.contains(newWord)) {
+                        if (!map.containsKey(word)) {
+                            map.put(word, new ArrayList<>());
                         }
                         map.get(word).add(newWord);
                     }
@@ -118,13 +103,14 @@ public class WordLadder {
 
     }
 
+
     public static void main(String[] args) {
 
-        List<String> wordList = new ArrayList<>(Arrays.asList("hot","dot","dog","lot","log","cog"));
+        List<String> wordList = new ArrayList<>(Arrays.asList("hot", "dot", "dog", "lot", "log", "cog"));
         String beginWord = "hit";
         String endWord = "cog";
 
-        System.out.print(new WordLadder().ladderLength(beginWord,endWord,wordList));
+        System.out.print(new WordLadder().ladderLength(beginWord, endWord, wordList));
 
     }
 
