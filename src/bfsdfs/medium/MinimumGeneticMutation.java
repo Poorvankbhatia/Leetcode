@@ -68,7 +68,7 @@ public class MinimumGeneticMutation {
         }
 
 
-        int result = 0;
+        int result = -1;
 
         if(start.equals(end)) {
             return 0;
@@ -78,9 +78,7 @@ public class MinimumGeneticMutation {
 
         Collections.addAll(set, bank);
 
-        if(!set.contains(start)) {
-            set.add(start);
-        }
+        set.add(start);
 
         Map<String,List<String>> map = new HashMap<>();
 
@@ -100,9 +98,7 @@ public class MinimumGeneticMutation {
                     if(!newMutation.equals(mutation) && set.contains(newMutation)) {
                         List<String> list;
                         if(map.containsKey(mutation)) {
-                            list = map.get(mutation);
-                            list.add(newMutation);
-                            map.put(mutation,list);
+                            map.get(mutation).add(newMutation);
                         } else {
                             list = new ArrayList<>();
                             list.add(newMutation);
@@ -142,7 +138,7 @@ public class MinimumGeneticMutation {
             map.remove(currentMutation.mutation);
         }
 
-        return result==0?-1:result;
+        return result;
 
     }
 
