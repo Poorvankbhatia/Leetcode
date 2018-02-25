@@ -50,7 +50,7 @@ public class Vector2D {
     }
 
     public boolean hasNext() {
-        while (rowId<rowCount && (vector2D.get(rowCount)==null || vector2D.get(rowCount).size()==0)) {
+        while (rowId<rowCount && (vector2D.get(rowId)==null || vector2D.get(rowId).size()==0)) {
             rowCount++;
         }
 
