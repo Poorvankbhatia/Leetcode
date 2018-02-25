@@ -55,11 +55,11 @@ public class AlienDictionary {
             for (int j=0;j<Math.min(first.length(),second.length());j++) {
                 if(first.charAt(j)!=second.charAt(j)) {
 
-                    if(!map.containsKey(second.charAt(j))) {
-                        map.put(second.charAt(j),new ArrayList<>());
+                    if(!map.containsKey(first.charAt(j))) {
+                        map.put(first.charAt(j),new ArrayList<>());
                     }
-                    map.get(second.charAt(j)).add(first.charAt(j));
-                    inDegree[first.charAt(j)-'a']++;
+                    map.get(first.charAt(j)).add(second.charAt(j));
+                    inDegree[second.charAt(j)-'a']++;
                     break;
                 }
             }
@@ -77,10 +77,11 @@ public class AlienDictionary {
             }
         }
 
-        Stack<Character> stack = new Stack<>();
+        StringBuilder sb = new StringBuilder();
 
         while (!queue.isEmpty()) {
             Character current = queue.poll();
+            sb.append(current);
             if(map.containsKey(current)) {
                 for (char next : map.get(current)) {
                     if(--inDegree[next-'a']==0) {
@@ -88,16 +89,11 @@ public class AlienDictionary {
                     }
                 }
                 charCount--;
-                stack.push(current);
             }
         }
 
 
         if(charCount==0) {
-            StringBuilder sb = new StringBuilder();
-            while (!stack.isEmpty()) {
-                sb.append(stack.pop());
-            }
             return sb.toString();
         } else {
             return "";
@@ -115,3 +111,23 @@ public class AlienDictionary {
     }
 
 }
+/*
+
+The idea is to create a graph of characters and then find topological sorting of the created graph. Following are the detailed steps.
+
+1) Create a graph g with number of vertices equal to the size of alphabet in the given alien language. For example,
+if the alphabet size is 5, then there can be 5 characters in words. Initially there are no edges in graph.
+
+2) Do following for every pair of adjacent words in given sorted array.
+…..a) Let the current pair of words be word1 and word2. One by one compare characters of both words and find the first mismatching characters.
+…..b) Create an edge in g from mismatching character of word1 to that of word2.
+
+3) Print topological sorting of the above created graph.
+
+
+The first step to create a graph takes O(n + alhpa) time where n is number of given words and alpha is number of characters in given alphabet.
+The second step is also topological sorting. Note that there would be alpha vertices and at-most (n-1) edges in the graph.
+The time complexity of topological sorting is O(V+E) which is O(n + aplha) here. So overall time complexity is O(n + aplha) + O(n + aplha) which is O(n + aplha).
+
+
+ */
