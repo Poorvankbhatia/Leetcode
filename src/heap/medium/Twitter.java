@@ -88,9 +88,7 @@ public class Twitter {
         tweetVariable++;
         Tweet newTweet = new Tweet(tweetId,tweetVariable);
         if(usersTweet.containsKey(userId)) {
-            List<Tweet> tweetList = usersTweet.get(userId);
-            tweetList.add(newTweet);
-            usersTweet.put(userId,tweetList);
+           usersTweet.get(userId).add(newTweet);
         } else {
             List<Tweet> tweetList = new ArrayList<>();
             tweetList.add(newTweet);
