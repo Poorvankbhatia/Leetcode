@@ -104,3 +104,10 @@ public class WordBreak {
     }
 
 }
+
+/*
+
+This problem is very similar to Word Break. Instead of using a boolean array to track the matched positions,
+we need to track the actual matched words. Then we can use depth first search to get all the possible paths, i.e., the children of strings.
+
+ */

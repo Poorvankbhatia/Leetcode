@@ -83,7 +83,7 @@ public class WaterFlow {
 
         }
 
-        /*for (int[] arr : list) {
+        /*for (int[] arr : children) {
             System.out.print(Arrays.toString(arr) +  " ");
         }*/
 
