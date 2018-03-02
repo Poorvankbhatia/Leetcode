@@ -122,8 +122,8 @@ So, we need to use Collection such as TreeSet or PriorityQueue.
 Better O(1) solution :
 
 Two HashMaps are used, one to store <key, value> pair, another store the <key, node>.
-A double linked list to keep the frequency of each key.
-In each double linked list node,
+A double linked children to keep the frequency of each key.
+In each double linked children node,
 keys with the same count are saved using java built in LinkedHashSet. This can keep the order.
 
 class Node {
