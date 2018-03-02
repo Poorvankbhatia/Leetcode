@@ -14,9 +14,14 @@ import java.util.Map;
 public class MaximumPointsInLine {
 
 
-    class Point {
+    static class Point {
         int x;
         int y;
+
+        public Point(int x, int y) {
+            this.x = x;
+            this.y = y;
+        }
     }
 
 
@@ -62,10 +67,21 @@ public class MaximumPointsInLine {
 
     }
 
+
+    //Time Complexity: O(Log min(a, b))
     private int generateGCD(int a, int b) {
 
         if (b == 0) return a;
         else return generateGCD(b, a % b);
+
+    }
+
+    public static void main(String[] args) {
+        Point p1 = new Point(2,2);
+        Point p2 = new Point(3,3);
+        Point p4 = new Point(4,4);
+        Point[] points = new Point[]{p1,p2,p4};
+        System.out.println(new MaximumPointsInLine().maxPoints(points));
 
     }
 

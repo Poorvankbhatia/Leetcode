@@ -98,7 +98,7 @@ public class SmallestRange {
 
         }
 
-        HashMap<Integer, Integer> map = new HashMap<>(); // Map of list index and there count since duplicate elements can be there
+        HashMap<Integer, Integer> map = new HashMap<>(); // Map of children index and there count since duplicate elements can be there
 
         int start = 0;
         int minLength = Integer.MAX_VALUE;
@@ -165,7 +165,7 @@ public class SmallestRange {
 
 /*
 
-A combination of merge K sorted list and Minimum window substring problem.
+A combination of merge K sorted children and Minimum window substring problem.
 
  */
 

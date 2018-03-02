@@ -27,7 +27,7 @@ public class ReorderList {
 
         ListNode n1 = head, n2 = head;
 
-        // Finding middle of link list.
+        // Finding middle of link children.
         while(n2!=null && n2.next!=null){
             n1 = n1.next;
             n2 = n2.next.next;
@@ -39,7 +39,7 @@ public class ReorderList {
             cur = tmp;
         }
 
-        // Reversing the right half of the list.
+        // Reversing the right half of the children.
         while(cur!=null){
             ListNode tmp = cur.next;
             cur.next = middle.next;
@@ -47,7 +47,7 @@ public class ReorderList {
             cur = tmp;
         }
 
-        // Merging the two list
+        // Merging the two children
         ListNode left = head, right = middle.next;
         while(right!=null){
             middle.next = right.next;
@@ -88,7 +88,7 @@ public class ReorderList {
 
 Time Limit exceeding solution 12/13 test cases passed:
 
-Logic is:  every time keep reversing the entire link list, except the first element
+Logic is:  every time keep reversing the entire link children, except the first element
 
 public void reorderList(ListNode head) {
 

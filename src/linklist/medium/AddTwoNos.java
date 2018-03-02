@@ -137,10 +137,10 @@ Following are the steps.
 calculate sum of rightmost nodes and forward carry to left side.
 3) If size is not same, then follow below steps:
 ….a) Calculate difference of sizes of two linked lists. Let the difference be diff
-….b) Move diff nodes ahead in the bigger linked list. Now use step 2 to calculate sum of smaller list and right sub-list (of same size)
-of larger list. Also, store the carry of this sum.
-….c) Calculate sum of the carry (calculated in previous step) with the remaining left sub-list of larger list. Nodes of this sum are added
-at the beginning of sum list obtained previous step.
+….b) Move diff nodes ahead in the bigger linked children. Now use step 2 to calculate sum of smaller children and right sub-children (of same size)
+of larger children. Also, store the carry of this sum.
+….c) Calculate sum of the carry (calculated in previous step) with the remaining left sub-children of larger children. Nodes of this sum are added
+at the beginning of sum children obtained previous step.
 
 
 

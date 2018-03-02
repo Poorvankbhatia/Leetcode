@@ -90,10 +90,10 @@ public class IntersectionLinkList {
 
 /*
 
-1) Get count of the nodes in first list, let count be c1.
-2) Get count of the nodes in second list, let count be c2.
+1) Get count of the nodes in first children, let count be c1.
+2) Get count of the nodes in second children, let count be c2.
 3) Get the difference of counts d = abs(c1 – c2)
-4) Now traverse the bigger list from the first node till d nodes so that from here onwards both the lists have equal no of nodes.
+4) Now traverse the bigger children from the first node till d nodes so that from here onwards both the lists have equal no of nodes.
 5) Then we can traverse both the lists in parallel till we come across a common node. (Note that getting a common node is done by
 comparing the address of the nodes)
 
@@ -102,10 +102,10 @@ Auxiliary Space: O(1)
 
 Another method:
 
-1. Traverse the first linked list(count the elements) and make a circular linked list. (Remember last node so that we can break the circle later on).
-2. Now view the problem as find the loop in the second linked list. So the problem is solved.
-3. Since we already know the length of the loop(size of first linked list) we can traverse those many number of nodes in second list, and
-then start another pointer from the beginning of second list. we have to traverse until they are equal, and that is the required intersection point.
-4. remove the circle from the linked list.
+1. Traverse the first linked children(count the elements) and make a circular linked children. (Remember last node so that we can break the circle later on).
+2. Now view the problem as find the loop in the second linked children. So the problem is solved.
+3. Since we already know the length of the loop(size of first linked children) we can traverse those many number of nodes in second children, and
+then start another pointer from the beginning of second children. we have to traverse until they are equal, and that is the required intersection point.
+4. remove the circle from the linked children.
 
  */

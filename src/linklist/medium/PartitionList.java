@@ -36,7 +36,7 @@ public class PartitionList {
             }
             head = head.next;
         }
-        curr2.next = null;          //important! avoid cycle in linked list. otherwise u will get TLE.
+        curr2.next = null;          //important! avoid cycle in linked children. otherwise u will get TLE.
         curr1.next = dummy2.next;
         return dummy1.next;
 

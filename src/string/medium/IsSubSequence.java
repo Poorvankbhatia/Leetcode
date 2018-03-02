@@ -88,8 +88,8 @@ public boolean isSubsequence(String s, String t) {
         if (map.get(c) == null)  {
             return false;
         } else {
-            List<Integer> list = map.get(c);
-            prev = binarySearch(prev, list, 0, list.size() - 1);
+            List<Integer> children = map.get(c);
+            prev = binarySearch(prev, children, 0, children.size() - 1);
             if (prev == -1) {
                 return false;
             }
@@ -100,17 +100,17 @@ public boolean isSubsequence(String s, String t) {
     return true;
 }
 
-private int binarySearch(int index, List<Integer> list, int start, int end) {
+private int binarySearch(int index, List<Integer> children, int start, int end) {
     while (start <= end) {
         int mid = start + (end - start) / 2;
-        if (list.get(mid) < index) {
+        if (children.get(mid) < index) {
             start = mid + 1;
         } else {
             end = mid - 1;
         }
     }
 
-    return start == list.size() ? -1 : list.get(start);
+    return start == children.size() ? -1 : children.get(start);
 }
 
  */
