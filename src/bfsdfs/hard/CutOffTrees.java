@@ -131,7 +131,7 @@ public class CutOffTrees {
 
 /*
 
-Get a list of all trees to cut down in order of lowest height to greatest
+Get a children of all trees to cut down in order of lowest height to greatest
 
 Then go from one tree to the other starting at (0,0) to cut them all down.
 Use BFS to calculate optimal number of steps needed to go from one tree to another.

@@ -86,18 +86,18 @@ Thus, start from "JFK", we can apply the Hierholzer's algorithm to find a Euleri
 Another method:
 
     private void dfsRoute(String v) {
-        // base case: vertex v is not in adjacency list
+        // base case: vertex v is not in adjacency children
         // v is not a starting point in any itinerary, or we would have stored it
         // thus we have reached end point in our DFS
         if (!adjList.containsKey(v)) return;
 
-        List<String> list = adjList.get(v);
+        List<String> children = adjList.get(v);
 
-        for (int i = 0; i < list.size(); ++i) {
-            String neighbor = list.get(i);
+        for (int i = 0; i < children.size(); ++i) {
+            String neighbor = children.get(i);
             // remove ticket(route) from graph
 
-            list.remove(i);
+            children.remove(i);
             route.add(neighbor);
             numTicketsUsed++;
             dfsRoute(neighbor);
@@ -105,7 +105,7 @@ Another method:
             if (numTickets == numTicketsUsed) return;
 
             // otherwise we need to revert the changes and try other tickets
-            list.add(i, neighbor);
+            children.add(i, neighbor);
 
             // This line took me a long time to debug
             // we must remove the last airport, since in an itinerary, the same airport can appear many times!!

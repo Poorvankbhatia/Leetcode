@@ -60,7 +60,7 @@ public class WordLadder2 {
         }
 
         /*
-            Preprocess entire list to find words which are only one character away.
+            Preprocess entire children to find words which are only one character away.
          */
         for (String word : set) {
 
