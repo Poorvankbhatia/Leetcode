@@ -69,6 +69,7 @@ public class ClosestLeaf {
         Queue<TreeNode> queue = new LinkedList<>();
         queue.add(kNode);
         Set<Integer> visited = new TreeSet<>(); // So that we dont traverse child of parents again from parent map
+        visited.add(k);
 
         while (!queue.isEmpty()) {
             TreeNode current = queue.poll();
@@ -119,7 +120,10 @@ public class ClosestLeaf {
         TreeNode root = new TreeNode(1);
         root.left = new TreeNode(2);
         root.right=new TreeNode(3);
-        System.out.println(new ClosestLeaf().findClosestLeaf(root,3));
+        root.left.left = new TreeNode(4);
+        root.left.left.left = new TreeNode(5);
+        root.left.left.left.left = new TreeNode(6);
+        System.out.println(new ClosestLeaf().findClosestLeaf(root,2));
 
     }
 
