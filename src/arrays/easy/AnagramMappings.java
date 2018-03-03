@@ -34,12 +34,9 @@ public class AnagramMappings {
 
         for (int i=0;i<B.length;i++) {
             if(!map.containsKey(B[i])) {
-                List<Integer> list = new ArrayList<>();
-                list.add(i);
-                map.put(B[i],list);
-            } else {
-                map.get(B[i]).add(i);
+                map.put(B[i],new ArrayList<>());
             }
+            map.get(B[i]).add(i);
         }
 
         int[] P = new int[B.length];
