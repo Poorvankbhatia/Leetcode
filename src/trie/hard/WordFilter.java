@@ -34,7 +34,7 @@ class WordFilter {
     Map<String,Integer> map;
 
     public WordFilter(String[] words) {
-        trie = new Trie();
+        trie = new Trie<Integer>();
         map=new HashMap<>();;
         for (int i=0;i<words.length;i++) {
             trie.put(words[i],i);
@@ -73,7 +73,7 @@ class WordFilter {
 
 /*
 
-Time Complexity: O(NK + QK)O(NK+QK) where NN is the number of words, KK is the maximum length of a word, and QQ is the number of queries.
+Time Complexity: O(NK+QK) where N is the number of words, K is the maximum length of a word, and Q is the number of queries.
 https://leetcode.com/articles/prefix-and-suffix-search/
 
  */
