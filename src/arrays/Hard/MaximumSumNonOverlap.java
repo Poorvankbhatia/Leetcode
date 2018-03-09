@@ -35,21 +35,29 @@ public class MaximumSumNonOverlap {
         int currentSum=0;
         for (int i=0;i<n;i++) {
              currentSum+= nums[i];
-            if (i >= K) currentSum -= nums[i-K];
-            if (i >= K-1) sum[i-K+1] = currentSum;
+            if (i >= K) {
+                currentSum -= nums[i-K];
+            }
+            if (i >= K-1) {
+                sum[i-K+1] = currentSum;
+            }
         }
 
         int[] left = new int[sum.length];
         int best = 0;
         for (int i = 0; i < sum.length; i++) {
-            if (sum[i] > sum[best]) best = i;
+            if (sum[i] > sum[best]) {
+                best = i;
+            }
             left[i] = best;
         }
 
         int[] right = new int[sum.length];
         best = sum.length - 1;
         for (int i = sum.length - 1; i >= 0; i--) {
-            if (sum[i] >= sum[best]) best = i;
+            if (sum[i] >= sum[best]){
+                best = i;
+            }
             right[i] = best;
         }
 
@@ -59,7 +67,8 @@ public class MaximumSumNonOverlap {
 
         int[] ans = new int[]{-1, -1, -1};
         for (int j = K; j < sum.length - K; j++) {
-            int i = left[j - K], k = right[j + K];
+            int i = left[j - K];
+            int k = right[j + K];
             if (ans[0] == -1 || sum[i] + sum[j] + sum[k] >
                     sum[ans[0]] + sum[ans[1]] + sum[ans[2]]) {
 
@@ -93,8 +102,8 @@ Suppose we fixed j. We would like to know on the intervals i∈[0,j−K] and k�
 (and respectively W[k]) occurs first. (Here, first means the smaller index.)
 
 We can solve these problems with dynamic programming. For example,
-if we know that ii is where the largest value of W[i] occurs first on [0, 5]. then on [0, 6]
-the first occurrence of the largest W[i]W[i] must be either ii or 66. If say, 66 is better, then we set best = 6.
+if we know that i is where the largest value of W[i] occurs first on [0, 5]. then on [0, 6]
+the first occurrence of the largest W[i] must be either i or 6. If say, 6 is better, then we set best = 6.
 
 At the end, left[z] will be the first occurrence of the largest value of W[i] on the interval i∈[0,z], and right[z] will be the same
 but on the interval i∈[z,len(W)−1]. This means that for some choice j, the candidate answer must be
