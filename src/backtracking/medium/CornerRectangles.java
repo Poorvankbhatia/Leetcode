@@ -71,4 +71,36 @@ public class CornerRectangles {
 
 identify the possible rectangles, then check their 4 corners for validity into count.
 
+Another method:
+
+public int countCornerRectangles(int[][] grid) {
+        int n = grid.length;
+        int m = grid[0].length;
+        int ret = 0;
+        for (int i = 0; i < n; ++i) {
+            for (int j = i + 1; j < n; ++j) {
+                int np = 0;
+                for (int k = 0; k < m; ++k) {
+                    if (grid[i][k] == 1 && grid[j][k] == 1) {
+                        np ++;
+                    }
+                }
+                ret += np * (np - 1) / 2;
+            }
+        }
+        return ret;
+    }
+
+ When a row is filled with 1s, we do work to enumerate every pair of 1s. This is okay when is small, but expensive when is big.
+
+Say the entire top row is filled with 1s. When looking at the next row with say, f 1s that match the top row, the number of rectangles
+created is just the number of pairs of 1s, which is f * (f-1) / 2. We could find each f quickly using a Set and a simple linear scan of each row.
+
+Let's call a row to be heavy if it has more than points. The above algorithm changes the complexity of counting a heavy row from to ,
+and there are at most heavy rows.
+
+Time Complexity: where is the number of ones in the grid.
+
+Space Complexity: in additional space, for rows, target, and count.
+
  */
