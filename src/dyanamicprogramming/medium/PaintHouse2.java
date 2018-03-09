@@ -51,6 +51,15 @@ public class PaintHouse2 {
         return preMin;
     }
 
+    public static void main(String[] args) {
+        int[][] cost = new int[][]{
+                {2,3,0,5},
+                {4,7,9,2},
+                {9,8,2,1}
+        };
+        System.out.println(new PaintHouse2().minCostII(cost));
+    }
+
 
 }
 
