@@ -38,74 +38,48 @@ import java.util.*;
 public class AccountsMerge {
 
 
-    private HashMap<String,List<String>> emailMapping = new HashMap<>();
-    private HashSet<String> visitedSet = new HashSet<>();
-
     public List<List<String>> accountsMerge(List<List<String>> accounts) {
-
-        mapEmailBuckets(accounts);
-
-        //System.out.println(emailMapping.toString());
-        List<List<String>> result = new ArrayList<>();
-
-        for (List<String> list : accounts) {
-           if(!visitedSet.contains(list.get(1))) {
-               List<String> emails = new ArrayList<>();
-               dfsList(list.get(1),emails);
-               List<String> newList = new ArrayList<>();
-               newList.addAll(emails);
-               Collections.sort(newList);
-               newList.add(0,list.get(0));
-               result.add(newList);
-           }
-        }
-
-
-        return result;
-
-    }
-
-    private void dfsList(String email,List<String> list) {
-
-        list.add(email);
-        visitedSet.add(email);
-        for (String s : emailMapping.get(email)) {
-            if(!visitedSet.contains(s)) {
-                dfsList(s,list);
-            }
-        }
-    }
-
-
-    private void mapEmailBuckets(List<List<String>> accounts) {
-
-        for (List<String> list : accounts) {
-            for (int i=1;i<list.size();i++) {
-               List<String> neighbours = new ArrayList<>();
-               for (int j=1;j<list.size();j++) {
-                   if(i!=j) {
-                       neighbours.add(list.get(j));
-                   }
-               }
-               if(emailMapping.containsKey(list.get(i))) {
-                   List<String> stringList = emailMapping.get(list.get(i));
-                   List<String> union = union(stringList,neighbours);
-                   emailMapping.put(list.get(i),union);
-               } else {
-                   emailMapping.put(list.get(i),neighbours);
-               }
+        Map<String, String> emailToName = new HashMap<>();
+        Map<String, ArrayList<String>> graph = new HashMap<>();
+        for (List<String> account: accounts) {
+            String name = "";
+            for (String email: account) {
+                if (name.equals("")) {
+                    name = email;
+                    continue;
+                }
+                graph.putIfAbsent(email,new ArrayList<>());
+                graph.putIfAbsent(account.get(1),new ArrayList<>());
+                graph.get(email).add(account.get(1));
+                graph.get(account.get(1)).add(email);
+                emailToName.put(email, name);
             }
         }
 
-    }
-
-    private List<String> union(List<String> list1, List<String> list2) {
-        Set<String> set = new HashSet<>();
-
-        set.addAll(list1);
-        set.addAll(list2);
-
-        return new ArrayList<>(set);
+        Set<String> visited = new HashSet<>();
+        List<List<String>> ans = new ArrayList<>();
+        for (String email: graph.keySet()) {
+            if (!visited.contains(email)) {
+                visited.add(email);
+                Stack<String> stack = new Stack<>();
+                stack.push(email);
+                List<String> component = new ArrayList<>();
+                while (!stack.empty()) {
+                    String node = stack.pop();
+                    component.add(node);
+                    for (String nei: graph.get(node)) {
+                        if (!visited.contains(nei)) {
+                            visited.add(nei);
+                            stack.push(nei);
+                        }
+                    }
+                }
+                Collections.sort(component);
+                component.add(0, emailToName.get(email));
+                ans.add(component);
+            }
+        }
+        return ans;
     }
 
     public static void main(String[] args) {
