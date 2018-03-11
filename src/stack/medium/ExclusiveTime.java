@@ -97,12 +97,10 @@ public class ExclusiveTime {
     public static void main(String[] args) {
         List<String> logs = new ArrayList<>();
         logs.add("0:start:0");
-        logs.add("0:start:2");
-        logs.add("0:end:5");
-        logs.add("0:start:6");
-        logs.add("0:end:6");
+        logs.add("1:start:2");
+        logs.add("1:end:5");
         logs.add("0:end:7");
-        System.out.println(Arrays.toString(new ExclusiveTime().exclusiveTime(1,logs)));
+        System.out.println(Arrays.toString(new ExclusiveTime().exclusiveTime(2,logs)));
     }
 
 }
