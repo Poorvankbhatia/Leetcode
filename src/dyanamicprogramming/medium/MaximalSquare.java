@@ -28,11 +28,7 @@ public class MaximalSquare {
         int cols = matrix[0].length;
 
         if (cols == 1 && rows == 1) {
-            if (matrix[0][0] == '0') {
-                return 0;
-            } else {
-                return 1;
-            }
+           return matrix[0][0];
         } else if (cols == 1) {
             for (char[] aMatrix : matrix) {
                 if (aMatrix[0] == '1') {
@@ -54,37 +50,30 @@ public class MaximalSquare {
 
         int result = 0;
 
-        for (int i = 0; i < cols; i++) {
-            if (matrix[0][i] == '0') {
-                s[0][i] = 0;
-            } else {
-                s[0][i] = 1;
-                result = 1;
-            }
-        }
-
-        for (int j = 0; j < rows; j++) {
-            if (matrix[j][0] == '0') {
-                s[j][0] = 0;
-            } else {
-                s[j][0] = 1;
-                result = 1;
-            }
-        }
-
-        for (int i = 1; i < rows; i++) {
-            for (int j = 1; j < cols; j++) {
-                if (matrix[i][j] == '1') {
-                    s[i][j] = Math.min(Math.min(s[i - 1][j], s[i][j - 1]), s[i - 1][j - 1]) + 1;
+        for (int i=0;i<rows;i++) {
+            for (int j=0;j<cols;j++) {
+                if(i==0 || j==0) {
+                    s[i][j] = matrix[i][j]-'0';
                     result = Math.max(result,s[i][j]);
+                } else if(matrix[i][j]=='1') {
+                    s[i][j] = Math.min(Math.min((s[i-1][j]),(s[i][j-1])),(s[i-1][j-1]))+1;
+                    result = Math.max(s[i][j],result);
                 }
             }
         }
 
         return result*result;
 
+    }
 
-
+    public static void main(String[] args) {
+        char[][] matrix = new char[][]{
+                {'1','0','1','0','0'},
+                {'1','0','1','1','1'},
+                {'1','1','1','1','1'},
+                {'1','0','0','1','0'}
+        };
+        System.out.println(new MaximalSquare().maximalSquare(matrix));
     }
 
 }
