@@ -41,21 +41,21 @@ public class NumMatrix {
         int cols = matrix[0].length;
         sumMatrix = new int[rows][cols];
 
-        sumMatrix[0][0] = matrix[0][0];
-
-        for (int i=1;i<rows;i++) {
-            sumMatrix[i][0] = matrix[i][0] + sumMatrix[i-1][0];
-        }
-
-        for (int j=1;j<cols;j++) {
-            sumMatrix[0][j] = matrix[0][j] + sumMatrix[0][j-1];
-        }
-
-        for (int i=1;i<rows;i++) {
-            for (int j=1;j<cols;j++) {
-                sumMatrix[i][j] = matrix[i][j] + sumMatrix[i-1][j] + sumMatrix[i][j-1] - sumMatrix[i-1][j-1];
+        for (int i=0;i<rows;i++) {
+            for (int j=0;j<cols;j++) {
+                if(i==0 && j==0) {
+                    sumMatrix[i][j] = matrix[i][j];
+                } else if(i==0) {
+                    sumMatrix[i][j] = matrix[i][j]+sumMatrix[i][j-1];
+                } else if(j==0) {
+                    sumMatrix[i][j] = matrix[i][j]+sumMatrix[i-1][j];
+                } else {
+                    sumMatrix[i][j] = matrix[i][j]+sumMatrix[i-1][j]+sumMatrix[i][j-1]-sumMatrix[i-1][j-1];
+                }
             }
         }
+
+
 
     }
 
@@ -86,10 +86,10 @@ public class NumMatrix {
     }
 
     public static void main(String[] args) {
-        int[][] arr = new int[][]{{7 ,7 ,0},
-                                  {-4,-7,7},
-                                  {-4,0 ,-2},
-                                  {-8,5 ,6}};
+        int[][] arr = new int[][]{{ 7 , 7, 0},
+                                  {-4 ,-7, 7},
+                                  {-4 , 0, -2},
+                                  {-8 , 5, 6}};
 
         NumMatrix nm = new NumMatrix(arr);
         System.out.print(nm.sumRegion(0,2,2,2));
