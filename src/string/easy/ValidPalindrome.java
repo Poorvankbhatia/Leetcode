@@ -42,4 +42,9 @@ public class ValidPalindrome {
         return true;
 
     }
+
+    public static void main(String[] args) {
+        String s = "Le*&VE)))l";
+        System.out.println(new ValidPalindrome().isPalindrome(s));
+    }
 }
