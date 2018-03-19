@@ -21,7 +21,7 @@ Explanat
 The above arrows point to positions where the corresponding bits are different.
 
  */
-package bits;
+package bits.medium;
 
 /**
  * Created by poorvank on 18/12/16.
