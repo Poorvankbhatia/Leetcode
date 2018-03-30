@@ -80,12 +80,24 @@ public class TwoSum {
 
 /*
 
-O(n) time, O(Logn) space and doesn’t modify BST.
+O(n) time, O(Logn) space and does not modify BST.
 
-We traverse BST in Normal Inorder and Reverse Inorder simultaneously. In reverse inorder, we start from the rightmost node which is the maximum
-value node. In normal inorder, we start from the left most node which is minimum value node. We add sum of current nodes in both traversals
-and compare this sum with given target sum. If the sum is same as target sum, we return true. If the sum is more than target sum, we move
-to next node in reverse inorder traversal, otherwise we move to next node in normal inorder traversal. If any of the traversals is
-finished without finding a pair, we return false.
+Binary search method
+
+public boolean findTarget(TreeNode root, int k) {
+        return dfs(root, root,  k);
+    }
+
+    public boolean dfs(TreeNode root,  TreeNode cur, int k){
+        if(cur == null)return false;
+        return search(root, cur, k - cur.val) || dfs(root, cur.left, k) || dfs(root, cur.right, k);
+    }
+
+    public boolean search(TreeNode root, TreeNode cur, int value){
+        if(root == null)return false;
+        return (root.val == value) && (root != cur)
+            || (root.val < value) && search(root.right, cur, value)
+                || (root.val > value) && search(root.left, cur, value);
+    }
 
  */
