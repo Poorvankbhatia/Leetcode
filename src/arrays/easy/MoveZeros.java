@@ -39,9 +39,9 @@ public class MoveZeros {
 
 /*
 
-Space Complexity : O(1)O(1). Only constant space is used.
+Space Complexity : O(1) Only constant space is used.
 
-Time Complexity: O(n)O(n).
+Time Complexity: O(n)
 
  */
 

@@ -31,6 +31,8 @@ public class WordBreak {
             return result;
         }
 
+        System.out.println("dp array is - " + Arrays.toString(dp));
+
         wordBreakUtil(dp,s.length(),result,new ArrayList<>());
         return result;
     }
@@ -50,7 +52,7 @@ public class WordBreak {
             }
             sb.deleteCharAt(sb.length()-1);
             result.add(sb.toString());
-            System.out.println(sb.reverse().toString());
+            //System.out.println(sb.reverse().toString());
             return;
 
         }
@@ -97,8 +99,8 @@ public class WordBreak {
     }
 
     public static void main(String[] args) {
-        String str =  "cars";
-        Set<String> set = new HashSet<>(Arrays.asList("ca","rs","car"));
+        String str =  "CatMat";
+        Set<String> set = new HashSet<>(Arrays.asList("Cat", "Mat", "Ca", "tM", "at", "C", "Dog", "og", "Do"));
         WordBreak wb = new WordBreak();
         System.out.println(wb.wordBreak(str,set));
     }
