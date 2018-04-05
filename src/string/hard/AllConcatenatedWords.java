@@ -43,7 +43,7 @@ public class AllConcatenatedWords {
             }
         }
 
-        for (int i=0;i<len;i++) { //Maximum staring can be till len;
+        for (int i=0;i<len;i++) { //Maximum starting can be till len;
             HashMap<String,Integer> hasFound = new HashMap<>();
             int count =0;
             int start = i;
@@ -97,8 +97,8 @@ public class AllConcatenatedWords {
 
     public static void main(String[] args) {
 
-        String s = "barfoofoobarthefoobarman";
-        String[] words = {"bar","foo","the"};
+        String s = "lingmindraboofooowingdingbarrwingmonkeypoundcake";
+        String[] words = {"fooo","barr","wing","ding","wing"};
 
         System.out.print(new AllConcatenatedWords().findSubstring(s,words));
 
