@@ -39,7 +39,7 @@ import java.util.TreeMap;
  */
 public class MyCalender3 {
 
-    private TreeMap<Integer, Integer> times = new TreeMap<>();
+    private static TreeMap<Integer, Integer> times = new TreeMap<>();
     public int book(int s, int e) {
         times.put(s, times.getOrDefault(s, 0) + 1); // 1 new event will be starting at times[s]
         times.put(e, times.getOrDefault(e, 0) - 1); // 1 new event will be ending at times[e];
@@ -49,6 +49,15 @@ public class MyCalender3 {
             k = Math.max(k, ongoing);
         }
         return k;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(new MyCalender3().book(10,20));
+        System.out.println(new MyCalender3().book(50,60));
+        System.out.println(new MyCalender3().book(10,40));
+        System.out.println(new MyCalender3().book(5,15));
+        System.out.println(new MyCalender3().book(5,10));
+        System.out.println(new MyCalender3().book(25,55));
     }
 
 }
