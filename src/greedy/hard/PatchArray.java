@@ -34,11 +34,18 @@ public class PatchArray {
                 i++;
             } else {
                 patch++;
+                System.out.print((maxReach+1)+ " ");
                 maxReach += maxReach + 1;
             }
         }
 
+        System.out.println();
         return patch;
+    }
+
+    public static void main(String[] args) {
+        int[] nums = new int[]{1,5};
+        System.out.print(new PatchArray().minPatches(nums,6));
     }
 
 }
