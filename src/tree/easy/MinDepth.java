@@ -9,12 +9,13 @@ package tree.easy;
 
 import tree.TreeNode;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 /**
  * Created by poorvank on 13/09/16.
  */
 public class MinDepth {
-
-    private int minLevel = Integer.MAX_VALUE;
 
     public int minDepth(TreeNode root) {
 
@@ -22,31 +23,34 @@ public class MinDepth {
             return 0;
         }
 
-        minDepthUtil(root,1);
-        return minLevel;
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
 
-    }
-
-    private void minDepthUtil(TreeNode root,int level) {
-
-        if(root==null) {
-            return;
-        }
-
-        if(root.right==null && root.left==null) {
-            if(minLevel>level) {
-                minLevel = level;
+        int dis=1;
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            for (int i=0;i<size;i++) {
+                TreeNode pop = queue.poll();
+                if(pop.right==null && pop.left==null) {
+                    return dis;
+                }
+                if(pop.left!=null) {
+                    queue.offer(pop.left);
+                }
+                if(pop.right!=null) {
+                    queue.offer(pop.right);
+                }
             }
-            return;
+            dis++;
         }
 
-        minDepthUtil(root.right,level+1);
-        minDepthUtil(root.left,level+1);
+        return dis;
 
     }
 
     public static void main(String[] args) {
         TreeNode root = new TreeNode(0);
+        root.left = new TreeNode(2);
         System.out.println(new MinDepth().minDepth(root));
     }
 
