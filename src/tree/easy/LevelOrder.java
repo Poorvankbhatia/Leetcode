@@ -49,33 +49,22 @@ public class LevelOrder {
         }
 
         Queue<TreeNode> queue = new LinkedList<>();
-
-        queue.add(root);
-        List<Integer> intermediateList = new ArrayList<>();
-        queue.add(null);
+        queue.offer(root);
 
         while (!queue.isEmpty()) {
-
-
-            TreeNode current = queue.remove();
-            //Reached end of a level
-            if(current==null) {
-                result.add(intermediateList);
-                intermediateList = new ArrayList<>();
-                if(!queue.isEmpty()) {
-                    queue.add(null);
+            int size = queue.size();
+            List<Integer> list = new ArrayList<>();
+            for (int i=0;i<size;i++) {
+                TreeNode poll = queue.poll();
+                list.add(poll.val);
+                if(poll.left!=null) {
+                    queue.offer(poll.left);
                 }
-                continue;
+                if(poll.right!=null) {
+                    queue.offer(poll.right);
+                }
             }
-            intermediateList.add(current.val);
-
-            if(current.left!=null) {
-                queue.add(current.left);
-            }
-            if(current.right!=null) {
-                queue.add(current.right);
-            }
-
+            result.add(list);
         }
 
         return result;
