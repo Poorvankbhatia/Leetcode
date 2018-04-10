@@ -83,4 +83,8 @@ public class ClosestValueBST {
 The straight-forward solution would be to use a heap. We just treat the BST just as a usual array and do a in-order traverse.
  Then we compare the current element with the minimum element in the heap, the same as top k problem.
 
+The time complexity would be O(k + (n - k) logk).
+Space complexity is O(k).
+
+http://buttercola.blogspot.in/2015/09/leetcode-closest-binary-search-tree_8.html
  */
