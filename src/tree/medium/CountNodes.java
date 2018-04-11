@@ -37,7 +37,7 @@ public class CountNodes {
             For example x = x * 2; can also be written as x<<1 or x = x*8 can be written as x<<3 (since 2 to the power of 3 is 8).
             Similarly x = x / 2; is x>>1 and so on.
              */
-            return (2<<(treeHeight-1))-1;
+            return (2<<(treeHeight-1))-1; // Can also be written as 1<<(treeHeight)-1
         } else {
             return (1+countNodes(root.left) + countNodes(root.right));
         }

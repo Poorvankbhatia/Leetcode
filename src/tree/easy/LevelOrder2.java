@@ -39,48 +39,28 @@ public class LevelOrder2 {
         }
 
         Queue<TreeNode> queue = new LinkedList<>();
+        Stack<List<Integer>> stack = new Stack<>();
+
         queue.add(root);
-        Stack<TreeNode> stack = new Stack<>();
-        queue.add(null);
-
         while (!queue.isEmpty()) {
-
-            TreeNode current = queue.remove();
-            stack.push(current);
-            if(current==null) {
-                if(!queue.isEmpty()) {
-                    queue.add(null);
+            int size = queue.size();
+            List<Integer> list = new ArrayList<>();
+            for (int i=0;i<size;i++) {
+                TreeNode pop = queue.poll();
+                list.add(pop.val);
+                if (pop.left != null) {
+                    queue.add(pop.left);
                 }
-                continue;
+                if(pop.right!=null) {
+                    queue.add(pop.right);
+                }
             }
-
-            if(current.right!=null) {
-                queue.add(current.right);
-            }
-
-            if(current.left!=null) {
-                queue.add(current.left);
-            }
-
+            stack.add(list);
         }
 
-        List<Integer> intermediateList = new ArrayList<>();
-
-        while (!stack.empty()) {
-
-            TreeNode current = stack.pop();
-            if (current==null) {
-                if(intermediateList.size()!=0) {
-                    lists.add(intermediateList);
-                    intermediateList = new ArrayList<>();
-                }
-                continue;
-            }
-            intermediateList.add(current.val);
-
+        while (!stack.isEmpty()) {
+            lists.add(stack.pop());
         }
-
-        lists.add(intermediateList);
 
         return lists;
 
@@ -97,3 +77,31 @@ public class LevelOrder2 {
 
 
 }
+
+/*
+
+Using only 1 queue:
+
+public class Solution {
+    public List<List<Integer>> levelOrderBottom(TreeNode root) {
+        Queue<TreeNode> queue = new LinkedList<TreeNode>();
+        List<List<Integer>> wrapList = new LinkedList<List<Integer>>();
+
+        if(root == null) return wrapList;
+
+        queue.offer(root);
+        while(!queue.isEmpty()){
+            int levelNum = queue.size();
+            List<Integer> subList = new LinkedList<Integer>();
+            for(int i=0; i<levelNum; i++) {
+                if(queue.peek().left != null) queue.offer(queue.peek().left);
+                if(queue.peek().right != null) queue.offer(queue.peek().right);
+                subList.add(queue.poll().val);
+            }
+            wrapList.add(0, subList);
+        }
+        return wrapList;
+    }
+}
+
+ */
