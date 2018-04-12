@@ -29,17 +29,12 @@ public class RemoveInvalidParentheses {
 
         Set<String> visited = new HashSet<>();
 
-        return util(s,result,visited);
-
-    }
-
-
-    private List<String> util(String s, List<String> result, Set<String> visitedSet) {
 
         Queue<String> queue = new LinkedList<>();
         boolean reachedFirstLevel = false;
 
         queue.add(s);
+        visited.add(s);
 
         while (!queue.isEmpty()) {
             String current = queue.poll();
@@ -61,9 +56,9 @@ public class RemoveInvalidParentheses {
                 }
 
                 String next = current.substring(0,i)+current.substring(i+1);
-                if(!visitedSet.contains(next)) {
+                if(!visited.contains(next)) {
                     queue.add(next);
-                    visitedSet.add(next);
+                    visited.add(next);
                 }
 
             }
