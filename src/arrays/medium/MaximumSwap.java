@@ -42,6 +42,11 @@ public class MaximumSwap {
 
     }
 
+    public static void main(String[] args) {
+        int num = 9273;
+        System.out.println(new MaximumSwap().maximumSwap(num));
+    }
+
 }
 
 /*
