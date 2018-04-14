@@ -122,4 +122,54 @@ Frequency sort using java's queue:
 PriorityQueue<Map.Entry<Character, Integer>> q = new PriorityQueue<>( //frequency sort
             (a,b) -> a.getValue() != b.getValue() ? b.getValue() - a.getValue() : a.getKey() - b.getKey());
 
+
+Entire Soln :
+ public int leastInterval(char[] tasks, int n) {
+
+        Map<Character,Integer> map = new HashMap<>();
+
+        for(char c : tasks) {
+            map.put(c,map.getOrDefault(c,0)+1);
+        }
+
+        PriorityQueue<Map.Entry<Character, Integer>> pq = new PriorityQueue<>(
+            (a,b) -> a.getValue() != b.getValue() ? b.getValue() - a.getValue() : a.getKey() - b.getKey());
+
+        for(Map.Entry<Character,Integer> entry  : map.entrySet()) {
+            pq.offer(entry);
+        }
+
+        int result=0;
+        while(!pq.isEmpty()) {
+            int k=n+1;
+            List<Map.Entry<Character,Integer>> list = new ArrayList<>();
+            while(k>0 && !pq.isEmpty()) {
+
+                Map.Entry<Character,Integer> entry = pq.poll();
+                entry.setValue(entry.getValue()-1);
+                list.add(entry);
+                k--;
+                result++;
+
+            }
+
+            for(Map.Entry<Character,Integer> entry : list) {
+                if(entry.getValue()>0) {
+                    pq.add(entry);
+                }
+            }
+
+            if(pq.isEmpty()) {
+                break;
+            }
+
+            result+=k;
+
+        }
+
+        return result;
+
+    }
+
+
  */
