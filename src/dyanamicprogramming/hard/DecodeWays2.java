@@ -64,12 +64,17 @@ public class DecodeWays2 {
 
     }
 
+    public static void main(String[] args) {
+        String s = "*0";
+        System.out.println(new DecodeWays2().numDecodings(s));
+    }
+
 }
 
 /*
 
 In order to find the solution to the given problem, we need to consider every case possible(for the arrangement of the input digits/characters)
-and what value needs to be considered for each case. Let's look at each of the possibilites one by one.
+and what value needs to be considered for each case. Let's look at each of the possibilities one by one.
 
 Firstly, let's assume, we have a function ways(s,i) which returns the number of ways to decode the input string ,
 if only the characters upto the index in this string are considered. We start off by calling the function ways(s, s.length()-1)
