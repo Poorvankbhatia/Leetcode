@@ -104,13 +104,16 @@ public class AutocompleteSystem {
         List<String> keysWithPrefixList = trie.keysWithPrefix(searchQuery.toString());
         if(!keysWithPrefixList.isEmpty()) {
 
+            /* Compares its two arguments for order.  Returns a negative integer,
+             * zero, or a positive integer as the first argument is less than, equal
+             * to, or greater than the second.*/
             sort(keysWithPrefixList, new Comparator<String>() {
                 @Override
                 public int compare(String o1, String o2) {
                     if(trie.get(o1)>trie.get(o2)) {
-                        return -1;
+                        return -1; //o1<o2
                     } else if(trie.get(o1)<trie.get(o2)) {
-                        return 1;
+                        return 1; //o1>o2
                     } else {
                         return 0;
                     }
