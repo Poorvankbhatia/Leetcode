@@ -27,7 +27,7 @@ public class PaintHouse1 {
             costs[i][2] += Math.min(costs[i-1][1],costs[i-1][0]);
         }
 
-        int m = costs.length-1;
+        int m = costs.length;
         return Math.min(costs[m-1][0],Math.min(costs[m-1][1],costs[m-1][2]));
 
     }
