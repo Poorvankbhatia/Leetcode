@@ -25,16 +25,14 @@ public class GroupShiftedStrings {
         List<List<String>> result = new ArrayList<>();
 
         Map<String,List<String>> map = new HashMap<>();
-        for (int i=0;i<strings.length;i++) {
-            String h = hash(strings[i]);
-            if(map.containsKey(h)) {
-                List<String> list = map.get(h);
-                list.add(strings[i]);
-                map.put(h,list);
+        for (String string : strings) {
+            String h = hash(string);
+            if (map.containsKey(h)) {
+                map.get(h).add(string);
             } else {
                 List<String> list = new ArrayList<>();
-                list.add(strings[i]);
-                map.put(h,list);
+                list.add(string);
+                map.put(h, list);
             }
         }
 

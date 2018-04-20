@@ -65,8 +65,8 @@ public class CombinationSum {
 
     public static void main(String[] args) {
 
-        int[] arr = new int[]{8,7,4,3};
-        int target =11;
+        int[] arr = new int[]{1,1,1};
+        int target =3;
 
         CombinationSum sum = new CombinationSum();
         System.out.println(sum.combinationSum(arr,target));
