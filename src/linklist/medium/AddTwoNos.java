@@ -16,7 +16,7 @@ Output: 7 -> 8 -> 0 -> 7
  */
 package linklist.medium;
 
-import linklist.easy.ListNode;
+import linklist.ListNode;
 
 /**
  * Created by poorvank on 12/06/17.

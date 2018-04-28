@@ -1,5 +1,7 @@
 package linklist.easy;
 
+import linklist.ListNode;
+
 /**
  * Created by poorvank.b on 19/11/16.
  */

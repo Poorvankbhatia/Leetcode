@@ -11,7 +11,7 @@ return 1->2->2->4->3->5.
  */
 package linklist.medium;
 
-import linklist.easy.ListNode;
+import linklist.ListNode;
 
 /**
  * Created by poorvank on 06/05/17.

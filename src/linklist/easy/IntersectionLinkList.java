@@ -23,6 +23,8 @@ Your code should preferably run in O(n) time and use only O(1) memory.
  */
 package linklist.easy;
 
+import linklist.ListNode;
+
 /**
  * Created by poorvank on 24/02/17.
  */

@@ -6,7 +6,7 @@ Given a singly linked list where elements are sorted in ascending order, convert
 
 package linklist.medium;
 
-import linklist.easy.ListNode;
+import linklist.ListNode;
 import tree.TreeNode;
 
 /**

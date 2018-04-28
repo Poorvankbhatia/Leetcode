@@ -11,6 +11,8 @@ Return: 1 --> 2 --> 3 --> 4 --> 5
  */
 package linklist.easy;
 
+import linklist.ListNode;
+
 /**
  * Created by poorvank.b on 30/04/17.
  */

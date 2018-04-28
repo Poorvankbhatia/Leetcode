@@ -19,7 +19,7 @@ For k = 3, you should return: 3->2->1->4->5
  */
 package linklist.hard;
 
-import linklist.easy.ListNode;
+import linklist.ListNode;
 
 /**
  * Created by poorvank.b on 06/05/17.

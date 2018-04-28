@@ -14,7 +14,7 @@ Given m, n satisfy the following condition:
  */
 package linklist.medium;
 
-import linklist.easy.ListNode;
+import linklist.ListNode;
 
 /**
  * Created by poorvank on 22/05/17.

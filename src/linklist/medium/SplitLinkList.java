@@ -35,7 +35,7 @@ k will be an integer in the range [1, 50].
  */
 package linklist.medium;
 
-import linklist.easy.ListNode;
+import linklist.ListNode;
 
 /**
  * Created by poorvank.b on 12/11/17.

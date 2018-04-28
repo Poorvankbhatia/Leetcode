@@ -18,7 +18,7 @@ The first node is considered odd, the second node even and so on ...
  */
 package linklist.medium;
 
-import linklist.easy.ListNode;
+import linklist.ListNode;
 
 /**
  * Created by poorvank on 06/05/17.
