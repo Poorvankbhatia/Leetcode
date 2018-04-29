@@ -1,6 +1,6 @@
 package heap.hard;
 
-import linklist.easy.ListNode;
+import linklist.ListNode;
 
 import java.util.List;
 
