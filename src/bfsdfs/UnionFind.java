@@ -54,24 +54,26 @@ public class UnionFind {
         return count;
     }
 
-    public void union(int p,int q) {
+    public int union(int p,int q) {
 
         int pRoot = find(p);
         int qRoot = find(q);
 
         if(pRoot==qRoot) {
-            return;
-        }
-
-        if(size[pRoot]> size[qRoot]) {
-            parent[qRoot] = pRoot;
-            size[pRoot]+=size[qRoot];
-        } else {
-            parent[pRoot] = qRoot;
-            size[qRoot]+=size[pRoot];
+            return size[pRoot];
         }
 
         count--;
+        if(size[pRoot]> size[qRoot]) {
+            parent[qRoot] = pRoot;
+            size[pRoot]+=size[qRoot];
+            return size[pRoot];
+        } else {
+            parent[pRoot] = qRoot;
+            size[qRoot]+=size[pRoot];
+            return size[qRoot];
+        }
+
     }
 
 }
