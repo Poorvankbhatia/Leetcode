@@ -36,7 +36,6 @@ public class LongestConsecutivePath2 {
     private class Result {
 
         TreeNode node;
-        int maxValue;
         int increasing;
         int decreasing;
 
@@ -50,8 +49,8 @@ public class LongestConsecutivePath2 {
             return 0;
         }
 
-        int val = longestConsecutiveUtil(root).maxValue;
-        return Math.max(max,val);
+        longestConsecutiveUtil(root);
+        return max;
 
     }
 
@@ -77,7 +76,7 @@ public class LongestConsecutivePath2 {
         }
 
         if (right != null) {
-            if (node.val - right.node.val == 1) {
+            if (node.val - right.node.val == 1
                 current.decreasing = Math.max(current.decreasing, right.decreasing + 1);
             }
             else if (right.node.val - node.val == 1) {
