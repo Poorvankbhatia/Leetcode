@@ -134,5 +134,13 @@ class MyCalendar {
 
 The floorKey(K key) method is used to return the greatest key less than or equal to the given key, or null if there is no such key.
 
+we will have a TreeMap where the keys are the start of each interval, and the values are the ends of those intervals.
+When inserting the interval [start, end), we check if there is a conflict on each side with neighboring intervals:
+we would like calendar.get(prev)) <= start <= end <= next for the booking to be valid (or for prev or next to be null respectively.)
+
+
+Time Complexity (Java): O(NlogN), where N is the number of events booked. For each new event, we search that the event is
+ legal in O(logN) time, then insert it in O(1) time.
+
 
  */
