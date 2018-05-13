@@ -75,4 +75,26 @@ public class MyCalender2 {
 For each time point, store how the number of booked events changes. For each booking attempt, book it and undo the booking if it
 causes a triple booking (as determined by going through the time line, keeping track of the number of booked events).
 
+Time Complexity: O(N^2), where N is the number of events booked.
+
+
+
+This is more efficient:
+
+for (Map.Entry entry : map.entrySet()) {
+    Object key = entry.getKey();
+    Object value = entry.getValue();
+}
+than:
+
+for (Object key : map.keySet()) {
+    Object value = map.get(key);
+}
+Because in the second case, for every key in the keySet the map.get() method is called,
+which - in the case of a HashMap - requires that the hashCode() and equals() methods of the key object be evaluated in order to find the associated value.
+In the first case that extra work is eliminated.
+
+Edit: This is even worse if you consider a TreeMap, where a call to get is O(log2(n)), i.e.
+the comparator for will may need to run log2(n) times (n = size of the Map) before finding the associated value.
+
  */

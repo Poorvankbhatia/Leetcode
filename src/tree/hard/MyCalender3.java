@@ -69,6 +69,8 @@ This is to find the maximum number of concurrent ongoing event at any time.
 We can log the start & end of each event on the timeline, each start add a new ongoing event at that time,
 each end terminate an ongoing event. Then we can scan the timeline to figure out the maximum number of ongoing event at any time.
 
+O(N^2), where N is the number of events booked. For each new event, we traverse delta in O(N) time.
+
 
 
  */
