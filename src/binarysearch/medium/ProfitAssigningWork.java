@@ -36,7 +36,7 @@ public class ProfitAssigningWork {
         private int profit;
         private int difficulty;
 
-        public Element(int profit, int difficulty) {
+        Element(int profit, int difficulty) {
             this.profit = profit;
             this.difficulty = difficulty;
         }
@@ -83,8 +83,12 @@ public class ProfitAssigningWork {
         int mid = start + (end - start) / 2;
         if (arr[mid].difficulty == w) {
             // In case there are multiple Element with same difficult, choose the one with highest
-            while (mid+1<=end && arr[mid].difficulty==arr[mid+1].difficulty) {
-                mid++;
+            if (mid+1<=end) {
+                if(arr[mid+1].difficulty>arr[mid].difficulty) {
+                    return arr[mid].profit;
+                } else {
+                    return binarySearch(arr,w,mid+1,end);
+                }
             }
             return arr[mid].profit;
         } else if (arr[mid].difficulty < w) {

@@ -27,4 +27,8 @@ public class Pow {
         }
     }
 
+    public static void main(String[] args) {
+        System.out.println(new Pow().myPow(2,-5));
+    }
+
 }
