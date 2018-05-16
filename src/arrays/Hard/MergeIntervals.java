@@ -127,6 +127,24 @@ Given [1,2],[3,5],[6,7],[8,10],[12,16], insert and merge [4,9] in as [1,2],[3,10
 
 This is because the new interval [4,9] overlaps with [3,5],[6,7],[8,10].
 
+public List<Interval> insert(List<Interval> intervals, Interval newInterval) {
+    List<Interval> result = new ArrayList<Interval>();
+    for (Interval i : intervals) {
+        if (newInterval == null || i.end < newInterval.start)
+            result.add(i);
+        else if (i.start > newInterval.end) {
+            result.add(newInterval);
+            result.add(i);
+            newInterval = null;
+        } else {
+            newInterval.start = Math.min(newInterval.start, i.start);
+            newInterval.end = Math.max(newInterval.end, i.end);
+        }
+    }
+    if (newInterval != null)
+        result.add(newInterval);
+    return result;
+}
 
 
  */

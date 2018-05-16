@@ -32,45 +32,49 @@ import java.util.*;
  */
 public class ProfitAssigningWork {
 
-    private class Element {
-        private int profit;
-        private int difficulty;
+    class Element {
 
-        Element(int profit, int difficulty) {
-            this.profit = profit;
-            this.difficulty = difficulty;
+        private int difficulty;
+        private int profit;
+
+        Element(int profit,int difficulty) {
+            this.profit=profit;
+            this.difficulty=difficulty;
         }
 
     }
 
     public int maxProfitAssignment(int[] difficulty, int[] profit, int[] worker) {
+        if(worker==null || worker.length==0) {
+            return 0;
+        }
 
         int n = profit.length;
 
         Element[] arr = new Element[n];
 
-        for (int i=0;i<n;i++) {
+        for(int i=0;i<n;i++) {
             arr[i]=new Element(profit[i],difficulty[i]);
         }
 
         Arrays.sort(arr,(a,b)->a.difficulty!=b.difficulty?a.difficulty-b.difficulty:a.profit-b.profit);
 
-        for (int i=1;i<n;i++) {
-            arr[i].profit = Math.max(arr[i-1].profit,arr[i].profit);
+        for(int i=1;i<n;i++) {
+            arr[i].profit = Math.max(arr[i].profit,arr[i-1].profit);
         }
 
-        int maxProfit = 0;
+        int p=0;
 
-        for (int w : worker) {
-            maxProfit+=binarySearch(arr,w,0,arr.length-1);
+        for(int w: worker) {
+            int v = findMaxProfit(arr,0,arr.length-1,w);
+            // System.out.println(w+" "+v);
+            p+=v;
         }
 
-        return maxProfit;
-
+        return p;
     }
 
-    private int binarySearch(Element[] arr,int w,int start,int end) {
-
+    private int findMaxProfit(Element[] arr,int start,int end,int w) {
         if(w<arr[start].difficulty) {
             return 0;
         }
@@ -79,32 +83,18 @@ public class ProfitAssigningWork {
             return arr[end].profit;
         }
 
+        int mid = start+(end-start)/2;
 
-        int mid = start + (end - start) / 2;
-        if (arr[mid].difficulty == w) {
-            // In case there are multiple Element with same difficult, choose the one with highest
-            if (mid+1<=end) {
-                if(arr[mid+1].difficulty>arr[mid].difficulty) {
-                    return arr[mid].profit;
-                } else {
-                    return binarySearch(arr,w,mid+1,end);
-                }
-            }
-            return arr[mid].profit;
-        } else if (arr[mid].difficulty < w) {
-            if (mid + 1 <= end && w < arr[mid + 1].difficulty) {
+        if(arr[mid].difficulty<=w) {
+            if((mid==end || arr[mid+1].difficulty>w)) {
                 return arr[mid].profit;
             } else {
-                return binarySearch(arr, w, mid + 1, end);
+                return findMaxProfit(arr,mid+1,end,w);
             }
-        } else {
-            if (mid - 1 >= start && w > arr[mid - 1].difficulty) {
-                return arr[mid-1].profit;
-            } else {
-                return binarySearch(arr,w,start,mid-1);
-            }
+
         }
 
+        return  findMaxProfit(arr,start,mid-1,w);
     }
 
     public static void main(String[] args) {
