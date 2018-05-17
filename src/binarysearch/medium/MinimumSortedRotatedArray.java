@@ -41,3 +41,36 @@ public class MinimumSortedRotatedArray {
     }
 
 }
+
+
+/*
+
+With Duplicates :
+
+When duplicates are allowed, we don't really know if the pivot is located before or after the mid.. example : nums=[10,10,10,1,10]
+
+Run-time complexity is affected by the degree of duplicate, i.e. the number of duplicates and how they distribute in the sequence,
+worst case o(log(n-m) +o(m) where n is the length and m the number of duplicates
+
+class Solution {
+    public int findMin(int[] nums) {
+        int low = 0;
+        int high = nums.length-1;
+        int min = Integer.MAX_VALUE;
+        while(low <= high){
+            int mid = (low + high) / 2;
+            min = Math.min(min, nums[mid]);
+            if(nums[low] < nums[mid] || nums[mid] > nums[high]){
+                min = Math.min(min, nums[low]);
+                low = mid + 1;
+            }else if(nums[low] > nums[mid] || nums[mid] < nums[high]){
+                high = mid - 1;
+            }else {
+                low++;
+            }
+        }
+        return min;
+    }
+}
+
+ */
