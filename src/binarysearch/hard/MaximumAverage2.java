@@ -50,7 +50,9 @@ public class MaximumAverage2 {
         // else we should remove them from the current sum (equivalent to update the start position)
         int curr = k;
         while (curr < nums.length) {
-            if (sum >= 0) return true;
+            if (sum >= 0) {
+                return true;
+            }
             sum += nums[curr] - target;
             extraSum += nums[curr-k] - target;
             if (extraSum < 0) { //update the start position of the current sum
@@ -72,7 +74,10 @@ public class MaximumAverage2 {
 
 /*
 
-https://leetcode.com/articles/maximum-average-subarray-ii/
+We keep guessing whether the mid value (average of max and min) can be satisfied in a given sequence, that is to say whether there is an average of greater than
+or equal to the interval of k is greater than or equal to the mid value, and if so, we will change the lower limit min to mid, and vice versa, change the max, and do so,
+until the guess range is less than 0.00001 you can directly give the answer (the title says that there is an error tolerance range, small hint it).
+
  O(nlog(max_val-min_val))
  check takes O(n) time and it is executed O(log(max_val-min_val)) times.
 

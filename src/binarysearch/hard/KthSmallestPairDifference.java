@@ -83,32 +83,18 @@ public class KthSmallestPairDifference {
     Returns pointer to “first position of next higher number than last occurrence of num” if
     container contains multiple occurrence of num. Returns pointer to “position of next higher number than num” if container does not contain occurrence of num.
      */
-    private int findCeil(int[] arr, int num, int low, int high) {
+    private int findCeil(int[] a, int key, int low, int high) {
 
-        if (num >= arr[high]) {
-            return high+1;
+        if (a[high] <= key) return high + 1;
+        while (low < high) {
+            int mid = low + (high - low) / 2;
+            if (key >= a[mid]) {
+                low = mid + 1;
+            } else {
+                high = mid;
+            }
         }
-        if (num < arr[low]) {
-            return low;
-        }
-
-        int mid = low + (high - low) / 2;
-
-        if (arr[mid] <= num && arr[mid + 1] > num) {
-            return mid+1;
-        }
-
-        if(arr[mid]>num && arr[mid-1]<=num) {
-            return mid;
-        }
-
-         /* If x is greater than arr[mid], then either arr[mid + 1]
-          is ceiling of x or ceiling lies in arr[mid+1...high] */
-        else if (arr[mid] < num) {
-            return findCeil(arr, num, mid + 1, high);
-        }
-
-        return findCeil(arr, num, low, mid - 1);
+        return low;
 
 
     }

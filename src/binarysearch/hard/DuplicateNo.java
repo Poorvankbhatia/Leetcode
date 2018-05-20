@@ -20,7 +20,7 @@ public class DuplicateNo {
     public int findDuplicate(int[] nums) {
 
 
-        int l=1,r=nums.length-1;
+        int l=0,r=nums.length-1;
         while(l<r){
             int m=(l+r)/2;
             int c=0;
@@ -50,7 +50,7 @@ public class DuplicateNo {
     }
 
     public static void main(String[] args) {
-        int[] arr = new int[]{1,2,3,4,4};
+        int[] arr = new int[]{4,4,3,2,1};
         System.out.println(new DuplicateNo().findDuplicate(arr));
     }
 
