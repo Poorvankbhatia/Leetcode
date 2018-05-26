@@ -83,4 +83,13 @@ public class SplitBST {
         }
     }
 
+    public static void main(String [] args) {
+        TreeNode root = new TreeNode(10);
+        root.left = new TreeNode(3);
+        root.right = new TreeNode(4);
+        root.left.left = new TreeNode(14);
+        TreeNode[] split = new SplitBST().splitBST(root,4);
+        System.out.println(split[0].val +" "+split[1].val);
+    }
+
 }

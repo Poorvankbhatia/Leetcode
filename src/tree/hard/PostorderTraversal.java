@@ -53,3 +53,28 @@ public class PostorderTraversal {
     }
 
 }
+
+/*
+
+Another method :
+
+List<Integer> result = new LinkedList<>();
+        if(root==null) {
+            return result;
+        }
+        Stack<TreeNode> stack = new Stack<>();
+        stack.add(root);
+        while(!stack.isEmpty()) {
+            TreeNode node = stack.pop();
+            result.add(0,node.val);
+            if(node.left!=null) {
+                stack.add(node.left);
+            }
+            if(node.right!=null) {
+                stack.add(node.right);
+            }
+
+        }
+        return result;
+
+ */

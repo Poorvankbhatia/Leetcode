@@ -1,4 +1,4 @@
-package arrays.easy;/*
+/*
 
 Assume you have an array of length n initialized with all 0's and are given k update operations.
 Each operation is represented as a triplet: [startIndex, endIndex, inc] which increments each element of subarray A[startIndex ... endIndex]
@@ -28,6 +28,7 @@ After applying operation [0, 2, -2]:
 [-2, 0, 3, 5, 3 ]
 
  */
+package arrays.easy;
 
 import java.util.Arrays;
 

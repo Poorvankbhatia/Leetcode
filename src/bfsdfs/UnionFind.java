@@ -7,9 +7,9 @@ import java.util.Arrays;
  */
 public class UnionFind {
 
-    private int count;
-    private int[] size;
-    private int[] parent;
+    public int count;
+    public int[] size;
+    public int[] parent;
 
     public UnionFind(int count) {
         this.count = count;
