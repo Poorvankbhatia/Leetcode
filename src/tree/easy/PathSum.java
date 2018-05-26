@@ -28,19 +28,22 @@ import tree.TreeNode;
 public class PathSum {
 
     public boolean hasPathSum(TreeNode root, int sum) {
-
-        if(root==null || sum<0) {
+        if(root==null) {
             return false;
         }
+        return util(root,sum);
+    }
 
-        sum -= root.val;
-
+    private boolean util(TreeNode root,int sum) {
+        if(root==null) {
+            return sum==0;
+        }
+        sum -=root.val;
         if(sum==0 && root.left==null && root.right==null) {
             return true;
         }
 
-        return (hasPathSum(root.right,sum) || hasPathSum(root.left,sum));
-
+        return hasPathSum(root.left,sum) || hasPathSum(root.right,sum);
     }
 
 }
