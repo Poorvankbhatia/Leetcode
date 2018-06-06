@@ -27,6 +27,26 @@ import tree.TreeNode;
  */
 public class KthSmallestBST {
 
+    /*
+     Average case complexity : nlogn
+     Worst case n^2 for a skewed tree
+     a skewed binary search tree, like this.
+
+                     9
+                  8
+                7
+              6
+           5
+        4
+      3
+    2
+  1
+    For every node, the time complexity of countNodes() is O(m), where m is # of node in the left tree.
+    Suppose k = 1, then we need to call kthSmallest() on every node, from 9 to 1. With each call, countNodes() is called.
+    Thus, the overall time complexity is 9 + 8 + ... + 1 = 9 * (9 + 1) / 2 = O(n ^ 2).
+
+
+     */
     public int kthSmallest(TreeNode root, int k) {
         int count  = countNodes(root.left);
         if(count>=k) {
@@ -52,6 +72,7 @@ public class KthSmallestBST {
 
 If we could add a count field in the BST node class, it will take O(n) time when we calculate the count value for the whole tree, but after that,
 it will take O(logn) time when insert/delete a node or calculate the kth smallest element.
+O(h)
 
    public class Solution {
         public int kthSmallest(TreeNode root, int k) {
@@ -88,6 +109,31 @@ it will take O(logn) time when insert/delete a node or calculate the kth smalles
             TreeNodeWithCount right;
             TreeNodeWithCount(int x) {val = x; count = 1;};
         }
+    }
+
+ */
+
+/*
+
+DFS recursive :
+
+private static int number = 0;
+    private static int count = 0;
+
+    public int kthSmallest(TreeNode root, int k) {
+        count = k;
+        helper(root);
+        return number;
+    }
+
+    public void helper(TreeNode n) {
+        if (n.left != null) helper(n.left);
+        count--;
+        if (count == 0) {
+            number = n.val;
+            return;
+        }
+        if (n.right != null) helper(n.right);
     }
 
  */
