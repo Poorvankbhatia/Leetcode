@@ -1,7 +1,11 @@
 /*
 
-Given a sorted integer array where the range of elements are [0, 99] inclusive,
-return its missing ranges. For example, given [0, 1, 3, 50, 75], return [“2”, “4->49”, “51->74”, “76->99”]
+Given a sorted integer array nums, where the range of elements are in the inclusive range [lower, upper], return its missing ranges.
+
+Example:
+
+Input: nums = [0, 1, 3, 50, 75], lower = 0 and upper = 99,
+Output: ["2", "4->49", "51->74", "76->99"]
 
  */
 package arrays.medium;
@@ -14,56 +18,46 @@ import java.util.List;
  */
 public class MissingRanges {
 
-    public List<String> findMissingRanges(int[] vals) {
-
+    public List<String> findMissingRanges(int[] nums, int lower, int upper) {
         List<String> list = new ArrayList<>();
-
-        if(vals.length==0) {
-            list.add("0->99");
+        if(nums==null || nums.length==0) {
+            addToList(list,lower,upper);
             return list;
         }
 
-        int i=0,j=0;
-
-        if (vals[i] > 0) {
-            addToList(list,0,vals[i]-1);
+        if(nums[0]>lower) {
+            addToList(list,lower,nums[0]-1);
         }
 
-        int n = vals.length;
-        while (i<n) {
-
-            j = i+1;
-            if(j<n && vals[j]-vals[i]>=2) {
-                int start = vals[i]+1;
-                int end = vals[j]-1;
-                addToList(list,start,end);
+        for(int i=1;i<nums.length;i++) {
+            if(nums[i]==nums[i-1]) {
+                continue;
             }
-            i=j;
-
+            if(nums[i]>=2+nums[i-1]) {
+                addToList(list,nums[i-1]+1,nums[i]-1);
+            }
         }
 
-        if(vals[n-1]<99) {
-            int start = vals[n-1]+1;
-            addToList(list,start,99);
+        if(nums[nums.length-1]<upper) {
+            addToList(list,nums[nums.length-1]+1,upper);
         }
-
 
         return list;
 
     }
 
-    private void addToList(List<String> list,int start,int end) {
-        if(end!=start) {
-            list.add(start+"->"+end);
+    private void addToList(List<String> list,int lower,int upper) {
+        if(lower<upper) {
+            list.add(lower+"->"+upper);
         } else {
-            list.add(start+"");
+            list.add(upper+"");
         }
     }
 
 
     public static void main(String[] args) {
         int[] arr = {0};
-        System.out.println(new MissingRanges().findMissingRanges(arr));
+        System.out.println(new MissingRanges().findMissingRanges(arr,0,0));
     }
 
 }
