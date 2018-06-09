@@ -12,41 +12,37 @@ By calling next repeatedly until hasNext returns false, the order of elements re
 
 package design.medium;
 
-import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 
 /**
  * Created by poorvank on 17/09/16.
  */
-public class ZigZagIterator {
+public class ZigzagIterator {
 
-    private Queue<Iterator<Integer>> queue;
+    private Queue<List<Integer>> queue;
 
-    public ZigZagIterator(Iterator<Integer> it1,Iterator<Integer> it2) {
-
-        if(it1.hasNext()) {
-            queue.add(it1);
+    public ZigzagIterator(List<Integer> v1, List<Integer> v2) {
+        queue = new LinkedList<>();
+        if( v1!=null &&v1.size()!=0) {
+            queue.add(v1);
         }
-        if(it2.hasNext()) {
-            queue.add(it2);
+        if(v2!=null && v2.size()!=0) {
+            queue.add(v2);
         }
-
     }
 
-    public int next()
-    {
-        Iterator<Integer> it = queue.remove();
-        int result = it.next();
-        if (it.hasNext())
-        {
+    public int next() {
+        List<Integer> it = queue.remove();
+        int result = it.remove(0);
+        if(it.size()!=0) {
             queue.add(it);
         }
-
         return result;
     }
 
-    public boolean hasNext()
-    {
+    public boolean hasNext() {
         return !queue.isEmpty();
     }
 
