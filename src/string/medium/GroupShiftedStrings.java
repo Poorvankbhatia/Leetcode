@@ -53,6 +53,7 @@ public class GroupShiftedStrings {
         StringBuilder hash=new StringBuilder();
         for (int i=1;i<s.length();i++) {
             int diff = s.charAt(i)-s.charAt(i-1);
+            // for cases like "yz","za"
             if(diff<0) {
                 diff+=count;
             }
