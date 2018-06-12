@@ -56,3 +56,8 @@ public class DominantIndex {
     }
 
 }
+
+/*
+
+ G I
+ */
