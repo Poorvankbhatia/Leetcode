@@ -140,4 +140,48 @@ Which word could be the third word? Must be a word start with "le" (therefore "l
 and the third letter of word "area".
 What about the last word? Must be a word start with "lad" (therefore "lady"). For the same reason above.
 
+
+class TrieNode {
+        List<String> startWith;
+        TrieNode[] children;
+
+        TrieNode() {
+            startWith = new ArrayList<>();
+            children = new TrieNode[26];
+        }
+    }
+
+    class Trie {
+        TrieNode root;
+
+        Trie(String[] words) {
+            root = new TrieNode();
+            for (String w : words) {
+                TrieNode cur = root;
+                for (char ch : w.toCharArray()) {
+                    int idx = ch - 'a';
+                    if (cur.children[idx] == null)
+                        cur.children[idx] = new TrieNode();
+                    cur.children[idx].startWith.add(w);
+                    cur = cur.children[idx];
+                }
+            }
+        }
+
+        List<String> findByPrefix(String prefix) {
+            List<String> ans = new ArrayList<>();
+            TrieNode cur = root;
+            for (char ch : prefix.toCharArray()) {
+                int idx = ch - 'a';
+                if (cur.children[idx] == null)
+                    return ans;
+
+                cur = cur.children[idx];
+            }
+            ans.addAll(cur.startWith);
+            return ans;
+        }
+    }
+}
+
  */
