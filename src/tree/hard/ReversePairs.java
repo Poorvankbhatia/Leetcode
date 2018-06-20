@@ -19,66 +19,74 @@ All the numbers in the input array are in the range of 32-bit integer.
  */
 package tree.hard;
 
+import java.util.Arrays;
+
 /**
  * Created by poorvank.b on 02/12/17.
  */
 public class ReversePairs {
 
-    private class Node {
+    private static class Node {
+        Node left, right;
+        long val;
+        int cnt;
 
-        private Node left;
-        private Node right;
-        private int value;
-        private int greaterCount;
-
-    }
-
-    private Node root;
-
-    private Node addToBST(Integer x,Node root) {
-        if(root==null) {
-            root = new Node();
-            root.value=x;
-            root.greaterCount=1;
-        } else if(root.value>x) {
-            root.left = addToBST(x,root.left);
-        } else {
-            root.greaterCount++;
-            root.right = addToBST(x,root.right);
+        Node(long val) {
+            this.val = val;
         }
-        return root;
-    }
 
-    private int searchCount(long x,Node root) {
-        if(root==null) {
-            return 0;
+        void add(long n) {
+            if(n <= val) {
+                cnt++;
+            }
+            if(n > val) {
+                right.add(n);
+            }
+            if(n < val) {
+                left.add(n);
+            }
         }
-        if(x==root.value) {
-            return root.greaterCount;
-        } else if(x<root.value) {
-            return root.greaterCount+searchCount(x,root.left);
-        } else {
-            return searchCount(x,root.right);
+
+        int count(long n) {
+            return n > val ? cnt + (right == null ? 0 : right.count(n))
+                    : (left == null ? 0 : left.count(n));
         }
     }
 
     public int reversePairs(int[] nums) {
-
-        if(nums==null || nums.length==0) {
+        int n = nums.length;
+        if(n == 0)
             return 0;
+
+        long[] doubles = new long[n];
+        for(int i = 0; i < n; i++)
+            doubles[i] = 2L * nums[i];
+        Arrays.sort(doubles);
+        int j = 0;
+        for(int i = 1; i < n; i++)
+            if(doubles[j] != doubles[i])
+                doubles[++j] = doubles[i];
+
+        Node root = build(doubles, 0, j);
+
+        int res = 0;
+        for(int i = n - 1; i >= 0; i--) {
+            res += root.count(nums[i]);
+            root.add(2L * nums[i]);
         }
 
-        int ans=0;
-        root=null;
+        return res;
+    }
 
-        for (int num : nums) {
-            Long value = (num*2L+1);
-            ans+=searchCount(value,root);
-            root = addToBST(num,root);
-        }
+    private Node build(long[] nums, int st, int en) {
+        if(st > en)
+            return null;
 
-        return ans;
-
+        int mi = st + (en - st) / 2;
+        Node n = new Node(nums[mi]);
+        n.left = build(nums, st, mi - 1);
+        n.right = build(nums, mi + 1, en);
+        return n;
     }
 
     public static void main(String[] args) {

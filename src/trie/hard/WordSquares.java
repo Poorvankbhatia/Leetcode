@@ -184,4 +184,8 @@ class TrieNode {
     }
 }
 
+
+The only difference between the trie here and the normal trie is that we hold one more list of all
+the words which have the prefix (from the root char to the current node char).
+
  */
