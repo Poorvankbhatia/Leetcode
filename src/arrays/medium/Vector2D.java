@@ -50,3 +50,9 @@ public class Vector2D {
         return vec2d != null && !vec2d.isEmpty() && rowId < numRows;
     }
 }
+
+/*
+
+G  I
+
+ */

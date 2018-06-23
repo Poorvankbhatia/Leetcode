@@ -27,40 +27,10 @@ import java.util.Arrays;
 public class BeautifulArrangement2 {
 
     public int[] constructArray(int n, int k) {
-
-        if(n==0) {
-            return new int[]{};
-        }
-
-        int[] result = new int[n];
-        int i=k;
-
-        result[0] = 1;int j=1;
-        boolean flag = false;
-        while (i!=0) {
-            if(!flag) {
-                result[j] = result[j-1] +  i;
-                i = -i+1;
-            } else {
-                result[j] = result[j-1] +  i;
-                i = -i-1;
-            }
-            j++;
-            flag = !flag;
-        }
-
-        if(j==n) {
-            return result;
-        }
-
-        int m = n-1;
-        while (result[m]==0) {
-            result[m] = n;
-            n--;m--;
-        }
-
-        return result;
-
+        int[] res = new int[n];
+        for (int i = 0, l = 1, r = n; l <= r; i++)
+            res[i] = k > 1 ? (k-- % 2 != 0 ? l++ : r--) : (k % 2 != 0? l++ : r--);
+        return res;
     }
 
     public static void main(String[] args) {
@@ -100,5 +70,11 @@ class Solution {
         return res;
     }
 }
+
+ */
+
+/*
+
+G I
 
  */
