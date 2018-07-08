@@ -105,4 +105,16 @@ components.
 For example, each time we add a new cross somewhere in the 2D matrix, we could call "union" on the corresponding index and its eight neighbors'
 index. When we want to find the number of islands, we would then just have to note down the frequency of each set, as its done here.
 
+
+Time complexity : Klog(mn)
+
+
+Create parent[mn+1] and reserve parent[0] to indicate whether a cell is water.
+Since the init value of new int[m * n + 1] is 0, you can avoid the array initialization of complexity O(mn).
+you can achieve O(klog(mn)).
+
+ */
+
+/*
+ G I
  */

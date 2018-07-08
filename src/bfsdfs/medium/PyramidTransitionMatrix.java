@@ -36,10 +36,7 @@ Letters in all strings will be chosen from the set {'A', 'B', 'C', 'D', 'E', 'F'
  */
 package bfsdfs.medium;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by poorvank.b on 28/04/18.
@@ -100,6 +97,12 @@ public class PyramidTransitionMatrix {
             sb.deleteCharAt(sb.length()-1);
         }
 
+    }
+
+    public static void main(String[] args) {
+        String bottom = "XYZ";
+        String[] allowed = new String[]{"XYD", "YZE", "DEA", "FFF"};
+        System.out.println(new PyramidTransitionMatrix().pyramidTransition(bottom, Arrays.asList(allowed)));
     }
 
 }

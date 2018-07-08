@@ -61,7 +61,6 @@ public class NextClosestTime {
                 diff = d;
                 result = cur.substring(0, 2) + ":" + cur.substring(2, 4);
             }
-            return;
         }
 
         for (int i = 0; i < digits.size(); i++) {
