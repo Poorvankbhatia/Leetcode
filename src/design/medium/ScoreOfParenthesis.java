@@ -78,9 +78,11 @@ public class ScoreOfParenthesis {
 O(n)
 
 Another solution:
-Every position in the string has a depth - some number of matching parentheses surrounding it. For example, the dot in (()(.())) has depth 2, because of these parentheses: (__(.__))
+Every position in the string has a depth - some number of matching parentheses surrounding it. For example, the dot in (()(.()))
+has depth 2, because of these parentheses: (__(.__))
 
-Our goal is to maintain the score at the current depth we are on. When we see an opening bracket, we increase our depth, and our score at the new depth is 0. When we see a closing bracket, we add twice the score of the previous deeper part - except when counting (), which has a score of 1.
+Our goal is to maintain the score at the current depth we are on. When we see an opening bracket, we increase our depth, and our score
+at the new depth is 0. When we see a closing bracket, we add twice the score of the previous deeper part - except when counting (), which has a score of 1.
 
 For example, when counting (()(())), our stack will look like this:
 

@@ -51,7 +51,7 @@ import java.util.Queue;
  */
 public class SequenceReconstruction {
 
-    public boolean sequenceReconstruction(int[] org, int[][] seqs) {
+    public boolean sequenceReconstruction(int[] org, List<List<Integer>> seqs) {
 
         int[] inDegree = new int[org.length];
         List<List<Integer>> lists = new ArrayList<>(org.length);
@@ -64,10 +64,10 @@ public class SequenceReconstruction {
             For [1,2,3]
             1 is dependent on 2, 2 is dependent on 3, and 1 is also dependent on 3
          */
-        for (int[] seq : seqs) {
-            for (int i=0;i<seq.length-1;i++) {
-                lists.get(seq[i]).add(seq[i+1]);
-                inDegree[seq[i+1]]++;
+        for (List<Integer> seq : seqs) {
+            for (int i=0;i<seq.size()-1;i++) {
+                lists.get(seq.get(i)).add(seq.get(i+1));
+                inDegree[seq.get(i+1)]++;
             }
         }
 
