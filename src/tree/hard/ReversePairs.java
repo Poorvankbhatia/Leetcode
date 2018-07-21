@@ -71,6 +71,7 @@ public class ReversePairs {
 
         int res = 0;
         for(int i = n - 1; i >= 0; i--) {
+            assert root != null;
             res += root.count(nums[i]);
             root.add(2L * nums[i]);
         }
