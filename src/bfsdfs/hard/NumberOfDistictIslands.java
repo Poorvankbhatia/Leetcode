@@ -39,53 +39,36 @@ import java.util.Set;
  */
 public class NumberOfDistictIslands {
 
-    int[][] dir = new int[][]{{1,0},{0,1},{-1,0},{0,-1}};
-    // The path taken by our depth-first search will be the same if and only if the shape is the same.
-    Set<String> shapeHash = new HashSet<>();
-
+    private int[][] dirs= new int[][]{{1,0},{0,1},{-1,0},{0,-1}};
     public int numDistinctIslands(int[][] grid) {
+        Set<String> set= new HashSet<>();
+        int res=0;
 
-        if(grid==null || grid.length==0) {
-            return 0;
-        }
-
-        int m = grid.length;
-        int n = grid[0].length;
-        boolean[][] visited = new boolean[m][n];
-
-        for (int i=0;i<m;i++) {
-            for (int j=0;j<n;j++) {
-                if(grid[i][j]==1 && !visited[i][j]) {
-                    String hash = calculateIslands(grid,m,n,i,j,visited,new StringBuilder());
-                    System.out.println("hash - "+ hash);
-                    if(!shapeHash.contains(hash)) {
-                        shapeHash.add(hash);
+        for(int i=0;i<grid.length;i++){
+            for(int j=0;j<grid[0].length;j++){
+                if(grid[i][j]==1) {
+                    StringBuilder sb= new StringBuilder();
+                    helper(grid,i,j,0,0, sb);
+                    String s=sb.toString();
+                    if(!set.contains(s)){
+                        res++;
+                        set.add(s);
                     }
                 }
             }
         }
-
-        return shapeHash.size();
-
+        return res;
     }
 
-    private String calculateIslands(int[][] grid,int m,int n,int x,int y,boolean[][] visited,StringBuilder shape) {
-
-        visited[x][y]=true;
-
-        for (int i=0;i<dir.length;i++) {
-            int nextX = dir[i][0]+x;
-            int nextY = dir[i][1]+y;
-
-            if(nextX>=0 && nextY>=0 && nextX<m && nextY<n && grid[nextX][nextY]==1 && !visited[nextX][nextY]) {
-                shape.append(i);
-                calculateIslands(grid,m,n,nextX,nextY,visited,shape);
-            }
-
+    private void helper(int[][] grid,int i,int j, int xpos, int ypos,StringBuilder sb){
+        grid[i][j]=0;
+        sb.append(xpos).append("").append(ypos);
+        for(int[] dir : dirs){
+            int x=i+dir[0];
+            int y=j+dir[1];
+            if(x<0 || y<0 || x>=grid.length || y>=grid[0].length || grid[x][y]==0) continue;
+            helper(grid,x,y,xpos+dir[0],ypos+dir[1],sb);
         }
-
-        return shape.toString();
-
     }
 
     public static void main(String[] args) {
