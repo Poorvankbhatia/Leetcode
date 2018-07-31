@@ -28,38 +28,31 @@ package dyanamicprogramming.hard;
 public class MinimumWindowSubSequence {
 
     public String minWindow(String S, String T) {
-        int min = -1, index = -1;
-        char[] tArr = T.toCharArray();
-        char[] sArr = S.toCharArray();
-        for (int i = 0; i < S.length(); i++) {
-            if (sArr[i] != tArr[0]) {
-                continue;
-            }
-            int len = check(tArr, sArr, i);
-            if (len <= 0) break;
-            if (min == -1 || len < min) {
-                index = i;
-                min = len;
+        int m = T.length(), n = S.length();
+        int[][] dp = new int[m + 1][n + 1];
+        for (int j = 0; j <= n; j++) {
+            dp[0][j] = j + 1;
+        }
+        for (int i = 1; i <= m; i++) {
+            for (int j = 1; j <= n; j++) {
+                if (T.charAt(i - 1) == S.charAt(j - 1)) {
+                    dp[i][j] = dp[i - 1][j - 1];
+                } else {
+                    dp[i][j] = dp[i][j - 1];
+                }
             }
         }
-        if (min == -1) {
-            return "";
-        }
-        return S.substring(index, index + min);
-    }
 
-    public int check(char[] Tc, char[] Sc, int start) {
-        int i = start, j = 0;
-        while (i < Sc.length && j < Tc.length) {
-            if (Sc[i] == Tc[j]) {
-                j++;
+        int start = 0, len = n + 1;
+        for (int j = 1; j <= n; j++) {
+            if (dp[m][j] != 0) {
+                if (j - dp[m][j] + 1 < len) {
+                    start = dp[m][j] - 1;
+                    len = j - dp[m][j] + 1;
+                }
             }
-            i++;
         }
-        if (j == Tc.length) {
-            return i - start;
-        }
-        return -1;
+        return len == n + 1 ? "" : S.substring(start, start + len);
     }
 
     public static void main(String[] args) {
@@ -72,46 +65,23 @@ public class MinimumWindowSubSequence {
 
 /*
 
-Brute Force complexity = (ST)
+dp[i][j] stores the starting index of the substring where T has length i and S has length j.
 
-DP Method:
+So dp[i][j would be:
+if T[i - 1] == S[j - 1], this means we could borrow the start index from dp[i - 1][j - 1] to make the current substring valid;
+else, we only need to borrow the start index from dp[i][j - 1] which could either exist or not.
 
-At time j, for each position e in S (e for end), let's remember the largest index cur[e] = s (for start)
- so that S[s: e+1] has T[:j] as a subsequence, and -1 (or None) otherwise if it isn't possible.
+Finally, go through the last row to find the substring with min length and appears first.
 
-To update our knowledge as j += 1, if S[i] == T[j], then new[e] is last, the largest s we
-have seen so far (representing that T[:j] was found). We can prove this is just the most recent valid index we have seen.
 
-we use dp[j] and dp[~j] to keep track of the last two rows of our dynamic programming.
+dp[i][j] represents the largest occurence of T[0] in S such that all the characters of T are included in S
+e.g. S = "abcdebdde" T="bd"
+dp[2][4] = 2 which corresponds to S being only "abcd"
+dp[2][7] = 6 which correspods to S being only "abcdebd"
 
-class Solution {
-    public String minWindow(String S, String T) {
-        int[][] dp = new int[2][S.length()];
+Suppose T is "abc", and S is "abc"
+dp[4][4] == dp[3][3] == dp[2][2] .. == dp[0][0],
+so dp[4][4] stores the starting index of 0 from T and starting index of 0 from S, and length is 4.
 
-        for (int i = 0; i < S.length(); ++i)
-            dp[0][i] = S.charAt(i) == T.charAt(0) ? i : -1;
-
-        for (int j = 1; j < T.length(); ++j) {
-            int last = -1;
-            Arrays.fill(dp[j & 1], -1);
-            for (int i = 0; i < S.length(); ++i) {
-                if (last >= 0 && S.charAt(i) == T.charAt(j))
-                    dp[j & 1][i] = last;
-                if (dp[~j & 1][i] >= 0)
-                    last = dp[~j & 1][i];
-            }
-        }
-
-        int start = 0, end = S.length();
-        for (int e = 0; e < S.length(); ++e) {
-            int s = dp[~T.length() & 1][e];
-            if (s >= 0 && e - s < end - start) {
-                start = s;
-                end = e;
-            }
-        }
-        return end < S.length() ? S.substring(start, end+1) : "";
-    }
-}
 
  */
