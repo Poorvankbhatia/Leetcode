@@ -12,68 +12,36 @@ import tree.TreeNode;
  */
 public class LargestBST {
 
-    private class BSTInfo {
+    private class Result {  // (size, rangeLower, rangeUpper) -- size of current tree, range of current tree [rangeLower, rangeUpper]
+        int size;
+        int lower;
+        int upper;
 
-        int max;
-        int min;
-        boolean isBST;
-        int size; // Size of subtree
-        int val; // Size of largest BST which is subtree of current node
-
-        public BSTInfo(int max, int min, boolean isBST, int size, int val) {
-            this.max = max;
-            this.min = min;
-            this.isBST = isBST;
+        Result(int size, int lower, int upper) {
             this.size = size;
-            this.val = val;
-        }
-
-        public BSTInfo() {
+            this.lower = lower;
+            this.upper = upper;
         }
     }
+
+    int max = 0;
 
     public int largestBSTSubtree(TreeNode root) {
-        return util(root).val;
+        if (root == null) { return 0; }
+        traverse(root);
+        return max;
     }
 
-    private BSTInfo util(TreeNode root) {
-
-        if(root==null) {
-            return new BSTInfo(Integer.MIN_VALUE,Integer.MAX_VALUE,true,0,0);
+    private Result traverse(TreeNode root) {
+        if (root == null) { return new Result(0, Integer.MAX_VALUE, Integer.MIN_VALUE); }
+        Result left = traverse(root.left);
+        Result right = traverse(root.right);
+        if (left.size == -1 || right.size == -1 || root.val <= left.upper || root.val >= right.lower) {
+            return new Result(-1, 0, 0);
         }
-
-        if(root.left==null && root.right==null) {
-            return new BSTInfo(root.val,root.val,true,1,1);
-        }
-
-        BSTInfo left = util(root.left);
-        BSTInfo right = util(root.right);
-
-        BSTInfo result = new BSTInfo();
-        result.size = 1+left.size+right.size;
-
-        // If whole tree rooted under current root is
-        // BST.
-        if (left.isBST && right.isBST && left.max < root.val && right.min > root.val)
-        {
-            result.min = left.min;
-            result.max = right.max;
-
-            // Update answer for tree rooted under
-            // current 'root'
-            result.val = result.size;
-            result.isBST = true;
-
-            return result;
-        }
-
-        // If whole tree is not BST, return maximum
-        // of left and right subtrees
-        result.val = Math.max(left.val, right.val);
-        result.isBST = false;
-
-        return result;
-
+        int size = left.size + 1 + right.size;
+        max = Math.max(size, max);
+        return new Result(size, Math.min(left.lower, root.val), Math.max(right.upper, root.val));
     }
 
     public static void main(String[] args) {

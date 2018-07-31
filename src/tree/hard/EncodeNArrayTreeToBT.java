@@ -1,9 +1,19 @@
+/*
+
+Design an algorithm to encode an N-ary tree into a binary tree and decode the binary tree to get the original N-ary tree.
+An N-ary tree is a rooted tree in which each node has no more than N children. Similarly, a binary tree is a rooted tree
+in which each node has no more than 2 children. There is no restriction on how your encode/decode algorithm should work.
+You just need to ensure that an N-ary tree can be encoded to a binary tree and this binary tree can be decoded to the original
+N-nary tree structure.
+
+
+
+ */
 package tree.hard;
 
-import tree.NArrayTreeNode;
 import tree.TreeNode;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -11,57 +21,53 @@ import java.util.List;
  */
 public class EncodeNArrayTreeToBT {
 
-    public TreeNode convertToBT(NArrayTreeNode root) {
-        return util(root,new ArrayList<>(),0);
-    }
-
 
     /*
     The strategy follows two rules:
-    1. The left child of each node in the binary tree is the next sibling of the node in the N-ary tree.
-    2. The right child of each node in the binary tree is the first child of the node in the N-ary tree.
+    1. The left child of each TreeNode in the binary tree is the next sibling of the TreeNode in the N-ary tree.
+    2. The right child of each TreeNode in the binary tree is the first child of the TreeNode in the N-ary tree.
      */
 
-    private TreeNode util(NArrayTreeNode root,List<NArrayTreeNode> siblings,int i) {
+    class Node {
+        public int val;
+        public List<Node> children;
 
-        if(root==null) {
-            return null;
+        public Node() {}
+
+        public Node(int _val,List<Node> _children) {
+            val = _val;
+            children = _children;
         }
-
-        System.out.println(root.value);
-        TreeNode BTRoot = new TreeNode(root.value);
-        if(siblings.size()==0 || i>=siblings.size()) {
-            BTRoot.left = null;
-        } else {
-            BTRoot.left = util(siblings.get(i),siblings,i+1);
-        }
-        BTRoot.right = root.children!=null?util(root.children.get(0),root.children,1):null    ;
-
-        return BTRoot;
-
     }
 
-    public static void main(String[] args) {
-        NArrayTreeNode node = new NArrayTreeNode(0);
-        NArrayTreeNode c1 = new NArrayTreeNode(1);
-        NArrayTreeNode c2 = new NArrayTreeNode(2);
-        NArrayTreeNode c3 = new NArrayTreeNode(3);
-        NArrayTreeNode c4 = new NArrayTreeNode(4);
-        NArrayTreeNode c5 = new NArrayTreeNode(5);
-        NArrayTreeNode c6 = new NArrayTreeNode(6);
-        List<NArrayTreeNode> list = new ArrayList<>();
-        list.add(c1);
-        list.add(c2);
-        list.add(c3);
-        list.add(c4);
-        node.children = list;
-        list = new ArrayList<>();
-        list.add(c5);
-        list.add(c6);
-        c2.children = list;
-        TreeNode result = new EncodeNArrayTreeToBT().convertToBT(node);
+    public TreeNode encode(Node root) {
+        if (root == null) {
+            return null;
+        }
+        TreeNode result = new TreeNode(root.val);
+        if (root.children.size() > 0) {
+            result.left = encode(root.children.get(0));
+        }
+        TreeNode cur = result.left;
+        for (int i = 1; i < root.children.size(); i++) {
+            cur.right = encode(root.children.get(i));
+            cur = cur.right;
+        }
+        return result;
+    }
 
-
+    // Decodes your binary tree to an n-ary tree.
+    public Node decode(TreeNode root) {
+        if (root == null) {
+            return null;
+        }
+        Node result = new Node(root.val, new LinkedList<>());
+        TreeNode cur = root.left;
+        while (cur != null) {
+            result.children.add(decode(cur));
+            cur = cur.right;
+        }
+        return result;
     }
 
 }
@@ -74,6 +80,22 @@ convert a N-ary tree to a binary tree recursively:
 
 1. Deal with its children recursively.
 2. Add its left child as the next child of its parent if it has a left child.
-3. Add its right child as the first child of the node itself if it has a right child.
+3. Add its right child as the first child of the TreeNode itself if it has a right child.
+
+Next Level -> left, Same Level -> right
+
+  1
+ / | \
+2  3  4
+
+to:
+
+ 1
+/
+2
+ \
+  3
+   \
+    4
 
  */

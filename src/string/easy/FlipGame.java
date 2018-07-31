@@ -21,7 +21,6 @@ If there is no valid move, return an empty list [].
 package string.easy;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -42,7 +41,7 @@ public class FlipGame {
             if(arr[i]=='+' && arr[i+1]=='+') {
                 arr[i]='-';
                 arr[i+1]='-';
-                result.add(Arrays.toString(arr));
+                result.add(new String(arr));
                 arr[i]='+';
                 arr[i+1]='+';
             }
