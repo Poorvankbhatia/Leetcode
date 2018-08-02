@@ -17,45 +17,35 @@ find(7) -> false
 
 package design.medium;
 
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Set;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by poorvank on 18/09/16.
  */
 public class TwoSum {
 
-    private HashMap<Integer,Integer> map = new HashMap<>();
+    private List<Integer> list = new ArrayList<>();
+    private Map<Integer, Integer> map = new HashMap<>();
 
-    public void add(int x) {
-        if(!map.containsKey(x)) {
-            map.put(x,1);
-        } else {
-            map.put(x,map.get(x)+1);
+    // Add the number to an internal data structure.
+    public void add(int number) {
+        if (map.containsKey(number)) map.put(number, map.get(number) + 1);
+        else {
+            map.put(number, 1);
+            list.add(number);
         }
     }
 
-    public boolean find(int x) {
-
-        Set<Integer> keys = map.keySet();
-
-        for (Integer element : keys) {
-            int valueToFind = x-element;
-            // In case we have two same digits in the input array. and the sum to find is equal to their sum.
-            if(map.containsKey(valueToFind)) {
-                /*
-                    Simplified version of  :
-                    if(valueToFind==element) {
-                        return map.get(valueToFind)>1;
-                    }
-                    return true;
-                 */
-                return valueToFind != element || map.get(valueToFind) > 1;
-            }
+    // Find if there exists any pair of numbers which sum is equal to the value.
+    public boolean find(int value) {
+        for (Integer aList : list) {
+            int num1 = aList, num2 = value - num1;
+            if ((num1 == num2 && map.get(num1) > 1) || (num1 != num2 && map.containsKey(num2))) return true;
         }
-
         return false;
-
     }
 
     public static void main(String[] args) {
