@@ -65,12 +65,11 @@ public class RobotRoomCleaner {
         // A number can be added to each visited cell
         // use string to identify the class
         Set<String> set = new HashSet<>();
-        int cur_dir = 0;   // 0: up, 90: right, 180: down, 270: left
+        int currentDir = 0;   // 0: up, 90: right, 180: down, 270: left
         backtrack(robot, set, 0, 0, 0);
     }
 
-    public void backtrack(Robot robot, Set<String> set, int i,
-                          int j, int cur_dir) {
+    private void backtrack(Robot robot, Set<String> set, int i, int j, int currentDir) {
         String tmp = i + "->" + j;
         if(set.contains(tmp)) {
             return;
@@ -84,7 +83,7 @@ public class RobotRoomCleaner {
             if(robot.move()) {
                 // can go directly. Find the (x, y) for the next cell based on current direction
                 int x = i, y = j;
-                switch(cur_dir) {
+                switch(currentDir) {
                     case 0:
                         // go up, reduce i
                         x = i-1;
@@ -105,7 +104,7 @@ public class RobotRoomCleaner {
                         break;
                 }
 
-                backtrack(robot, set, x, y, cur_dir);
+                backtrack(robot, set, x, y, currentDir);
                 // go back to the starting position
                 robot.turnLeft();
                 robot.turnLeft();
@@ -116,8 +115,8 @@ public class RobotRoomCleaner {
             }
             // turn to next direction
             robot.turnRight();
-            cur_dir += 90;
-            cur_dir %= 360;
+            currentDir += 90;
+            currentDir %= 360;
         }
 
     }
