@@ -128,7 +128,7 @@ private class Solution {
 
 At first, let's get clear that count is used to count the target number in nums. Say we now we have nums=[1,5,5,6,5,7,9,0] and the target is 5.
 
-Now let's focus on the loop. When i=1, we get the first target number, and by rnd.nextInt(++count) we select a random number between
+Now let's focus on the loop. When i=1, we get the first target number, and by random.nextInt(++count) we select a random number between
 [0, 1), which means actually you could only select 0, so the probability of making result = 1 is 1.
 
 Keep going. In the loop where i = 2, we get the second number. Now we have to get a random number in {0,1}. So what should we do if we
