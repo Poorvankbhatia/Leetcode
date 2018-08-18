@@ -70,6 +70,13 @@ public class RandomPickIndex {
 
 /*
 
+ It's just having something like count-2 works only when your count>1. Same way just 2 or 3 would work only when you have count
+ more or equal to the respective number. So to simplify, the number to compare against should be within 0 to count-1, any of that,
+  but borders are easier to define.
+If sticking to classical Reservoir approach I'd chose 'if (i == 0)'.
+
+
+
 int[] nums;
     Random rand;
     public Solution(int[] nums) {
@@ -149,6 +156,7 @@ We just use that random number to know whether current number has same probablit
 
 http://blog.gaurav.im/2017/07/30/reservoir-sampling/
 
+https://www.geeksforgeeks.org/select-a-random-number-from-stream-with-o1-space/
 
 https://www.geeksforgeeks.org/reservoir-sampling/
 
