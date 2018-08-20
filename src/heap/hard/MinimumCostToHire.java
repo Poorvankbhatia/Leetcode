@@ -69,7 +69,7 @@ We pay wage to every worker in the group with the same ratio compared to his own
 For every worker, he has an expected ratio of wage compared to his quality.
 
 So to minimize the total wage, we want a small ratio.
-So we sort all workers with their exoected ratio, and pick up K first worker.
+So we sort all workers with their expected ratio, and pick up K first worker.
 Now we have a minimum possible ratio for K worker and we their total quality.
 
 As we pick up next worker with bigger ratio, we increase the ratio for whole group.
