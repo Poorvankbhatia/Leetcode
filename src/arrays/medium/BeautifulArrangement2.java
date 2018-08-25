@@ -33,7 +33,7 @@ public class BeautifulArrangement2 {
                 res[i] = k % 2 != 0 ? l++ : r--;
                 k--;
             } else {
-                res[i] = k % 2 != 0? l++ : r--;
+                res[i] = l++;
             }
         return res;
     }
