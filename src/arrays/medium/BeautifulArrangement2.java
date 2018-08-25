@@ -29,7 +29,12 @@ public class BeautifulArrangement2 {
     public int[] constructArray(int n, int k) {
         int[] res = new int[n];
         for (int i = 0, l = 1, r = n; l <= r; i++)
-            res[i] = k > 1 ? (k-- % 2 != 0 ? l++ : r--) : (k % 2 != 0? l++ : r--);
+            if(k>1) {
+                res[i] = k % 2 != 0 ? l++ : r--;
+                k--;
+            } else {
+                res[i] = k % 2 != 0? l++ : r--;
+            }
         return res;
     }
 

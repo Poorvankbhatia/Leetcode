@@ -15,33 +15,19 @@ Word1 & Word2 can be equal also.
  */
 public class ShortestDistance {
 
-    private static int value(String[] arr,String word1,String word2) {
+    private static int value(String[] words,String word1,String word2) {
 
-        int i=-1,j=-1,k;
-        int minDistance = 0;
-        boolean flag= true;
-        boolean wordsAreEqual = word1.equals(word2);
-        for (k=0;k<arr.length;k++) {
-
-            if(word1.equals(arr[k]) && flag) {
-                i = k;
-                if(wordsAreEqual) {
-                    flag=!flag;
+        int index = -1;
+        int min = words.length;
+        for (int i = 0; i < words.length; i++) {
+            if (words[i].equals(word1) || words[i].equals(word2)) {
+                if (index != -1 && (word1.equals(word2) || !words[index].equals(words[i]))) {
+                    min = Math.min(i - index, min);
                 }
-            } else if(word2.equals(arr[k])) {
-                j = k;
-                if(wordsAreEqual) {
-                    flag=!flag;
-                }
+                index = i;
             }
-
-            if(i!=-1 && j!=-1) {
-                minDistance = Math.abs(i-j);
-            }
-
         }
-
-        return minDistance;
+        return min;
 
     }
 
