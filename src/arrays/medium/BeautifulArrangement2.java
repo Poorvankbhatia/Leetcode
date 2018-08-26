@@ -28,25 +28,37 @@ public class BeautifulArrangement2 {
 
     public int[] constructArray(int n, int k) {
         int[] res = new int[n];
-        for (int i = 0, l = 1, r = n; l <= r; i++)
-            if(k>1) {
-                res[i] = k % 2 != 0 ? l++ : r--;
-                k--;
+        int i=0,small=1,large=n;
+        boolean flag = true;
+        while (i<k) {
+            if(flag) {
+                res[i++]=small++;
             } else {
-                res[i] = l++;
+                res[i++]=large--;
             }
+            flag=!flag;
+        }
+        if(k%2==0) { // Distinct difference ends at 8,6
+           while (i<n) {
+               res[i++]=large--;
+           }
+        } else {
+            while (i<n) { // Distinct difference ends at 1,7..
+                res[i++]=small++;
+            }
+        }
         return res;
     }
 
     public static void main(String[] args) {
-        System.out.print(Arrays.toString(new BeautifulArrangement2().constructArray(5,4)));
+        System.out.print(Arrays.toString(new BeautifulArrangement2().constructArray(10,3)));
     }
 
 }
 
 /*
 
-Concise soln:
+Concise sol:
 
 if you have n number, the maximum k can be n - 1;
 if n is 9, max k is 8.
