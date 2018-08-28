@@ -20,6 +20,7 @@ You may assume the sum of all the numbers is in the range of a signed 32-bit int
 package arrays.medium;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by poorvank on 26/02/17.
@@ -28,50 +29,28 @@ public class ContinuousSubArraySum {
 
     public boolean checkSubarraySum(int[] nums, int k) {
 
-        if (null == nums) {
-            return false;
-        }
-        if (k == 1 && nums.length >= 2) {
-            return true;
-        }
-
-        HashMap<Integer, Integer> map = new HashMap<>();
-
-        int sum = 0;
-
-        for (int i = 0; i < nums.length; i++) {
-
-            sum += nums[i];
-
+        Map<Integer, Integer> map = new HashMap<Integer, Integer>(){{put(0,-1);}}; //{0,0} k=0
+        int runningSum = 0;
+        for (int i=0;i<nums.length;i++) {
+            runningSum += nums[i];
             if (k != 0) {
-                sum = sum % k;
-                // When we have input like {3,3} and 6
-                if (sum == 0 && i >= 1) {
+                runningSum %= k;
+            }
+            Integer prev = map.get(runningSum);
+            if (prev != null) {
+                if (i - prev > 1) {
                     return true;
                 }
             }
-
-            if (map.containsKey(sum)) {
-                if (k != 0) {
-                    return true;
-                } else {
-                    // for input like {0,0,3} and 0
-                    if (nums[map.get(sum)] == 0) {
-                        return true;
-                    }
-                }
-            }
-            map.put(sum, i);
-
+            else map.put(runningSum, i);
         }
-
         return false;
 
     }
 
     public static void main(String[] args) {
-        int[] arr = new int[]{3, 3};
-        int k = 6;
+        int[] arr = new int[]{3,0};
+        int k = 6; // 6*0=0
         System.out.println(new ContinuousSubArraySum().checkSubarraySum(arr, k));
     }
 
@@ -79,6 +58,8 @@ public class ContinuousSubArraySum {
 
 /*
 
-Same concept used as subarray with 0 sum.
+We iterate through the input array exactly once, keeping track of the running sum mod k of the elements in the process.
+If we find that a running sum value at index j has been previously seen before in some earlier index i in the array,
+then we know that the sub-array (i,j] contains a desired sum.
 
  */
