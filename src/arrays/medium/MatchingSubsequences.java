@@ -88,5 +88,11 @@ public class MatchingSubsequences {
         return start == children.size() ? -1 : children.get(start);
     }
 
+    public static void main(String[] args) {
+        String S = "abcde";
+        String[] words = {"acd","a", "bb", "ace"};
+        System.out.println(new MatchingSubsequences().numMatchingSubseq(S,words));
+    }
+
 
 }
