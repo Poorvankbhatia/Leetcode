@@ -38,10 +38,8 @@ package arrays.easy;
 public class MonotonicArray {
 
     public boolean isMonotonic(int[] array) {
-        if (isIncreasing(array) || isDecreasing(array))
-            return true;
+        return isIncreasing(array) || isDecreasing(array);
 
-        return false;
     }
 
     private boolean isDecreasing(int[] array) {
