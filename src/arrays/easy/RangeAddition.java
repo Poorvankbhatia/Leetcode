@@ -37,16 +37,8 @@ import java.util.Arrays;
  */
 public class RangeAddition {
 
-    public static void main(String[] args) {
-        int[][] updates = new int[][] {
-                {1,3,2},
-                {2,4,3},
-                {0,2,-2}
-        };
-
-        int length = 5;
-
-        int[] result = new int[5];
+    public int[] getModifiedArray(int length, int[][] updates) {
+        int[] result = new int[length];
 
         /*
              We don't need to update all the values of the subarray.
@@ -65,7 +57,7 @@ public class RangeAddition {
             result[i] = c;
         }
 
-        System.out.println(Arrays.toString(result));
+        return result;
     }
 
 }
