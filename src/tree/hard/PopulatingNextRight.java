@@ -84,25 +84,18 @@ public class PopulatingNextRight {
 /*
 
 CONSTANT SPACE:
-if(root==null) {
-            return;
-        }
-
-        while(root!=null) {
-            TreeLinkNode tmp = new TreeLinkNode(Integer.MIN_VALUE);
-            TreeLinkNode child = tmp;
-            while(root!=null) {
-                if(root.left!=null) {
-                    child.next = root.left;
-                    child=child.next;
-                }
-                if(root.right!=null) {
-                    child.next=root.right;
-                    child=child.next;
-                }
-                root= root.next;
-            }
-            root = tmp.next;
-        }
-
+public void connect(TreeLinkNode root) {
+    TreeLinkNode dummyhead = new TreeLinkNode(0);
+    TreeLinkNode current = null;
+    while (root != null) {
+        current = dummyhead;
+	while (root != null) {
+		if (root.left != null) { current.next = root.left; current = current.next; }
+		if (root.right != null) { current.next = root.right; current = current.next; }
+		root = root.next;
+	}
+        root = dummyhead.next;
+        dummyhead.next = null;
+    }
+}
  */
