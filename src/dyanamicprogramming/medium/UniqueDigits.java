@@ -39,7 +39,7 @@ This is a digit combination problem. Can be solved in at most 10 loops.
 
 When n == 0, return 1.
 
-When n == 1, _ can put 10 digit in the only position. [0, ... , 10]. Answer is 10.
+When n == 1, _ can put 10 digit in the only position. [0, … , 9]. Answer is 10.
 
 When n == 2, _ _ first digit has 9 choices [1, ..., 9], second one has 9 choices excluding the already chosen one. So totally 9 * 9 = 81. answer should be 10 + 81 = 91
 
