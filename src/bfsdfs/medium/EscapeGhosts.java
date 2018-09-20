@@ -64,20 +64,14 @@ If this distance is smaller, then it means that this ghost would eat the pacman 
  and hence we return false; else we return true.
 
 
-The taxicab distance is the number of moves required to get from point A to point B in our grid.
-It is calculated as dist(A, B) = abs(A.x - B.x) + abs(A.y - B.y).
+Let's say you always take the shortest route to reach the target because if you go a longer or a more tortuous route, I believe the ghost has a better
+chance of getting you.
+Denote your starting point A, ghost's starting point B, the target point C.
+For a ghost to intercept you, there has to be some point D on AC such that AD = DB. Fix D. By triangle inequality, AC = AD + DC = DB + DC >= BC.
+What that means is if the ghost can intercept you in the middle, it can actually reach the target at least as early as you do. So wherever the ghost
+starts at (and wherever the interception point is), its best chance of getting you is going directly to the target and waiting there rather than
+intercepting you in the middle.
 
-Let's say we start at S, the ghost starts at G, the target is T, and the ghost first meets us at X.
-This implies dist(G, X) <= dist(S, X), as the ghost must reach X before or at the time that we do.
-
-Now, if the ghost travels from G to X and then to T, it will reach T at time dist(G, T) <= dist(G, X) + dist(X, T) <= dist(S, X) + dist(X, T).
- The first inequality is because of the triangle inequality that all distance metrics satisfy.
-
-The above shows that it is at least as good for the ghost to just travel directly to the target: if it could reach us beforehand
-(at X), it will also reach us if it goes to X then to T, and then it would reach us if it just went directly to T.
-
-Also, if the ghost goes directly to the target, then a necessary condition is clearly that we get to the target before the ghost.
-
-Once we can make the assumption that all parties just go directly to the target in the shortest time possible, the problem is greatly simplified.
+SEE IMAGES
 
  */
