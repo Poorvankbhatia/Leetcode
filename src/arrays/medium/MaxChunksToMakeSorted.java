@@ -65,6 +65,10 @@ Algorithm: Iterate through the array, each time all elements to the left are sma
 Use two arrays to store the left max and right min to achieve O(n) time complexity. Space complexity is O(n) too.
 This algorithm can be used to solve ver2 too.
 
+For a increasing straight line , (Max at i) < (Min of I + 1)...
+i.e [1..4] max =4 , [5..7] min in 5 ,
+So , If Max < Min , then there is no element on the right side , who belongs on the left side as per above observation.
+if Max > Min, it means , there is some element on the right side, who belongs on the left, so we CANNOT create a chunk.
 
 
  */
