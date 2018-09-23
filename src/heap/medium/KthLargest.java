@@ -14,6 +14,8 @@ You may assume k is always valid, 1 ≤ k ≤ array's length.
  */
 package heap.medium;
 
+import java.util.Random;
+
 /**
  * Created by poorvank on 05/09/16.
  */
@@ -22,6 +24,7 @@ public class KthLargest {
         if(nums==null || nums.length==0) {
             return Integer.MAX_VALUE;
         }
+        shuffle(nums);
         return quickSelect(nums,0,nums.length-1,nums.length-k);
     }
 
@@ -49,6 +52,23 @@ public class KthLargest {
         int temp = nums[i1];
         nums[i1]=nums[i2];
         nums[i2]=temp;
+    }
+
+    /*
+Sorting an already sorted array is worst case in quicksort, because whenever you pick a pivot,
+you discover that all the elements get placed on the same side of the pivot, so you don't split into two roughly equal halves at all.
+And often in practice this already sorted case will turn up more often than other cases.
+Randomly shuffling the data first is a quick way of ensuring that you really do end up with all cases turning up with equal probability,
+and therefore that this worst case will be as rare as any other case.
+It's worth noting that there are other strategies that deal well with already sorted data, such as choosing the middle element as the pivot.
+     */
+    private void shuffle(int a[]) {
+
+        Random random = new Random();
+        for(int ind = 1; ind < a.length; ind++) {
+            int r = random.nextInt(ind + 1);
+            swap(a, ind, r);
+        }
     }
 
     public static void main(String[] args) {
