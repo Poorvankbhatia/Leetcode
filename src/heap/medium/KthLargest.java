@@ -60,6 +60,16 @@ public class KthLargest {
 
 /*
 
+The basic idea is to use Quick Select algorithm to partition the array with pivot:
+
+Put numbers < pivot to pivot's left
+Put numbers > pivot to pivot's right
+Then
+
+if indexOfPivot == k, return A[k]
+else if indexOfPivot < k, keep checking left part to pivot
+else if indexOfPivot > k, keep checking right part to pivot
+
 https://stackoverflow.com/questions/8783408/why-is-the-runtime-of-the-selection-algorithm-on
 
 Why BS is O(logn) and quickselect is O(n):
