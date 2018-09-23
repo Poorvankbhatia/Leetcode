@@ -32,93 +32,50 @@ All possible pairs are returned from the sequence:
  */
 package heap.medium;
 
-import heap.MaxPriorityQueue;
-
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
+import java.util.PriorityQueue;
 
 /**
  * Created by poorvank on 05/09/16.
  */
 
-@SuppressWarnings("unchecked")
 public class KPairsWithSmallestSums {
 
-    private class Pair implements Comparable<Pair> {
-
-        private int e1;
-        private int e2;
-        private int sum;
-        private int[] array;
-
-        public Pair(int e1, int e2) {
-            this.e1 = e1;
-            this.e2 = e2;
-            this.sum = e1+e2;
-            array = new int[]{e1,e2};
-        }
-
-        public int getSum() {
-            return sum;
-        }
-
-        public int[] getArray() {
-            return array;
-        }
-
-        public int compareTo(Pair p) {
-            if(this.sum>p.getSum()) {
-                return 1;
-            } else if(this.sum < p.getSum()) {
-                return -1;
-            } else {
-                return 0;
-            }
-        }
-
-    }
-
     public List<int[]> kSmallestPairs(int[] nums1, int[] nums2, int k) {
-        List<int[]> result = new ArrayList<>();
-        MaxPriorityQueue<Pair> maxPriorityQueue = new MaxPriorityQueue(k);
-        Pair[] newArr = new Pair[nums1.length*nums2.length];
-
-        int x=0;
-
-        for (int aNums1 : nums1) {
-            for (int aNums2 : nums2) {
-                Pair p = new Pair(aNums1, aNums2);
-                newArr[x] = p;
-                if (x < k) {
-                    maxPriorityQueue.insert(p);
-                }
-                x++;
+        List<int[]> list = new ArrayList<>();
+        if(nums1==null || nums2==null || nums1.length==0 || nums2.length==0) {
+            return list;
+        }
+        PriorityQueue<int[]> pq = new PriorityQueue<>(new Comparator<int[]>() {
+            @Override
+            public int compare(int[] a,int[] b) {
+                return (a[0]+a[1])-(b[1]+b[0]);
             }
+        });
+        for(int i=0; i<nums1.length && i<k; i++) {
+            pq.offer(new int[]{nums1[i], nums2[0], 0});
         }
-
-        for (int i=k;i<newArr.length;i++) {
-            if(newArr[i].sum<maxPriorityQueue.getMaximumElement().getSum()) {
-                maxPriorityQueue.replaceRoot(newArr[i]);
+        while (!pq.isEmpty() && k-->0) {
+            int[] poll = pq.poll();
+            list.add(new int[]{poll[0],poll[1]}); // Because the integer arrays are in ascending order.
+            if(poll[2]==nums2.length-1) {
+                continue;
             }
+            pq.add(new int[]{poll[0],nums2[poll[2]+1],poll[2]+1});
         }
 
-        for (Pair pair : maxPriorityQueue) {
-            result.add(pair.array);
-        }
-
-        return result;
+        return list;
     }
-
-    public static void main(String[] args) {
-
-        int[] nums1 = new int[]{1,1,2};
-        int[] nums2 = new int[]{1,2,3};
-        KPairsWithSmallestSums k = new KPairsWithSmallestSums();
-        for (int[] array : k.kSmallestPairs(nums1,nums2,2)) {
-            System.out.println(Arrays.toString(array));
-        }
-
-    }
-
 }
+/*
+
+O(KlogK)
+
+Use min_heap to keep track on next minimum pair sum, and we only need to maintain K possible candidates in the data structure.
+
+Some observations: For every numbers in nums1, its best partner(yields min sum) always strats from nums2[0] since arrays are all sorted;
+And for a specific number in nums1, its next candidate sould be [this specific number] + nums2[current_associated_index + 1], unless out of boundary;)
+
+ */
