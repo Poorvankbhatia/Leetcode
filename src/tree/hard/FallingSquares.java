@@ -2,14 +2,18 @@
 
 On an infinite number line (x-axis), we drop given squares in the order they are given.
 
-The i-th square dropped (positions[i] = (left, side_length)) is a square with the left-most point being positions[i][0] and sidelength positions[i][1].
+The i-th square dropped (positions[i] = (left, side_length)) is a square with the left-most point being positions[i][0] and
+sidelength positions[i][1].
 
-The square is dropped with the bottom edge parallel to the number line, and from a higher height than all currently landed squares. We wait for each square to stick before dropping the next.
+The square is dropped with the bottom edge parallel to the number line, and from a higher height than all currently landed squares.
+We wait for each square to stick before dropping the next.
 
-The squares are infinitely sticky on their bottom edge, and will remain fixed to any positive length surface they touch (either the number line or another square). Squares dropped adjacent to each other will not stick together prematurely.
+The squares are infinitely sticky on their bottom edge, and will remain fixed to any positive length surface they touch
+(either the number line or another square). Squares dropped adjacent to each other will not stick together prematurely.
 
 
-Return a list ans of heights. Each height ans[i] represents the current highest height of any square we have dropped, after dropping squares represented by positions[0], positions[1], ..., positions[i].
+Return a list ans of heights. Each height ans[i] represents the current highest height of any square we have dropped,
+after dropping squares represented by positions[0], positions[1], ..., positions[i].
 
 Example 1:
 Input: [[1, 2], [2, 3], [6, 1]]
@@ -142,3 +146,60 @@ public class FallingSquares {
     }
 
 }
+
+/*
+
+The squares divide the number line into many segments with different heights.
+Therefore we can use a TreeMap to store the number line.
+The key is the starting point of each segment and the value is the height of the segment.
+For every new falling square (s, l), we update those segments between s and s + l.
+
+
+
+TreeMap Soln:
+
+class Solution {
+    public List<Integer> fallingSquares(int[][] positions) {
+        List<Integer> list = new ArrayList<>();
+        TreeMap<Integer, Integer> map = new TreeMap<>();
+
+        // at first, there is only one segment starting from 0 with height 0
+        map.put(0, 0);
+
+        // The global max height is 0
+        int max = 0;
+
+        for(int[] position : positions) {
+
+            // the new segment
+            int start = position[0], end = start + position[1];
+
+            // find the height among this range
+            Integer key = map.floorKey(start);
+            int h = map.get(key);
+            key = map.higherKey(key);
+            while(key != null && key < end) {
+                h = Math.max(h, map.get(key));
+                key = map.higherKey(key);
+            }
+            h += position[1];
+
+            // update global max height
+            max = Math.max(max, h);
+            list.add(max);
+
+            // update new segment and delete previous segments among the range
+            int tail = map.floorEntry(end).getValue();
+            map.put(start, h);
+            map.put(end, tail);
+            key = map.higherKey(start);
+            while(key != null && key < end) {
+                map.remove(key);
+                key = map.higherKey(key);
+            }
+        }
+        return list;
+    }
+}
+
+ */
