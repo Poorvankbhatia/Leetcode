@@ -102,7 +102,6 @@ Note that if there are odd number of elements, the left half must be 1 more than
 must be indexed as even (e.g. 0, 1, 2, 3, 4, 5, 6), and since nums[even] < nums[odd], so the last number must be in the smaller half.
 
 
- //TODO : O(n) solution
     public static void main(String[] args) {
 
         int[] a = new int[]{1,1,1,2,2,2};

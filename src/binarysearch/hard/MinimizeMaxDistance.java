@@ -29,7 +29,9 @@ package binarysearch.hard;
 public class MinimizeMaxDistance {
 
     public double minmaxGasDist(int[] stations, int K) {
-        double l = 0, r = stations[stations.length - 1] - stations[0]; // assuming the positions are sorted, or alternatively we can go through the stations array to find the maximum distance between all adjacent stations
+        double l = 0, r = stations[stations.length - 1] - stations[0];
+        // assuming the positions are sorted, or alternatively we can go through the stations array
+        // to find the maximum distance between all adjacent stations
 
         while (r - l >= 1e-6) {
             double d = (r + l) / 2;
