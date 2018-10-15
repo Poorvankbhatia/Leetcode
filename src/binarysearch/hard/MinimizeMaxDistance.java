@@ -28,28 +28,30 @@ package binarysearch.hard;
  */
 public class MinimizeMaxDistance {
 
-    public double minmaxGasDist(int[] stations, int K) {
-        double l = 0, r = stations[stations.length - 1] - stations[0];
-        // assuming the positions are sorted, or alternatively we can go through the stations array
-        // to find the maximum distance between all adjacent stations
-
-        while (r - l >= 1e-6) {
-            double d = (r + l) / 2;
-
-            int cnt = 0;
-
-            for (int i = 0; i < stations.length - 1; i++) {
-                cnt += Math.ceil((stations[i + 1] - stations[i]) / d) - 1;
+    class Solution {
+        public double minmaxGasDist(int[] stations, int K) {
+            double l = 0;
+            double r = 1e8;
+            while(r - l > 1e-6){
+                double m = l + (r-l)/2.0;
+                if(possible(stations, K, m)){
+                    r = m;
+                }else{
+                    l = m;
+                }
             }
 
-            if (cnt <= K) {
-                r = d;
-            } else {
-                l = d;
-            }
+            return l;
         }
 
-        return l;
+        private boolean possible(int [] stations, int K, double d){
+            int count = 0;
+            for(int i = 0; i<stations.length-1; i++){
+                count += (int)((stations[i+1] - stations[i])/d);
+            }
+
+            return count <= K;
+        }
     }
 
 }
