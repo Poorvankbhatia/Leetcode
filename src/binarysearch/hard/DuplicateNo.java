@@ -44,7 +44,7 @@ public class DuplicateNo {
             }
         }
 
-        return r;
+        return l;
 
 
     }
