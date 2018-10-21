@@ -59,7 +59,7 @@ public class KSimilarStrings {
                     if (s.charAt(i) == B.charAt(j)) {
                         String temp = swap(s, i, j);
                         if (temp.equals(B)) {
-                            return res;
+                            return res+1;
                         }
                         if (vis.add(temp)) {
                             q.add(temp);
@@ -78,6 +78,10 @@ public class KSimilarStrings {
         ca[i] = ca[j];
         ca[j] = temp;
         return new String(ca);
+    }
+
+    public static void main(String[] args) {
+        System.out.println(new KSimilarStrings().kSimilarity("abc","bca"));
     }
 
 }
