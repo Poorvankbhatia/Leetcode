@@ -39,17 +39,15 @@ public class RedundantConnection {
 
     public int[] findRedundantConnection(int[][] edges) {
 
+        int n = edges.length;
+        UnionFind uf =  new UnionFind(n+1);
         List<int[]> list = new ArrayList<>();
-        UnionFind unionFind = new UnionFind(2000);
-
-        for (int[] edge : edges) {
-            if(unionFind.isConnected(edge[0],edge[1])) {
+        for(int[] edge : edges) {
+            if(uf.isConnected(edge[0],edge[1])) {
                 list.add(edge);
-            } else {
-                unionFind.union(edge[0],edge[1]);
             }
+            uf.union(edge[0],edge[1]);
         }
-
         return list.get(list.size()-1);
 
     }
