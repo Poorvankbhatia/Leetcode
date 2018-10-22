@@ -42,15 +42,12 @@ public class SmallestRectangle {
 
         boolean[][] visited = new boolean[m][n];
 
-        minAreaHelper(image, x, y, visited);
+        minAreaHelper(image, x, y, visited,m,n);
 
         return area;
     }
 
-    private void minAreaHelper(char[][] image, int x, int y,
-                               boolean[][] visited) {
-        int m = image.length;
-        int n = image[0].length;
+    private void minAreaHelper(char[][] image, int x, int y, boolean[][] visited,int m,int n) {
 
         if (x < 0 || x >= m || y < 0 || y >= n || visited[x][y]) {
             return;
@@ -71,10 +68,10 @@ public class SmallestRectangle {
         int curArea = (top - bottom + 1) * (right - left + 1);
         area = Math.max(area, curArea);
 
-        minAreaHelper(image, x, y - 1, visited);
-        minAreaHelper(image, x, y + 1, visited);
-        minAreaHelper(image, x - 1, y, visited);
-        minAreaHelper(image, x + 1, y, visited);
+        minAreaHelper(image, x, y - 1, visited,m,n);
+        minAreaHelper(image, x, y + 1, visited,m,n);
+        minAreaHelper(image, x - 1, y, visited,m,n);
+        minAreaHelper(image, x + 1, y, visited,m,n);
     }
 
     public static void main(String[] args) {
