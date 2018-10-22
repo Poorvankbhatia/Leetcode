@@ -60,7 +60,7 @@ public class SlidingPuzzle {
         }
     }
 
-    int[][] directions = new int[][]{{0,1},{1,0},{0,-1},{-1,0}};
+    private int[][] directions = new int[][]{{0,1},{1,0},{0,-1},{-1,0}};
 
     public int slidingPuzzle(int[][] board) {
 

@@ -63,12 +63,12 @@ public class SmallestRectangle {
         visited[x][y] = true;
 
         // update the border
-        top = Math.min(top, y);
-        bottom = Math.max(bottom, y);
+        top = Math.max(top, y);
+        bottom = Math.min(bottom, y);
         left = Math.min(left, x);
         right = Math.max(right, x);
 
-        int curArea = (bottom - top + 1) * (right - left + 1);
+        int curArea = (top - bottom + 1) * (right - left + 1);
         area = Math.max(area, curArea);
 
         minAreaHelper(image, x, y - 1, visited);
@@ -80,7 +80,8 @@ public class SmallestRectangle {
     public static void main(String[] args) {
         char[][] arr = new char[][] {
                 {'0','0','1','0'},
-                {'0','1','1','0'}
+                {'0','1','1','0'},
+                {'0','1','0','0'}
         };
         System.out.println(new SmallestRectangle().minArea(arr,0,2));
     }
