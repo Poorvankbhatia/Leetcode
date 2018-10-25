@@ -36,6 +36,8 @@ Every integer represented in the 2D-array will be between 1 and N, where N is th
 package bfsdfs.hard;
 
 
+import java.util.Arrays;
+
 /**
  * Created by poorvank.b on 28/09/17.
  */
@@ -79,6 +81,13 @@ public class RedundantConnection2 {
             i = parent[i];
         }
         return i;
+    }
+
+    public static void main(String[] args) {
+        int[][] a = new int[][] {
+                {4,2},{1,5},{5,2},{5,3},{2,4}
+        };
+        System.out.println(Arrays.toString(new RedundantConnection2().findRedundantDirectedConnection(a)));
     }
 
 }
