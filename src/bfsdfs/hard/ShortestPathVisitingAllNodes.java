@@ -125,4 +125,6 @@ In order to prevent duplicate paths from being visited, we use a Set<Tuple> to s
  Since we don't really need the cost here, I set cost to 0 for elements stored in Set. You could also set the actual cost value here,
   it wouldn't make a difference :)
 
+  there are 2^n * n possible states. complexity = 2^n * n
+
  */
