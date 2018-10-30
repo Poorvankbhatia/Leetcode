@@ -148,4 +148,8 @@ the left island connects to right island and acttaches top, and left island is o
 1111111111
 the island size is just enlarged by 1, which means no brick drops.
 
+Time Complexity: O(N∗Q∗α(N∗Q)), where N = R*C is the number of grid squares, Q is the length of hits, and α is the Inverse-Ackerman function.
+
+Space Complexity: O(N)O(N).
+
  */
