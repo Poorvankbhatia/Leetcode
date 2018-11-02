@@ -22,8 +22,8 @@ public class SubArraysWithGivenSum {
         Map<Integer, Integer> preSum = new HashMap<>();
         preSum.put(0, 1);
 
-        for (int i = 0; i < input.length; i++) {
-            sum += input[i];
+        for (int anInput : input) {
+            sum += anInput;
             if (preSum.containsKey(sum - k)) {
                 result += preSum.get(sum - k);
             }
@@ -36,8 +36,8 @@ public class SubArraysWithGivenSum {
     }
 
     public static void main(String[] args) {
-        int[] arr = new int[]{0,0,0,1,0,0,1,0,12,2};
-        System.out.println(new SubArraysWithGivenSum().subarraySum(arr,0));
+        int[] arr = new int[]{1,0,1,0,1};
+        System.out.println(new SubArraysWithGivenSum().subarraySum(arr,2));
     }
 
 }
