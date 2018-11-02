@@ -56,12 +56,13 @@ public class CountDistinctPalindromicSubsequences {
         }
 
         Integer[][] dp = new Integer[S.length()+1][S.length()+1];
-        return memo(S,set,dp,0,S.length());
+        return memo(set,dp,0,S.length());
 
     }
 
-    private int memo(String S,TreeSet<Integer>[] sets,Integer[][] dp,int start,int end) {
+    private int memo(TreeSet<Integer>[] sets,Integer[][] dp,int start,int end) {
 
+        System.out.println(start+" "+end);
         if(start>=end) {
             return 0;
         }
@@ -75,7 +76,7 @@ public class CountDistinctPalindromicSubsequences {
             if(sets[i].size()==0) {
                 continue;
             }
-            Integer newStart = sets[i].ceiling(start);
+            Integer newStart = sets[i].ceiling(start); // Return null.
             Integer newEnd = sets[i].lower(end);
             if(newStart==null || newStart>=end) {
                 continue;
@@ -85,7 +86,7 @@ public class CountDistinctPalindromicSubsequences {
             } else {
                 ans+=1;
             }
-            ans+=memo(S,sets,dp,newStart+1,newEnd);
+            ans+=memo(sets,dp,newStart+1,newEnd);
         }
 
         dp[start][end]= (int) (ans%div);
@@ -94,7 +95,7 @@ public class CountDistinctPalindromicSubsequences {
     }
 
     public static void main(String[] args) {
-        System.out.println(new CountDistinctPalindromicSubsequences().countPalindromicSubsequences("a"));
+        System.out.println(new CountDistinctPalindromicSubsequences().countPalindromicSubsequences("aaab"));
     }
 
 }
@@ -123,17 +124,25 @@ c -> {1, 2}
 Then call the recursive function in the range of [0, n]. In the recursive function, first determine if start is greater than or equal
 to end, return 0. If the value of the current position in memo is greater than 0, it indicates that the current situation has been calculated,
  and directly returns the value in the memo array. Otherwise, all letters are traversed. If there is no value in the array corresponding to a
- letter, it means that the letter does not appear in the string, skipping. Then we find the first position in the alphabet array not less than
-  start, find the first position less than end, in the current loop, start is 0, end is 4, the current letter b, our new_start points to 0,
-   new_end points 3. If the current new_start points to end(), or the position it points to is greater than end, it means that there is no
-    letter b in the current range, skip it directly, otherwise the result res is incremented by 1, because new_start exists at this time,
-     at least one single letter exists. b, can also be used as a palindrome subsequence, then see if new_start and new_end are not the same,
+ letter, it means that the letter does not appear in the string, skipping.
+  Then we find the first position in the alphabet array not less than
+start, find the first position less than end, in the current loop, start is 0, end is 4, the current letter b, our new_start points to 0,
+new_end points 3. If the current new_start points to end(), or the position it points to is greater than end, it means that there is no
+letter b in the current range, skip it directly, otherwise the result res is incremented by 1, because new_start exists at this time,
+at least one single letter exists. b, can also be used as a palindrome subsequence, then see if new_start and new_end are not the same,
  indicating that the two point to a different b, then res should be incremented by 1, because a new palindrome subsequence "bb" has been
- added. The following is to call the recursive function on the middle part, and add the return value to the result res. At this point,
+ added.
+ The following is to call the recursive function on the middle part, and add the return value to the result res. At this point,
  the letter b is processed. Now the letter c is processed. At this time, the start is still 0, the end is still 4, the new_start points to 1,
  and the new_end points to 2. The same as the above analysis, the new_start is in the range, and the result is incremented by 1,
  because On the "c", then new_start and new_end are different, the result res is incremented by 1, because "cc" is added, there is no character
  in between, the result of calling recursion is 0, the for loop ends, we will memo[start] The value of [end] is reserved for the super large
  number, and the value can be returned.
+
+
+ it will first check the string [a...a, b...b, c...c, d...d], then goes to next level.
+For palindrome a...a, in next level, it will check [aa...a, ab...a, ac...a, ad...a].
+
+Time complexity : (N^2)*logN.
 
  */

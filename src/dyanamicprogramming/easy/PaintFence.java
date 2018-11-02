@@ -40,9 +40,9 @@ the last two posts have the same color, the number of ways to paint in this case
 
 the last two posts have different colors, and the number of ways in this case is diffColorCounts.
 
-The reason why we have these two cases is that we can easily compute both of them, and that is all I do.
+The reason why we have these two cases is that we can easily compute both of them, and that is all we do.
  When adding a new post, we can use the same color as the last one (if allowed) or different color.
- If we use different color, there're k-1 options, and the outcomes shoule belong to the diffColorCounts category.
+ If we use different color, there're k-1 options, and the outcomes should belong to the diffColorCounts category.
   If we use same color, there's only one option, and we can only do this when the last two have different colors
   (which is the diffColorCounts). There we have our induction step.
 
