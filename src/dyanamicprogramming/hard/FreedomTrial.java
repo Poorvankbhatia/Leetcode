@@ -40,23 +40,21 @@ import java.util.Map;
 public class FreedomTrial {
 
     //For every configuration we store minimum distance from starting of ring to current char of key
-    Map<String,Map<Integer,Integer>> map;
-
+    Map<String,Integer> map;
     public int findRotateSteps(String ring, String key) {
         map = new HashMap<>();
-        return countRotations(ring,key,0)+key.length();
+        return key.length()+countRotations(ring,key,0);
     }
 
-
-    private int firstOccurrence(String ring,char c) { // First occurrence clockwise
+    private int firstOccurrence(String ring,char c) {
         return ring.indexOf(c);
     }
 
-    private int lastOccurrence(String ring,char c) { // First occurrence anti-clockwise
-        //Important condition
+    private int lastOccurrence(String ring,char c) {
         if(ring.charAt(0)==c) {
             return 0;
         }
+
         return ring.lastIndexOf(c);
     }
 
@@ -64,26 +62,23 @@ public class FreedomTrial {
         if(keyIndex==key.length()) {
             return 0;
         }
-        int result = 0;
-        if(map.containsKey(ring) && map.get(ring).containsKey(keyIndex)) {
-            return map.get(ring).get(keyIndex);
+        String mapKey = keyIndex+"_"+ring;
+        if(map.get(mapKey)!=null) {
+            return map.get(mapKey);
         }
+
         int first = firstOccurrence(ring,key.charAt(keyIndex));
-        int last = lastOccurrence(ring,key.charAt(keyIndex));
+        int last = lastOccurrence(ring ,key.charAt(keyIndex));
         int clockwise = first+countRotations(ring.substring(first)+ring.substring(0,first),key,keyIndex+1);
-        int antiClockwise = ring.length()-last+countRotations(ring.substring(last)+ring.substring(0,last),key,keyIndex+1);
-        result = Math.min(clockwise, antiClockwise);
-        Map<Integer, Integer> ans = map.getOrDefault(ring, new HashMap<>());
-        ans.put(keyIndex, result);
-        map.put(ring, ans);
-        return result;
-
-
+        int anticlockwise = ring.length()-last+countRotations(ring.substring(last)+ring.substring(0,last),key,keyIndex+1);
+        int min = Math.min(clockwise,anticlockwise);
+        map.put(mapKey,min);
+        return min;
     }
 
     public static void main(String[] args) {
         String ring = "godding";
-        String key = "dodggi";
+        String key = "gg";
         System.out.print(new FreedomTrial().findRotateSteps(ring,key));
     }
 
