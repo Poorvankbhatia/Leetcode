@@ -24,48 +24,37 @@ public class InterleavingStrings {
             return false;
         }
 
-        boolean[][] dpTable = new boolean[s1.length()+1][s2.length()+1];
+        int m = s1.length();
+        int n = s2.length();
 
-        dpTable[0][0] = true;
+        boolean[][] invalid = new boolean[m+1][n+1];
+        return util(s1,s2,s3,0,0,0,invalid);
 
-        for (int j=1;j<=s2.length();j++) {
-            if(s2.charAt(j-1)==s3.charAt(j-1)) {
-                dpTable[0][j] = dpTable[0][j-1];
-            }
+
+    }
+
+    private boolean util(String s1,String s2,String s3,int i,int j,
+                         int k,boolean[][] invalid){
+
+        if(invalid[i][j]) {
+            return false;
+        }
+        if(k==s3.length()) {
+            return true;
+        }
+        boolean valid =  (i<s1.length() &&s1.charAt(i)==s3.charAt(k) && util(s1,s2,s3,i+1,j,k+1,invalid)) ||
+                (j<s2.length() && s2.charAt(j)==s3.charAt(k) && util(s1,s2,s3,i,j+1,k+1,invalid));
+
+        if(!valid) {
+            invalid[i][j]=true;
         }
 
-
-        for (int i=1;i<=s1.length();i++) {
-            if(s1.charAt(i-1)==s3.charAt(i-1)) {
-                dpTable[i][0] = dpTable[i-1][0];
-            }
-        }
-
-        for (int i=1;i<=s1.length();i++) {
-            for (int j=1;j<=s2.length();j++) {
-
-                char s1Char = s1.charAt(i-1);
-                char s2Char = s2.charAt(j-1);
-                char s3Char = s3.charAt(i+j-1);
-
-                if(s3Char!=s1Char && s3Char==s2Char) {
-                    dpTable[i][j] = dpTable[i][j-1];
-                } else if(s3Char==s1Char && s3Char!=s2Char) {
-                    dpTable[i][j] = dpTable[i-1][j];
-                } else if(s3Char==s1Char && s3Char==s2Char) {
-                    dpTable[i][j] = dpTable[i-1][j] || dpTable[i][j-1];
-                }
-
-            }
-        }
-
-
-        return dpTable[s1.length()][s2.length()];
+        return valid;
 
     }
 
     public static void main(String[] args) {
-        System.out.println(new InterleavingStrings().isInterleave("aa","ab","aaba"));
+        System.out.println(new InterleavingStrings().isInterleave("aa","ab","abaa"));
     }
 
 }
