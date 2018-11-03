@@ -83,7 +83,7 @@ public class FreedomTrial {
 
     public static void main(String[] args) {
         String ring = "godding";
-        String key = "ding";
+        String key = "dodggi";
         System.out.print(new FreedomTrial().findRotateSteps(ring,key));
     }
 
@@ -91,11 +91,15 @@ public class FreedomTrial {
 
 /*
 
+The key point in the problem is to make decision whether to move clockwise or anticlockwise.
+Actually to get optimal answer, we have to move clockwise for some characters of key and anti-clockwise for others.
+If apply brute force, then for each position in key we have two options,\
 Search for the character clockwise
 Search for the character anti-clockwise
+
 To find optimal answer we need to try both options and get minimum of them.
 Thus, we obtain dfs solution for the problem. But, there are duplicate calculation for some positions.
-Therefore, we need to memorize states. The state is defined by position of thering and the index of character in the key.
+Therefore, we need to memorize states. The state is defined by position of the ring and the index of character in the key.
 This way, we can avoid calculating number of steps for the same state.
 
  */

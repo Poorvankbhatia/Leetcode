@@ -65,7 +65,7 @@ public class DecodeWays2 {
     }
 
     public static void main(String[] args) {
-        String s = "*0";
+        String s = "*7";
         System.out.println(new DecodeWays2().numDecodings(s));
     }
 
