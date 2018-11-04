@@ -28,30 +28,36 @@ import java.util.Map;
  */
 public class OutOfBoundary {
 
-    private static long max = 1000000007;
+    private Map<String,Integer> map;
     public int findPaths(int m, int n, int N, int i, int j) {
-        return (int) pathUtil(m, n, N, i, j, new HashMap<>());
+        map = new HashMap<>();
+        return count(m,n,N,i,j);
     }
 
-    public long pathUtil(int m, int n, int steps, int i, int j, Map<Integer, Long> map) {
-        if (i<0 || j<0 || i==m || j==n) {
-            // out of boundary
+    private int count(int m,int n,int step,int i,int j) {
+
+        if (i < 0 || j < 0 || i == m || j == n) {
             return 1;
         }
-
-        int key = i * 10000 + j * 100 + steps;
-        Long p = map.get(key);
-        if (p != null) {
-            return p;
-        }
-
-        if (steps == 0) {
+        if (step == 0) {
             return 0;
         }
 
-        long paths = (pathUtil(m, n, steps-1, i+1, j, map) + pathUtil(m, n, steps-1, i-1, j, map) + pathUtil(m, n, steps-1, i, j+1, map) + pathUtil(m, n, steps-1, i, j-1, map)) % max;
-        map.put(key, paths);
-        return paths;
+        String key = i + "_" + j + "_" + step;
+
+        Integer result = map.get(key);
+        long mod = 1000000007L;
+        if (map.get(key) != null) {
+            return result;
+        }
+
+
+        long path = (count(m, n, step - 1, i + 1, j) % mod + count(m, n, step - 1, i, j + 1) % mod +
+                     count(m, n, step - 1, i - 1, j) % mod + count(m, n, step - 1, i, j - 1) % mod) % mod;
+
+        map.put(key, (int) path);
+        return (int) path;
+
     }
 
 }
