@@ -58,24 +58,25 @@ public class LongestIncreasingSubsequence {
     //nlog(n) solution
     private int lisMethod2(int[] nums) {
 
-        int n = nums.length;
-        if(n==0) {
+        if(nums==null || nums.length==0) {
             return 0;
         }
 
+        int n =  nums.length;
         int[] dp = new int[n];
-        int len = 0;
 
-        dp[0] = nums[0];
+        dp[0]=nums[0];
+        int len=0;
 
-        for (int i = 1; i < nums.length; i++) {
-            int pos = binarySearch(dp,len,nums[i]);
-            if (nums[i] < dp[pos]) {
-                dp[pos] = nums[i];
+        for(int i=1;i<n;i++) {
+
+            int pos = search(dp,nums[i],len);
+            if(nums[i]<dp[pos]) {
+                dp[pos]=nums[i];
             }
-            if (pos > len) {
-                len = pos;
-                dp[len] = nums[i];
+            if(pos>len) {
+                len=pos;
+                dp[len]=nums[i];
             }
         }
 
@@ -83,32 +84,40 @@ public class LongestIncreasingSubsequence {
 
     }
 
+    private int search(int[] dp,int target,int len) {
 
-    private int binarySearch(int[] dp,int len,int val) {
-        int left = 0;
-        int right = len;
-        while(left+1 < right) {
-            int mid = left + (right-left)/2;
-            if (dp[mid] == val) {
-                return mid;
-            } else {
-                if (dp[mid] < val) {
-                    left = mid;
-                } else {
-                    right = mid;
-                }
-            }
+        int start=0;
+        int end = len;
+
+        if(dp[start]>=target) {
+            return start;
         }
-        if (dp[right] < val) return len+1;
-        else if (dp[left] >= val) return left;
-        else return right;
 
+        if(dp[end]<target) {
+            return end+1;
+        }
+
+        while(start<end) {
+
+            int mid = start+(end-start)/2;
+            if(dp[mid]==target) {
+                return mid;
+            }
+            if(dp[mid]>target) {
+                end=mid;
+            } else {
+                start=mid+1; // in case of (0,1) start should go to 1 otherwise infinite loop.
+            }
+
+        }
+
+        return start;
     }
 
 
     public static void main(String[] args) {
 
-        int[] arr = new int[]{2, 5, 6, 7, 101, 18};
+        int[] arr = new int[]{2, 6,5};
         System.out.println(new LongestIncreasingSubsequence().lengthOfLIS(arr));
 
     }
