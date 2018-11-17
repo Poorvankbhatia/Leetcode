@@ -36,9 +36,9 @@ import java.util.Set;
  */
 public class MinAreaRectangle {
     public int minAreaRect(int[][] points) {
-        Set<Integer> s = new HashSet<>();
+        Set<String> s = new HashSet<>();
         for (int[] p : points) {
-            s.add(p[0] * 40001 + p[1]);
+            s.add(p[0] +"_"+ p[1]);
         }
         int min = Integer.MAX_VALUE;
         int l = points.length;
@@ -49,8 +49,8 @@ public class MinAreaRectangle {
                 if (p1[0] == p2[0] || p1[1] == p2[1]) {
                     continue;
                 }
-                int need1 = p1[0] * 40001 + p2[1];
-                int need2 = p2[0] * 40001 + p1[1];
+                String need1 = p1[0] +"_" + p2[1];
+                String need2 = p2[0] +"_" + p1[1];
                 if (s.contains(need1) && s.contains(need2)) {
                     min = Math.min(Math.abs(p1[0]-p2[0]) * Math.abs(p1[1]-p2[1]), min);
                 }
