@@ -61,6 +61,6 @@ public class OrderlyQueue {
 /*
 
 For K = 1, try all queue positions: O(N)
-For K > 1, characers may be re-arranged in any order, so, we may just sort the queue: O(N) in case of counting
+For K > 1, characters may be re-arranged in any order, so, we may just sort the queue: O(N) in case of counting
 
  */

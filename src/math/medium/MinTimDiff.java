@@ -23,32 +23,29 @@ import java.util.List;
 public class MinTimDiff {
 
     public int findMinDifference(List<String> timePoints) {
-        int timeCount = timePoints.size();
-        int sortedTimes[] = new int[timeCount];
-
-        for (int i = 0; i < timeCount; i++) {
-            String[] arr = timePoints.get(i).split(":");
-            String h = arr[0];
-            String s = arr[1];
-            int t = Integer.valueOf(h)*60 + Integer.valueOf(s);
-            sortedTimes[i] = t;
+        int[] timeRevert = new int[timePoints.size()];
+        for (int i = 0; i < timePoints.size(); i++) {
+            String timePoint = timePoints.get(i);
+            String[] timeParts = timePoint.split(":");
+            int hour = Integer.valueOf(timeParts[0].trim());
+            int minute = Integer.valueOf(timeParts[1].trim());
+            int revert = hour * 60 + minute;
+            timeRevert[i] = revert;
         }
-        Arrays.sort(sortedTimes);/*sort times*/
-
-        /*Number of minutes in a day.*/
-        int minDiff = 1440;
-        for (int i = 0; i < timeCount; i++) {
-            int curr = sortedTimes[i];
-            int prev = sortedTimes[(timeCount+i-1)%timeCount];
-            //Handle case of (24:00 && 00:00)
-            int diffPrev = Math.abs(curr - prev) < 1440 - Math.abs(curr - prev ) ?
-                    Math.abs(curr - prev) :  1440 - Math.abs(curr - prev  ) ;
-            if (minDiff > diffPrev) {
-                minDiff = diffPrev;
+        Arrays.sort(timeRevert);
+        int min = Integer.MAX_VALUE;
+        for (int i = 0; i < timeRevert.length; i++) {
+            if (i < timeRevert.length - 1) {
+                if (timeRevert[i + 1] - timeRevert[i] < min) {
+                    min = timeRevert[i + 1] - timeRevert[i];
+                }
+            } else {
+                if (timeRevert[0] + 1440 - timeRevert[i] < min) {
+                    min = timeRevert[0] + 1440 - timeRevert[i];
+                }
             }
         }
-
-        return minDiff;
+        return min;
 
     }
 
