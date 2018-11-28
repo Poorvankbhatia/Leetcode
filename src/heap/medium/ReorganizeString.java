@@ -41,32 +41,29 @@ public class ReorganizeString {
         priorityQueue.addAll(characterCount.entrySet());
 
         StringBuilder result = new StringBuilder();
+        Queue<Map.Entry<Character,Integer>> queue = new LinkedList<>();
 
         while (!priorityQueue.isEmpty()) {
 
-            int step=2;
-            List<Map.Entry<Character,Integer>> list = new ArrayList<>();
-            while (step>0 && !priorityQueue.isEmpty()) {
-                Map.Entry<Character,Integer> entry = priorityQueue.poll();
-                entry.setValue(entry.getValue()-1);
-                list.add(entry);
-                result.append(entry.getKey());
-                step--;
+            Map.Entry<Character, Integer> entry = priorityQueue.poll();
+            entry.setValue(entry.getValue() - 1);
+            queue.offer(entry);
+            result.append(entry.getKey());
+
+
+            if(queue.size()<2) {
+                continue;
             }
 
-            for (Map.Entry<Character,Integer> entry : list) {
-                if(entry.getValue()!=0) {
-                    priorityQueue.add(entry);
-                }
-            }
+            Map.Entry<Character, Integer> front = queue.poll();
 
-            if(result.length()>1 && result.charAt(result.length()-1)==result.charAt(result.length()-2)) {
-                return "";
+            if(front.getValue()>0) {
+                priorityQueue.offer(front);
             }
 
         }
 
-        return result.toString();
+        return result.length() == S.length() ? result.toString() : "";
     }
 
     public static void main(String[] args) {

@@ -51,7 +51,7 @@ public class MultiplicationTable {
             }
         }
 
-        return high;
+        return low;
 
     }
 
