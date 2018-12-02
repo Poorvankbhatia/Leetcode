@@ -105,7 +105,9 @@ Consider the following repeating sentence string, with positions of the start ch
 "abc de f abc de f abc de f ..."
  ^      ^     ^    ^      ^
  0      7     13   18     25
-Our goal is to find the start position of the row next to the last row on the screen, which is 25 here. Since actually it's the length of everything earlier, we can get the answer by dividing this number by the length of (non-repeated) sentence string. Note that the non-repeated sentence string has a space at the end; it is "abc de f " in this example.
+Our goal is to find the start position of the row next to the last row on the screen, which is 25 here. Since actually it's the length of everything
+earlier, we can get the answer by dividing this number by the length of (non-repeated) sentence string.
+Note that the non-repeated sentence string has a space at the end; it is "abc de f " in this example.
 
 Here is how we find that position. In each iteration, we need to adjust start based on spaces either added or removed.
 
@@ -120,7 +122,7 @@ Hope this helps.
 
 
 This is a Greedy approach. Since we want to know how many times the given sentence can be fitted, we are actually looking for the MAXIMUM
-time the given sentence can be fitted. Hance, we can try to put as many words in one line as possible, making up the greedy aporoach.
+time the given sentence can be fitted. Hence, we can try to put as many words in one line as possible, making up the greedy approach.
 In this process, we first try to put as many words in one line as possible and trim the tailing words that does not fit in that line as a whole,
 leaving all remaining positions in that line after trimming empty (as space). Then we continue filling next line by starting from the word after
 the last word in previous line. In this process we can make use of modulo operation to deal with the wrapping back issue for the sentence.

@@ -1,4 +1,4 @@
-package math;
+package math.medium;
 
 /**
  * Created by poorvank.b on 15/07/17.
