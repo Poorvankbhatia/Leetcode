@@ -33,7 +33,6 @@ package bfsdfs.medium;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * Created by poorvank.b on 05/12/18.
@@ -80,7 +79,7 @@ public class MoveStones {
         String parent1 = find(s1);
         String parent2 = find(s2);
 
-        if(Objects.equals(parent1, parent2)) {
+        if(parent1.equals(parent2)) {
             return;
         }
 

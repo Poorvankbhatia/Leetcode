@@ -25,6 +25,7 @@ import tree.TreeNode;
  */
 public class Diameter {
 
+    private int max=0;
     public int diameterOfBinaryTree(TreeNode root) {
 
         if(root==null) {
@@ -34,11 +35,8 @@ public class Diameter {
         int lHeight = height(root.left);
         int rHeight = height(root.right);
 
-        int lDiameter = diameterOfBinaryTree(root.left);
-        int rDiameter = diameterOfBinaryTree(root.right);
-
-        return Math.max(Math.max(lDiameter,rDiameter),(lHeight+rHeight));
-
+        max= Math.max(max,(lHeight+rHeight+1));
+        return max;
     }
 
     private int height(TreeNode root) {
@@ -55,4 +53,28 @@ public class Diameter {
 
 /*
  G I
+
+ Another approach:
+ class Solution {
+    private int max=0;
+    public int diameterOfBinaryTree(TreeNode root) {
+        if(root==null) {
+            return 0;
+        }
+        height(root);
+        return max-1;
+    }
+     private int height(TreeNode root) {
+
+        if(root==null) {
+            return 0;
+        }
+        int lHeight = height(root.left);
+        int rHeight = height(root.right);
+        max= Math.max(max,(lHeight+rHeight+1));
+        return Math.max(lHeight,rHeight)+1;
+    }
+
+}
+
  */
