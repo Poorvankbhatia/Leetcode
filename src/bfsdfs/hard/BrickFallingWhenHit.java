@@ -112,7 +112,7 @@ public class BrickFallingWhenHit {
 
 /*
 
-If no bircks drop, then after all operations. The grid will be look like a pool with multi islands.
+If no bricks drop, then after all operations. The grid will be look like a pool with multi islands.
 for example:
 0010000100
 0111001110
@@ -140,7 +140,7 @@ the left island does not reach the top, so no brick drops.
 0000000100
 0111001110
 1111111111
-the left island connects to right island and acttaches top, and left island is original 7, which means 7 bricks drop in this operation.
+the left island connects to right island and attaches top, and left island is original 7, which means 7 bricks drop in this operation.
 
 [0,2]
 0010000100
