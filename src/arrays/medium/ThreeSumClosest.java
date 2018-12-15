@@ -20,40 +20,29 @@ public class ThreeSumClosest {
     public int threeSumClosest(int[] nums, int target) {
 
 
-        if(null == nums || nums.length==0) {
-            return 0;
-        } else if(nums.length<3) {
-            int sum =0;
-            for (Integer n :nums) {
-                sum += n;
-            }
-            return sum;
-        }
-
+        int n = nums.length;
+        int val = Integer.MAX_VALUE;
+        int ans=0;
         Arrays.sort(nums);
 
-        int ans = nums[0] + nums[1] + nums[2];
+        for(int i=0;i<n-2;i++) {
+            int j=i+1;
+            int k=n-1;
 
-        for (int i=0;i<nums.length-2;i++) {
-
-            int j = i+1;
-            int k = nums.length-1;
-
-            while (j<k) {
-                int sum = nums[i] + nums[j] + nums[k];
-                if(Math.abs(target-ans)>Math.abs(target-sum)) {
-                    ans = sum;
-                    if(ans == target) {
-                        return target;
-                    }
+            while(j<k) {
+                int sum = nums[i]+nums[j]+nums[k];
+                if(sum==target) {
+                    return target;
                 }
-
+                if(Math.abs(sum-target)<val) {
+                    ans = sum;
+                    val = Math.abs(sum-target);
+                }
                 if(sum>target) {
                     k--;
                 } else {
-                    j++;
+                   j++;
                 }
-
             }
 
         }
