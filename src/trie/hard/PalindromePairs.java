@@ -56,6 +56,8 @@ public class PalindromePairs {
 
             for (String key : keyWithWordPrefix) {
                 int keyVal = trie.get(key);
+
+
                 List<Integer> list = new ArrayList<>();
                 if(!word.equals(key)) {
                     boolean isPal = isPalindrome(key.substring(word.length()));
