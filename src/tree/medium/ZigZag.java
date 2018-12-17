@@ -102,3 +102,46 @@ public class ZigZag {
 
 
 }
+
+/*
+
+Alternate solution:
+
+public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
+        List<List<Integer>> result = new ArrayList<>();
+        if(root==null) {
+            return result;
+        }
+
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
+
+        boolean flag =true;
+        while(!queue.isEmpty()) {
+            int size = queue.size();
+            LinkedList<Integer> list = new LinkedList<>();
+            for(int i=0;i<size;i++) {
+                TreeNode current = queue.poll();
+                if(flag) {
+                    list.add(current.val);
+                } else {
+                    list.addFirst(current.val);
+                }
+
+                if(current.left!=null) {
+                    queue.add(current.left);
+                }
+                if(current.right!=null){
+                    queue.add(current.right);
+                }
+
+            }
+            flag = !flag;
+            result.add(list);
+        }
+
+        return result;
+
+    }
+
+ */
