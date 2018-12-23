@@ -80,6 +80,26 @@ public class FlattenBTList {
 
 /*
 
-f you notice carefully in the flattened tree, each node's right child points to the next node of a pre-order traversal.
+If you notice carefully in the flattened tree, each node's right child points to the next node of a pre-order traversal.
+
+Better sol:
+
+class Solution {
+
+    private TreeNode prev=null;
+
+    public void flatten(TreeNode root) {
+
+        if(root==null) {
+            return;
+        }
+        flatten(root.right);
+        flatten(root.left);
+        root.left=null;
+        root.right=prev;
+        prev=root;
+    }
+}
+
 
  */
