@@ -91,4 +91,15 @@ If the height of the leftmost tree & right most tree is same. height is (2)^h -1
 Else
 it is normal count.
 
+Complexity Analysis:
+
+Let n be the total number of the tree. It is likely that you will get a child tree as a perfect binary tree and a non-perfect binary tree (T(n/2)) at each level.
+
+T(n) = T(n/2) + c1 lgn
+       = T(n/4) + c1 lgn + c2 (lgn - 1)
+       = ...
+       = T(1) + c [lgn + (lgn-1) + (lgn-2) + ... + 1]
+       = O(lgn*lgn)
+
+
  */
