@@ -57,3 +57,34 @@ public class SumRootToLeafNumbers {
     }
 
 }
+
+/*
+
+Another sol:
+
+class Solution {
+
+    private int sum=0;
+
+    public int sumNumbers(TreeNode root) {
+        util(root,0);
+        return sum;
+    }
+
+    private void util(TreeNode root,int val) {
+
+        if(root!=null) {
+            if(root.left==null && root.right==null) {
+                sum+=(val*10+root.val);
+                return;
+            }
+
+            util(root.left,val*10+root.val);
+            util(root.right,val*10+root.val);
+        }
+
+    }
+
+}
+
+ */
