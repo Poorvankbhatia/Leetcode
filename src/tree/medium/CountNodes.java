@@ -92,6 +92,7 @@ Else
 it is normal count.
 
 Complexity Analysis:
+There are at most lgn divisions, and lgn to calculate height within each division. So lgn * lgn
 
 Let n be the total number of the tree. It is likely that you will get a child tree as a perfect binary tree and a non-perfect binary tree (T(n/2)) at each level.
 
