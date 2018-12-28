@@ -48,3 +48,39 @@ public class SymmetricTree {
 
     }
 }
+
+/*
+
+Non recursive:
+
+public boolean isSymmetric(TreeNode root) {
+
+        if(root==null) {
+            return true;
+        }
+        Stack<TreeNode> stack = new Stack<>();
+        stack.push(root.right);
+        stack.push(root.left);
+
+        while(!stack.isEmpty()) {
+
+            TreeNode left = stack.pop();
+            TreeNode right = stack.pop();
+            if(left==null && right==null) {
+                continue;
+            }
+            if(left==null || right==null || left.val!=right.val) {
+                return false;
+            }
+            stack.push(left.left);
+            stack.push(right.right);
+            stack.push(left.right);
+            stack.push(right.left);
+
+        }
+        
+        return true;
+
+    }
+
+ */
