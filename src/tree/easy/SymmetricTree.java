@@ -78,7 +78,7 @@ public boolean isSymmetric(TreeNode root) {
             stack.push(right.left);
 
         }
-        
+
         return true;
 
     }
