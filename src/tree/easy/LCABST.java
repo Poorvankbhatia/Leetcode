@@ -1,3 +1,11 @@
+/*
+
+Given a binary search tree (BST), find the lowest common ancestor (LCA) of two given nodes in the BST.
+
+According to the definition of LCA on Wikipedia: “The lowest common ancestor is defined between two nodes p and
+q as the lowest node in T that has both p and q as descendants (where we allow a node to be a descendant of itself).”
+
+ */
 package tree.easy;
 
 import tree.TreeNode;
@@ -15,27 +23,19 @@ public class LCABST {
             return null;
         }
 
-        if(root==p || root ==q) {
-            return root;
+        while(true) {
+            if(root.val>p.val && root.val>q.val) {
+                root=root.left;
+            }
+            else if(root.val<p.val && root.val<q.val) {
+                root=root.right;
+            }
+            else {
+                break;
+            }
         }
 
-        if(p.val > q.val) {
-            if(root.val>q.val && root.val<p.val) {
-                return root;
-            } else if(root.val < q.val) {
-                return lowestCommonAncestor(root.right,p,q);
-            } else {
-                return lowestCommonAncestor(root.left,p,q);
-            }
-        } else {
-            if(root.val<q.val && root.val>p.val) {
-                return root;
-            } else if(root.val < p.val) {
-                return lowestCommonAncestor(root.right,p,q);
-            } else {
-                return lowestCommonAncestor(root.left,p,q);
-            }
-        }
+        return root;
 
     }
 
