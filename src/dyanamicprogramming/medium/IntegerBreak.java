@@ -17,23 +17,22 @@ public class IntegerBreak {
 
     public int integerBreak(int n) {
 
-        int[] dp = new int[n+1];
+        if(n<=2) {
+            return 1;
+        }
 
-        dp[0] = dp[1] = 0;
+        int[] arr = new int[n+1];
+        arr[1]=0;
+        arr[2]=1;
 
-        /*
-
-            For every value of n , since we have already calculated the maximum product value for all i<n,
-            we just get a maximum of their sum/calculated value and multiply to get result.
-
-         */
-        for (int i=2;i<=n;i++) {
-            for (int j=1;j<i;j++) {
-                dp[i] = Math.max(dp[i],(Math.max(j,dp[j])*Math.max(i-j,dp[i-j])));
+        for(int i=3;i<=n;i++) {
+            arr[i]=Integer.MIN_VALUE;
+            for(int j=1;j<i;j++) {
+                arr[i]=Math.max(arr[i],Math.max(arr[i-j]*j,(i-j)*j));
             }
         }
 
-        return dp[n];
+        return arr[n];
 
     }
 
@@ -62,27 +61,32 @@ We only need to find how many 3's we can get when n> 4. If n%3==1, we do not wan
 
 public int integerBreak(int n) {
 
-    if(n==2) return 1;
-    if(n==3) return 2;
-    if(n==4) return 4;
+    if(n==2) {
+            return 1;
+        }
+        if(n==3) {
+            return 2;
+        }
+        if(n==4) {
+            return 4;
+        }
 
-    int result=1;
-    if(n%3==0){
-        int m = n/3;
-        result = (int) Math.pow(3, m);
-    }else if(n%3==2){
-        int m=n/3;
-        result = (int) Math.pow(3, m) * 2;
-    }else if(n%3==1){
-        int m=(n-4)/3;
-        result = (int) Math.pow(3, m) *4;
-    }
 
-    return result;
+        if(n%3==0) {
+            int m = n/3;
+            return (int) Math.pow(3,m);
+        } else if(n%3==2) {
+            int m = (n-2)/3;
+            return (int) Math.pow(3,m)*2;
+        } else if(n%3==1) {
+            int m = (n-4)/3;
+            return (int) Math.pow(3,m)*4;
+        }
+
+        return -1;
 }
 
-Prove that for all integers n > 4, ( ( n-3 ) * 3 ) > n".
-
+Prove that for all integers n > 4, ( ( n-3 ) * 3 ) > n.
 This gives reason to the 3, and why we may want to consider special cases for preceding numbers.
 
 
