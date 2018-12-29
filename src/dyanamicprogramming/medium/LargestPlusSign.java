@@ -128,4 +128,43 @@ The maximum of these minimums is the answer.
 
 O(n^2) time and space
 
+
+More time less space sol:
+
+public int orderOfLargestPlusSign(int N, int[][] mines) {
+        if(N==0) {
+            return 0;
+        }
+
+        int[][] matrix = new int[N][N];
+
+        for(int i=0;i<N;i++) {
+            Arrays.fill(matrix[i],1);
+        }
+
+        for(int[] mine : mines) {
+            matrix[mine[0]][mine[1]]=0;
+        }
+
+        int ans=0;
+        for(int i=0;i<N;i++) {
+            for(int j=0;j<N;j++) {
+                if(matrix[i][j]==1) {
+                    int count=1;
+                    int dir=1;
+                    while((i-dir)>=0 && (j-dir)>=0 && (i+dir<N) && (j+dir<N) && matrix[i][j-dir]==1 &&
+                    matrix[i][j+dir]==1 && matrix[i-dir][j]==1 && matrix[i+dir][j]==1) {
+                    count++;
+                    dir++;
+                    }
+                    ans = Math.max(ans,count);
+                }
+
+            }
+        }
+
+        return ans;
+
+    }
+
  */
