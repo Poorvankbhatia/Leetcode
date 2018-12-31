@@ -40,3 +40,17 @@ public class UniquePaths {
     }
 
 }
+
+/*
+
+Total permutations = (m+n)! / (m! * n!)
+
+If the matrix is 3x7, we have 10 grids to reach the finish because 3 + 7 = 10
+
+The maximum right (The direction 'right' not right-wrong 'right') moves we can have is 3 since it's a 3x7 matrix.
+
+The maximum down moves we can have is 7 since it's a 3x7 matrix.
+
+No. of ways in which we can choose the right turn? It's C(10,3) = 10! / (7! * 3!) => (m+n)! / (m!*n!)
+
+ */

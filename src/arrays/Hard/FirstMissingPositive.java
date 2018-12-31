@@ -58,6 +58,11 @@ we iterate again the array and check the first position that i != A[i] + 1.
 The take-away message for this question is when the question asks for O(n) time solution, and you found that it must be beneficial to sort the
 input array, bucket sort is a way to think about.
 
+Note that in the "worst case" scenario for 1 run over the while loop above, all other elements are now in the right order,
+and all other runs over the while loop will be free. This will be the case for any initial configuration.
+Each swap puts one element in the right place, and this can at most happen n times in the entire for-loop.
+If one run over the while loop runs into the worst case scenario of making all these swaps, all other runs have no swaps left to do.
+
 
 A naive approach is first to sort the array. Then it is quite straightforward to solve the problem. Just compare each element with the result,
 if the difference is larger than 1, return the result + 1, else update the result as A[i]. If iterate the entire array and we did not find the
