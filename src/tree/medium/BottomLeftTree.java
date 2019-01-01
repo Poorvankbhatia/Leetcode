@@ -37,34 +37,15 @@ import tree.TreeNode;
  */
 public class  BottomLeftTree {
 
-    private int leftMostValue =0,max=0;
-
     public int findBottomLeftValue(TreeNode root) {
-
-        findBottomLeftUtil(root,1);
-        return leftMostValue;
-
+        return findBottomLeftValue(root, 1, new int[]{0,0});
     }
-
-    private void findBottomLeftUtil(TreeNode root,int level) {
-
-        if(root==null) {
-            return;
-        }
-
-        /*
-         Same logic as printing left view of a tree
-         */
-        if(level>max) {
-            leftMostValue = root.val;
-            max = level;
-        }
-
-        findBottomLeftUtil(root.left,level+1);
-        findBottomLeftUtil(root.right,level+1);
-
+    public int findBottomLeftValue(TreeNode root, int depth, int[] res) {
+        if (res[1]<depth) {res[0]=root.val;res[1]=depth;}
+        if (root.left!=null) findBottomLeftValue(root.left, depth+1, res);
+        if (root.right!=null) findBottomLeftValue(root.right, depth+1, res);
+        return res[0];
     }
-
     public static void main(String[] args) {
         TreeNode node = new TreeNode(1);
         node.left = new TreeNode(2);
