@@ -49,50 +49,40 @@ import tree.TreeNode;
 public class DeleteNodeBST {
 
     public TreeNode deleteNode(TreeNode root, int key) {
-
-        if (null == root) {
+        if(root==null) {
             return null;
         }
-        if (root.val < key) {
-            root.right =  deleteNode(root.right, key);
-        } else if (root.val > key) {
-            root.left =  deleteNode(root.left, key);
-        } else {
 
-            if (root.left == null && root.right == null) {
+        if(root.val<key) {
+            root.right= deleteNode(root.right,key);
+        } else if(root.val>key) {
+            root.left= deleteNode(root.left,key);
+        } else {
+            if(root.left==null && root.right==null) {
                 return null;
             }
-
-            if (root.left == null) {
-                return root.right;
-            }
-
-            if (root.right == null) {
+            if(root.right==null) {
                 return root.left;
+            } else {
+                TreeNode inorderSuccessor = getSuccessor(root.right);
+                System.out.println(root.val+" "+inorderSuccessor.val);
+                root.val = inorderSuccessor.val;
+                root.right= deleteNode(root.right,inorderSuccessor.val);
             }
-
-            TreeNode temp = inorderSucc(root.right);
-            root.val = temp.val;
-            root.right = deleteNode(root.right, temp.val);
-
 
         }
-
 
         return root;
     }
 
-    private TreeNode inorderSucc(TreeNode root) {
 
-        if (root == null) {
-            return null;
+    private TreeNode getSuccessor(TreeNode current) {
+
+        while(current.left!=null) {
+            current=current.left;
         }
 
-        while (root.left != null) {
-            root = root.left;
-        }
-
-        return root;
+        return current;
 
     }
 
