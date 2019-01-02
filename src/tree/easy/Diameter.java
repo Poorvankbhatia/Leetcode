@@ -25,28 +25,27 @@ import tree.TreeNode;
  */
 public class Diameter {
 
-    private int max=0;
     public int diameterOfBinaryTree(TreeNode root) {
-
         if(root==null) {
             return 0;
         }
-
-        int lHeight = height(root.left);
-        int rHeight = height(root.right);
-
-        max= Math.max(max,(lHeight+rHeight+1));
-        return max;
+        return diameter(root)-1;
     }
 
-    private int height(TreeNode root) {
-
+    private int diameter(TreeNode root) {
         if(root==null) {
             return 0;
-        } else {
-            return Math.max(height(root.right),height(root.left))+1;
         }
+        int val= 1+getHeight(root.left)+getHeight(root.right);
 
+        return Math.max(val,Math.max(diameter(root.left),diameter(root.right)));
+    }
+
+    private int getHeight(TreeNode root) {
+        if(root==null) {
+            return 0;
+        }
+        return 1+Math.max(getHeight(root.left),getHeight(root.right));
     }
 
 }
