@@ -70,46 +70,45 @@ public class AddOneRow {
 
     public TreeNode addOneRow(TreeNode root, int v, int d) {
 
-        Queue<TreeNode> queue = new LinkedList<>();
-        queue.add(root);
-        //If u need to add value to the root node.
-        if(d==1) {
+        if (d == 1) {
             TreeNode node = new TreeNode(v);
             node.left = root;
             return node;
         }
-        int current = 1;
-        while (!queue.isEmpty()) {
-            int size = queue.size();
-            if (d - 1 == current) {
-                for (int i = 0; i < size; i++) {
-                    TreeNode node = queue.remove();
-                    TreeNode left = node.left;
-                    TreeNode right = node.right;
-                    node.left = new TreeNode(v);
-                    node.right = new TreeNode(v);
-                    node.left.left = left;
-                    node.right.right = right;
-                }
-                break;
-            } else {
-                for (int i = 0; i < size; i++) {
-                    TreeNode node = queue.remove();
-                    if (node.left != null) {
-                        queue.add(node.left);
-                    }
-                    if (node.right != null) {
-                        queue.add(node.right);
-                    }
 
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
+        int dis = 1;
+        while (!queue.isEmpty()) {
+
+            int size = queue.size();
+            for (int i = 0; i < size; i++) {
+                TreeNode current = queue.poll();
+                if (dis == d - 1) {
+                    TreeNode left = current.left;
+                    current.left = new TreeNode(v);
+                    current.left.left = left;
+                    queue.add(current.left);
+                    TreeNode right = current.right;
+                    current.right = new TreeNode(v);
+                    current.right.right = right;
+                    queue.add(current.right);
+                } else {
+                    if (current.left != null) {
+                        queue.add(current.left);
+                    }
+                    if (current.right != null) {
+                        queue.add(current.right);
+                    }
                 }
-                current++;
             }
+            dis++;
 
         }
 
         return root;
-
     }
 
 }
+
+
