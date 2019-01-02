@@ -25,75 +25,52 @@ package tree.medium;
 
 import tree.TreeNode;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by poorvank on 08/02/17.
  */
 public class FrequentSubtreeSum {
 
-    private int maxFrequency=0;
-
+    private int max=Integer.MIN_VALUE;
     public int[] findFrequentTreeSum(TreeNode root) {
-
-        HashMap<Integer,Integer> map = new HashMap<>();
-        frequentSumUtil(root,map);
-
-        int size = map.size();
-        for (Integer key : map.keySet()) {
-            if(map.get(key)!=maxFrequency) {
-                size--;
+        Map<Integer,Integer> map = new HashMap<>();
+        int[] result;
+        if(root==null) {
+            return new int[0];
+        }
+        sum(root,map);
+        ArrayList<Integer> list = new ArrayList<>();
+        int size=0;
+        for(Map.Entry<Integer,Integer> entry : map.entrySet()) {
+            if(entry.getValue()==max) {
+                list.add(entry.getKey());
+                size++;
             }
         }
-
-        int[] result = new int[size];
-        int i=0;
-        for (Integer key : map.keySet()) {
-            if(map.get(key)==maxFrequency) {
-                result[i] = key;
-                i++;
-            }
+        result = new int[size];
+        for(int i=0;i<size;i++) {
+            result[i]=list.get(i);
         }
-
         return result;
-
     }
 
-    private int frequentSumUtil(TreeNode root,HashMap<Integer,Integer> map) {
+    private int sum(TreeNode root,Map<Integer,Integer> map) {
 
         if(root==null) {
             return 0;
         }
 
-        if(root.right==null && root.left==null) {
-            fillMap(map,root.val);
-            return root.val;
-        }
+        int left = sum(root.left,map);
+        int right = sum(root.right,map);
 
-        int rootVal = root.val;
-        int left = frequentSumUtil(root.left,map);
-        int right = frequentSumUtil(root.right,map);
-
-        int total = rootVal+left+right;
-
-        fillMap(map,total);
-
-
-        return total;
-
-    }
-
-    private void fillMap(HashMap<Integer,Integer> map,int val) {
-        if(map.containsKey(val)) {
-            map.put(val,map.get(val)+1);
-        } else {
-            map.put(val,1);
-        }
-
-        if(map.get(val)>maxFrequency) {
-            maxFrequency = map.get(val);
-        }
+        int sum = root.val+left+right;
+        map.put(sum,map.getOrDefault(sum,0)+1);
+        max = Math.max(max,map.get(sum));
+        return sum;
     }
 
     public static void main(String[] args) {
