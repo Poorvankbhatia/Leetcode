@@ -73,4 +73,22 @@ public class DungeonGame {
 dp[i][j] = minimum cost from (0, 0) to (i, j)
 It won't help solving the problem, because the result of dp[i + 1][j + 1]
 does not depends only on previous solve subproblems, but also future unsolved subproblems.
+
+If we start from left top, in addition to minimize initial HP required to get (i,j), we also have to maximize HP left when we get (i,j)
+in order to decide whether we need more initial HP in the next step. It doesn't directly depend on things at (i-1,j) and (i,j-1).
+
+For example, at some point we have two paths, from left or from up.
+
+Left: min HP required is 1, max HP left is 1
+Up: min HP required is 5, max HP left is 100
+How do we choose now? If we choose smaller min HP required, this requirement may increase to 5 later anyway and 95 HP is wasted.
+
+We start from bottom right because , in order to compute HP[i][j], you will need to make sure of two things:
+
+your HP[i][j]+dungeon[i][j] should be >0
+your HP[i][j]+dungeon[i][j] should be large enough, so that it will be sufficient to cover the minimum requirement on HP
+for the next step, be it right or down (take whichever requires smaller HP).
+So you see, because of the second requirement, your calculation of HP[i][j] will depend on later steps that you could take.
+This is why you have to know these later steps ahead of time, thus calculating from the bottom right.
+
 * */
