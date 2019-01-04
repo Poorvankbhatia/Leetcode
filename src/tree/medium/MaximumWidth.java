@@ -129,4 +129,41 @@ So we can just:
 
 Record the id of left most node at each level of the tree(you can tell be check the size of the container);
 At each node, calculate the distance from it the left most node, and compare with the max width;
+
+public int widthOfBinaryTree(TreeNode root) {
+        if(root==null) {
+            return 0;
+        }
+        Queue<TreeNode> queue = new LinkedList<>();
+        Queue<Integer> widthQueue = new LinkedList<>();
+        widthQueue.add(0);
+        queue.add(root);
+        int max=1;
+        int left=0,right=0;
+        while(!queue.isEmpty()) {
+            int size=queue.size();
+            for(int i=0;i<size;i++) {
+                TreeNode current = queue.poll();
+                int val = widthQueue.poll();
+                if(i==0) {
+                    left=val;
+                }
+                if(i==size-1) {
+                    right=val;
+                }
+                if(current.left!=null) {
+                    queue.add(current.left);
+                    widthQueue.add(2*val+1);
+                }
+                if(current.right!=null) {
+                    queue.add(current.right);
+                    widthQueue.add(2*val+2);
+                }
+            }
+            max = Math.max(max,right-left+1);
+        }
+
+        return max;
+    }
+
  */
