@@ -35,32 +35,22 @@ import tree.TreeNode;
 public class SecondMinimum {
 
     public int findSecondMinimumValue(TreeNode root) {
-        if (root == null) {
+        if(root==null) {
             return -1;
         }
-        int res = secondMinValue(root, root.val);
-        return res == root.val ? -1 : res;
+        int val = Math.min(findMinValGreaterThan(root.left,root.val),findMinValGreaterThan(root.right,root.val));
+        return val==Integer.MAX_VALUE?-1:val;
     }
 
-    private int secondMinValue(TreeNode root, int val) {
-
-        if (root.left == null && root.right == null) {
+    private int findMinValGreaterThan(TreeNode root,int val) {
+        if(root==null) {
+            return Integer.MAX_VALUE;
+        }
+        if(root.val==val) {
+            return Math.min(findMinValGreaterThan(root.left,val),findMinValGreaterThan(root.right,val));
+        } else {
             return root.val;
         }
-
-        int left = secondMinValue(root.left, val);
-        int right = secondMinValue(root.right, val);
-
-        // If any of the child's value is equal to the roots value return other child's value.
-        if (left == val) {
-            return right;
-        } else if (right == val) {
-            return left;
-        } else {
-            // if both child are greater than the roots value(Not immediate children but grand children, Take min of both)
-            return Math.min(left, right);
-        }
-
     }
 
 }
