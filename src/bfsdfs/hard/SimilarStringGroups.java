@@ -50,7 +50,7 @@ public class SimilarStringGroups {
         int res = 0, len = a.length();
         for (int i = 0; i < len; i++)
             if (a.charAt(i) != b.charAt(i) && ++res > 2) {
-                return false;   
+                return false;
             }
         return true;
     }
