@@ -53,7 +53,7 @@ public class MagicSquaresInGrid {
 
         for (int i=1;i<m-1;i++) {
             for(int j=1;j<n-1;j++) {
-                if(equalDiagonals(i,j,grid) && containsAllElements(i,j,grid) && equalRowsAndCols(i,j,grid) && equalCols(i,j,grid)) {
+                if(equalDiagonals(i,j,grid) && containsAllElements(i,j,grid) && equalRows(i,j,grid) && equalCols(i,j,grid)) {
                     System.out.println(i+" "+j);
                     count++;
                 }
@@ -90,7 +90,7 @@ public class MagicSquaresInGrid {
 
     }
 
-    private boolean equalRowsAndCols(int i, int j, int[][] grid) {
+    private boolean equalRows(int i, int j, int[][] grid) {
 
         int[] s = new int[3];
 
