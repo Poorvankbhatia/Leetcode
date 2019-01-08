@@ -28,17 +28,45 @@ package bfsdfs.hard;
 
 import bfsdfs.UnionFind;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 /**
  * Created by poorvank.b on 20/05/18.
  */
 public class SimilarStringGroups {
 
     public int numSimilarGroups(String[] A) {
+        int N = A.length;
+        UnionFind uf = new UnionFind(N);
+        for (int i = 0; i < N; ++i) {
+            for (int j = i+1; j < N; ++j) {
+                if (similar(A[i], A[j])) {
+                    uf.union(i, j);
+                }
+            }
+        }
+        return uf.getCount();
+    }
+
+    public boolean similar(String a, String b) {
+        int res = 0, len = a.length();
+        for (int i = 0; i < len; i++)
+            if (a.charAt(i) != b.charAt(i) && ++res > 2) {
+                return false;   
+            }
+        return true;
+    }
+
+    public static void main(String[] args) {
+        String[] arr = new String[]{"tars","rats","arts","star"};
+        System.out.println(new SimilarStringGroups().numSimilarGroups(arr));
+    }
+
+}
+
+/*
+
+Another method:
+
+public int numSimilarGroups(String[] A) {
         int N = A.length;
         int W = A[0].length();
         UnionFind uf = new UnionFind(N);
@@ -93,15 +121,7 @@ public class SimilarStringGroups {
         A[i] = A[j];
         A[j] = tmp;
     }
-
-    public static void main(String[] args) {
-        String[] arr = new String[]{"tars","rats","arts","star"};
-        System.out.println(new SimilarStringGroups().numSimilarGroups(arr));
-    }
-
-}
-
-/*
+ }
 
 Let W = A[0].length. It is clear that we can determine in O(W) time, whether two words from A are similar.
 
