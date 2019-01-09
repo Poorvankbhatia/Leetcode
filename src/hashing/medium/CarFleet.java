@@ -82,6 +82,11 @@ public class CarFleet {
 
 O(N) solution without sorting.
 
+Calculate time needed to arrive the target, sort by the start position.
+Loop on each car from the end to the beginning. cur record the current biggest time (the slowest).
+If another car needs less or equal time than cur, it can catch up this car.
+Otherwise it will become the new slowest car, that is new lead of a car fleet.
+
 Calculate the number of steps for each car required to reach the destination. Number of steps should be double because of
 the INCORRECT requirements (look at the problem's rating). Calculated values inserted into 0-based array to avoid sorting.
 Loop through array from end to start and check if the next value is bigger than previous.
