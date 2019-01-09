@@ -70,6 +70,12 @@ public class CarFleet {
         return fleetCount;
     }
 
+    public static void main(String[] args){
+        int[] pos = new int[]{10,8,0,5,3};
+        int[] speed = new int[]{2,4,1,1,3};
+        System.out.println(new CarFleet().carFleet(12,pos,speed));
+    }
+
 }
 
 /*
@@ -77,7 +83,7 @@ public class CarFleet {
 O(N) solution without sorting.
 
 Calculate the number of steps for each car required to reach the destination. Number of steps should be double because of
-the INCORRECT requirements (look at the problem's rating). Caculated values inserted into 0-based array to avoid sorting.
+the INCORRECT requirements (look at the problem's rating). Calculated values inserted into 0-based array to avoid sorting.
 Loop through array from end to start and check if the next value is bigger than previous.
 If the value is bigger it means it is the next slower car.
 
