@@ -81,9 +81,8 @@ public class ShortestPathVisitingAllNodes {
                 for (int v : graph[tuple.head]) {
                     int mask = tuple.mask | (1 << v);
                     Tuple t = new Tuple(mask, v, 0);
-                    if (!set.contains(t)) {
+                    if (set.add(t)) {
                         queue.offer(new Tuple(mask, v, tuple.len + 1));
-                        set.add(t);
                     }
                 }
             }
@@ -126,5 +125,7 @@ In order to prevent duplicate paths from being visited, we use a Set<Tuple> to s
   it wouldn't make a difference :)
 
   there are 2^n * n possible states. complexity = 2^n * n
+
+There are 2^n * n possible states. time complexity is also n*(2^n), because each node may be visited 2^n times.
 
  */
