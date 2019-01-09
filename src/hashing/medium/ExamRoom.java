@@ -91,4 +91,74 @@ Time Complexity: Each seat operation is O(P),
 (where P is the number of students sitting),
 as we iterate through every student. Each leave operation is O(P) (logP in Java).
 
+/*
+
+O(logn) seat:
+
+class ExamRoom {
+    PriorityQueue<Interval> pq;
+    int N;
+
+    class Interval {
+        int x, y, dist;
+        public Interval(int x, int y) {
+            this.x = x;
+            this.y = y;
+            if (x == -1) {
+                this.dist = y;
+            } else if (y == N) {
+                this.dist = N - 1 - x;
+            } else {
+                this.dist = Math.abs(x - y) / 2;
+            }
+        }
+    }
+
+    public ExamRoom(int N) {
+        this.pq = new PriorityQueue<>((a, b) -> a.dist != b.dist? b.dist - a.dist : a.x - b.x);
+        this.N = N;
+        pq.add(new Interval(-1, N));
+    }
+
+    // O(logn): poll top candidate, split into two new intervals
+    public int seat() {
+        int seat = 0;
+        Interval interval = pq.poll();
+        if (interval.x == -1) seat = 0;
+        else if (interval.y == N) seat = N - 1;
+        else seat = (interval.x + interval.y) / 2;
+
+        pq.offer(new Interval(interval.x, seat));
+        pq.offer(new Interval(seat, interval.y));
+
+        return seat;
+    }
+
+    // O(n)Find head and tail based on p. Delete and merge two ends
+    public void leave(int p) {
+        Interval head = null, tail = null;
+        List<Interval> intervals = new ArrayList<>(pq);
+        for (Interval interval : intervals) {
+            if (interval.x == p) tail = interval;
+            if (interval.y == p) head = interval;
+            if (head != null && tail != null) break;
+        }
+        // Delete
+        pq.remove(head);
+        pq.remove(tail);
+        // Merge
+        pq.offer(new Interval(head.x, tail.y));
+    }
+}
+
+Need to measure the distance between seated students: O(n) is trivial,
+but not as fast. Use PriorityQueue to store the potential candidate as interval, and also calculate the candidate's mid-distance to both side.
+
+seat(): pq.poll() to find interval of largest distance. Split and add new intervals back to queue.
+
+leave(x): one seat will be in 2 intervals: remove both from pq, and merge to a new interval.
+
+Trick: there is no interval when adding for first student, so we need to create boundary/fake seats
+[-1, N], which simplifies the edge case a lot. (I spent hours on edge case, and finally saw a smart abstraction using boundary seats).
+
  */
