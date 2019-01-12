@@ -114,16 +114,20 @@ Time Complexity: O(sum*n)
 Auxiliary Space: O(sum*n)
 
 Without using space
- boolean[] dp = new boolean[sum + 1];
-        // dp init
-        dp[0] = true;
-        // dp transition
-        for (int i = 1; i <= nums.length; i++) {
-            for (int j = sum; j >= nums[i-1]; j--) {
-                dp[j] = dp[j] || dp[j - nums[i-1]];
+ private boolean canPartitionDP(int[] nums,int sum) {
+
+        boolean[] dp = new boolean[sum+1];
+        dp[0]=true;
+
+        for(int num : nums) {
+            for(int i=sum;i>=num;i--) {
+                dp[i] = dp[i] || (dp[i-num]);
             }
         }
+
         return dp[sum];
+
+    }
 
 
  */
