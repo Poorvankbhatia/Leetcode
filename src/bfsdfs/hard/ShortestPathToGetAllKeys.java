@@ -115,7 +115,9 @@ public class ShortestPathToGetAllKeys {
     }
 
     public static void main(String[] args) {
-        String[] s = new String[]{"@...a",".###A","b.BCc"};
+        String[] s = new String[]{"@...a",
+                                  ".###A",
+                                  "b.BCc"};
         System.out.println(new ShortestPathToGetAllKeys().shortestPathAllKeys(s));
     }
 

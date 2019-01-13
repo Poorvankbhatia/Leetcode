@@ -44,9 +44,9 @@ public class CombinationSum4 {
         dp[0] = 1;
 
         for (int i=1;i<=target;i++) {
-            for (int j=0;j<n;j++) {
-                if(i>=nums[j]) {
-                    dp[i] += dp[i-nums[j]];
+            for (int num : nums) {
+                if (i >= num) {
+                    dp[i] += dp[i - num];
                 }
             }
         }
