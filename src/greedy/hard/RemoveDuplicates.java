@@ -141,7 +141,7 @@ public String removeDuplicateLetters(String s) {
         return sb.toString();
 
     }
-    
+
    First, given "bcabc", the solution should be "abc". If we think about this problem intuitively, you would sort of go
    from the beginning of the string and start removing one if there is still the same character left and a smaller character
    is after it. Given "bcabc", when you see a 'b', keep it and continue with the search, then keep the following 'c', then we see
