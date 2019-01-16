@@ -24,6 +24,7 @@ K will be between 1 and A.length * (A.length - 1) / 2.
  */
 package heap.hard;
 
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.PriorityQueue;
 
@@ -62,6 +63,11 @@ public class KthSmallestPrimeFraction {
         return new int[]{a[peek[0]], a[peek[1]]};
 
 
+    }
+
+    public static void main(String[] args) {
+        int[] arr = new int[]{1,7,23,29,39};
+        System.out.println(Arrays.toString(new KthSmallestPrimeFraction().kthSmallestPrimeFraction(arr,6)));
     }
 
 }
