@@ -76,4 +76,57 @@ public class PalindromicSubStrings {
 
 Same concept as Longest Palindromic Substring
 
+Using manacher's algorithm:
+
+public int countSubstrings(String s) {
+        if(s==null || s.length()==0) {
+            return 0;
+        }
+        String newString = preprocessString(s);
+        //System.out.println(newString);
+        int[] count = new int[newString.length()];
+        int center=0;
+        int right=0;
+        int maxLen=0;
+        int centerIndex=0;
+        for(int i=1;i<newString.length()-1;i++) {
+
+            int mirror = (2*center)-i;
+
+            if(i<right) {
+                count[i]=Math.min(right-i,count[mirror]);
+            }
+
+            while(newString.charAt(i-(count[i]+1))==newString.charAt(i+(count[i]+1))) {
+                count[i]++;
+
+            }
+
+            if(i+count[i]>right) {
+                center=i;
+                right=i+count[i];
+            }
+
+        }
+
+       int sum=0;
+        //Use count array to get sum。example,if p[i] = 5,then we can get three palindromes with length 1,3,5 respectively,that is to say (1 + 5) / 2.
+        for(int i : count) sum += (1 + i) / 2;
+        return sum;
+  }
+
+  private String preprocessString(String s) {
+        if(s==null || s.length()==0) {
+            return new String("^$");
+        }
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("^");
+        for(int i=0;i<s.length();i++) {
+            sb.append("#").append(s.substring(i,i+1));
+        }
+        sb.append("#$");
+        return sb.toString();
+    }
+
  */
