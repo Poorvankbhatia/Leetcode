@@ -93,4 +93,77 @@ The value of table[i][j] is true, if the substring is palindrome, otherwise fals
 To calculate table[i][j], we first check the value of table[i+1][j-1], if the value is true and str[i] is same as str[j],
 then we make table[i][j] true. Otherwise, the value of table[i][j] is made false.
 
+O(n) manacher's solution:
+
+class Solution {
+    public String longestPalindrome(String s) {
+        if(s==null || s.length()==0) {
+            return "";
+        }
+        String newString = preprocessString(s);
+        //System.out.println(newString);
+        int[] count = new int[newString.length()];
+        int center=0;
+        int right=0;
+        int maxLen=0;
+        int centerIndex=0;
+        for(int i=1;i<newString.length()-1;i++) {
+
+            int mirror = (2*center)-i;
+
+            if(i<right) {
+                count[i]=Math.min(right-i,count[mirror]);
+            }
+
+            while(newString.charAt(i-(count[i]+1))==newString.charAt(i+(count[i]+1))) {
+                count[i]++;
+
+            }
+
+            if(i+count[i]>right) {
+                center=i;
+                right=i+count[i];
+            }
+
+            if(count[i]>maxLen) {
+                maxLen = count[i];
+                centerIndex = i;
+            }
+
+        }
+
+       int pos = (centerIndex - 1 - maxLen) / 2;
+       return s.substring(pos, pos + maxLen);
+  }
+
+  private String preprocessString(String s) {
+        if(s==null || s.length()==0) {
+            return new String("^$");
+        }
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("^");
+        for(int i=0;i<s.length();i++) {
+            sb.append("#").append(s.substring(i,i+1));
+        }
+        sb.append("#$");
+        return sb.toString();
+    }
+
+
+}
+
+
+Even with the extra while loop inside, it is guaranteed in the worst case the algorithm completes in 2*n steps.
+
+Think of how the i and right edge (R) relates. In the loop each time, you look if this index is a candidate to re-position the palindrome’s center.
+If it is, you increment the existing R one at a time. See? R could only be incremented at most N steps. Once you incremented a total of N steps,
+it couldn’t be incremented any more. It’s not like you will increment R all the time in the while loop. This is called amortized O(1).
+
+only one step took N/2 steps, so you cannot assume the time taken is N/2 * N, for your case, should be N + ( 1 + 1 + 1…+ N/2), 1+1+1+… = N/2,
+so totally N+( N/2 + N/2) = 2N, so clearly O(N) for this alg.
+
+
+https://www.youtube.com/watch?v=nbTSfrEfo6M
+
  */
