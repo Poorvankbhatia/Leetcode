@@ -44,6 +44,11 @@ public class SubArraySumDivisibleByK {
         return count;
     }
 
+    public static void main(String[] args) {
+        int[] arr = new int[]{4,5,0,-2,-3,1};
+        System.out.println(new SubArraySumDivisibleByK().subarraysDivByK(arr,5));
+    }
+
 }
 /*
 

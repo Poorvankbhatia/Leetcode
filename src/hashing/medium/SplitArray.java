@@ -34,7 +34,7 @@ import java.util.Map;
  * Created by poorvank.b on 15/08/17.
  */
 
-/*COPIED*/
+
 public class SplitArray {
 
     public boolean isPossible(int[] nums) {
@@ -69,7 +69,7 @@ public class SplitArray {
     }
 
     public static void main(String[] args) {
-        int[] arr = new int[]{1,2,3,3,4,4,5,5};
+        int[] arr = new int[]{1,2,3,3,4,4,5};
         System.out.print(new SplitArray().isPossible(arr));
     }
 

@@ -35,7 +35,7 @@ public class SummaryRanges {
         }
     }
 
-    TreeSet<Interval> set;
+    private TreeSet<Interval> set;
 
     /** Initialize your data structure here. */
     public SummaryRanges() {
