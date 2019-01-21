@@ -12,7 +12,9 @@ Return the number of 4-directional walks from the starting square to the ending 
 
 Example 1:
 
-Input: [[1,0,0,0],[0,0,0,0],[0,0,2,-1]]
+Input: [[1,0,0,0],
+        [0,0,0,0],
+        [0,0,2,-1]]
 Output: 2
 Explanation: We have the following two paths:
 1. (0,0),(0,1),(0,2),(0,3),(1,3),(1,2),(1,1),(1,0),(2,0),(2,1),(2,2)
@@ -90,6 +92,15 @@ public class UniquePaths3 {
         }
         grid[curX][curY] = 0;
         return count;
+    }
+
+    public static void main(String[] args) {
+        int[][] a = new int[][]{
+                {1,0,0,0},
+                {0,0,0,0},
+                {0,0,0,2}
+        };
+        System.out.println(new UniquePaths3().uniquePathsIII(a));
     }
 
 }
