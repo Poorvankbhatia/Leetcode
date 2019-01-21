@@ -44,6 +44,10 @@ public class FourKeys {
         return dp[n];
     }
 
+    public static void main(String[] args) {
+        System.out.println(new FourKeys().maxA(7));
+    }
+
 }
 
 /*
