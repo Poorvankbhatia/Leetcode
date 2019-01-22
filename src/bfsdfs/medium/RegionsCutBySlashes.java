@@ -72,6 +72,10 @@ public class RegionsCutBySlashes {
         }
     }
 
+    public static void main(String[] args) {
+        String[] grid = new String[]{" /","/ "};
+        System.out.println(new RegionsCutBySlashes().regionsBySlashes(grid));
+    }
 }
 
 /*
