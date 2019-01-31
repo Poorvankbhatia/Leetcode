@@ -27,7 +27,7 @@ public class NumArray {
 
         private int inputSize;
         public int[] tree;
-        public int[] inputArray;
+        private int[] inputArray;
 
         public SegmentTree(int[] nums) {
             inputSize = nums.length;

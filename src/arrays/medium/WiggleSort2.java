@@ -25,7 +25,7 @@ public class WiggleSort2 {
         int j = n%2==0?n-2:n-1; //(1) elements smaller than the 'median' are put into the last even slots
         int x = j;
 
-        for(int k = 0; k < n;k++){
+        for(int k = 0; k < n; k++){
             if(nums[x] > med){
                 swap(nums, x, i);
                 i += 2;
@@ -33,10 +33,14 @@ public class WiggleSort2 {
                 swap(nums, x, j);
                 j = j - 2;
                 x = x - 2;
-                if(x < 0) x = n / 2 * 2 - 1;
+                if(x < 0) {
+                    x = n / 2 * 2 - 1;
+                }
             } else {
                 x = x - 2;
-                if(x < 0) x = n / 2 * 2 - 1;
+                if(x < 0) {
+                    x = n / 2 * 2 - 1;
+                }
             }
         }
     }
