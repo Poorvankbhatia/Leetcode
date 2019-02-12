@@ -19,11 +19,11 @@ import java.util.Queue;
 /**
  * Created by poorvank on 17/09/16.
  */
-public class ZigzagIterator {
+public class ZigZagIterator {
 
     private Queue<List<Integer>> queue;
 
-    public ZigzagIterator(List<Integer> v1, List<Integer> v2) {
+    public ZigZagIterator(List<Integer> v1, List<Integer> v2) {
         queue = new LinkedList<>();
         if( v1!=null &&v1.size()!=0) {
             queue.add(v1);
