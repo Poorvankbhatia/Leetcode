@@ -53,13 +53,6 @@ public class Satisfiability {
 
     public boolean equationsPossible(String[] equations) {
 
-
-        int[] parent = new int[26];
-        int[] size = new int[26];
-        for(int i=0;i<26;i++) {
-            parent[i]=i;
-            size[i]=1;
-        }
         UnionFind uf = new UnionFind(26);
 
         if(equations==null || equations.length==0) {
