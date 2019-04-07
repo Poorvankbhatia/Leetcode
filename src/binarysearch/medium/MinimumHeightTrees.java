@@ -103,6 +103,10 @@ and meanwhile we add the new leaf nodes after deleting them(just add their conne
 
 So basically in the end, the nodes in the queue would be connected to no other nodes but each other. They should be the answer.
 
+
+
+******
+
 First let's review some statement for tree in graph theory:
 
 (1) A tree is an undirected graph in which any two vertices are
