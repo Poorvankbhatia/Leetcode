@@ -79,3 +79,10 @@ public class VideoStiching {
         return -1;
     }
 }
+
+/*
+First, you can sort the clips according to the start time. Then, for the first one, you must find a start time of 0. Otherwise, you can't meet the requirements.
+Then, for the start time is 0, you must find the end with the most. Cost effective
+After finding a curend, then look for it in all start<= curend. At this time, you can also use greedy thoughts, and choose the most cost-effective in these.
+Loop until you find curend>=T
+ */
