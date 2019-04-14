@@ -48,50 +48,59 @@ package bfsdfs.hard;
  * Created by poorvank.b on 20/01/19.
  */
 public class UniquePaths3 {
-    private int[][] dirs = new int[][]{{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+    private int[][] dir = new int[][]{{0,1},{1,0},{0,-1},{-1,0}};
     public int uniquePathsIII(int[][] grid) {
-        int[] startPoint = new int[2];
-        int[] endPoint = new int[2];
-        int spaces = 1;
-        for(int i=0;i<grid.length;i++){
-            for(int j=0;j<grid[0].length;j++){
-                if(grid[i][j] == 1){
-                    startPoint[0] = i;
-                    startPoint[1] = j;
-                }else if(grid[i][j] == 2){
-                    endPoint[0] = i;
-                    endPoint[1] = j;
-                }else if(grid[i][j] == 0){
-                    spaces++;
+        if(grid==null || grid.length==0) {
+            return 0;
+        }
+        int m = grid.length;
+        int n = grid[0].length;
+
+        int[] start = new int[2];
+        int[] end = new int[2];
+        int space=0;
+        for(int i=0;i<m;i++) {
+            for(int j=0;j<n;j++) {
+                if(grid[i][j]==0) {
+                    space++;
+                } else if(grid[i][j]==1) {
+                    start[0]=i;
+                    start[1]=j;
+                } else if(grid[i][j]==2) {
+                    end[0]=i;
+                    end[1]=j;
                 }
             }
         }
 
-        return dfs(grid, startPoint, endPoint, 0, spaces);
+        return util(grid,start,end,space,-1);
+
     }
 
+    private int util(int[][] grid,int[] start,int[] end,int space,int current) {
 
-
-    public int dfs(int[][] grid, int[] currentPos, int[] des, int currentStep, int totalSteps){
-        if(currentPos[0]<0 || currentPos[0]>=grid.length || currentPos[1]<0 || currentPos[1]>=grid[0].length || currentStep > totalSteps){
-            return 0;
-        }
-        int curX = currentPos[0];
-        int curY = currentPos[1];
-        if(curX == des[0] && curY == des[1] && currentStep == totalSteps){
+        if(start[0]==end[0] && start[1]==end[1] && current==space) {
             return 1;
-        }else if(grid[curX][curY] == -1 || (grid[curX][curY] == 1 && currentStep!=0) || grid[curX][curY] == 2){
+        }
+
+        if(start[0]==end[0] && start[1]==end[1]) {
             return 0;
         }
 
-        int count = 0;
-        grid[curX][curY] = -1;
-        for(int[] dir: dirs){
-            int[] next = new int[]{curX + dir[0], curY + dir[1]};
-            count += dfs(grid, next, des, currentStep+1, totalSteps);
+        int count=0;
+        int val = grid[start[0]][start[1]];
+        grid[start[0]][start[1]]=-1;
+        for(int i=0;i<4;i++) {
+            int nextX = start[0]+dir[i][0];
+            int nextY = start[1]+dir[i][1];
+            if(nextX>=0 && nextY>=0 && nextX<grid.length && nextY<grid[0].length && grid[nextX][nextY]!=-1) {
+                count+=util(grid,new int[]{nextX,nextY},end,space,current+1);
+            }
         }
-        grid[curX][curY] = 0;
+
+        grid[start[0]][start[1]]=val;
         return count;
+
     }
 
     public static void main(String[] args) {

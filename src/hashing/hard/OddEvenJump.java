@@ -90,7 +90,7 @@ public class OddEvenJump {
             if (lo != null) {
                 lower[i] = higher[map.get(lo)];
             }
-            if (higher[i]) {
+            if (higher[i]) { // Because the first jump is odd.
                 res++;
             }
             map.put(A[i], i);

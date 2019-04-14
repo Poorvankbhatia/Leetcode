@@ -27,25 +27,43 @@ import tree.TreeNode;
 public class SmallestString {
 
     public String smallestFromLeaf(TreeNode root) {
+        return dfs(root,"");
+    }
+
+    private String dfs(TreeNode root,String suffix) {
         if(root==null) {
-            return "";
+            return suffix;
         }
-        String current = ((char)('a'+root.val))+"";
+        suffix= "" + ((char) ('a'+root.val)) + suffix;
 
         if(root.left==null && root.right==null) {
-            return current;
+            return suffix;
         }
 
-        String left = smallestFromLeaf(root.left);
-        String right = smallestFromLeaf(root.right);
-
-        if(left.length() > 0 && right.length() > 0) {
-            return (( (left.compareTo(right)<0) ? left: right) + current);
-        } else if(left.length()>0) {
-            return left + current;
-        } else {
-            return right + current;
+        if(root.left==null) {
+            return dfs(root.right,suffix);
         }
+        if(root.right==null) {
+            return dfs(root.left,suffix);
+        }
+
+        String left = dfs(root.left,suffix);
+        String right = dfs(root.right,suffix);
+
+        System.out.println(left+" "+right);
+
+        return (left.compareTo(right)>0?right:left);
+
     }
 
 }
+
+/*
+
+Case :  [4,0,1,1]
+        e
+       / \
+      a  b
+     /
+    b
+ */

@@ -19,19 +19,26 @@ public class DistributeCoins {
     private int moves;
     public int distributeCoins(TreeNode root) {
         moves=0;
-        dfs(root);
+        util(root);
         return moves;
     }
 
-    private int dfs(TreeNode root) {
+    /*
+    Helper function returns the amount of coins each node need or have excessively. For each node, it will try to balance the amount of the coins used by its left child and right child.
+    And it will return a positive number if there is excessive coins which could be used by its parent node, or a negative number if current node or its children need coins.
+    Each coin (excessive or needed) need one step to be sent to the parent node.
+     */
+    private int util(TreeNode root) {
         if(root==null) {
             return 0;
         }
-        int left = dfs(root.left);
-        int right = dfs(root.right);
-        int res = left+right;
-        moves+=Math.abs(left)+Math.abs(right);
-        res+=root.val-1;
+        int res = util(root.left)+util(root.right);
+        if(root.val==0) {
+            res+=-1;// current node need one coin.
+        } else {
+            res+=root.val-1;// keep one coin for current node.
+        }
+        moves+=Math.abs(res);// each coin move up to parent node need 1 move.
         return res;
     }
 

@@ -36,38 +36,31 @@ package arrays.easy;
 public class SumAfterEvenNumbers {
 
     public int[] sumEvenAfterQueries(int[] A, int[][] queries) {
-        int evenSum = 0;
-        for(int a : A) {
-            if(isEven(a)) {
-                evenSum+=a;
-            }
+        int sum = 0;
+        for (int a : A) {
+            sum += (a % 2 == 0) ? a : 0;
         }
-
         int[] result = new int[queries.length];
-        int i=0;
-        int oldVal=0,newVal=0,sum=evenSum;
-        for(int[] query : queries) {
-            int val = query[0];
+        int k = 0;
+        for (int[] query : queries) {
+            int add = query[0];
             int index = query[1];
-            oldVal = A[index];
-            A[index]+=val;
-            newVal = A[index];
-            if(!isEven(oldVal) && isEven(newVal)) {
-                sum+=newVal;
-            } else if(isEven(oldVal) && isEven(newVal)) {
-                sum+=val;
-            } else if(isEven(oldVal) && !isEven(newVal)) {
-                sum-=oldVal;
+            if (A[index] % 2 == 0) {
+                if (add % 2 == 0) {
+                    sum += add;
+                } else {
+                    sum -= A[index];
+                }
+            } else {
+                if (add % 2 != 0) {
+                    sum += A[index] + add;
+                }
             }
-            result[i++]=sum;
+            A[index] += add;
+            result[k] = sum;
+            k++;
         }
-
         return result;
-
-    }
-
-    private boolean isEven(int a) {
-        return (a & 1)==0;
     }
 
 }

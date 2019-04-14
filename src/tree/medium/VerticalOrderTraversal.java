@@ -37,26 +37,28 @@ public class VerticalOrderTraversal {
             int level = levelQueue.poll();
             TreeNode current = nodeQueue.poll();
 
-            minLevel = Math.min(minLevel,level);
-            maxLevel = Math.max(maxLevel,level);
+           if(current!=null) {
+               minLevel = Math.min(minLevel,level);
+               maxLevel = Math.max(maxLevel,level);
 
-            if(ColValMap.containsKey(level)) {
-                ColValMap.get(level).add(current.val);
-            } else {
-                List<Integer> list = new ArrayList<>();
-                list.add(current.val);
-                ColValMap.put(level,list);
-            }
+               if(ColValMap.containsKey(level)) {
+                   ColValMap.get(level).add(current.val);
+               } else {
+                   List<Integer> list = new ArrayList<>();
+                   list.add(current.val);
+                   ColValMap.put(level,list);
+               }
 
-            if(current.left!=null) {
-                levelQueue.add(level-1);
-                nodeQueue.add(current.left);
-            }
+               if(current.left!=null) {
+                   levelQueue.add(level-1);
+                   nodeQueue.add(current.left);
+               }
 
-            if(current.right!=null) {
-                levelQueue.add(level+1);
-                nodeQueue.add(current.right);
-            }
+               if(current.right!=null) {
+                   levelQueue.add(level+1);
+                   nodeQueue.add(current.right);
+               }
+           }
 
         }
 
