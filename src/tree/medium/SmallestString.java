@@ -59,6 +59,7 @@ public class SmallestString {
 }
 
 /*
+time complexity would be O(NlogN).
 
 Case :  [4,0,1,1]
         e
