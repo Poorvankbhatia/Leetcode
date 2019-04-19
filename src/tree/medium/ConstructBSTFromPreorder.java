@@ -59,4 +59,24 @@ stack based iterative solution that works in O(n) time.
 
 5. Repeat steps 2 and 3 until there are items remaining in pre[].
 
+Another method:
+
+class Solution {
+    private int i;
+    public TreeNode bstFromPreorder(int[] preorder) {
+        return util(preorder,Integer.MAX_VALUE);
+    }
+
+    private TreeNode util(int[] preorder,int bound) {
+        if(i>=preorder.length || preorder[i]>bound) {
+            return null;
+        }
+        TreeNode root = new TreeNode(preorder[i++]);
+        root.left =util(preorder,root.val);
+        root.right =util(preorder,bound);
+        return root;
+    }
+
+}
+
  */
