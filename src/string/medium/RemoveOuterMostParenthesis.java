@@ -46,13 +46,23 @@ package string.medium;
 public class RemoveOuterMostParenthesis {
 
     public String removeOuterParentheses(String S) {
-        StringBuilder s = new StringBuilder();
-        int opened = 0;
-        for (char c : S.toCharArray()) {
-            if (c == '(' && opened++ > 0) s.append(c);
-            if (c == ')' && opened-- > 1) s.append(c);
+        if(S==null || S.length()==0) {
+            return "";
         }
-        return s.toString();
+        int open=0,close=0,start=0;
+        StringBuilder sb = new StringBuilder();
+        for(int i=0;i<S.length();i++) {
+            if(S.charAt(i)=='(') {
+                open++;
+            }else if(S.charAt(i)==')'){
+                close++;
+            }
+            if(open==close) {
+                sb.append(S.substring(start+1,i));
+                start=i+1;
+            }
+        }
+        return sb.toString();
     }
 
 }

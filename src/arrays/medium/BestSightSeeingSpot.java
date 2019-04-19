@@ -25,21 +25,48 @@ package arrays.medium;
 
 public class BestSightSeeingSpot {
     public int maxScoreSightseeingPair(int[] A) {
-        int max = 0, ans = 0;           // use max to record max A[i] + i before j
-        for(int j = 0; j < A.length; j ++)
-        {
-            int sum = A[j] - j + max;   // calculate the score
-            if(sum > ans) ans = sum;
-            sum = A[j] + j;             // update max if possible
-            if(sum > max) max = sum;
+        int i=0;
+        int max = A[i] + i;
+        for(int j=1;j<A.length;j++){
+            int curr = A[i] + A[j] + i - j;
+            max = curr > max ? curr : max;
+
+            // update the value of i to the one that maximizes
+            if(A[i] + i < A[j] + j){
+                i=j;
+            }
         }
-        return ans;
+        return max;
+    }
+
+    public static void main(String[] args) {
+        int[] arr = new int[]{8,1,5,2,6};
+        new BestSightSeeingSpot().maxScoreSightseeingPair(arr);
     }
 }
 
 /*
 
-Count the current best score in all previous sightseeing spot.
-Note that, as we go further, the score of previous spot decrement.
+We want to maximize A[i] + A[j] + i - j where j > i, meaning i is to the left and j is to the right
 
+One way to think about this is that we somehow make sure that we add the best value of A[i] + i to A[j] - j
+as we go from left to right. So, at any point, while going towards right end, we add the best value available to the left.
+
+Other way to think is to make sure we add the best value of A[j]-j to A[i] + i as we go from right to left.
+ So, at any point, while going towards left end, we add the best value available to the right.
+public int maxScoreSightseeingPair(int[] A) {
+        int N = A.length;
+		int j=N-1;
+        int max = A[j] - j;
+        for(int i=N-2;i>=0; i--){
+            int curr = A[i] + A[j] + i - j;
+            max = curr > max ? curr : max;
+
+            // update the value of j to the one that maximizes
+            if(A[j] - j < A[i] - i){
+                j=i;
+            }
+        }
+        return max;
+    }
  */
