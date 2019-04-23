@@ -57,3 +57,8 @@ public class MinimumDominoRotation {
     }
 
 }
+
+/*
+
+countA[i] + countB[i] - same[i] is like finding the union of two set A and set B <=> A + B - (A & B)
+ */

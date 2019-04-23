@@ -61,6 +61,8 @@ public class SlidingWindow {
 
         while (i<n) {
 
+
+
             list.add(nums[integerDeque.getFirst()]);
 
             //Remove redundant elements
