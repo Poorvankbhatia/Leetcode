@@ -21,12 +21,12 @@ public class ClosestPalindrome {
 
     public String nearestPalindromic(String n) {
         if (n.length() >= 2 && checkNine(n)) {
-            String s = "1";
+            StringBuilder s = new StringBuilder("1");
             for (int i = 0; i < n.length() - 1; i++) {
-                s += "0";
+                s.append("0");
             }
-            s += "1";
-            return s;
+            s.append("1");
+            return s.toString();
         }
         boolean hasOddLength = (n.length() % 2 != 0);
         String left = n.substring(0, (n.length() + 1) / 2);
@@ -34,17 +34,17 @@ public class ClosestPalindrome {
         String ret = n;
         long minDiff = Long.MAX_VALUE;
         for (long i : increment) {
-            String s = getPalindrome(Long.toString(Long.parseLong(left) + i), hasOddLength);
-            if (n.length() >= 2 && (s.length() != n.length() || Long.parseLong(s) == 0)) {
-                s = "";
+            StringBuilder s = new StringBuilder(getPalindrome(Long.toString(Long.parseLong(left) + i), hasOddLength));
+            if (n.length() >= 2 && (s.length() != n.length() || Long.parseLong(s.toString()) == 0)) {
+                s = new StringBuilder();
                 for (int j = 0; j < n.length() - 1; j++) {
-                    s += "9";
+                    s.append("9");
                 }
             }
-            long diff = s.equals(n) ? Long.MAX_VALUE : Math.abs(Long.parseLong(s) - Long.parseLong(n));
+            long diff = s.toString().equals(n) ? Long.MAX_VALUE : Math.abs(Long.parseLong(s.toString()) - Long.parseLong(n));
             if (diff < minDiff) {
                 minDiff = diff;
-                ret = s;
+                ret = s.toString();
             }
         }
         return ret;

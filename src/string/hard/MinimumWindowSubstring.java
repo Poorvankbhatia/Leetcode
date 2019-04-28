@@ -24,64 +24,49 @@ public class MinimumWindowSubstring {
 
         int sLen = s.length();
         int tLen = t.length();
-
         if(tLen>sLen) {
             return "";
         }
 
         int[] needToFind = new int[256];
-
-        for (int i=0;i<tLen;i++) {
-            needToFind[t.charAt(i)]++;
+        for(char c : t.toCharArray()) {
+            needToFind[c]++;
         }
-
-        int minWindowLength=Integer.MAX_VALUE,finalStart=-1,finalEnd=0,count=0;
 
         int[] hasFound = new int[256];
 
-        for (int start=0,end=0;end<sLen;end++) {
-
-            if(needToFind[s.charAt(end)]==0) {
+        int start=0;int minLength=Integer.MAX_VALUE;
+        int count=0;
+        int finalStart=0;
+        for(int end=0;end<sLen;end++) {
+            char c = s.charAt(end);
+            if(needToFind[c]==0) {
                 continue;
             }
-
-            hasFound[s.charAt(end)]++;
-
-            if (hasFound[s.charAt(end)] <= needToFind[s.charAt(end)]) {
+            hasFound[c]++;
+            if(hasFound[c]<=needToFind[c]) {
                 count++;
             }
-
             if(count==tLen) {
-
-                while (needToFind[s.charAt(start)]==0 || hasFound[s.charAt(start)]>needToFind[s.charAt(start)]) {
-
+                while(needToFind[s.charAt(start)]==0 || hasFound[s.charAt(start)]>needToFind[s.charAt(start)]) {
                     if(hasFound[s.charAt(start)]>needToFind[s.charAt(start)]) {
                         hasFound[s.charAt(start)]--;
                     }
-
                     start++;
-
                 }
-
-                int windowLength = end - start + 1;
-
-                if (minWindowLength > windowLength) {
-                    minWindowLength = windowLength;
-                    finalStart = start;
-                    finalEnd = end;
+                if(minLength>end-start+1) {
+                    minLength = end-start+1;
+                    finalStart=start;
                 }
-
             }
-
         }
-
-        return (count!=0 && finalStart!=-1)?s.substring(finalStart, finalEnd + 1):"";
+        return minLength!=Integer.MAX_VALUE?s.substring(finalStart,finalStart+minLength):"";
 
     }
 
 
     public static void main(String[] args) {
-        System.out.print(new MinimumWindowSubstring().minWindow("babb","baba"));
+        System.out.print(new MinimumWindowSubstring().minWindow("cabwefgewcwaefgcf","cae"));
     }
 
 }

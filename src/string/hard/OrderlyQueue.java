@@ -46,7 +46,7 @@ public class OrderlyQueue {
         return new String(arr);
     }
 
-    public String slideString(String S) {
+    private String slideString(String S) {
         String res = S, cur = S;
         for(int i = 0; i < S.length(); i ++) {
             cur = cur.substring(1) + cur.charAt(0);

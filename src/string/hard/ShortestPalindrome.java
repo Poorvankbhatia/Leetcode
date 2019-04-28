@@ -38,9 +38,6 @@ public class ShortestPalindrome {
             return s;
         }
 
-
-
-
     }
 
     private int[] computeLPS(String s) {
