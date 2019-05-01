@@ -47,18 +47,25 @@ public class LogSystem {
 
     public List<Integer> retrieve(String s, String e, String gra) {
         int end = 0;
-        if(gra.equals("Year")) {
-            end = 4;
-        } else if(gra.equals("Month")) {
-            end = 7;
-        } else if(gra.equals("Day")) {
-            end = 10;
-        } else if(gra.equals("Hour")) {
-            end = 13;
-        } else if(gra.equals("Minute")) {
-            end = 16;
-        } else {
-            end = 19;
+        switch (gra) {
+            case "Year":
+                end = 4;
+                break;
+            case "Month":
+                end = 7;
+                break;
+            case "Day":
+                end = 10;
+                break;
+            case "Hour":
+                end = 13;
+                break;
+            case "Minute":
+                end = 16;
+                break;
+            default:
+                end = 19;
+                break;
         }
 
         s= s.substring(0,end);

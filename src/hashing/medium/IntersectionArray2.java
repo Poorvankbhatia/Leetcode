@@ -38,10 +38,10 @@ public class IntersectionArray2 {
             }
         }
 
-        for (int j=0;j<nums2.length;j++) {
-            if(map.containsKey(nums2[j]) && map.get(nums2[j])!=0) {
-                list.add(nums2[j]);
-                map.put(nums2[j],map.get(nums2[j])-1);
+        for (int i : nums2) {
+            if (map.containsKey(i) && map.get(i) != 0) {
+                list.add(i);
+                map.put(i, map.get(i) - 1);
             }
         }
 

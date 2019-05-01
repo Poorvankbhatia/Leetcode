@@ -18,56 +18,26 @@ public class RandomNodeList {
 
     public RandomListNode copyRandomList(RandomListNode head) {
 
-        if(head==null) {
-            return null;
+        if (head == null) return null;
+
+        Map<RandomListNode, RandomListNode> map = new HashMap<>();
+
+        // loop 1. copy all the nodes
+        RandomListNode node = head;
+        while (node != null) {
+            map.put(node, new RandomListNode(node.label));
+            node = node.next;
         }
 
-        RandomListNode tmp = head;
-        RandomListNode tmpCopy = new RandomListNode(head.label);
-        RandomListNode copyHead = tmpCopy;
-        tmpCopy.next = null;
-
-        Map<RandomListNode,RandomListNode> map = new HashMap<>();
-
-        while (tmp!=null) {
-            map.put(tmp,tmp.next);
-            tmp = tmp.next;
+        // loop 2. assign next and random pointers
+        node = head;
+        while (node != null) {
+            map.get(node).next = map.get(node.next);
+            map.get(node).random = map.get(node.random);
+            node = node.next;
         }
 
-        tmp = head;
-
-        while (tmp.next!=null) {
-            tmp = tmp.next;
-            tmpCopy.next = new RandomListNode(tmp.label);
-            tmpCopy = tmpCopy.next;
-        }
-
-        tmp = head;tmpCopy=copyHead;
-
-        while (tmpCopy!=null) {
-            tmpCopy.random = tmp;
-            tmp.next = tmpCopy;
-            tmpCopy = tmpCopy.next;
-        }
-
-        tmpCopy = copyHead;
-
-        while (tmpCopy!=null) {
-            if(tmpCopy.random.random!=null) {
-                tmpCopy.random = tmpCopy.random.random.next;
-            }
-            tmpCopy = tmpCopy.next;
-        }
-
-        tmp = head;
-
-        while (tmp!=null) {
-            tmp.next = map.get(tmp);
-            tmp = tmp.next;
-        }
-
-        return copyHead;
-
+        return map.get(head);
     }
 
     public static void main(String[] args) {

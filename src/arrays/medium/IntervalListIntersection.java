@@ -28,47 +28,37 @@ import java.util.List;
 public class IntervalListIntersection {
 
 
-    private class Interval {
-        int start;
-        int end;
+    public int[][] intervalIntersection(int[][] A, int[][] B) {
 
-        Interval() {
-            start = 0;
-            end = 0;
-        }
+        int i=0,j=0;
 
-        Interval(int s, int e) {
-            start = s;
-            end = e;
-        }
-    }
-
-    public Interval[] intervalIntersection(Interval[] A, Interval[] B) {
-        List<Interval> list = new ArrayList<>();
-        int i = 0, j = 0;
-        while (i < A.length && j < B.length) {
-            if (A[i].end < B[j].start) {
+        List<int[]> list = new ArrayList<>();
+        while(i<A.length && j<B.length) {
+            if(A[i][1]<B[j][0]) {
                 i++;
-            } else if (A[i].start > B[j].end) {
+            } else if(A[i][0]>B[j][1]) {
                 j++;
-            } else {
-                list.add(intersect(A[i], B[j]));
-                if (A[i].end < B[j].end) {
+            }  else {
+                list.add(intersection(A[i],B[j]));
+                if(A[i][1]<B[j][1]) {
                     i++;
                 } else {
                     j++;
                 }
             }
+
         }
-        int n = list.size();
-        Interval[] result = new Interval[n];
-        for (int k = 0; k < n; k++) {
-            result[k] = list.get(k);
+
+        int[][] result = new int[list.size()][2];
+        for(i=0;i<result.length;i++) {
+            result[i]=list.get(i);
         }
+
         return result;
+
     }
 
-    private Interval intersect(Interval a, Interval b) {
-        return new Interval(Math.max(a.start, b.start), Math.min(a.end, b.end));
+    private int[] intersection(int[] A,int[] B) {
+        return new int[]{Math.max(A[0],B[0]),Math.min(A[1],B[1])};
     }
 }
