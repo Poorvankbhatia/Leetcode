@@ -33,28 +33,29 @@ import java.util.TreeMap;
  */
 public class RandomPickIndexWeight {
 
-    private class Solution {
+    TreeMap<Integer, Integer> map;
+    private int sum;
+    private Random random;
 
-        TreeMap<Integer,Integer> map;
-        private int sum;
-        private Random random;
-
-        public Solution(int[] w) {
-            map = new TreeMap<>();
-            sum = 0;
-            for (int i=0;i<w.length;i++) {
-                sum += w[i];
-                map.put(sum,i);
-            }
-            random  =new Random();
+    public RandomPickIndexWeight(int[] w) {
+        map = new TreeMap<>();
+        sum = 0;
+        for (int i = 0; i < w.length; i++) {
+            sum += w[i];
+            map.put(sum, i);
         }
+        random = new Random();
+    }
 
-        //In the case w = [1, 99] , pickIndex() should return 1 for 99% and 0 for 1%.
-        public int pickIndex() {
-            int key= map.higherKey(random.nextInt(sum));
-            return map.get(key);
-        }
+    //In the case w = [1, 99] , pickIndex() should return 1 for 99% and 0 for 1%.
+    private int pickIndex() {
+        int key = map.ceilingKey(random.nextInt(sum));
+        return map.get(key);
+    }
 
+    public static void main(String[] args) {
+        int[] arr = new int[]{2, 5, 3, 4};
+        System.out.println(new RandomPickIndexWeight(arr).pickIndex());
     }
 
 }
