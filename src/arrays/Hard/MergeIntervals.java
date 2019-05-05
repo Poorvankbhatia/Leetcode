@@ -50,16 +50,13 @@ public class MergeIntervals {
             return intervals;
         }
 
-        Collections.sort(intervals, new Comparator<Interval>() {
-            @Override
-            public int compare(Interval o1, Interval o2) {
-                if(o1.start>o2.start) {
-                    return 1;
-                } else if(o1.start<o2.start) {
-                    return -1;
-                }else {
-                    return 0;
-                }
+        Collections.sort(intervals, (o1, o2) -> {
+            if(o1.start>o2.start) {
+                return 1;
+            } else if(o1.start<o2.start) {
+                return -1;
+            }else {
+                return 0;
             }
         });
 

@@ -50,6 +50,11 @@ public class RemoveComments {
         return res;
     }
 
+    public static void main(String[] args) {
+        String[] arr = new String[]{"a/*comment", "line", "more_comment*/b"};
+        System.out.println(new RemoveComments().removeComments(arr));
+    }
+
 }
 
 /*

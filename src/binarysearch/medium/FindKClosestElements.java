@@ -35,7 +35,6 @@ public class FindKClosestElements {
         int l= getCrossOverIndex(arr,x,0,arr.length-1),r=l+1;
 
         if (arr[l] == x) {
-            l--;
             result.add(x);
             count++;
         }

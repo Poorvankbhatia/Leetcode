@@ -33,6 +33,7 @@ Answers within 10^-5 of the correct answer will be considered correct.
 package heap.hard;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.PriorityQueue;
 
 /**
@@ -40,31 +41,70 @@ import java.util.PriorityQueue;
  */
 public class MinimumCostToHire {
 
-    public double mincostToHireWorkers(int[] q, int[] w, int K) {
-        double[][] workers = new double[q.length][2];
+    public double mincostToHireWorkers(int[] quality, int[] wage, int K) {
+        int numWorkers = quality.length;
 
-        for (int i = 0; i < q.length; ++i) {
-            workers[i] = new double[]{(double) (w[i]) / q[i], (double) q[i]};
-        }
-        Arrays.sort(workers, (a, b) -> Double.compare(a[0], b[0]));
-        double res = Double.MAX_VALUE, qsum = 0;
-        PriorityQueue<Double> pq = new PriorityQueue<>();
+        /* qualityRatio[i] = {quality, wage[i] / quality[i]}. */
+        double[][] qualityRatio = new double[numWorkers][2];
 
-        for (double[] worker : workers) {
-            qsum += worker[1];
-            pq.add(-worker[1]);
-            if (pq.size() > K) {
-                qsum += pq.poll();
+        for (int i = 0; i < numWorkers; i++) {
+            qualityRatio[i][0] = quality[i];
+            qualityRatio[i][1] = (double) wage[i] / quality[i];
+        }
+
+        Arrays.sort(qualityRatio, (a, b) -> Double.compare(a[1], b[1]));
+        double minSumSalary = Integer.MAX_VALUE;
+        int sumQuality = 0;;
+
+        /* Always remove maximum quality. */
+        PriorityQueue<Double> maxHeap = new PriorityQueue<>((a, b) -> Double.compare(b, a));
+
+        for (int i = 0; i < numWorkers; i++) {
+            maxHeap.add(qualityRatio[i][0]);
+            sumQuality += qualityRatio[i][0];
+            if (maxHeap.size() > K) {
+                sumQuality -= maxHeap.poll();
             }
-            if (pq.size() == K) {
-                res = Math.min(res, qsum * worker[0]);
+            if (maxHeap.size() == K) {
+
+                /* Calculate sumSalary. */
+                double curRatio = qualityRatio[i][1];
+                minSumSalary = Math.min(minSumSalary, sumQuality * curRatio);
             }
         }
-        return res;
+
+        return minSumSalary;
     }
 
 }
 /*
+Every worker in the paid group should be paid in the ratio of their quality compared to other workers in the paid group.
+->
+
+ quality[i]   money[i]
+ _________  = ________
+ quality[j]   money[j]
+
+ money[i] / quality[i] = money[j] / quality[j] -- ratio
+That is, the group of people should have the same ratio.
+
+Every worker in the paid group must be paid at least their minimum wage expectation.
+->
+
+money[i] >= wage[i]
+ratio >= wage[i] / quality[i] -- ratio2
+->
+ratio is at least the maximum ratio2 within the group of K people.
+
+If we keep current candidates in a priority queue as below,
+
+|-- < k candidates--|
+			new worker to join is with higher ratio2
+If there are k + 1candidates, we pop the highest quality to reduce total cost.
+If there are k candidates, we can calculate the total cost.
+
+
+
 
 "1. Every worker in the paid group should be paid in the ratio of their quality compared to other workers in the paid group."
 So for any two workers in the paid group,

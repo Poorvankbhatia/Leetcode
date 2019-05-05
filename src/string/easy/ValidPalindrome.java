@@ -23,9 +23,9 @@ public class ValidPalindrome {
 
         for (int j=arr.length-1,i=0;j>=0 && i<arr.length;) {
 
-            if(!Character.isLetterOrDigit(arr[i]) && i<arr.length) {
+            if(!Character.isLetterOrDigit(arr[i])) {
                 i++;
-            } else if(!Character.isLetterOrDigit(arr[j]) && j>=0) {
+            } else if(!Character.isLetterOrDigit(arr[j])) {
                 j--;
             } else if(Character.toLowerCase(arr[i])==Character.toLowerCase(arr[j])) {
                 if(i==j) {

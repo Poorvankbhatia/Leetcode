@@ -66,19 +66,10 @@ public class EmployeeFreeTime {
             }
         }
 
-        Collections.sort(intervalList, new Comparator<Interval>() {
-            @Override
-            public int compare(Interval o1, Interval o2) {
-                if(o1.start>o2.start) {
-                    return 1;
-                } else if(o1.start<o2.start) {
-                    return -1;
-                } else {
-                    return 0;
-                }
+        Collections.sort(intervalList, (o1, o2) -> {
+            return Integer.compare(o1.start, o2.start);
 
 
-            }
         });
 
         int k =0;

@@ -59,7 +59,7 @@ public class RearrangeStringKDistance {
 
             Map.Entry<Character, Integer> front = queue.poll();
 
-            if(front.getValue()>0) {
+            if(front!=null && front.getValue()>0) {
                 priorityQueue.offer(front);
             }
 
