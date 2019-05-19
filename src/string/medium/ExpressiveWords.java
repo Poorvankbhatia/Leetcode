@@ -74,7 +74,7 @@ public class ExpressiveWords {
     private void fillRunLengthEncoding(String input){
 
         List<Integer> list = new ArrayList<>();
-        String s = "";
+        StringBuilder s = new StringBuilder();
         for (int i = 0; i < input.length(); i++) {
             int count = 1;
             while (i + 1 < input.length() && input.charAt(i) == input.charAt(i + 1)) {
@@ -82,10 +82,10 @@ public class ExpressiveWords {
                 i++;
             }
             list.add(count);
-            s+=input.charAt(i);
+            s.append(input.charAt(i));
         }
         listMap.put(input,list);
-        encodedStringMap.put(input,s);
+        encodedStringMap.put(input, s.toString());
     }
 
     public static void main(String[] args) {
