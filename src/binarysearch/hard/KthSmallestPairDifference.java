@@ -110,6 +110,7 @@ public class KthSmallestPairDifference {
 
 O(NlogW+NlogN), where N is the length of nums, and W is equal to nums[nums.length - 1] - nums[0]
 
-O( n*logn + n*logn*logn). Sorting takes O(n*logn). After that the main binary search over low and high takes O(n*logn*logn) time because each call to the function
+O( n*logn + n*logn*logn). Sorting takes O(n*logn).
+After that the main binary search over low and high takes O(n*logn*logn) time because each call to the function
 
  */
