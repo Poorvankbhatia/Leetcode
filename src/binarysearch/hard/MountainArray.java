@@ -1,4 +1,4 @@
-package binarysearch.medium;
+package binarysearch.hard;
 
 public interface MountainArray {
 

@@ -19,7 +19,7 @@ import java.util.HashMap;
 /**
  * Created by poorvank on 16/12/16.
  */
-public class RemoveDuplicates {
+public class RemoveDuplicateLetters {
 
     public String removeDuplicateLetters(String s) {
 
@@ -76,7 +76,7 @@ public class RemoveDuplicates {
     }
 
     public static void main(String[] args) {
-        System.out.println(new RemoveDuplicates().removeDuplicateLetters("cbacdcbc"));
+        System.out.println(new RemoveDuplicateLetters().removeDuplicateLetters("cbacdcbc"));
     }
 
 }
