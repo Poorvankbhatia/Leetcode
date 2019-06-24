@@ -34,8 +34,10 @@ Constraints:
 0 <= target <= 10^9
 0 <= mountain_arr.get(index) <= 10^9
  */
-package binarysearch.medium;
+package binarysearch.hard;
 
+
+import binarysearch.hard.MountainArray;
 
 public class MountainArr {
     public int findInMountainArray(int target, MountainArray mountainArr) {

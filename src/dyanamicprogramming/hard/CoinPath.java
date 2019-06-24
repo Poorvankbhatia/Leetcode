@@ -38,11 +38,11 @@ import java.util.List;
  */
 public class CoinPath {
 
-    public List < Integer > cheapestJump(int[] A, int B) {
+    public List <Integer> cheapestJump(int[] A, int B) {
         int[] next = new int[A.length];
         long[] dp = new long[A.length];
         Arrays.fill(next, -1);
-        List< Integer > res = new ArrayList<>();
+        List<Integer> res = new ArrayList<>();
         for (int i = A.length - 2; i >= 0; i--) {
             long minCost = Integer.MAX_VALUE;
             for (int j = i + 1; j <= i + B && j < A.length; j++) {
@@ -72,7 +72,7 @@ public class CoinPath {
 
 /*
 
-From the solutions discussed above, we can observe that the cost of jumping till the end of the array starting from the index is only
+We can observe that the cost of jumping till the end of the array starting from the index is only
 dependent on the elements following the index and not the ones before it. This inspires us to make use of Dynamic Programming to
 solve the current problem.
 
