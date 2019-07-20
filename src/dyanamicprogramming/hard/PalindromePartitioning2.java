@@ -36,9 +36,10 @@ public class PalindromePartitioning2 {
 
                 int j = i+gap-1;
 
-                if(s.charAt(i)==s.charAt(j) && gap==2) {
+                boolean b = s.charAt(i) == s.charAt(j);
+                if(b && gap==2) {
                     isPalindrome[i][j] = true;
-                } else if(s.charAt(i)==s.charAt(j)) {
+                } else if(b) {
                     isPalindrome[i][j] = isPalindrome[i+1][j-1];
                 }
 
