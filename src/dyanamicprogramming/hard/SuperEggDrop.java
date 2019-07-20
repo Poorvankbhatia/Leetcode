@@ -121,6 +121,16 @@ It's natural to attempt dynamic programming, as we encounter similar subproblems
  K eggs and N floors left. When we drop an egg from floor X, it either survives and we have state (K, N-X),
   or it breaks and we have state (K-1, X-1).
 
+
+Now for the key insight: Because dp(K,N) is a function that is increasing on N, the first term T1 = dp(K-1, X-1)
+in our max expression is an increasing function on X, and the second term T2 = dp(K, N-X)
+is a decreasing function on X. This means that we do not need to check every X to find the minimum -- instead, we can binary search for the best X.
+
+Continuing our discussion, if T1<T2 the X value chosen is too small;
+if T1>T2 then X is too big. However, this argument is not quite correct: when there are only two possible values of X, we need to check both.
+
+Using the above fact, we can use a binary search to find the correct value of X more efficiently than checking all N of them.
+
 See : https://leetcode.com/problems/super-egg-drop/solution/
 
  */
