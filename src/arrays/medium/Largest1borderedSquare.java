@@ -27,26 +27,20 @@ package arrays.medium;
 public class Largest1borderedSquare {
 
     public int largest1BorderedSquare(int[][] grid) {
-        int m=grid.length,n=grid[0].length;
-        int[][] left=new int[m][n];
-        int[][] up=new int[m][n];
-        int max=0;
-        for(int i=0;i<m;i++){
-            for(int j=0;j<n;j++){
-                if(grid[i][j]==0) {
-                    continue;
-                }
-                up[i][j]=i-1<0?1:up[i-1][j]+1;
-                left[i][j]=j-1<0?1:left[i][j-1]+1;
-                if(up[i][j]==1||left[i][j]==1) {
-                    max=Math.max(max,1);
-                    continue;
-                }
-                int len=Math.min(up[i][j],left[i][j]);
-                for(int l=len;l>1;l--) {
-                    int index=l-1;
-                    if(up[i][j-index]>=l && left[i-index][j]>=l) {
-                        max=Math.max(max,l*l);
+        if (grid.length==0) return 0;
+        int[][] horizontal = new int[grid.length+1][grid[0].length+1];
+        int[][] vertical = new int[grid.length+1][grid[0].length+1];
+        int dist, max=0;
+        for (int r=1;r<=grid.length;r++){
+            for (int c=1;c<=grid[0].length;c++){
+                if (grid[r-1][c-1]==0) continue;
+                horizontal[r][c] = horizontal[r-1][c]+1;
+                vertical[r][c] = vertical[r][c-1]+1;
+                dist = Math.min(horizontal[r][c],vertical[r][c]);
+                for (int i=dist;i>=1;i--){
+                    if (horizontal[r][c-i+1]>=i
+                            && vertical[r-i+1][c]>=i){
+                        max = Math.max(max, i*i);
                         break;
                     }
                 }
@@ -55,3 +49,11 @@ public class Largest1borderedSquare {
         return max;
     }
 }
+
+/*
+Create auxillary horizontal and vertical arrays first
+Look Images.
+Then starting from bottom right,for every i,j ; we find small=min (ver[i][j], hor[i][j]) (marked in orange) ,
+then look at all distances in [1,small] vertically in hor array and horizontally in ver array. If values(shown in blue)
+are greater than small and if small is greater than curr result, then we update result
+ */
