@@ -31,13 +31,23 @@ public class LargestSubstringLexicographic {
             if (c == d) {
                 ++offset;
             }else {
-                if (c < d)  { i += offset + 1; } // chars in [i, ..., i + offset] <= charAt(i) == charAt(j)
-                else { j += offset + 1; } // c > d, chars in [j, ..., j + offset] <= charAt(i) == charAt(j)
-                if (i == j) { ++i; } // avoid duplicate start indices.
+                if (c < d)  { // chars in [i, ..., i + offset] <= charAt(i) == charAt(j)
+                    i += offset + 1;
+                }
+                else { // c > d, chars in [j, ..., j + offset] <= charAt(i) == charAt(j)
+                    j += offset + 1;
+                }
+                if (i == j) {// avoid duplicate start indices.
+                    ++i;
+                }
                 offset = 0; // reset offset to 0.
             }
         }
         return s.substring(Math.min(i, j));
+    }
+
+    public static void main(String[] args) {
+        System.out.println(new LargestSubstringLexicographic().lastSubstring("leetcode"));
     }
 
 }

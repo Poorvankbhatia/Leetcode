@@ -73,3 +73,29 @@ public class RemoveNodesThatSumToZero {
     }
 
 }
+
+/*
+Wrong solution for :
+This solution is incorrect for this case [1,3,2,-3,-2,5,5,-5,1], it returns [1,5,5,-5,1] whereas it should be [1,5,1]
+
+Brute force works:
+
+public ListNode removeZeroSumSublists(ListNode head) {
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode i = dummy;
+        while(i != null){
+            int sum = 0;
+            for(ListNode j = i.next; j != null ;){
+                sum += j.val;
+                if(sum == 0){
+                    i.next = j.next;
+                }
+                j = j.next;
+            }
+            i = i.next;
+        }
+        return dummy.next;
+    }
+
+ */

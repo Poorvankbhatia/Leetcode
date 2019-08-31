@@ -26,7 +26,7 @@ Output:
 Note:
 The number of elements of the given matrix will not exceed 10,000.
 There are at least one 0 in the given matrix.
-The cells are adjacent in only four directions: up, down, left and right.
+The cells are adjacent in only four dir: up, down, left and right.
 
  */
 package bfsdfs.medium;
