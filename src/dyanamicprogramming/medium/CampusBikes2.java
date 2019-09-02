@@ -133,7 +133,38 @@ DFS Solution:
         return Math.abs(a[0] - b[0]) + Math.abs(a[1] - b[1]);
     }
 
-    Integer key can be constructed as:
+Lets say x is a worker, y is bike
+for 4 workers and 4 bikes, we expect the algorithm to go through paths like
+
+x0y0, x1y1, x2y2, x3y3
+x0y0, x1y1, x2y3, x3y2
+x0y0, x1y2, x2y1, x3y3
+x0y0, x1y2, x2y3, x3y1
+x0y0, x1y3, x2y1, x3y2
+x0y0, x1y3, x2y2, x3y2
+
+x0y1, x1y0, x2y2, x3y3
+x0y1, x1y0, x2y3, x3y2
+x0y1, x1y2, x2y0, x3y1
+x0y1, x1y2, x2y1, x3y0
+...
+
+Notice the bolded paths here repeats themself. We can prevent calculating this path again with a memoization technique.
+We can reword the pattern above as:
+
+x0yn, x1yn, x2y2, x3y3
+x0yn, x1yn, x2y3, x3y2
+
+Since the nature of this problem asks for the shortest distance, so whenever we encounter the above 2 possible paths,
+we will always return it as Math.min(f(x2y2, x3y3), f(x2y3 ,x3y2))
+
+Now the quesiton becomes how do we store Math.min(f(x2y2, x3y3), f(x2y3 ,x3y2))
+Since the dfs function iterates through each worker from 0-nth, we can map them to an boolean array of boolean[workers.length]
+Meaning if we ever see a boolean array of {[true], [true], [false], [false]} it will always refer to {x0yn, x1yn, x2y2, x3y3} or {x0yn, x1yn, x2y3, x3y2}.
+
+
+
+    Integer key can be constructed as(BIT MASKING):
      private int createKey(boolean[] visited) {
         int key = 0;
         for (int i = 0; i < visited.length; i++) {
