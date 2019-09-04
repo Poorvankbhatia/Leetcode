@@ -56,13 +56,6 @@ public class CampusBikes {
                 disMap.get(current).add(arr);
             }
         }
-
-        for (Integer key :  disMap.keySet()) {
-            for (int[] arr : disMap.get(key)) {
-                System.out.println(key+" " + arr[0]+" "+arr[1]);
-            }
-        }
-
         for(Map.Entry<Integer,List<int[]>> entry : disMap.entrySet()) {
             List<int[]> values = entry.getValue();
             for(int[] v : values) {
