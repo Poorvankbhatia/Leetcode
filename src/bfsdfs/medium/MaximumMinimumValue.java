@@ -44,10 +44,10 @@ public class MaximumMinimumValue {
         int smallest = Integer.MAX_VALUE;
         while(!queue.isEmpty()) {
             int[] pop = queue.poll();
+            smallest = Math.min(pop[0], smallest);
             if(pop[1]==0 && pop[2]==0) {
                 break;
             }
-            smallest = Math.min(pop[0], smallest);
             for(int i=0;i<4;i++) {
                 int nextX = pop[1]+dir[i][0];
                 int nextY = pop[2]+dir[i][1];
