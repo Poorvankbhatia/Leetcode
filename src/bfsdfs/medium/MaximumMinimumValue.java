@@ -48,7 +48,6 @@ public class MaximumMinimumValue {
                 break;
             }
             smallest = Math.min(pop[0], smallest);
-            System.out.println(smallest);
             for(int i=0;i<4;i++) {
                 int nextX = pop[1]+dir[i][0];
                 int nextY = pop[2]+dir[i][1];
