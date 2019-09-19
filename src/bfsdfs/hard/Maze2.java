@@ -44,6 +44,7 @@ Explanation: There is no way for the ball to stop at the destination.
  */
 package bfsdfs.hard;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -52,58 +53,66 @@ import java.util.Queue;
  */
 public class Maze2 {
 
-    int[] xMove = new int[]{0,0,1,-1};
-    int[] yMove = new int[]{1,-1,0,0};
+    public static final int[][] dirs = new int[][] {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
 
-    private class Node {
-        int x,y,distance;
-
-        public Node(int x, int y, int distance) {
-            this.x = x;
-            this.y = y;
-            this.distance = distance;
-        }
-    }
-
-    public int shortestDistance(int[][] maze, int[] start, int[] dest) {
-
-        if(maze==null || maze.length==0) {
-            return 0;
+    public int shortestDistance(int[][] maze, int[] start, int[] destination) {
+        if(maze == null || maze.length == 0 || maze[0].length == 0) {
+            return -1;
         }
 
         int m = maze.length;
         int n = maze[0].length;
+        int[][] dp = new int[m][n];
+        Queue<Pair> que = new LinkedList<>();
 
-        boolean[][] visited = new boolean[m][n];
+        que.offer(new Pair(start[0], start[1], 0));
+        for(int i = 0; i < m; i++) {
+            Arrays.fill(dp[i], Integer.MAX_VALUE);
+        }
 
-        Queue<Node> queue = new LinkedList<>();
-        Node startNode = new Node(start[0],start[1],0);
-        queue.add(startNode);
-        while (!queue.isEmpty()) {
-            Node current = queue.remove();
-            if(current.x==dest[0] && current.y==dest[1]) {
-                return current.distance;
-            }
-            for (int i=0;i<4;i++) {
-                int nextX = current.x+xMove[i];
-                int nextY = current.y+yMove[i];
-                int dist=0;
-                while (nextX>=0 && nextY>=0 && nextX<m && nextY<n && maze[nextX][nextY]==0) {
-                    nextX += xMove[i];
-                    nextY += yMove[i];
-                    dist++;
+
+        while(!que.isEmpty()) {
+            Pair cur = que.poll();
+            for(int[] dir : dirs) {
+                int nextX = cur.x;
+                int nextY = cur.y;
+                int len = cur.len;
+                while(nextX < m && nextX >= 0 && nextY < n && nextY >= 0 && maze[nextX][nextY] == 0) {
+                    nextX += dir[0];
+                    nextY += dir[1];
+                    len++;
+
                 }
-                int lastVisitedX=nextX-xMove[i],lastVisitedY=nextY-yMove[i];
-                if(!visited[lastVisitedX][lastVisitedY]) {
-                    visited[lastVisitedX][lastVisitedY]=true;
-                    queue.add(new Node(lastVisitedX,lastVisitedY,dist+current.distance));
+                nextX -= dir[0];
+                nextY -= dir[1];
+                len--;
+
+                // avoid going through unnecessary cases.
+                if(len > dp[destination[0]][destination[1]]) {
+                    continue;
+                }
+
+                if(len < dp[nextX][nextY]) {
+                    dp[nextX][nextY] = len;
+                    que.offer(new Pair(nextX, nextY, len));
                 }
             }
         }
 
-        return -1;
-
+        return dp[destination[0]][destination[1]] == Integer.MAX_VALUE ? -1 : dp[destination[0]][destination[1]];
     }
+
+    class Pair {
+        int x;
+        int y;
+        int len;
+        Pair(int x, int y, int len) {
+            this.x = x;
+            this.y = y;
+            this.len = len;
+        }
+    }
+
 
     public static void main(String[] args) {
 
