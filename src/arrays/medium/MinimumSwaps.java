@@ -63,7 +63,7 @@ public class MinimumSwaps {
 
 /*
 
-Thinking about it: the final result we want is a window with length of n (total number of the 1s)
+Final result we want is a window with length of n (total number of the 1s)
 Check all the window with the same length n, find the maximum one which already contains the most 1s.
 All we need to do is to swap the rest: n-max.
 
