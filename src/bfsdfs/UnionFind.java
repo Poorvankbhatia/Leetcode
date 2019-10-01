@@ -7,9 +7,10 @@ import java.util.Arrays;
  */
 public class UnionFind {
 
-    public int count;
+    private int count;
     public int[] size;
     public int[] parent;
+    private int maxSize;
 
     public UnionFind(int count) {
         this.count = count;
@@ -19,6 +20,7 @@ public class UnionFind {
             size[i] = 1;
             parent[i] = i;
         }
+        maxSize = 0;
     }
 
     public UnionFind(int count,int[] size,int[] parent) {
@@ -50,6 +52,10 @@ public class UnionFind {
         return p;
     }
 
+    public int getMaxSize() {
+       return maxSize;
+    }
+
     public int getCount() {
         return count;
     }
@@ -67,12 +73,16 @@ public class UnionFind {
         if(size[pRoot]> size[qRoot]) {
             parent[qRoot] = pRoot;
             size[pRoot]+=size[qRoot];
+            maxSize = Math.max(size[pRoot],maxSize);
             return size[pRoot];
         } else {
             parent[pRoot] = qRoot;
             size[qRoot]+=size[pRoot];
+            maxSize = Math.max(size[qRoot],maxSize);
             return size[qRoot];
         }
+
+
 
     }
 
