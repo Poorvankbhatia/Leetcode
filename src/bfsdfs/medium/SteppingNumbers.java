@@ -24,8 +24,6 @@ import java.util.*;
 
 public class SteppingNumbers {
 
-    List<Integer> list = new ArrayList<>();
-
     public ArrayList<Integer> countSteppingNumbers(int A, int B) {
         ArrayList<Integer> res = new ArrayList<>();
         if (A > B) return res;
