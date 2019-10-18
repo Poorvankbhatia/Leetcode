@@ -40,30 +40,44 @@ import java.util.*;
 
 public class StreamChecker {
 
-    class TrieNode {
+    private class TrieNode {
+        TrieNode[] children = new TrieNode[26];
         boolean isWord;
-        TrieNode[] next = new TrieNode[26];
     }
 
-    TrieNode root = new TrieNode();
-    private Deque<Character> queue;
-    private int size=0;
-
+    public TrieNode root;
+    LinkedList<Character> queue = new LinkedList<>();
+    private int size = 0;
 
     public StreamChecker(String[] words) {
-        queue = new LinkedList<>();
-        createTrie(words);
+        root = new TrieNode();
+        for (String w : words) {
+            size = Math.max(w.length(), size);
+            insert(w, root, w.length() - 1);
+        }
+    }
+
+    private void insert(String word, TrieNode root, int d) {
+        char c = word.charAt(d);
+        if(root.children[c-'a']==null) {
+            root.children[c - 'a'] = new TrieNode();
+        }
+        if (d > 0) {
+            insert(word, root.children[c - 'a'], d-1);
+        } else {
+            root.children[c - 'a'].isWord = true;
+        }
     }
 
     public boolean query(char letter) {
         queue.addFirst(letter);
-        if(queue.size()>size) {
-            queue.removeLast();
+        if (queue.size() > size) {
+            queue.pollLast();
         }
         TrieNode node = root;
         for (char c : queue) {
-            if(node!=null) {
-                node = node.next[c - 'a'];
+            if (node != null) {
+                node = node.children[c - 'a'];
                 if (node != null && node.isWord) {
                     return true;
                 }
@@ -72,20 +86,5 @@ public class StreamChecker {
         return false;
     }
 
-    private void createTrie(String[] words) {
-        for (String s : words) {
-            size = Math.max(s.length(),size);
-            TrieNode node = root;
-            int len = s.length();
-            for (int i = len - 1; i >= 0; i--) {
-                char c = s.charAt(i);
-                if (node.next[c - 'a'] == null) {
-                    node.next[c - 'a'] = new TrieNode();
-                }
-                node = node.next[c - 'a'];
-            }
-            node.isWord = true;
-        }
-    }
-
 }
+
