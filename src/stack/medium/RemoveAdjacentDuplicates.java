@@ -44,31 +44,39 @@ import java.util.Stack;
 
 public class RemoveAdjacentDuplicates {
 
+    private class Element {
+        int count;
+        char c;
+
+        Element(char c,int count) {
+            this.c = c;
+            this.count = count;
+        }
+
+    }
+
     public String removeDuplicates(String s, int k) {
-        Stack<Character> stackChar = new Stack<>();
-        Stack<Integer> stackAdjCnt = new Stack<>();
-
-        for (char x : s.toCharArray()) {
-            if (!stackChar.isEmpty() && stackChar.peek() == x) {
-                stackAdjCnt.push(stackAdjCnt.peek() + 1);
-            } else {
-                stackAdjCnt.push(1);
-            }
-            stackChar.push(x);
-            if (stackAdjCnt.peek() == k) {
-                for (int i = 0; i < k; i++) { // pop k adjacent equal chars
-                    stackChar.pop();
-                    stackAdjCnt.pop();
+        Stack<Element> stack = new Stack<>();
+        for(char c: s.toCharArray()) {
+            if(!stack.isEmpty() && c==stack.peek().c) {
+                if(stack.peek().count==k-1) {
+                    stack.pop();
+                } else {
+                    Element x = stack.pop();
+                    stack.push(new Element(c,x.count+1));
                 }
+            } else {
+                stack.push(new Element(c,1));
             }
         }
-
-        // Convert stack to string
-        StringBuilder builder = new StringBuilder();
-        while (!stackChar.empty()) {
-            builder.append(stackChar.pop());
+        StringBuilder sb = new StringBuilder();
+        while(!stack.isEmpty()) {
+            Element e = stack.pop();
+            for(int i=0;i<e.count;i++) {
+                sb.append(e.c);
+            }
         }
-        return builder.reverse().toString();
+        return sb.reverse().toString();
     }
 
 }
