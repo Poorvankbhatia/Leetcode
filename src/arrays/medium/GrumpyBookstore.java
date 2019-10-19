@@ -32,28 +32,26 @@ package arrays.medium;
 public class GrumpyBookstore {
 
     public int maxSatisfied(int[] customers, int[] grumpy, int X) {
-
-        int left = 0;
-        int right = 0;
-        int length = customers.length;
-        for (int i = 0; i < X; i++) {
-            left += customers[i];
-        }
-        for (int i = X; i < length; i++) {
-            if (grumpy[i] == 0) {
-                right += customers[i];
+        int total = 0;
+        // Total satisfied customers.
+        for(int i=0;i<customers.length;i++) {
+            if(grumpy[i]==0) {
+                total+=customers[i];
             }
         }
-        int max = left + right;
-        int temp = left + right;
-        for (int i = 1; i < length - X + 1; i++) {
-            if (grumpy[i - 1] == 1) {
-                temp -= customers[i - 1];
+        int max = Integer.MIN_VALUE;
+        int one=0;
+        for(int end=0;end<grumpy.length;end++) {
+            if(grumpy[end]==1) {
+                one+=customers[end];
             }
-            if (grumpy[i + X - 1] == 1) {
-                temp += customers[i + X - 1];
+            if(end-X+1>=0) {
+                int val = total+one;
+                max = Math.max(max,val);
+                if(grumpy[end-X+1]==1) {
+                    one-=customers[end-X+1];
+                }
             }
-            max = Math.max(max, temp);
         }
         return max;
     }
