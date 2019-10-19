@@ -47,74 +47,64 @@ import java.util.*;
 
 public class ShortestPathAlternatingColors {
 
-    public int[] shortestAlternatingPaths(int n, int[][] red_edges, int[][] blue_edges) {
-        Map<Integer, List<Integer>> redMap = new HashMap<>();
-        Map<Integer, List<Integer>> blueMap = new HashMap<>();
-
-        for (int[] edge : red_edges) {
-            if(!redMap.containsKey(edge[1])) {
-                redMap.put(edge[1], new ArrayList<>());
-            }
-            redMap.get(edge[1]).add(edge[0]);
-        }
-
-        for (int[] edge : blue_edges) {
-            if(!blueMap.containsKey(edge[1])) {
-                blueMap.put(edge[1], new ArrayList<>());
-            }
-            blueMap.get(edge[1]).add(edge[0]);
-        }
-
-
-        /**
-         * Queue contains an array of 3 elements:
-         * First element signifies the index of the vertex from : 0 to n-1
-         * Second signifies the edge color : 0-> blue & 1-> red.
-         * Third signifies the length to reach.
-         */
-        Queue<int[]> queue = new LinkedList<>();
-        int[] result = new int[n];
-        for (int i=n-1;i>0;i--) {
-            queue.add(new int[]{i,0,0});
-            queue.add(new int[]{i,1,0});
-            Set<String> set = new HashSet<>();
-            boolean flag = true;
-            while (!queue.isEmpty()) {
-                int[] pop = queue.poll();
-                if(pop[0] == 0) {
-                    result[i] = pop[2];
-                    flag = false;
-                    break;
+        public int[] shortestAlternatingPaths(int n, int[][] red_edges, int[][] blue_edges) {
+            Map<Integer, List<Integer>> redMap = new HashMap<>();
+            Map<Integer,List<Integer>> blueMap = new HashMap<>();
+            Queue<int[]> queue = new LinkedList<>();
+            Set<String> visited = new HashSet<>();
+            visited.add("0_0");
+            visited.add("0_1");
+            for(int[] e: red_edges) {
+                redMap.putIfAbsent(e[0],new ArrayList<>());
+                redMap.get(e[0]).add(e[1]);
+                if(e[0]==0) {
+                    queue.add(new int[]{e[1],1});
                 }
-                set.add(pop[0]+"_"+pop[1]);
-                if(pop[1] ==0) {
-                    if(blueMap.containsKey(pop[0])) {
-                        for (int v : blueMap.get(pop[0])) {
-                            if(!set.contains(v+"_"+1)) {
-                                queue.add(new int[]{v,1,pop[2]+1});
+            }
+            for(int[] e: blue_edges) {
+                blueMap.putIfAbsent(e[0],new ArrayList<>());
+                blueMap.get(e[0]).add(e[1]);
+                if(e[0]==0) {
+                    queue.add(new int[]{e[1],0});
+                }
+            }
+
+            int[] result = new int[n];
+            Arrays.fill(result,-1);
+            result[0]=0;
+            int val=1;
+            while(!queue.isEmpty()) {
+                int size = queue.size();
+                for(int i=0;i<size;i++) {
+                    int[] pop = queue.poll();
+                    if(result[pop[0]]==-1) {
+                        result[pop[0]]=val;
+                    }
+                    if(pop[1]==1) {
+                        if(blueMap.containsKey(pop[0])) {
+                            for(int next : blueMap.get(pop[0])) {
+                                String check = next+"_"+0;
+                                if(visited.add(check)) {
+                                    queue.add(new int[]{next,0});
+                                }
                             }
                         }
-                    }
-                } else {
-                    if(redMap.containsKey(pop[0])) {
-                        for (int v : redMap.get(pop[0])) {
-                            if(!set.contains(v+"_"+0)) {
-                                queue.add(new int[]{v,0,pop[2]+1});
+                    } else {
+                        if(redMap.containsKey(pop[0])) {
+                            for(int next : redMap.get(pop[0])) {
+                                String check = next+"_"+1;
+                                if(visited.add(check)) {
+                                    queue.add(new int[]{next,1});
+                                }
                             }
                         }
                     }
                 }
+                val++;
             }
-            if(!flag) {
-                queue.clear();
-            } else {
-                result[i] = -1;
-            }
+            return result;
         }
 
-        return result;
-
-    }
 
     public static void main(String[] args) {
         int[][] blue = new int[][] {
