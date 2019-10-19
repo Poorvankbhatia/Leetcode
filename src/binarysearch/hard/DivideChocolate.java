@@ -39,34 +39,34 @@ package binarysearch.hard;
 public class DivideChocolate {
 
     public int maximizeSweetness(int[] sweetness, int K) {
-        K=K+1; // including yourself.
-        int lo = getMinimum(sweetness);
+        K=K+1;
+        int lo = getMin(sweetness);
         int hi = getSum(sweetness);
         while (lo < hi) {
-            int mid = lo + (hi-lo)/2;
-            if (split(sweetness, mid) < K) {
-                hi = mid - 1;
+            int minLvl = (lo + hi + 1) >>> 1;
+            if (split(sweetness, minLvl) < K) {
+                hi = minLvl - 1;
             } else {
-                lo = mid;
+                lo = minLvl;
             }
         }
         return lo;
     }
 
-    private int split(int[] sweetness, int minSweetness) {
+    private int split(int[] arr, int minSweetness) {
         int peopleCount = 0;
-        int sweet = 0;
-        for (int val : sweetness) {
-            sweet += val;
-            if (sweet >= minSweetness) {
+        int sweetness = 0;
+        for (int val : arr) {
+            sweetness += val;
+            if (sweetness >= minSweetness) {
                 peopleCount++;
-                sweet = 0;
+                sweetness = 0;
             }
         }
         return peopleCount;
     }
 
-    private int getMinimum(int[] arr) {
+    private int getMin(int[] arr) {
         int min = Integer.MAX_VALUE;
         for (int val : arr) {
             min = Math.min(min, val);
