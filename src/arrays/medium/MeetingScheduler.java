@@ -92,3 +92,9 @@ public class MeetingScheduler {
     }
 
 }
+
+/*
+
+Extension of https://leetcode.com/problems/interval-list-intersections/description/
+
+ */
