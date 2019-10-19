@@ -27,29 +27,71 @@ import java.util.Map;
  */
 public class MapSum {
 
-    Trie<Integer> trie;
-    Map<String,Integer> map;
+    private class TrieNode {
+        private int val;
+        private TrieNode[] children = new TrieNode[26];
+    }
+
+    private TrieNode root;
+
+    /** Initialize your data structure here. */
     public MapSum() {
-        trie = new Trie<>();
-        map = new HashMap<>();
+        root = new TrieNode();
     }
 
     public void insert(String key, int val) {
-        if(!map.containsKey(key)) {
-            trie.put(key,val);
+        insert(key,0,root,val);
+    }
+
+    private TrieNode insert(String key,int d,TrieNode root,int sum) {
+        if(d==key.length()) {
+            root.val = sum;
+            return root;
         }
-        map.put(key,val);
+        char c = key.charAt(d);
+        if(root.children[c-'a']==null) {
+            root.children[c-'a'] = new TrieNode();
+        }
+        insert(key,d+1,root.children[c-'a'],sum);
+        return root;
     }
 
     public int sum(String prefix) {
-        int sum =0;
-
-        List<String> keys = trie.keysWithPrefix(prefix);
-        for (String key : keys) {
-            sum += map.get(key);
+        TrieNode node = get(prefix,prefix.length(),0,root);
+        if(node==null) {
+            return 0;
+        } else {
+            return collect(node);
         }
+    }
 
-        return sum;
+    private int collect(TrieNode root) {
+        int val=root.val;
+        for(char c='a';c<='z';c++) {
+            if(root.children[c-'a']!=null) {
+                val+=collect(root.children[c-'a']);
+            }
+        }
+        return val;
+    }
+
+    private TrieNode get(String key,int length,int d,TrieNode root) {
+        if(d==length) {
+            return root;
+        }
+        char c = key.charAt(d);
+        if(root.children[c-'a']!=null) {
+            return get(key,length,d+1,root.children[c-'a']);
+        } else {
+            return null;
+        }
+    }
+
+    public static void main(String[] args) {
+        MapSum mapSum = new MapSum();
+        mapSum.insert("aa",2);
+        mapSum.insert("aaa",3);
+        System.out.println(mapSum.sum("aaa"));
     }
 
 }
