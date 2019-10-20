@@ -1,3 +1,21 @@
+/*
+
+Given a string, determine if a permutation of the string could form a palindrome.
+
+Example 1:
+
+Input: "code"
+Output: false
+Example 2:
+
+Input: "aab"
+Output: true
+Example 3:
+
+Input: "carerac"
+Output: true
+
+ */
 package string.easy;
 
 import java.util.HashMap;
@@ -7,9 +25,6 @@ import java.util.Map;
  * Created by poorvank.b on 08/06/18.
  */
 public class CanPermutePalindrome {
-
-
-
 
     public boolean canPermutePalindrome(String s) {
         if(s.length()==0) {
