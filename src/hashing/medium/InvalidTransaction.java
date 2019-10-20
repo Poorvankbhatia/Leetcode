@@ -41,37 +41,56 @@ import java.util.*;
 
 public class InvalidTransaction {
 
-    public List<String> invalidTransactions(String[] trans) {
-        int n = trans.length;
-        Set<String> res = new HashSet<>();
-        Map<String, Map<Integer, Map<String, String>>> map = new HashMap<>();
-        for (String tran : trans) {
-            String[] mm = tran.split(",");
-            int curTime = Integer.parseInt(mm[1]);
-            if (Integer.parseInt(mm[2]) > 1000) {
-                res.add(tran);
+    public class Transaction {
+        String name;
+        int time;
+        String city;
+        String trans;
+
+        Transaction(String name, int time, String city, String trans) {
+            this.name = name;
+            this.time = time;
+            this.city = city;
+            this.trans = trans;
+        }
+    }
+
+    public List<String> invalidTransactions(String[] transactions) {
+        Set<String> out = new HashSet<>();
+
+        Map<String, List<Transaction>> perPerson = new HashMap<>();
+
+        for(String trans : transactions) {
+            String[] split = trans.split(",");
+
+            String name = split[0];
+            int time = Integer.valueOf(split[1]);
+            int amount = Integer.valueOf(split[2]);
+            String city = split[3];
+
+            if(amount > 1000) {
+                out.add(trans);
             }
 
-            if (map.containsKey(mm[0])) {
-                for (Map.Entry<Integer, Map<String, String>> e : map.get(mm[0]).entrySet()) {
-                    int lastTime = e.getKey();
-                    if (Math.abs(lastTime - curTime) <= 60 && (e.getValue().size() > 1 ||
-                            !e.getValue().containsKey(mm[3]))) {
-                        res.add(tran);
-                        for (Map.Entry<String, String> es : e.getValue().entrySet()) {
-                            if (!es.getKey().equals(mm[3])) {
-                                res.add(es.getValue());
-                            }
-                        }
+            List<Transaction> otherTransactions = perPerson.get(name);
+
+            if(otherTransactions == null) {
+                otherTransactions = new ArrayList<>();
+                otherTransactions.add(new Transaction(name, time, city, trans));
+                perPerson.put(name, otherTransactions);
+            } else {
+                for(Transaction transa : otherTransactions) {
+                    if(!transa.city.equals(city) && Math.abs(transa.time - time) <= 60) {
+                        out.add(transa.trans);
+                        out.add(trans);
                     }
                 }
+
+                otherTransactions.add(new Transaction(name, time, city, trans));
             }
-            map.putIfAbsent(mm[0], new TreeMap<>());
-            map.get(mm[0]).putIfAbsent(curTime, new HashMap<>());
-            map.get(mm[0]).get(curTime).put(mm[3], tran);
         }
 
-        return new ArrayList<>(res);
+        return new ArrayList<>(out);
     }
 
 }
