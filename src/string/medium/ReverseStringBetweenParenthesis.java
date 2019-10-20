@@ -37,30 +37,57 @@ It's guaranteed that all parentheses are balanced.
  */
 package string.medium;
 
+import java.util.LinkedList;
+import java.util.Stack;
+
 public class ReverseStringBetweenParenthesis {
 
     public String reverseParentheses(String s) {
-        int begin = 0;
-        int end;
+        Stack<Character> stack = new Stack<>();
+        for(char c : s.toCharArray()) {
+            if(c==')') {
+                LinkedList<Character> list = new LinkedList<>();
+                while (!stack.isEmpty() && stack.peek() != '(') {
+                    list.addLast(stack.pop());
+                }
+                stack.pop();
+                while (list.size() > 0) {
+                    stack.push(list.removeFirst());
+                }
+            } else {
+                stack.push(c);
+            }
+        }
+        StringBuilder sb = new StringBuilder();
+        while(!stack.isEmpty()) {
+            sb.append(stack.pop());
+        }
+        return sb.reverse().toString();
+    }
+
+    public static void main(String[] args) {
+        System.out.println(new ReverseStringBetweenParenthesis().reverseParentheses("a(bcdefghijkl(mno)p)q"));
+    }
+
+}
+
+/*
+
+Recursive sol:
+
+public String reverseParentheses(String s) {
+        if(s.length() == 0) return "";
+
+        int begin = 0, end = 0;
         for(int i = 0; i < s.length(); i++){
-            if(s.charAt(i) == '(')
-                begin = i;
-            if(s.charAt(i) == ')'){
+            if(s.charAt(i) == '(') begin = i;
+            if(s.charAt(i) == ')') {
                 end = i;
-                String temp = s.substring(begin + 1, end);
-                return reverseParentheses(s.substring(0, begin) + reverseString(temp) + s.substring(end + 1));
+                StringBuilder sb = new StringBuilder(s.substring(begin+1, end));
+                return reverseParentheses(s.substring(0, begin) + sb.reverse().toString() + s.substring(end+1));
             }
         }
         return s;
     }
 
-    private String reverseString(String s){
-        char[] temp = s.toCharArray();
-        StringBuilder r = new StringBuilder();
-        for (int i = temp.length-1; i>=0; i--)
-            r.append(temp[i]);
-
-        return r.toString();
-    }
-
-}
+ */
