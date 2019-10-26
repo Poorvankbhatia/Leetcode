@@ -22,11 +22,36 @@ Explanation: The answer is "wke", with the length of 3.
  */
 package string.medium;
 
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.Queue;
 
 public class LongestSubStringWithoutRepeat {
     public int lengthOfLongestSubstring(String s) {
+        int n = s.length();
+        int start = 0,end=0;
+        Map<Character,Integer> map = new HashMap<>();
+        int len=0;
+        while(end<n) {
+            char c = s.charAt(end);
+            if(!map.containsKey(c) ||
+                    /*For input like "tmmzuxt"*/
+                    (map.getOrDefault(c,0)<start)) {
+                len = Math.max(len,end-start+1);
+            } else {
+                start = map.get(c)+1;
+            }
+            map.put(c,end);
+            end++;
+        }
+        return len;
+    }
+}
+
+/*
+
+public int lengthOfLongestSubstring(String s) {
         if(s.length()==0) {
             return 0;
         }
@@ -41,9 +66,6 @@ public class LongestSubStringWithoutRepeat {
         }
         return res;
     }
-}
-
-/*
 
 public int lengthOfLongestSubstring(String s) {
         if(s.length()==0) {
