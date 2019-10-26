@@ -23,9 +23,7 @@ Explanation: The answer is "wke", with the length of 3.
 package string.medium;
 
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.Map;
-import java.util.Queue;
 
 public class LongestSubStringWithoutRepeat {
     public int lengthOfLongestSubstring(String s) {
