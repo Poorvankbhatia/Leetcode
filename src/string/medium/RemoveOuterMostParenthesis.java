@@ -58,7 +58,7 @@ public class RemoveOuterMostParenthesis {
                 close++;
             }
             if(open==close) {
-                sb.append(S.substring(start+1,i));
+                sb.append(S, start+1, i);
                 start=i+1;
             }
         }
@@ -77,5 +77,34 @@ and the last right parenthesis.
 
 Time Complexity:
 O(N) Time, O(N) space
+
+Another method:
+
+public String removeOuterParentheses(String S) {
+        Stack<Integer> stack = new Stack<>();
+        int n = S.length();
+        Set<Integer> set = new HashSet<>();
+        for(int i=0;i<n;i++) {
+            char c = S.charAt(i);
+            if(c=='(') {
+                stack.push(i);
+            } else {
+                if(S.charAt(stack.peek())=='(') {
+                    if(stack.size()==1) {
+                        set.add(i);
+                        set.add(stack.peek());
+                    }
+                    stack.pop();
+                }
+            }
+        }
+        StringBuilder sb = new StringBuilder() ;
+        for(int i=0;i<n;i++) {
+            if(!set.contains(i)) {
+                sb.append(S.charAt(i));
+            }
+        }
+        return sb.toString();
+    }
 
  */
