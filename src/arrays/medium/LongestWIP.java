@@ -26,40 +26,27 @@ Constraints:
 package arrays.medium;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class LongestWIP {
 
     public int longestWPI(int[] hours) {
-        int sum = 0;
-        HashMap<Integer, Integer> map = new HashMap<>();
-
-        int maxInterval = 0;
-
-        for(int i = 0; i < hours.length; i++) {
-            sum = hours[i] > 8 ? sum + 1 : sum - 1;
-
-            if(sum >= 1) {
-                maxInterval = Math.max(maxInterval, i + 1);
+        int n = hours.length;
+        Map<Integer,Integer> map = new HashMap<>();
+        int sum=0;
+        int len=0;
+        for(int i=0;i<n;i++) {
+            int h = hours[i];
+            sum+=(h>8?1:-1); // transform each hour to 1 or -1
+            map.putIfAbsent(sum,i);
+            if(sum>0) { // in hours[0:i], more 1s than -1s
+                len = Math.max(len,i+1);
             }
-
-            if(map.get(sum)==null) {
-                map.put(sum, i);
-            } else {
-                if(map.get(sum - 1)!=null)
-                    maxInterval = Math.max(maxInterval, i - map.get(sum - 1));
+            if(map.containsKey(sum-1)) { // get the index j where sum of hours[0:j] is sum - 1, so that sum of hours[j+1:i] is 1
+                len = Math.max(len,i-map.get(sum-1));
             }
         }
-
-        if(maxInterval == 0) {
-            for (int hour : hours) {
-                if (hour > 8) {
-                    maxInterval = 1;
-                    break;
-                }
-            }
-        }
-
-        return maxInterval;
+        return len;
     }
 
 }
