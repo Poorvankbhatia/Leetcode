@@ -91,3 +91,62 @@ public class TimeMap {
     }
 
 }
+
+/*
+
+Binary search sol:
+
+private class TimeVal {
+        private Integer timeStamp;
+        private String val;
+
+        public TimeVal(Integer timeStamp, String val) {
+            this.timeStamp = timeStamp;
+            this.val = val;
+        }
+    }
+
+    Map<String, List<TimeVal>> map;
+
+    public TimeMap() {
+        map = new HashMap<>();
+    }
+
+    public void set(String key, String value, int timestamp) {
+        if (!map.containsKey(key)) {
+            map.put(key, new ArrayList<>());
+        }
+        map.get(key).add(new TimeVal(timestamp, value));
+    }
+
+    public String get(String key, int timestamp) {
+        List<TimeVal> list = map.get(key);
+        if (list != null) {
+            return bs(list, 0, list.size() - 1, timestamp);
+        }
+        return "";
+    }
+
+    private String bs(List<TimeVal> list, int start, int end, int target) {
+        if (list.get(start).timeStamp > target) {
+            return "";
+        } else if (list.get(end).timeStamp < target) {
+            return list.get(end).val;
+        } else {
+            int mid = (start) + (end - start) / 2;
+            int t = list.get(mid).timeStamp;
+            if (t == target) {
+                return list.get(mid).val;
+            } else if (t > target) {
+                return bs(list, start, mid - 1, target);
+            } else {
+                if (mid < list.size() - 1 && list.get(mid + 1).timeStamp > target) {
+                    return list.get(mid).val;
+                } else {
+                    return bs(list, mid + 1, end, target);
+                }
+            }
+        }
+    }
+
+ */
