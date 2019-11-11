@@ -37,31 +37,39 @@ package linklist.medium;
 import linklist.ListNode;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Stack;
 
 public class NextGreaterNodeLinkList {
     public int[] nextLargerNodes(ListNode head) {
+        Stack<int[]> stack = new Stack<>();
         List<Integer> list = new ArrayList<>();
-        ListNode node = head;
-        while(null != node) {
-            list.add(node.val);
-            node = node.next;
-        }
-
-        Stack<Integer> stack = new Stack<>(); // put index on stack
-        int[] ret = new int[list.size()];
-        for(int i = 0; i < list.size(); ++i) {
-            while(!stack.isEmpty() && list.get(i) > list.get(stack.peek())) {
-                int index = stack.pop();
-                ret[index] = list.get(i);
+        int size=0;
+        while(head!=null) {
+            list.add(0); // Just adding so that list.set function can work.
+            // If we don't get any bigger value we won't require to update.
+            while(!stack.isEmpty() && stack.peek()[0]<head.val)  {
+                list.set(stack.pop()[1],head.val);
             }
-            stack.push(i);
+            stack.push(new int[]{head.val,size});
+            size++;
+            head = head.next;
         }
-        while(!stack.isEmpty()) {
-            int index = stack.pop();
-            ret[index] = 0;
+        int[] result = new int[size];
+        int i=0;
+        for(int x : list) {
+            result[i]=x;
+            i++;
         }
-        return ret;
+        return result;
+    }
+
+    public static void main(String[] args) {
+        ListNode listNode = new ListNode(2);
+        listNode.next = new ListNode(7);
+        listNode.next.next = new ListNode(4);
+        System.out.println(Arrays.toString(new NextGreaterNodeLinkList().nextLargerNodes(listNode)));
+
     }
 }
