@@ -62,3 +62,48 @@ public class IntervalListIntersection {
         return new int[]{Math.max(A[0],B[0]),Math.min(A[1],B[1])};
     }
 }
+
+/*
+
+public int[][] intervalIntersection(int[][] A, int[][] B) {
+        List<int[]> list = new ArrayList<>();
+        int i=0,j=0;
+        while(i<A.length && j<B.length) {
+            int[] a = A[i];
+            int[] b = B[j];
+            int[] inter = intersection(a,b);
+            if(inter.length!=0) {
+                list.add(inter);
+            }
+            if(A[i][1]<B[j][1]) {
+                i++;
+            } else if(B[j][1]<A[i][1]) {
+                j++;
+            } else {
+                i++;j++;
+            }
+        }
+        int [][] result = new int[list.size()][2];
+        int k=0;
+        for(int[] l : list) {
+            result[k]=l;
+            k++;
+        }
+        return result;
+    }
+
+    private int[] intersection(int[] A,int[] B) {
+        if(A[1]>=B[0] && A[1]<=B[1]) {
+            return new int[]{Math.max(A[0],B[0]),A[1]};
+        } else if(B[1]>=A[0] && B[1]<=A[1]) {
+            return new int[]{Math.max(A[0],B[0]),B[1]};
+        } else {
+            return new int[0];
+        }
+    }
+
+    [[14,16]]
+[[7,13],[16,20]]
+
+
+ */
