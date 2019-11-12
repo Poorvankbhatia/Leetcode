@@ -37,32 +37,40 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class LongestArithmeticSequence {
-    public int longestArithSeqLength(int[] A) {
-        Map<Integer, Map<Integer, Integer>> map = new HashMap<>();
-        int res = 1;
-        int n = A.length;
-        Map<Integer, Integer> s = new HashMap<>();
-        s.put(A[0], 1);
-        map.put(0, s);
-        for (int i = 1; i < n; i++) {
-            Map<Integer, Integer> cur = new HashMap<>();
-            for (int j = 0; j < i; j++) {
-                int diff = A[i] - A[j];
-                cur.put(diff, 2);
-                Map<Integer, Integer> pre = map.get(j);
-                if (pre.containsKey(diff)) {
-                    cur.put(diff, pre.get(diff) + 1);
-                }
-                res = Math.max(cur.get(diff), res);
+    public int longestSubsequence(int[] arr, int difference) {
+        HashMap<Integer,Integer> map = new HashMap<>();
+        int n = arr.length;
+        int[] dp = new int[n];
+        dp[n-1]=1;
+        map.put(arr[n-1],n-1);
+        int max = 1;
+        for(int i=n-2;i>=0;i--) {
+            int v = difference+arr[i];
+            if(map.containsKey(v)) {
+                dp[i]=dp[map.get(v)]+1;
+                max = Math.max(dp[i],max);
+            } else {
+                dp[i]=1;
             }
-            map.put(i, cur);
+            map.put(arr[i],i);
         }
-        return res;
+        return max;
     }
 }
 
 /*
 
-Each cell is a hashmap with difference as key and length as value
+Each cell is a hashmap with difference as key and length as value.
+Without using extra space:
+
+public int longestSubsequence(int[] arr, int difference) {
+		HashMap<Integer, Integer> dp = new HashMap<>();
+		int longest = 0;
+		for(int i=0; i<arr.length; i++) {
+			dp.put(arr[i], dp.getOrDefault(arr[i] - difference, 0) + 1);
+			longest = Math.max(longest, dp.get(arr[i]));
+		}
+		return longest;
+	}
 
  */
