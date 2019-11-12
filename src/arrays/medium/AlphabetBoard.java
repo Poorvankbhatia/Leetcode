@@ -74,3 +74,60 @@ public class AlphabetBoard {
     }
 
 }
+/*
+
+Another method:
+public String alphabetBoardPath(String target) {
+        StringBuilder sb = new StringBuilder();
+        char prev = 'a';
+        for(int i=0;i<target.length();i++) {
+            char next = target.charAt(i);
+            if(next=='z' && prev!='z') {
+                sb.append(path(getCoordinates(prev),getCoordinates('u')));
+                sb.append("D");
+            } else {
+                sb.append(path(getCoordinates(prev),getCoordinates(next)));
+            }
+            sb.append('!');
+            prev = target.charAt(i);
+        }
+
+        return sb.toString();
+
+    }
+
+    private int[] getCoordinates(char c) {
+        int diff = (c-'a');
+        return new int[]{diff/5,diff%5};
+    }
+
+    private String path(int[] a,int[] b) {
+        int down = b[0]-a[0];
+        int right = b[1]-a[1];
+        StringBuilder sb = new StringBuilder();
+        if(down>0) {
+            while(down!=0) {
+                sb.append('D');
+                down--;
+            }
+        } else {
+            while(down!=0) {
+                sb.append('U');
+                down++;
+            }
+        }
+        if(right>0) {
+            while(right!=0) {
+                sb.append('R');
+                right--;
+            }
+        } else {
+            while(right!=0) {
+                sb.append('L');
+                right++;
+            }
+        };
+        return sb.toString();
+    }
+
+ */
