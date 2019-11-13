@@ -37,46 +37,23 @@ package string.medium;
 public class LongestRepeatedCharacterReplacement {
 
     public int characterReplacement(String s, int k) {
-
-        if(s == null || s.length() == 0){
-            return 0;
-        }
-
         int[] count = new int[26];
-
-        int result = 0;
-
-        for (int i=0,j=0;i<s.length();i++) {
-            while (j<s.length()) {
-                count[s.charAt(j)-'A'] ++;
-                if(countUniq(count)>k) {
-                    //Next iteration start from this character.
-                    count[s.charAt(j) - 'A']--;
-                    break;
-                }
-                j++;
+        int start=0;
+        int len=0;int max=0;
+        int end=0;
+        while(end<s.length()) {
+            char c = s.charAt(end);
+            count[c-'A']++;
+            max = Math.max(max,count[c-'A']);
+            if((end-start+1)-max>k) {
+                len = Math.max(len,end-start);
+                count[s.charAt(start)-'A']--;
+                start++;
             }
-            result = Math.max(result,j-i);
-            count[s.charAt(i)-'A']--;
+            end++;
         }
-
-        return result;
-
-    }
-
-    //Count the number of character that is different to the longest character
-    private int countUniq(int[] count) {
-
-        int max = 0;
-        int sum = 0;
-
-        for (Integer val : count) {
-            sum += val;
-            max = Math.max(val,max);
-        }
-
-        return sum-max;
-
+        len = Math.max(len,end-start);
+        return len;
     }
 
     public static void main(String[] args) {
