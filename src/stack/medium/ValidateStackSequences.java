@@ -37,20 +37,17 @@ import java.util.Stack;
 public class ValidateStackSequences {
 
     public boolean validateStackSequences(int[] pushed, int[] popped) {
-
+        int n = pushed.length;
         Stack<Integer> stack = new Stack<>();
-
-        int i=0;
-        for (int p : pushed) {
+        int j=0;
+        for(int p : pushed) {
             stack.push(p);
-            while (!stack.isEmpty() && stack.peek()==popped[i]) {
+            while(!stack.isEmpty() && popped[j]==stack.peek()) {
                 stack.pop();
-                ++i;
+                j++;
             }
         }
-
         return stack.isEmpty();
-
     }
 
 }
