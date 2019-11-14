@@ -39,24 +39,25 @@ package string.hard;
 
 public class LongestPalindromeChunkDecomposition {
 
-    public int longestDecomposition(String s) {
+    public int longestDecomposition(String text) {
+        int n = text.length();
         int chunkCount = 0;
-        String left = "", right = "";
-        int i = 0, j = s.length() - 1;
-        while (i < j) {
-            left = left + s.substring(i, i+1);
-            right = right + s.substring(j, j+1);
-            if (left.equals(new StringBuilder(right).reverse().toString())) {
-                System.out.println(left +" " + right);
-                chunkCount += 2;
-                left = "";
-                right = "";
+        int start=0;
+        int end = n;
+        int i=0,j=n-1;
+        while(i<j) {
+            String left = text.substring(start,i+1);
+            String right = text.substring(j,end);
+            if(left.equals(right)) {
+                chunkCount+=2;
+                start=i+1;
+                end = j;
             }
-            ++i;
-            --j;
+            i++;j--;
         }
-        if ( (!left.equals("") && !right.equals("")) || i == j) // middle chunk left over
-            ++chunkCount;
+        if(start<end) {
+            chunkCount++;
+        }
         return chunkCount;
     }
 
