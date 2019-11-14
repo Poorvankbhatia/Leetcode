@@ -36,65 +36,53 @@ Constraints:
  */
 package binarysearch.hard;
 
-
-import binarysearch.hard.MountainArray;
-
 public class MountainArr {
     public int findInMountainArray(int target, MountainArray mountainArr) {
-        int n = mountainArr.length();
-        int r = n - 1;
-        int l = 0;
-        int peak = -1;
-        while (l + 1 < r) {
-            int mid = (l + r) / 2;
-            if (mountainArr.get(mid) < mountainArr.get(mid + 1)) {
-                l = mid;
-            } else {
-                r = mid;
-            }
+        int start = 0;
+        int end = mountainArr.length()-1;
+        int peak = findPeak(mountainArr,start,end);
+        int ans = bs(mountainArr,start,peak,true,target);
+        if(ans==-1) {
+            return bs(mountainArr,peak,end,false,target);
         }
-        if (mountainArr.get(l) < mountainArr.get(r)) {
-            peak = r;
+        return ans;
+    }
+
+    private int findPeak(MountainArray mountainArr,int start,int end) {
+        if(start>end) {
+            return -1;
+        }
+        int mid = start+(end-start)/2;
+        int midElement = mountainArr.get(mid);
+        if((mid==0 || midElement>mountainArr.get(mid-1)) && (mid==mountainArr.length()-1 || midElement>mountainArr.get(mid+1))) {
+            return mid;
+        } else if(mid>0 && midElement<mountainArr.get(mid-1)) {
+            return findPeak(mountainArr,start,mid-1);
         } else {
-            peak = l;
+            return findPeak(mountainArr,mid+1,end);
         }
-        l = 0;
-        r = peak;
-        while (l + 1 < r) {
-            int mid = (l + r) / 2;
-            if (mountainArr.get(mid) == target) {
-                return mid;
-            } else if (mountainArr.get(mid) < target){
-                l = mid;
-            } else {
-                r = mid;
+    }
+
+    private int bs(MountainArray mountainArr,int start,int end,boolean inc,int target) {
+        if(start>end) {
+            return -1;
+        }
+        int mid = start+(end-start)/2;
+        int midElement = mountainArr.get(mid);
+        if(midElement==target) {
+            return mid;
+        }
+        if(inc) {
+            if(midElement>target) {
+                return bs(mountainArr,start,mid-1,inc,target);
             }
-        }
-        if (mountainArr.get(l) == target) {
-            return l;
-        }
-        if (mountainArr.get(r) == target) {
-            return r;
-        }
-        l = peak + 1;
-        r = n - 1;
-        while (l + 1 < r) {
-            int mid = (l + r) / 2;
-            if (mountainArr.get(mid) == target) {
-                return mid;
-            } else if (mountainArr.get(mid) < target){
-                r = mid;
-            } else {
-                l = mid;
+            return bs(mountainArr,mid+1,end,inc,target);
+        } else {
+            if(midElement>target) {
+                return bs(mountainArr,mid+1,end,inc,target);
             }
+            return bs(mountainArr,start,mid-1,inc,target);
         }
-        if (mountainArr.get(l) == target) {
-            return l;
-        }
-        if (mountainArr.get(r) == target) {
-            return r;
-        }
-        return -1;
     }
 }
 
