@@ -16,28 +16,20 @@ package arrays.medium;
  */
 public class MinimumSizeSubArraySum {
 
-    public int minSubArrayLen(int s, int[] a) {
-        if (a == null || a.length == 0)
-            return 0;
-
-        int i = 0, j = 0, sum = 0, min = Integer.MAX_VALUE;
-
-        /*
-        Since the given array contains only positive integers, the subarray sum can only increase by including more elements.
-        Therefore, you don't have to include more elements once the current subarray already has a sum large enough.
-        This gives the linear time complexity solution by maintaining a minimum window with a two indices.
-         */
-
-        while (j < a.length) {
-            sum += a[j++];
-
-            while (sum >= s) {
-                min = Math.min(min, j - i);
-                sum -= a[i++];
+    public int minSubArrayLen(int s, int[] nums) {
+        int n = nums.length;
+        int start=0;
+        int sum=0;
+        int len=Integer.MAX_VALUE;
+        for(int end=0;end<n;end++) {
+            sum+=nums[end];
+            while(sum>=s) {
+                len = Math.min(end-start+1,len);
+                sum-=nums[start];
+                start++;
             }
         }
-
-        return min == Integer.MAX_VALUE ? 0 : min;
+        return len==Integer.MAX_VALUE?0:len;
     }
 
     public static void main(String[] args) {
