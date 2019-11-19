@@ -25,6 +25,7 @@ All the integers in the given input belong to the range: [-1e7, 1e7].
 package arrays.easy;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by poorvank on 07/03/17.
@@ -32,34 +33,28 @@ import java.util.HashMap;
 public class KDiffPairsUnique {
 
     public int findPairs(int[] nums, int k) {
-
-        if(nums==null || k<0) {
+        if (nums == null || nums.length == 0 || k < 0) {
             return 0;
         }
-
-        HashMap<Integer,Integer> map = new HashMap<>();
-        for (Integer num : nums) {
-            if(!map.containsKey(num)) {
-                map.put(num,1);
-            } else {
-                map.put(num,map.get(num)+1);
-            }
-        }
-
+        Map<Integer, Integer> map = new HashMap<>();
         int count = 0;
-
-        for (Integer key : map.keySet()) {
-            if(k==0) {
-                if(map.get(key)>=2) {
-                    count++;
+        for (int n : nums) {
+            if (k != 0) {
+                if (!map.containsKey(n)) {
+                    if (map.containsKey(n + k)) {
+                        count++;
+                    }
+                    if (map.containsKey(n - k)) {
+                        count++;
+                    }
                 }
             } else {
-                if(map.containsKey(key+k)) {
+                if (map.getOrDefault(n, 0) == 1) { // For case like nums={1,1,1,1} & k=0;
                     count++;
                 }
             }
+            map.put(n, map.getOrDefault(n, 0) + 1);
         }
-
         return count;
 
     }

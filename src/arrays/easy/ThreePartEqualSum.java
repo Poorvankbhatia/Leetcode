@@ -45,11 +45,11 @@ public class ThreePartEqualSum {
         int target = sum/3;
         int cur = 0;
         int count =0;
-        for(int i=0;i<A.length;i++){
-            cur+=A[i];
-            if(cur==target){
+        for (int i1 : A) {
+            cur += i1;
+            if (cur == target) {
                 count++;
-                cur=0;
+                cur = 0;
             }
         }
 
