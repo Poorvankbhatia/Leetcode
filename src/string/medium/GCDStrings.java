@@ -31,17 +31,14 @@ package string.medium;
 
 public class GCDStrings {
     public String gcdOfStrings(String s1, String s2) {
-        if(s1 == null || s2 == null) {
+        if(s1.length()<s2.length()) {
+            return gcdOfStrings(s2,s1);
+        } else if(s1.equals(s2)) {
+            return s1;
+        }
+        if(!s1.startsWith(s2)) {
             return "";
         }
-        if(s1.charAt(0) != s2.charAt(0)) {
-            return "";
-        }
-        int len = gcd(s2.length(), s1.length());
-        return s1.substring(0, len);
-    }
-
-    private int gcd(int x, int y){
-        return y != 0 ? gcd(y,x%y) : x;
+        return gcdOfStrings(s1.substring(s2.length()),s2);
     }
 }
