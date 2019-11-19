@@ -18,48 +18,27 @@ import java.util.Stack;
  */
 public class DailyTemperatures {
 
-    public int[] dailyTemperatures(int[] temperatures) {
-
-        if(temperatures==null || temperatures.length==0) {
+    public int[] dailyTemperatures(int[] T) {
+        if(T==null || T.length==0) {
             return new int[0];
         }
-
+        int n = T.length;
+        int[] ans = new int[n];
+        ans[n-1]=0;
         Stack<Integer> stack = new Stack<>();
-
-        int n = temperatures.length;
-        int[] result = new int[n];
-
-        stack.push(0);
-
-        for (int i=1;i<n;i++) {
-
-            int currentIndex = stack.pop();
-
-            while (temperatures[currentIndex]<temperatures[i]) {
-                result[currentIndex]=i-currentIndex;
-                if(stack.isEmpty()) {
-                    break;
-                }
-                currentIndex = stack.pop();
+        for(int i=0;i<n;i++) {
+            while(!stack.isEmpty() && T[i]>T[stack.peek()]) {
+                int val = stack.pop();
+                ans[val]=i-val;
             }
-
-            if(temperatures[currentIndex]>=temperatures[i]) {
-                stack.push(currentIndex);
-            }
-
             stack.push(i);
-
         }
-
-        while (!stack.isEmpty()) {
-            int element = stack.pop();
-            result[element]=0;
+        while(!stack.isEmpty()) {
+            T[stack.pop()]=0;
         }
-
-        return result;
+        return ans;
 
     }
-
     public static void main(String[] args) {
         int[] temp = new int[]{89,62,70,58,47,47,46,76,100,70};
         System.out.println(Arrays.toString(new DailyTemperatures().dailyTemperatures(temp)));
