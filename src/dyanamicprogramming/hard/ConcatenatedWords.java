@@ -28,7 +28,7 @@ public class ConcatenatedWords {
     public static List<String> findAllConcatenatedWordsInADict(String[] words) {
         List<String> result = new ArrayList<>();
         Set<String> preWords = new HashSet<>();
-        Arrays.sort(words, (s1, s2) -> s1.length() - s2.length());
+        Arrays.sort(words, Comparator.comparingInt(String::length));
 
         int max = 0;
         String maxWord = "";

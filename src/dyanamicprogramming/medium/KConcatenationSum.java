@@ -16,6 +16,7 @@ Input: arr = [1,2], k = 3
 Output: 9
 Example 2:
 
+
 Input: arr = [1,-2,1], k = 5
 Output: 2
 Example 3:

@@ -78,37 +78,23 @@ public class ScoreOfParenthesis {
 O(n)
 
 Another solution:
-Every position in the string has a depth - some number of matching parentheses surrounding it. For example, the dot in (()(.()))
-has depth 2, because of these parentheses: (__(.__))
 
-Our goal is to maintain the score at the current depth we are on. When we see an opening bracket, we increase our depth, and our score
-at the new depth is 0. When we see a closing bracket, we add twice the score of the previous deeper part - except when counting (), which has a score of 1.
+We count the number of layers.
+If we meet '(' layers number l++
+else we meet ')' layers number l--
 
-For example, when counting (()(())), our stack will look like this:
+If we meet "()", we know the number of layer outside,
+so we can calculate the score res += 1 << l.
+Without Stack:
 
-[0, 0] after parsing (
-[0, 0, 0] after (
-[0, 1] after )
-[0, 1, 0] after (
-[0, 1, 0, 0] after (
-[0, 1, 1] after )
-[0, 3] after )
-[6] after )
-
- Stack<Integer> stack = new Stack();
-    stack.push(0); // The score of the current frame
-
-    for (char c: S.toCharArray()) {
-        if (c == '(')
-            stack.push(0);
-        else {
-            int v = stack.pop();
-            int w = stack.pop();
-            stack.push(w + Math.max(2 * v, 1));
+public int scoreOfParentheses(String S) {
+        int res = 0, l = 0;
+        for (int i = 0; i < S.length(); ++i) {
+            if (S.charAt(i) == '(') l++; else l--;
+            if (S.charAt(i) == ')' && S.charAt(i - 1) == '(') res += 1 << l;
         }
+        return res;
     }
-
-    return stack.pop();
 
 
 

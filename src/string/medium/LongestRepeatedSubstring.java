@@ -41,13 +41,18 @@ public class LongestRepeatedSubstring {
     public int longestRepeatingSubstring(String S) {
         int l = S.length();
         String[] suffix = new String[l];
-        for (int i = 0; i < l; i++) suffix[i] = S.substring(i);
+        for (int i = 0; i < l; i++) {
+            suffix[i] = S.substring(i);
+        }
         Arrays.sort(suffix);
         int max = 0;
         for (int i = 1; i < l; i++) {
             int j = 0;
-            for (; j < Math.min(suffix[i].length(),suffix[i-1].length()); j++) {
-                if (suffix[i].charAt(j) != suffix[i-1].charAt(j)) break;
+            while (j < Math.min(suffix[i].length(),suffix[i-1].length())) {
+                if (suffix[i].charAt(j) != suffix[i-1].charAt(j)) {
+                    break;
+                }
+                j++;
             }
             max = Math.max(max,j);
         }
