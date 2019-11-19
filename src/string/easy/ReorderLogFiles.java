@@ -42,31 +42,35 @@ import java.util.TreeMap;
 public class ReorderLogFiles {
 
     public String[] reorderLogFiles(String[] logs) {
-
-        TreeMap<String,String > letterLogs = new TreeMap<>();
+        if(logs==null || logs.length==0) {
+            return new String[0];
+        }
+        String[] result = new String[logs.length];
+        List<String> letterLogs = new ArrayList<>();
         List<String> digitLogs = new ArrayList<>();
-        for (String log : logs) {
-            int index = log.indexOf(" ");
-            if(Character.isLetter(log.charAt(index+1))) {
-                letterLogs.put(log.substring(index+1),log);
+        for(String s : logs) {
+            char c = s.charAt(s.length()-1);
+            if(Character.isDigit(c)) {
+                digitLogs.add(s);
             } else {
-                digitLogs.add(log);
+                letterLogs.add(s);
             }
         }
-
-        String[] result = new String[logs.length];
+        letterLogs.sort((o1, o2) -> {
+            int i = o1.substring(o1.indexOf(" ") + 1).compareTo(o2.substring(o2.indexOf(" ") + 1));
+            if(i ==0) {
+                return o1.compareTo(o2);
+            }
+            return i;
+        });
         int i=0;
-        for (Map.Entry<String,String> entry : letterLogs.entrySet()) {
-            result[i]=(entry.getValue());
-            i++;
+        for (String s : letterLogs) {
+            result[i++]=s;
         }
         for (String s : digitLogs) {
-            result[i]=s;
-            i++;
+            result[i++]=s;
         }
-
         return result;
-
     }
 
 }
