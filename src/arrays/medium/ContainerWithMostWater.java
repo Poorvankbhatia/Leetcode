@@ -16,22 +16,23 @@ package arrays.medium;
 public class ContainerWithMostWater {
 
     public int maxArea(int[] height) {
-
-        int l = 0,r=height.length-1;
-        int maxArea = Math.abs(r-l)*Math.min(height[r],height[l]);
-
-        while (l<r) {
-            if(height[l]<height[r]) {
-                l++;
+        int a= 0;
+        int b =height.length-1;
+        int leftMax=0;
+        int rightMax = 0;
+        int ans=0;
+        while(a<=b) {
+            leftMax = Math.max(leftMax,height[a]);
+            rightMax = Math.max(rightMax,height[b]);
+            ans = Math.max(Math.min(leftMax,rightMax)*(b-a),ans);
+            if(leftMax<rightMax) {
+                a++;
             } else {
-                r--;
+                b--;
             }
 
-            maxArea = Math.max(maxArea,((r-l)*Math.min(height[r],height[l])));
         }
-
-        return maxArea;
-
+        return ans;
     }
 
 

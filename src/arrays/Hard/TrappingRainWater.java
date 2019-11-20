@@ -69,8 +69,8 @@ public int trap(int[] A){
 }
 
 
-The idea is: Calculate the stored water at each index a and b in my code. At the start of every loop,
-I update the current maximum height from left side (that is from A[0,1...a]) and the maximum height from right side(from A[b,b+1...n-1]).
+The idea is: Calculate the stored water at each index a and b in code. At the start of every loop,
+update the current maximum height from left side (that is from A[0,1...a]) and the maximum height from right side(from A[b,b+1...n-1]).
 if(leftmax<rightmax) then, at least (leftmax-A[a]) water can definitely be stored no matter what happens between [a,b]
 since we know there is a barrier at the rightside(rightmax>leftmax). On the other side, we cannot store more water than (leftmax-A[a])
 at index a since the barrier at left is of height leftmax. So, we know the water that can be stored at index a is exactly (leftmax-A[a]).
