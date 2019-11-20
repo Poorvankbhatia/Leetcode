@@ -25,34 +25,22 @@ package string.medium;
 public class CustomSort {
 
     public String customSortString(String S, String T) {
-
-        int[] countArr = new int[26];
-
-        for (Character c : T.toCharArray()) {
-            countArr[c-'a']++;
+        int[] count = new int[26];
+        for(char c: T.toCharArray()) {
+            count[c-'a']++;
         }
-
-        int k=0;
-
-        char[] arr = new char[T.length()];
-        for (int i=0;i<S.length();i++) {
-            char c = S.charAt(i);
-            for (int j=0;j<countArr[c-'a'];j++) {
-                arr[k]=c;
-                k++;
-            }
-            countArr[c-'a'] = 0;
-        }
-
-        for (int i=0;i<26;i++) {
-            while (countArr[i]>0) {
-                arr[k]=(char)(i+'a');
-                k++;
-                countArr[i]--;
+        StringBuilder result = new StringBuilder();
+        for(char c :S.toCharArray()) {
+            while(count[c-'a']-->0) {
+                result.append(c);
             }
         }
-
-        return new String(arr);
+        for(int i=0;i<26;i++) {
+            while(count[i]-->0) {
+                result.append((char)(i+'a'));
+            }
+        }
+        return result.toString();
     }
 
     public static void main(String[] args) {
