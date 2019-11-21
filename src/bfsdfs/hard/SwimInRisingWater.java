@@ -48,60 +48,31 @@ import java.util.PriorityQueue;
  */
 public class SwimInRisingWater {
 
-    private int[] dirX = {0,1,-1,0};
-    private int[] dirY = {1,0,0,-1};
-
+    int[][] dir = new int[][]{{0,1},{0,-1},{1,0},{-1,0}};
     public int swimInWater(int[][] grid) {
-
-        if(grid==null || grid.length==0) {
-            return 0;
-        }
-
-        int m = grid.length;
-        int n = grid[0].length;
-
-
-        HashSet<Integer> visited = new HashSet<>();
-
-        PriorityQueue<Integer> priorityQueue = new PriorityQueue<>(new Comparator<Integer>() {
-            @Override
-            public int compare(Integer o1, Integer o2) {
-                return grid[o1/n][o1%n]-grid[o2/n][o2%n];
+        int n = grid.length;
+        PriorityQueue<int[]> pq = new PriorityQueue<>(Comparator.comparingInt(o -> grid[o[0]][o[1]]));
+        pq.add(new int[]{0,0});
+        HashSet<String> visited = new HashSet<>();
+        int max=0;
+        while(!pq.isEmpty()) {
+            int[] poll = pq.poll();
+            int x = poll[0];
+            int y = poll[1];
+            max = Math.max(grid[x][y],max);
+            if(x==n-1 && y==n-1) {
+                return max;
             }
-        });
-
-
-        priorityQueue.add(0);
-
-        int ans=0;
-        while (!priorityQueue.isEmpty()) {
-            int poll = priorityQueue.poll();
-            int r = poll/n;
-            int c = poll%n;
-            ans = Math.max(ans,grid[r][c]);
-
-            if(r==m-1 && c ==n-1) {
-                return ans;
-            }
-
-            for (int i=0;i<4;i++) {
-                int nextR = r+dirX[i];
-                int nextC = c+dirY[i];
-
-                int next = nextR*n+nextC;
-
-                if(nextR>=0 && nextR<m && nextC>=0 && nextC<n && !visited.contains(next)) {
-                    priorityQueue.add(next);
-                    visited.add(next);
+            visited.add(x+"_"+y);
+            for(int[] d: dir) {
+                int nextX = x+d[0];
+                int nextY = y+d[1];
+                if(nextX>=0 && nextY>=0 && nextX<n && nextY<n && visited.add(nextX+"_"+nextY)) {
+                    pq.add(new int[]{nextX,nextY});
                 }
-
             }
-
         }
-
         return -1;
-
-
     }
 
 }
