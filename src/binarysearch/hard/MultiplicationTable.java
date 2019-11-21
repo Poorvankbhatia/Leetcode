@@ -37,45 +37,41 @@ package binarysearch.hard;
 public class MultiplicationTable {
 
     public int findKthNumber(int m, int n, int k) {
+        int lo = 1;
+        int hi = m*n;
 
-        int low = 1;
-        int high = calculateValue(m,n);
-
-        while (low<high) {
-            int mid = (low)+((high-low)/2);
-            int count = count(m,n,mid);
-            if(count<k) {
-                low=mid+1;
+        while(lo<hi) {
+            int mid = lo+(hi-lo)/2;
+            int count = less(mid,m,n);
+            /*
+            Do not return when count == k, the reason of we have hi = mid instead of to directly return mid,
+            is that the mid could be not in the multiplication table.
+            And for c > k, we still keep the mid, and try a smaller value in [low, mid]
+            is that there could exist duplicate numbers in the multiplication table when calculating the count.
+             */
+            if(count>=k) {
+                hi = mid;
             } else {
-                high = mid;
+                lo = mid+1;
             }
         }
-
-        return low;
+        return lo;
 
     }
 
-    //counting how many values are less than or equal to target
-    private int count(int m,int n,int target) {
-        int i=m;
-        int j=1;
-        int count=0;
-
-        while (i>=1 && j<=n) {
-            if(calculateValue(i,j)<=target) {
-                count+=i;
-                j++;
+    private int less(int mid,int m,int n) {
+        int count = 0;
+        int i=1;
+        int j=n;
+        while(i<=m && j>=0) {
+            if(i*j<=mid) {
+                count+=j;
+                i++;
             } else {
-                i--;
+                j--;
             }
         }
-
         return count;
-
-    }
-
-    private int calculateValue(int m,int n) {
-        return (m*n);
     }
 
     public static void main(String[] args) {
@@ -87,6 +83,24 @@ public class MultiplicationTable {
 /*
 
 Time complexity : O(m∗log(m∗n))
+
+
+So why the smallest candidate is in M table?
+Because if the smallest candidate(no smaller than k numbers in M table), saying x, is not in M table,
+then x-1 will also be a candidate(no smaller than k numbers in M table) since x is not in the table.
+Then x is not the smallest candidate.
+For example, we have such range in our flattern sorted M table:
+
+Val: 1,..., xi,  xi, xj,  xj,  ...
+Seq: 1,..., p-1, p,  p+1, p+2, ...
+When k=p, {xi, xi+1,..., xj-1} are all valid candidates. There are p numbers no larger than xi or xi+1or xj-1 because {xi+1,..., xj-1} are not in M table.
+And we need to return xi which is in the M table and the smallest candidate as well.
+When k=p+1, the smallest candidate would be xj.
+
+As for time complexity, it would be log(mn) times of binary search so total is O(mlog(mn)).
+And we can swap m, n if m > n and ensure time complexity to be O(min(m,n) * log(mn))
+
+==========
 
 Since K is in range of (m*n) i.e 9*10^8
 
