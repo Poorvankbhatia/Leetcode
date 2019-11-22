@@ -22,12 +22,10 @@ public class MinimumWindowSubstring {
 
     public String minWindow(String s, String t) {
 
-        int sLen = s.length();
-        int tLen = t.length();
-        if(tLen>sLen) {
+        if(s==null || (s.length()<t.length())) {
             return "";
         }
-
+        int n = s.length();
         int[] needToFind = new int[256];
         for(char c : t.toCharArray()) {
             needToFind[c]++;
@@ -35,32 +33,40 @@ public class MinimumWindowSubstring {
 
         int[] hasFound = new int[256];
 
-        int start=0;int minLength=Integer.MAX_VALUE;
-        int count=0;
-        int finalStart=0;
-        for(int end=0;end<sLen;end++) {
+        int start=0;
+        int tLen=0;
+        int minLen = Integer.MAX_VALUE;
+        int fStart=0;
+        int fEnd=0;
+        for(int end=0;end<n;end++) {
             char c = s.charAt(end);
             if(needToFind[c]==0) {
                 continue;
             }
-            hasFound[c]++;
-            if(hasFound[c]<=needToFind[c]) {
-                count++;
+            if(needToFind[c]>hasFound[c]) {
+                tLen++;
             }
-            if(count==tLen) {
-                while(needToFind[s.charAt(start)]==0 || hasFound[s.charAt(start)]>needToFind[s.charAt(start)]) {
-                    if(hasFound[s.charAt(start)]>needToFind[s.charAt(start)]) {
-                        hasFound[s.charAt(start)]--;
+            hasFound[c]++;
+            if(tLen==t.length()) {
+                char x = s.charAt(start);
+                while(hasFound[x]>needToFind[x] || needToFind[x]==0) {
+                    if(hasFound[x]>needToFind[x]) {
+                        hasFound[x]--;
                     }
                     start++;
+                    x = s.charAt(start);
                 }
-                if(minLength>end-start+1) {
-                    minLength = end-start+1;
-                    finalStart=start;
+                if(minLen>end-start+1) {
+                    minLen = end-start+1;
+                    fStart =start;
+                    fEnd = end;
                 }
             }
         }
-        return minLength!=Integer.MAX_VALUE?s.substring(finalStart,finalStart+minLength):"";
+
+        String result = s.substring(fStart,fEnd+1);
+
+        return minLen==Integer.MAX_VALUE?"":result;
 
     }
 
