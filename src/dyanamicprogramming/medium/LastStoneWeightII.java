@@ -67,7 +67,7 @@ public class LastStoneWeightII {
 
 /*
 
-This question eaquals to partition an array into 2 subsets whose difference is minimal
+This question equals to partition an array into 2 subsets whose difference is minimal
 (1) S1 + S2  = S
 (2) S1 - S2 = diff
 
@@ -78,5 +78,16 @@ Now we should find the maximum of S2 , range from 0 to S / 2, using dp can solve
 dp[i][j]   = {true if some subset from 1st to j'th has a sum equal to sum i, false otherwise}
     i ranges from (sum of all elements) {1..n}
     j ranges from  {1..n}
+
+Suppose you have rock a, b, c and d.
+If you subtract them in the following order: b-c, then d-b-c. Then it is the same as doing d-(b+c).
+Then doing [d-(b+c)]-a is the same as -a+d-(b+c), which is d-a-(b+c), which is d-[a+(b+c)], which is d-(a+b+c). (So doing things in that order will lead to this shortcut).
+
+Lets try another order.
+Suppose you have rock a, b, c and d.
+If you do a-d, then b-c, then (a-d)-(b-c).
+Then (a-d)-(b-c) is the same as a-d-b+c, which is the same as -d-b+a+c, which is -(d+b)+(a+c), which is (a+c)-(d+b). Another shortcut.
+
+Then you can see that depending on the order of the subtractions, we get a different setting of difference between two groups.
 
  */
