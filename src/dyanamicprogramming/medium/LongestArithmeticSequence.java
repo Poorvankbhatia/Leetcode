@@ -37,24 +37,27 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class LongestArithmeticSequence {
-    public int longestSubsequence(int[] arr, int difference) {
-        HashMap<Integer,Integer> map = new HashMap<>();
-        int n = arr.length;
-        int[] dp = new int[n];
-        dp[n-1]=1;
-        map.put(arr[n-1],n-1);
-        int max = 1;
-        for(int i=n-2;i>=0;i--) {
-            int v = difference+arr[i];
-            if(map.containsKey(v)) {
-                dp[i]=dp[map.get(v)]+1;
-                max = Math.max(dp[i],max);
-            } else {
-                dp[i]=1;
+    public int longestArithSeqLength(int[] A) {
+        int n = A.length;
+        Map<Integer,Integer>[] count = new Map[n];
+        int i=1;
+        count[0] = new HashMap<>();
+        int max = 1; // Initial Max
+        while(i<n) {
+            count[i] = new HashMap<>();
+            for(int j=0;j<i;j++) {
+                int diff = A[i]-A[j];
+                if(count[j].containsKey(diff)) {
+                    int last = count[j].get(diff);
+                    count[i].put(diff,last+1);
+                    max = Math.max(count[i].get(diff),max);
+                } else {
+                    count[i].put(diff,1);
+                }
             }
-            map.put(arr[i],i);
+            i++;
         }
-        return max;
+        return max+1; // Since the first Diff is not stored.
     }
 }
 
