@@ -33,34 +33,29 @@ import java.util.*;
 public class LongestStringChain {
 
     public int longestStrChain(String[] words) {
+        Arrays.sort(words,Comparator.comparingInt(String::length));
         Map<String,Integer> map = new HashMap<>();
         Set<String> set = new HashSet<>(Arrays.asList(words));
-        Arrays.sort(words, Comparator.comparingInt(String::length));
-        int max = Integer.MIN_VALUE;
+        int max=0;
         for(String s : words) {
-            if(s.length()>1) {
-                int len = util(s,map,set);
-                max = Math.max(max,len);
-            } else {
-                map.put(s,1);
-            }
+            int len = util(s,map,set);
+            max = Math.max(max,len);
         }
         return max;
     }
 
-    private int util(String S,Map<String,Integer> map,Set<String> set) {
-
-        if(map.containsKey(S)) {
-            return map.get(S);
+    private int util(String t,Map<String,Integer> map,Set<String> set) {
+        int max = 0;
+        if(map.containsKey(t)) {
+            return map.get(t);
         }
-        int max=0;
-        for(int i=0;i<S.length();i++) {
-            String next = S.substring(0,i)+S.substring(i+1);
-            if(set.contains(next)) {
-                max = Math.max(max,util(next,map,set));
+        for(int i=0;i<t.length();i++) {
+            String x = t.substring(0,i)+t.substring(i+1);
+            if(set.contains(x)) {
+                max = Math.max(max,util(x,map,set));
             }
         }
-        map.put(S,max+1);
+        map.put(t,max+1);
         return max+1;
     }
 
@@ -73,4 +68,46 @@ public class LongestStringChain {
 
 /*
 In each step, remove one letter from this word only if doing so produces another word in the array.
+
+LIS Solution:
+
+public int longestStrChain(String[] words) {
+        Arrays.sort(words,Comparator.comparingInt(String::length));
+        int i=1;
+        int n = words.length;
+        int[] dp = new int[n];
+        Arrays.fill(dp,1);
+        int max=0;
+        while(i<n) {
+            String a = words[i];
+            for(int j=0;j<i;j++) {
+                String b = words[j];
+                if((a.length()-b.length()>1) || a.equals(b)) {
+                    continue;
+                }
+                if(precedes(words[i],words[j]) && dp[i]<dp[j]+1) {
+                    dp[i]=dp[j]+1;
+                    System.out.println(words[i]+" "+words[j]+" "+dp[i]);
+                }
+            }
+            max = Math.max(dp[i],max);
+            i++;
+        }
+        return max;
+    }
+
+    private boolean precedes(String t,String s) {
+        int i=0;
+        while (i<s.length()) {
+            int pos = t.indexOf(s.charAt(i));
+            if(pos==-1){
+                return false;
+            } else {
+                t = t.substring(pos+1);
+                i++;
+            }
+        }
+        return true;
+    }
+
  */
