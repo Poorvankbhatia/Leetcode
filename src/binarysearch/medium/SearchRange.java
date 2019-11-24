@@ -21,53 +21,41 @@ import java.util.Arrays;
 public class SearchRange {
 
     public int[] searchRange(int[] nums, int target) {
-
-        int firstOccurrence = first(0,nums.length-1,nums,target);
-        int secondOccurrence = second(0,nums.length-1,nums,target);
-
-        return new int[]{firstOccurrence,secondOccurrence};
-
-
+        if(nums==null || nums.length==0) {
+            return new int[]{-1,-1};
+        }
+        return new int[]{find(nums,0,nums.length-1,target,true),find(nums,0,nums.length-1,target,false)};
     }
 
-
-    private int first(int start,int end,int[] nums,int target) {
-
-        if(end>=start) {
-
-            int mid = start + (end-start)/2;
-
-            if((mid==0 || nums[mid]>nums[mid-1]) && nums[mid]==target) {
+    private int find(int[] nums,int start,int end,int target,boolean first) {
+        if(target > nums[end] || target < nums[start] || start>end) {
+            return -1;
+        }
+        if(nums[start]==target && first) {
+            return start;
+        }
+        if(nums[end]==target && !first) {
+            return end;
+        }
+        int mid = start+(end-start)/2;
+        if(first) {
+            if(nums[mid]==target && mid>0 && nums[mid-1]<target){
                 return mid;
             } else if(nums[mid]<target) {
-                return first(mid+1,end,nums,target);
+                return find(nums,mid+1,end,target,true);
+            } else {
+                return find(nums,start,mid,target, true);
             }
-
-            return first(start,mid-1,nums,target);
-
-        }
-
-        return -1;
-    }
-
-
-    private int second(int start,int end,int[] nums,int target) {
-
-        if(end>=start) {
-
-            int mid = start + (end-start)/2;
-
-            if((mid==nums.length-1 || nums[mid]<nums[mid+1]) && nums[mid]==target) {
+        } else {
+            if(nums[mid]==target && mid<nums.length-1 && nums[mid+1]>target) {
                 return mid;
-            } else if(nums[mid]>target) {
-                return second(start,mid-1,nums,target);
+            } else if(nums[mid]<=target) {
+                return find(nums,mid+1,end,target,false);
+            } else {
+                return find(nums,start,mid,target,false);
             }
-
-            return second(mid+1,end,nums,target);
-
         }
 
-        return -1;
     }
 
     public static void main(String[] args) {
