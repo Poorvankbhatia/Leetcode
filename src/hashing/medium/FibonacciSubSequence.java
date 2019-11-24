@@ -28,9 +28,8 @@ The longest subsequence that is fibonacci-like:
 
  */
 package hashing.medium;
-
-import java.util.HashMap;
-import java.util.Map;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by poorvank.b on 22/07/18.
@@ -39,32 +38,27 @@ public class FibonacciSubSequence {
 
     public int lenLongestFibSubseq(int[] A) {
 
-        if(A==null || A.length==0) {
-            return 0;
+        int n = A.length;
+        Set<Integer> set = new HashSet<>();
+        for (int a : A) {
+            set.add(a);
         }
-        Map<Integer,Integer> map = new HashMap<>();
-        for (int i=0;i<A.length;i++) {
-            map.put(A[i],i);
-        }
-
-        int maxLen=0;
-        for (int i=0;i<A.length-1;i++) {
-            for (int j=i+1;j<A.length-1;j++) {
-                int left = i, right = j, count = 0;
-                while(map.containsKey(A[left] + A[right])){
-                    int temp = right;
-                    right = map.get(A[left] + A[right]);
-                    left = temp;
-                    count ++;
+        int res=0;
+        for(int i=0;i<n;i++) {
+            for(int j=i+1;j<n;j++) {
+                int a = A[i];
+                int b = A[j];
+                int ans=2;
+                while (set.contains(a+b)) {
+                    int temp = b;
+                    b=a+b;
+                    a=temp;
+                    ans++;
                 }
-                if(count != 0){
-                    count += 2;
-                    maxLen = Math.max(maxLen,count);
-                }
+                res = Math.max(res,ans);
             }
         }
-
-        return maxLen;
+        return res==2?0:res;
 
     }
 
@@ -73,5 +67,8 @@ public class FibonacciSubSequence {
 /*
 
 Time Complexity: O(N^2 log M) where N is the length of A, and M is the maximum value of A.
+Since the values grow exponentially,
+the amount of numbers needed to accommodate a sequence
+that ends in a number M is at most log(M).
 
  */
