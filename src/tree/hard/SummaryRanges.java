@@ -15,64 +15,48 @@ What if there are lots of merges and the number of disjoint intervals are small 
  */
 package tree.hard;
 
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
-import java.util.TreeSet;
+import java.util.*;
 
 /**
  * Created by poorvank.b on 25/11/17.
  */
 public class SummaryRanges {
 
-    private class Interval {
-        public int start;
-        public int end;
-
-        public Interval(int start, int end) {
-            this.start = start;
-            this.end = end;
-        }
-    }
-
-    private TreeSet<Interval> set;
-
+    TreeMap<Integer,Integer> map;
     /** Initialize your data structure here. */
     public SummaryRanges() {
-        set = new TreeSet<>(new Comparator<Interval>(){
-            public int compare(Interval a, Interval b){
-                return a.start-b.start;
-            }
-        });
+        map = new TreeMap<>();
     }
 
     public void addNum(int val) {
-        Interval t = new Interval(val, val);
-
-        Interval floor = set.floor(t);
-        if(floor!=null){
-            if(val<=floor.end){
+        Integer floor = map.floorKey(val);
+        int start=val,end=val;
+        if(floor!=null) {
+            if(map.get(floor)>=val) {
                 return;
-            }else if(val == floor.end+1){
-                t.start = floor.start;
-                set.remove(floor);
+            } else if(map.get(floor)==val-1) {
+                start = floor;
+                map.remove(floor);
             }
         }
-
-        Interval ceil = set.higher(t);
-        if(ceil!=null){
-            if(ceil.start==val+1){
-                t.end = ceil.end;
-                set.remove(ceil);
+        Integer ceil = map.ceilingKey(val);
+        if(ceil!=null) {
+            if(ceil==val+1) {
+                end = map.get(ceil);
+                map.remove(ceil);
             }
         }
-
-        set.add(t);
+        map.put(start,end);
     }
 
-
-    public List<Interval> getIntervals() {
-        return Arrays.asList(set.toArray(new Interval[0]));
+    public int[][] getIntervals() {
+        int[][] result = new int[map.size()][2];
+        int i=0;
+        for (Map.Entry<Integer,Integer> entry : map.entrySet()) {
+            result[i] = new int[]{entry.getKey(),entry.getValue()};
+            i++;
+        }
+        return result;
     }
 
 }
