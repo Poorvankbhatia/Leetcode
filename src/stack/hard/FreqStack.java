@@ -95,53 +95,49 @@ public class FreqStack {
 
 
 
-O(NlogN) implementation using TreeMap:
+O(NlogN) implementation using Priority Queue.:
 
 class FreqStack {
 
-    private class Node implements Comparable<Node> {
-        Integer value;
-        Integer frequency;
-        Integer insertionTime;
-
-        public Node(int value, int frequency, int insertionTime) {
-            this.value = value;
-            this.frequency = frequency;
-            this.insertionTime = insertionTime;
-        }
-
-        @Override
-        public int compareTo(Node o) {
-            if(!o.frequency.equals(this.frequency)) {
-                return o.frequency.compareTo(this.frequency);
-            }
-            return o.insertionTime.compareTo(this.insertionTime);
+    private class Val {
+        private Integer count;
+        private Integer time;
+        private int val;
+        Val(int count,int time,int val) {
+            this.count = count;
+            this.time = time;
+            this.val = val;
         }
     }
 
-    private int insertionTime=0;
-    private Map<Integer,Integer> freq;
-    private TreeSet<Node> set;
+    private int time;
+    PriorityQueue<Val> pq;
+    Map<Integer,Integer> map;
 
     public FreqStack() {
-        freq = new HashMap<>();
-        set = new TreeSet<>();
+        time=0;
+        map = new TreeMap<>();
+        pq = new PriorityQueue<>((o1, o2) -> {
+           int c = o2.count.compareTo(o1.count);
+           if(c!=0) {
+               return (c);
+           } else {
+               return o2.time.compareTo(o1.time);
+           }
+        });
     }
 
+
     public void push(int x) {
-        freq.put(x,freq.getOrDefault(x,0)+1);
-        Node node =new Node(x,freq.get(x), insertionTime++);
-        set.add(node);
+        map.put(x,map.getOrDefault(x,0)+1);
+        pq.add(new Val(map.get(x),++time,x));
     }
 
     public int pop() {
-        Node node = set.pollFirst();
-        int res = node.value;
-        freq.put(res,freq.get(res)-1);
-        node.frequency-=1;
-        return res;
+        Val v =  pq.remove();
+       map.put(v.val,v.count-1);
+       return v.val;
     }
-
 }
 
  */
