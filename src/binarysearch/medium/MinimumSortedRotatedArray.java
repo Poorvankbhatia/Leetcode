@@ -17,27 +17,17 @@ package binarysearch.medium;
 public class MinimumSortedRotatedArray {
 
     public int findMin(int[] nums) {
-        return findMinBinarySearch(nums,0,nums.length-1);
-    }
-
-    private int findMinBinarySearch(int[] nums,int start,int end) {
-
-        if(nums[start]<=nums[end]) {
-            return nums[start];
+        int lo = 0;
+        int hi = nums.length-1;
+        while(lo<hi) {
+            int mid = (lo)+(hi-lo)/2;
+            if(nums[mid]>nums[nums.length-1]) {
+                lo=mid+1;
+            } else {
+                hi=mid;
+            }
         }
-
-        int mid = start + (end - start) / 2;
-
-        if ((mid == 0 || nums[mid] < nums[mid - 1]) && (mid == nums.length - 1 || nums[mid] < nums[mid + 1])) {
-            return nums[mid];
-        } else if(nums[mid]>=nums[start]) {
-            return findMinBinarySearch(nums,mid+1,end);
-        } else {
-            return findMinBinarySearch(nums,start,mid-1);
-        }
-
-
-
+        return nums[lo];
     }
 
 }
