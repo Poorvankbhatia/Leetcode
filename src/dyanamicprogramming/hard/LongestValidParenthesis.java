@@ -18,29 +18,20 @@ import java.util.Stack;
 public class LongestValidParenthesis {
 
     public int longestValidParentheses(String s) {
-
-        if(null==s || s.length()==0) {
-            return 0;
-        }
-
         Stack<Integer> stack = new Stack<>();
-        int result = 0;
-
-        for (int i=0;i<s.length();i++) {
-            if(s.charAt(i)=='(') {
-                stack.push(i);
-            } else {
+        int res = Integer.MIN_VALUE;
+        for(int i=0;i<s.length();i++) {
+            char c = s.charAt(i);
+            if(c==')') {
                 if(!stack.isEmpty() && s.charAt(stack.peek())=='(') {
                     stack.pop();
-                    result = Math.max(result,!stack.isEmpty()?i-stack.peek():i-(-1));
-                } else {
-                    stack.push(i);
+                    res = Math.max(res,stack.isEmpty()?i+1:i-stack.peek());
+                    continue;
                 }
             }
+            stack.push(i);
         }
-
-        return result;
-
+        return res==Integer.MIN_VALUE?0:res;
     }
 
     public static void main(String[] args) {
