@@ -34,8 +34,8 @@ For [2,3], the interval [3,4] has minimum-"right" start point.
  */
 
 package hashing.medium;
-
-import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.TreeMap;
 
 /**
@@ -43,62 +43,61 @@ import java.util.TreeMap;
  */
 public class FindRightInterval {
 
-    public static class Interval {
-        int start;
-        int end;
-
-        Interval() {
-            start = 0;
-            end = 0;
+    public int[] findRightInterval(int[][] intervals) {
+        TreeMap<Integer, Integer> map = new TreeMap<>();
+        Map<Integer, Integer> index = new HashMap<>();
+        int k = 0;
+        for (int[] interval : intervals) {
+            index.put(interval[0], k++);
+            map.put(interval[0], interval[1]);
         }
-
-        Interval(int s, int e) {
-            start = s;
-            end = e;
-        }
-    }
-
-
-
-    public int[] findRightInterval(Interval[] intervals) {
-
         int[] result = new int[intervals.length];
-
-        if(intervals.length <= 1) {
-            return new int[]{-1};
+        for (int i = 0; i < intervals.length; i++) {
+            Integer ceil = map.ceilingKey(intervals[i][1]);
+            if (ceil != null && index.get(ceil)!=i) {
+                result[i] = index.get(ceil);
+            } else {
+                result[i] = -1;
+            }
         }
-
-        TreeMap<Integer,Integer> map = new TreeMap<>();
-
-        for (int i=0;i<intervals.length;i++) {
-            map.put(intervals[i].start,i);
-        }
-
-        for (int i=0;i<intervals.length;i++) {
-            Integer key = map.ceilingKey(intervals[i].end);
-            result[i] = key!=null ?map.get(key) : -1;
-        }
-
         return result;
-
-    }
-
-
-    public static void main(String[] args) {
-
-        Interval[] intervals = {new Interval(3,4),new Interval(2,3),new Interval(1,2)};
-        System.out.print(Arrays.toString(new FindRightInterval().findRightInterval(intervals)));
-
     }
 
 }
 
 /*
 
-[  [3,5],[2,3], [1,2],[3,4] ]
+Binary Search Sol:
 
-output should be : [-1,0,1,-1]
+public int[] findRightInterval(int[][] intervals) {
+        Map<Integer,Integer> map = new HashMap<>();
+        for (int i=0;i<intervals.length;i++) {
+            map.put(intervals[i][0],i);
+        }
+        Arrays.sort(intervals, (a,b)->(a[0]!=b[0]?a[0]-b[0]:a[1]-b[1]));
+        int[] result = new int[intervals.length];
+        for (int i=0;i<intervals.length;i++) {
+            int correctIndex = map.get(intervals[i][0]);
+            int next = bs(intervals[i],i+1,intervals.length-1,intervals);
+            if(next!=-1) {
+                result[correctIndex] = map.get(intervals[next][0]);
+            } else {
+                result[correctIndex]=-1;
+            }
+        }
+        return result;
+    }
 
-We get: [-1,3,1,-1]
+    private int bs(int[] target,int start,int end,int[][] intervals) {
+        while (start<end) {
+            int mid = start+(end-start)/2;
+            if(intervals[mid][0]>=target[1]) {
+                end=mid;
+            } else {
+                start = mid+1;
+            }
+        }
+        return start>=intervals.length?-1:intervals[start][0]>=target[1]?start:-1;
+    }
 
  */
