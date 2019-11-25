@@ -21,54 +21,48 @@ Output: 500
  */
 package graph.medium;
 
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 
 /**
  * Created by poorvank.b on 22/02/18.
  */
 public class CheapestFlight {
 
+    Map<Integer, List<int[]>> map ;
+    int[][][] dp; // Storing minimum cost to reach from a given point to destination.
     public int findCheapestPrice(int n, int[][] flights, int src, int dst, int K) {
-
-        if(flights==null || flights.length==0) {
-            return -1;
+        map = new HashMap<>();
+        dp = new int[100][100][100];
+        for(int[] f : flights) {
+            if(!map.containsKey(f[0])) {
+                map.put(f[0],new ArrayList<>());
+            }
+            map.get(f[0]).add(new int[]{f[1],f[2]});
         }
+        int ans =  util(src,dst,K);
+        return ans==Integer.MAX_VALUE?-1:ans;
+    }
 
-        int[][] adjMatrix = new int[n][n];
-
-        int[] cost = new int[n];
-        Arrays.fill(cost,Integer.MAX_VALUE);
-        cost[src]=0;
-        for (int[] flight : flights) {
-            adjMatrix[flight[0]][flight[1]]=flight[2];
+    private int util(int src,int dst,int K) {
+        if(src==dst) {
+            return 0;
         }
-
-        Queue<Integer> queue = new LinkedList<>();
-        queue.add(src);
-
-        while (!queue.isEmpty()) {
-            int size=queue.size();
-            for (int i=0;i<size;i++) {
-                int current = queue.poll();
-                for (int[] flight : flights) {
-                    int start = flight[0],end = flight[1];
-                    if(start==current && cost[end]>cost[start]+adjMatrix[start][end]) {
-                        cost[end]=cost[start]+adjMatrix[start][end];
-                        queue.add(end);
-                    }
+        if(K<0) {
+            return Integer.MAX_VALUE;
+        }
+        int max=Integer.MAX_VALUE;
+        if(map.containsKey(src)) {
+            for(int[] next : map.get(src)) {
+                int currentPrice = next[1];
+                int val = util(next[0],dst,K-1);
+                if(val==Integer.MAX_VALUE) {
+                    continue;
                 }
-            }
-            K--;
-            //If k is one we can go till 2 stops.
-            if(K<0) {
-                break;
+                max = Math.min(max,currentPrice+val);
             }
         }
-
-        return cost[dst]!=Integer.MAX_VALUE?cost[dst]:-1;
-
+        dp[src][dst][K]=max;
+        return max;
     }
 
     public static void main(String[] args) {
@@ -81,3 +75,33 @@ public class CheapestFlight {
     }
 
 }
+
+/*
+
+Priority Queue: Dijikstra:
+
+ public int findCheapestPrice(int n, int[][] flights, int src, int dst, int k) {
+        Map<Integer, Map<Integer, Integer>> prices = new HashMap<>();
+        for (int[] f : flights) {
+            if (!prices.containsKey(f[0])) prices.put(f[0], new HashMap<>());
+            prices.get(f[0]).put(f[1], f[2]);
+        }
+        Queue<int[]> pq = new PriorityQueue<>((a, b) -> (Integer.compare(a[0], b[0])));
+        pq.add(new int[] {0, src, k});
+        while (!pq.isEmpty()) {
+            int[] top = pq.remove();
+            int price = top[0];
+            int city = top[1];
+            int stops = top[2];
+            if (city == dst) return price;
+            if (stops >= 0) {
+                Map<Integer, Integer> adj = prices.getOrDefault(city, new HashMap<>());
+                for (int a : adj.keySet()) {
+                    pq.add(new int[] {price + adj.get(a), a, stops - 1});
+                }
+            }
+        }
+        return -1;
+    }
+
+ */
