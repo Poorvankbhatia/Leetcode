@@ -35,46 +35,35 @@ package arrays.medium;
  */
 public class PushDominoes {
 
-    public String pushDominoes(String S) {
-        char[] A = S.toCharArray();
-        int N = A.length;
-        int[] forces = new int[N];
-
-        // Populate forces going from left to right
-        int force = 0;
-        for (int i = 0; i < N; ++i) {
-            if (A[i] == 'R') {
-                force = N;
+    public String pushDominoes(String dominoes) {
+        int N = dominoes.length();
+        int[] f = new int[N];
+        int force=0;
+        for(int i=0;i<N;i++) {
+            if(dominoes.charAt(i)=='R') {
+                force=N;
+            } else if(dominoes.charAt(i)=='L') {
+                force=0;
+            } else {
+                force=Math.max(force-1,0);
             }
-            else if (A[i] == 'L') {
-                force = 0;
-            }
-            else {
-                force = Math.max(force - 1, 0);
-            }
-            forces[i] += force;
+            f[i] += force;
         }
-
-        // Populate forces going from right to left
-        force = 0;
-        for (int i = N-1; i >= 0; --i) {
-            if (A[i] == 'L') {
-                force = N;
+        for(int i=N-1;i>=0;i--) {
+            if(dominoes.charAt(i)=='L') {
+                force=N;
+            } else if(dominoes.charAt(i)=='R') {
+                force=0;
+            } else {
+                force=Math.max(force-1,0);
             }
-            else if (A[i] == 'R') {
-                force = 0;
-            }
-            else {
-                force = Math.max(force - 1, 0);
-            }
-            forces[i] -= force;
+            f[i] -= force;
         }
-
-        StringBuilder ans = new StringBuilder();
-        for (int f: forces) {
-            ans.append(f > 0 ? 'R' : f < 0 ? 'L' : '.');
+        StringBuilder sb = new StringBuilder();
+        for(int fo : f) {
+            sb.append(fo<0?'L':fo>0?'R':'.');
         }
-        return ans.toString();
+        return sb.toString();
     }
 
 }
