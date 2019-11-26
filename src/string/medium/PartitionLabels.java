@@ -32,33 +32,26 @@ import java.util.Map;
 public class PartitionLabels {
 
     public List<Integer> partitionLabels(String S) {
-        List<Integer> res = new ArrayList<>();
-        if (S == null || S.length() == 0) return res;
-
-        Map<Character, Integer> map = new HashMap<>();
-        for (char c : S.toCharArray()) {
-            map.put(c, map.getOrDefault(c, 0) + 1);
+        if(S == null || S.length() == 0){
+            return null;
         }
+        List<Integer> list = new ArrayList<>();
+        int[] map = new int[26];  // record the last index of the each char
 
-        Map<Character, Integer> currMap = new HashMap<>();
-        int start = 0, end = start;
-        while (end < S.length()) {
-            char c = S.charAt(end);
-            if (!currMap.containsKey(c)) {
-                currMap.put(c, map.get(c));
-            }
-            currMap.put(c, currMap.get(c) - 1);
-            if (currMap.get(c) == 0) {
-                currMap.remove(c);
-            }
-            if (currMap.keySet().size() == 0) {
-                res.add(end - start + 1);
-                start = end + 1;
-            }
-
-            end++;
+        for(int i = 0; i < S.length(); i++){
+            map[S.charAt(i)-'a'] = i;
         }
-        return res;
+        // record the end index of the current sub string
+        int last = 0;
+        int start = 0;
+        for(int i = 0; i < S.length(); i++){
+            last = Math.max(last, map[S.charAt(i)-'a']);
+            if(last == i){
+                list.add(last - start + 1);
+                start = last + 1;
+            }
+        }
+        return list;
     }
 
     public static void main(String[] args) {
@@ -66,3 +59,49 @@ public class PartitionLabels {
     }
 
 }
+
+/*
+
+Another sol : same as interval list intersection:
+public List<Integer> partitionLabels(String S) {
+        List<int[]> sortedIntervalList = new ArrayList<>(); // Sorted list of intervals of every character occurring.
+        Map<Character,int[]> map = new HashMap<>();
+        int n = S.length();
+        for(int i=0;i<n;i++) {
+            char c = S.charAt(i);
+            if(!map.containsKey(c)) {
+                map.put(c,new int[]{i,i});
+            } else {
+                map.put(c,new int[]{map.get(c)[0],i});
+            }
+        }
+        for(char c : S.toCharArray()) {
+            if(map.containsKey(c)) {
+                sortedIntervalList.add(map.get(c));
+                map.remove(c);
+            }
+        }
+        List<int[]> mergedList = new ArrayList<>(); // Merged intervals.
+        mergedList.add(sortedIntervalList.get(0));
+        List<Integer> result = new ArrayList<>();
+        int k=0;
+        for (int i=1;i<sortedIntervalList.size();i++) {
+            if (sortedIntervalList.get(i)[0]<=mergedList.get(k)[1]) {
+                int[] merge = new int[]{mergedList.get(k)[0],Math.max(mergedList.get(k)[1],sortedIntervalList.get(i)[1])};
+                //Remove old and merge
+                mergedList.remove(k);
+                mergedList.add(k,merge);
+            } else {
+                //Add the new one.
+                k++;
+                mergedList.add(sortedIntervalList.get(i));
+            }
+        }
+
+        for (int[] ints : mergedList) {
+            result.add(ints[1] - ints[0] + 1);
+        }
+        return result;
+    }
+
+ */
