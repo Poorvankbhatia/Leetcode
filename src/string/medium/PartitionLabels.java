@@ -62,6 +62,9 @@ public class PartitionLabels {
 
 /*
 
+traverse the string record the last index of each char.
+using pointer to record end of the current sub string.
+
 Another sol : same as interval list intersection:
 public List<Integer> partitionLabels(String S) {
         List<int[]> sortedIntervalList = new ArrayList<>(); // Sorted list of intervals of every character occurring.
