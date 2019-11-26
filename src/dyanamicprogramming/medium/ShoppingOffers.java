@@ -45,38 +45,36 @@ import java.util.Map;
  * Created by poorvank.b on 15/07/17.
  */
 public class ShoppingOffers {
-    private int res = Integer.MAX_VALUE;
-
+    Map<String,Integer> map=new HashMap<>();
+    int res = Integer.MAX_VALUE;
     public int shoppingOffers(List<Integer> price, List<List<Integer>> special, List<Integer> needs) {
-        Map<List<Integer>, Integer> dp = new HashMap<>();
-        return dfs(needs, price, special, dp);
-    }
-
-    private int dfs(List<Integer> needs, List<Integer> price, List<List<Integer>> special, Map<List<Integer>, Integer> dp) {
-        if(dp.containsKey(needs)) {
-            return dp.get(needs);
+        StringBuilder sb = new StringBuilder();
+        for(int n : needs) {
+            sb.append(n);
         }
-        for(List<Integer> s : special) {
+        if(map.containsKey(sb.toString())) {
+            return map.get(sb.toString());
+        }
+        for(List<Integer> list : special) {
+            boolean isValid = true;
             List<Integer> needsCopy = new ArrayList<>(needs);
-            boolean valid = true;
             for(int i=0;i<needs.size();i++) {
-                needsCopy.set(i, needsCopy.get(i) - s.get(i));
-                if(needsCopy.get(i) < 0) {
-                    valid = false;
+                needsCopy.set(i,needsCopy.get(i)-list.get(i));
+                if(needsCopy.get(i)<0) {
+                    isValid=false;
                     break;
                 }
             }
-            if(valid) {
-                res = Math.min(res, s.get(needs.size()) + dfs(needsCopy, price, special, dp));
+            if(isValid) {
+                res = Math.min(res,list.get(list.size()-1)+shoppingOffers(price,special,needsCopy));
             }
         }
-        int noSpecial = 0;
-        for(int i=0;i<needs.size();i++) {
-            noSpecial += needs.get(i) * price.get(i);
+        int sum = 0;
+        for(int i=0;i<price.size();i++) {
+            sum+=(needs.get(i)*price.get(i));
         }
-        res = Math.min(res, noSpecial);
-
-        dp.put(needs, res);
+        res = Math.min(res,sum);
+        map.put(sb.toString(),res);
         return res;
     }
 
