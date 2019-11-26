@@ -31,42 +31,56 @@ import java.util.*;
  */
 public class LongestWordDictionary {
 
-    public class StringComparator implements Comparator<String> {
-
-        public int compare(String s1,String s2) {
-            if(s1.length()<s2.length()) {
-                return 1;
-            } else if(s2.length()<s1.length()) {
-                return -1;
-            } else {
-                return s1.compareTo(s2);
+    public String findLongestWord(String s, List<String> d) {
+        Map<Character,List<Integer>> map = new HashMap<>();
+        int i=0;
+        for(char c : s.toCharArray()) {
+            if(!map.containsKey(c)) {
+                map.put(c,new ArrayList<>());
+            }
+            map.get(c).add(i++);
+        }
+        String ans="";
+        for (String str : d) {
+            int prev = -1;
+            boolean isSub=true;
+            for (char c : str.toCharArray()) {
+                if(map.get(c)==null) {
+                    isSub = false;
+                    break;
+                }
+                List<Integer> occurrence = map.get(c);
+                int index = bs(prev,occurrence);
+                if(index==-1) {
+                    isSub=false;
+                    break;
+                }
+                prev=index;
+            }
+            if(isSub) {
+                if(str.length()>ans.length() || (str.length()==ans.length() && str.compareTo(ans)<0)) {
+                    ans = str;
+                }
             }
         }
-
+        return ans;
     }
-
-
-
-    public String findLongestWord(String s, List<String> d) {
-
-        Collections.sort(d,new StringComparator());
-        System.out.println(d.toString());
-
-       for (String dictString : d) {
-           int index = 0;
-           for (Character c : s.toCharArray()) {
-               if(index<dictString.length() && dictString.charAt(index)==c) {
-                   index++;
-               }
-           }
-           if(index==dictString.length()) {
-               return dictString;
-           }
-
-       }
-
-        return "";
-
+    // Binary search to find next possible smallest index.
+    private int bs(int prev, List<Integer> list) {
+        if(prev>list.get(list.size()-1)) {
+            return -1;
+        }
+        int lo = 0;
+        int hi = list.size()-1;
+        while (lo<hi) {
+            int mid = lo+(hi-lo)/2;
+            if(list.get(mid)>prev) {
+                hi=mid;
+            } else {
+                lo=mid+1;
+            }
+        }
+        return list.get(lo);
     }
 
     public static void main(String[] args) {
@@ -83,4 +97,60 @@ Sort the dictionary via length and lexicographically and then check for every st
 
 Lambda method:
 Collections.sort(d, (a,b) -> a.length() != b.length() ? -Integer.compare(a.length(), b.length()) :  a.compareTo(b));
+
+Using sorting:
+
+class Solution {
+    public String findLongestWord(String s, List<String> d) {
+        Map<Character,List<Integer>> map = new HashMap<>();
+        int i=0;
+        for(char c : s.toCharArray()) {
+            if(!map.containsKey(c)) {
+                map.put(c,new ArrayList<>());
+            }
+            map.get(c).add(i++);
+        }
+        d.sort((a, b) -> (b.length()!=a.length()?b.length()-a.length():a.compareTo(b)));
+        for (String str : d) {
+            int prev = -1;
+            boolean isSub=true;
+            for (char c : str.toCharArray()) {
+                if(map.get(c)==null) {
+                    isSub = false;
+                    break;
+                }
+                List<Integer> occurrence = map.get(c);
+                int index = bs(prev,occurrence);
+                if(index==-1) {
+                    isSub=false;
+                    break;
+                }
+                prev=index;
+            }
+            if(isSub) {
+                return str;
+            }
+        }
+        return "";
+    }
+
+    // Binary search to find next possible smallest index.
+    private int bs(int prev, List<Integer> list) {
+        if(prev>list.get(list.size()-1)) {
+            return -1;
+        }
+        int lo = 0;
+        int hi = list.size()-1;
+        while (lo<hi) {
+            int mid = lo+(hi-lo)/2;
+            if(list.get(mid)>prev) {
+                hi=mid;
+            } else {
+                lo=mid+1;
+            }
+        }
+        return list.get(lo);
+    }
+}
+
  */
