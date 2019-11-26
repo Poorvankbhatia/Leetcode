@@ -17,39 +17,30 @@ import java.util.Arrays;
  */
 public class ThreeSumClosest {
 
-    public int threeSumClosest(int[] nums, int target) {
-
-
-        int n = nums.length;
-        int val = Integer.MAX_VALUE;
+    public int threeSumClosest(int[] A, int target) {
+        Arrays.sort(A);
+        int diff=Integer.MAX_VALUE;
         int ans=0;
-        Arrays.sort(nums);
-
-        for(int i=0;i<n-2;i++) {
+        int n= A.length;
+        for(int i=0;i<n;i++) {
             int j=i+1;
             int k=n-1;
-
             while(j<k) {
-                int sum = nums[i]+nums[j]+nums[k];
+                int sum = A[i]+A[j]+A[k];
                 if(sum==target) {
                     return target;
-                }
-                if(Math.abs(sum-target)<val) {
-                    ans = sum;
-                    val = Math.abs(sum-target);
-                }
-                if(sum>target) {
+                } else if(sum>target) {
                     k--;
                 } else {
-                   j++;
+                    j++;
+                }
+                if(diff>Math.abs(sum-target)) {
+                    diff = Math.abs(sum-target);
+                    ans =sum;
                 }
             }
-
         }
-
         return ans;
-
-
     }
 
 
