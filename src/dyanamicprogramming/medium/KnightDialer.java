@@ -30,15 +30,63 @@ Note:
  */
 package dyanamicprogramming.medium;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by poorvank.b on 04/11/18.
  */
 public class KnightDialer {
 
-    private Map<String,Long> posHopCountMap;
+    int mod = (int) (Math.pow(10,9)+7);
+    int[][] dp;
+    Map<Integer, List<Integer>> phonePad;
+    public int knightDialer(int N) {
+        phonePad = new HashMap<>();
+        phonePad.put(0, Arrays.asList(4,6));
+        phonePad.put(1,Arrays.asList(6,8));
+        phonePad.put(2,Arrays.asList(7,9));
+        phonePad.put(3,Arrays.asList(4,8));
+        phonePad.put(4,Arrays.asList(3,9,0));
+        phonePad.put(5,new ArrayList<>());
+        phonePad.put(6,Arrays.asList(1,7,0));
+        phonePad.put(7,Arrays.asList(2,6));
+        phonePad.put(8,Arrays.asList(1,3));
+        phonePad.put(9,Arrays.asList(2,4));
+        dp = new int[10][5001];
+        int ans = 0;
+        for(int i=0;i<=9;i++) {
+            ans+=util(i,N)%mod;
+        }
+        return ans;
+    }
+
+    private int util(int start,int N) {
+        if(N==1) {
+            return 1;
+        }
+        if(dp[start][N]!=0) {
+            return dp[start][N];
+        }
+        int val=0;
+        for(int x: phonePad.get(start)) {
+            val+=util(x,N-1);
+        }
+        dp[start][N]=val;
+        return val;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(new KnightDialer().knightDialer(161));
+    }
+
+
+}
+
+/*
+
+Using hashMap for memoization:
+
+private Map<String,Long> posHopCountMap;
 
     private Map<Integer,Integer[]> neighbourMap;
 
@@ -91,9 +139,4 @@ public class KnightDialer {
 
     }
 
-    public static void main(String[] args) {
-        System.out.println(new KnightDialer().knightDialer(161));
-    }
-
-
-}
+ */
