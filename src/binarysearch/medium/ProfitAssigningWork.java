@@ -32,69 +32,44 @@ import java.util.*;
  */
 public class ProfitAssigningWork {
 
-    class Element {
-
-        private int difficulty;
-        private int profit;
-
-        Element(int profit,int difficulty) {
-            this.profit=profit;
-            this.difficulty=difficulty;
-        }
-
-    }
-
     public int maxProfitAssignment(int[] difficulty, int[] profit, int[] worker) {
-        if(worker==null || worker.length==0) {
-            return 0;
-        }
-
-        int n = profit.length;
-
-        Element[] arr = new Element[n];
-
+        int n = difficulty.length;
+        List<int[]> list = new ArrayList<>();
         for(int i=0;i<n;i++) {
-            arr[i]=new Element(profit[i],difficulty[i]);
+            list.add(new int[]{difficulty[i],profit[i]});
         }
-
-        Arrays.sort(arr,(a,b)->a.difficulty!=b.difficulty?a.difficulty-b.difficulty:a.profit-b.profit);
-
-        for(int i=1;i<n;i++) {
-            arr[i].profit = Math.max(arr[i].profit,arr[i-1].profit);
+        list.sort((a,b)->(a[0]-b[0]!=0?a[0]-b[0]:b[1]-a[1]));
+        int[] max = new int[n];
+        max[0]=list.get(0)[1];// Maximum Value till a given index.
+        for (int i=1;i<n;i++) {
+            max[i]=Math.max(list.get(i)[1],max[i-1]);
         }
-
-        int p=0;
-
+        int ans=0;
         for(int w: worker) {
-            int v = findMaxProfit(arr,0,arr.length-1,w);
-            // System.out.println(w+" "+v);
-            p+=v;
+            int res = bs(w,list);
+            ans+=res==-1?0:max[res];
         }
-
-        return p;
+        return ans;
     }
-
-    private int findMaxProfit(Element[] arr,int start,int end,int w) {
-        if(w<arr[start].difficulty) {
-            return 0;
+    // Smallest index which is less than or equal to the given target.
+    private int bs(int target,List<int[]> list) {
+        int lo = 0;
+        int hi = list.size()-1;
+        if(target>=list.get(hi)[0]) {
+            return hi;
         }
-
-        if(w>=arr[end].difficulty) {
-            return arr[end].profit;
-        }
-
-        int mid = start+(end-start)/2;
-
-        if(arr[mid].difficulty<=w) {
-            if((mid==end || arr[mid+1].difficulty>w)) {
-                return arr[mid].profit;
+        int ans = -1;
+        while (lo<hi) {
+            int mid = (lo)+(hi-lo)/2;
+            int val = list.get(mid)[0];
+            if(target>=val) {
+                ans=mid;
+                lo=mid+1;
             } else {
-                return findMaxProfit(arr,mid+1,end,w);
+                hi=mid;
             }
-
         }
-
-        return  findMaxProfit(arr,start,mid-1,w);
+        return ans;
     }
 
     public static void main(String[] args) {
@@ -105,3 +80,26 @@ public class ProfitAssigningWork {
     }
 
 }
+
+/*
+
+No Sort Sol:
+
+public int maxProfitAssignment(int[] difficulty, int[] profit, int[] worker) {
+        int[] dp = new int[100001];
+        for (int i = 0; i < difficulty.length; i++) {
+            dp[difficulty[i]] = Math.max(dp[difficulty[i]], profit[i]);
+        }
+        for (int i = 0; i < dp.length; i++) {
+            if (i > 0) {
+                dp[i] = Math.max(dp[i - 1], dp[i]);
+            }
+        }
+        int sum = 0;
+        for (int i : worker) {
+            sum += dp[i];
+        }
+        return sum;
+    }
+
+ */
