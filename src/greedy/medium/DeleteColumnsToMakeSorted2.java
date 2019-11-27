@@ -47,7 +47,7 @@ package greedy.medium;
 import java.util.HashSet;
 import java.util.Set;
 
-public class DeleteColumnsToMakeSorted3 {
+public class DeleteColumnsToMakeSorted2 {
 
     public int minDeletionSize(String[] A) {
         Set<Integer> deletedColums = new HashSet<>();
