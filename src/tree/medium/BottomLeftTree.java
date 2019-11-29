@@ -32,19 +32,29 @@ package tree.medium;
 
 import tree.TreeNode;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 /**
  * Created by poorvank on 14/02/17.
  */
 public class  BottomLeftTree {
 
     public int findBottomLeftValue(TreeNode root) {
-        return findBottomLeftValue(root, 1, new int[]{0,0});
-    }
-    public int findBottomLeftValue(TreeNode root, int depth, int[] res) {
-        if (res[1]<depth) {res[0]=root.val;res[1]=depth;}
-        if (root.left!=null) findBottomLeftValue(root.left, depth+1, res);
-        if (root.right!=null) findBottomLeftValue(root.right, depth+1, res);
-        return res[0];
+        int result = 0;
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            for (int interval = 0; interval < size; interval++) {
+                TreeNode node = queue.poll();
+                if (interval == 0) result = node.val;
+                if (node.left != null) queue.add(node.left);
+                if (node.right != null) queue.add(node.right);
+            }
+        }
+
+        return result;
     }
     public static void main(String[] args) {
         TreeNode node = new TreeNode(1);
@@ -64,26 +74,23 @@ public class  BottomLeftTree {
 
 /*
 
-Queue also works:
+Better sol:
 
-public int findLeftMostNode(TreeNode root) {
-        if (root == null) return 0;
-
-        int result = 0;
-        Queue<TreeNode> queue = new LinkedList<>();
+public int findBottomLeftValue(TreeNode root) {
+        Queue<TreeNode> queue =new LinkedList<>();
         queue.add(root);
-
-        while (!queue.isEmpty()) {
-            int size = queue.size();
-            for (int interval = 0; interval < size; interval++) {
-                TreeNode node = queue.poll();
-                if (interval == 0) result = node.val;
-                if (node.left != null) queue.add(node.left);
-                if (node.right != null) queue.add(node.right);
-            }
+        int val=-1;
+        while(!queue.isEmpty()) {
+                TreeNode pop = queue.poll();
+                val = pop.val;
+                if(pop.right!=null) {
+                    queue.add(pop.right);
+                }
+                if(pop.left!=null) {
+                    queue.add(pop.left);
+                }
         }
-
-        return result;
+        return val;
     }
 
  */
