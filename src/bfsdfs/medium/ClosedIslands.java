@@ -60,3 +60,9 @@ public class ClosedIslands {
     }
 
 }
+
+/*
+
+Similar to surrounded regions.
+
+ */

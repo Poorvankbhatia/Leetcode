@@ -24,75 +24,47 @@ package bfsdfs.medium;
  */
 public class SurroundedRegions {
 
-    private int[] xMove = new int[]{0,1,-1,0};
-    private int[] yMOve = new int[]{1,0,0,-1};
-
+    int[][] dir = new int[][]{{0,1},{1,0},{0,-1},{-1,0}};
     public void solve(char[][] board) {
-
-        int m = board.length;
-        if(m==0) {
+        if(board==null || board.length==0) {
             return;
         }
-
+        int m = board.length;
         int n = board[0].length;
-
         boolean[][] visited = new boolean[m][n];
-
-        for (int j=0;j<n;j++) {
-
-            if(board[0][j]=='O') {
-                dfs(0,j,board,visited);
-            }
-            if(board[m-1][j]=='O') {
-                dfs(m-1,j,board,visited);
-            }
-
-        }
-
-        for (int i=0;i<m;i++) {
-
-            if(board[i][0]=='O') {
-                dfs(i,0,board,visited);
-            }
-            if(board[i][n-1]=='O') {
-                dfs(i,n-1,board,visited);
-            }
-
-        }
-
-        for (int i=0;i<m;i++) {
-            for (int j=0;j<n;j++) {
-                if(board[i][j] =='B') {
-                    board[i][j] = 'O';
-                } else if(board[i][j]=='O') {
-                    board[i][j] ='X';
+        for(int i=0;i<m;i++) {
+            for(int j=0;j<n;j++) {
+                if(board[i][j]=='O' && (i==0 || j==0 || i==m-1 || j==n-1)) {
+                    dfs(board,i,j,visited);
                 }
             }
         }
 
-
-    }
-
-    private void dfs(int i,int j,char[][] board,boolean[][] visited) {
-
-
-        int m = board.length;
-        int n = board[0].length;
-
-        visited[i][j] = true;
-
-        if(board[i][j]=='O') {
-            board[i][j] = 'B';
-        }
-
-        for (int k=0;k<4;k++) {
-            int nextX = i + xMove[k];
-            int nextY = j + yMOve[k];
-            if(nextX>=0 && nextX<m && nextY>=0 && nextY<n && board[nextX][nextY]=='O' && !visited[nextX][nextY]) {
-                dfs(nextX,nextY,board,visited);
+        for (int i=0;i<m;i++) {
+            for (int j=0;j<n;j++) {
+                if(board[i][j]=='B') {
+                    board[i][j]='O';
+                } else {
+                    board[i][j]='X';
+                }
             }
         }
 
+    }
+
+    private void dfs(char[][] grid,int i,int j,boolean[][] visited) {
+        if(i<0 || j<0 || i>=grid.length || j>=grid[0].length || visited[i][j] || grid[i][j]=='X') {
+            return;
+        }
+        if(grid[i][j]=='O') {
+            grid[i][j]='B';
+        }
+        visited[i][j]=true;
+        for(int k=0;k<4;k++) {
+            int nextX = i+dir[k][0];
+            int nextY = j+dir[k][1];
+            dfs(grid,nextX,nextY,visited);
+        }
     }
 
     public static void main(String[] args) {
