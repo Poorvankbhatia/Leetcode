@@ -61,4 +61,29 @@ public class LongestTurbulentArray {
 inc: The length of sequence which ends with two incresing numbers
 dec: The length of sequence which ends with two decreasing numbers
 
+
+Another way:
+
+A(k)<A(k-1) and k==odd || A(k)>A(k-1) and k==even
+
+A(k)<A(k-1) and k==even || A(k)>A(k-1) and k==odd
+
+ public int maxTurbulenceSize(int[] A) {
+        int n = A.length;
+        int[] even = new int[n];
+        int[] odd = new int[n];
+        Arrays.fill(even, 1);
+        Arrays.fill(odd, 1);
+        int max = Integer.MIN_VALUE;
+        for (int i = 1; i < n ; i++) {
+            if(A[i]>A[i-1]) {
+                odd[i]=even[i-1]+1;
+            } else if(A[i]<A[i-1]) {
+                even[i]=odd[i-1]+1;
+            }
+            max = Math.max(max,Math.max(odd[i],even[i]));
+        }
+        return max==Integer.MIN_VALUE?1:max;
+    }
+
  */
