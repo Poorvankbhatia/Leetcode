@@ -61,6 +61,8 @@ public class ColoringBorder {
                     queue.add(new int[]{nextX,nextY});
                     visited[nextX][nextY]=true;
                 } else if(!isValid || grid[nextX][nextY] != val && !visited[nextX][nextY]) {
+                    // Only change color if either next part is out of grid i.e current is on the boundary
+                    // or next is not valid and not visited.
                     grid[poll[0]][poll[1]]=color;
                 }
             }
@@ -79,6 +81,11 @@ public class ColoringBorder {
                 {1,2,2,2}
         };
         new ColoringBorder().colorBorder(a,1,2,5);
+        /*
+        Ans: {{1,5,1,2},
+              {5,2,5,1},
+              {1,5,5,5}}
+         */
     }
 
 }
