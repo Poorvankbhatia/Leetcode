@@ -39,10 +39,7 @@ Note that 'A' and 'a' are treated as two different characters.
  */
 package string.medium;
 
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 /**
  * Created by poorvank on 02/11/16.
@@ -51,55 +48,63 @@ import java.util.TreeMap;
 
 public class SortByFrequency {
 
-    private class ValueComparator implements Comparator<Character> {
-
-        HashMap<Character, Integer> map = new HashMap<Character, Integer>();
-
-        public ValueComparator(HashMap<Character, Integer> map){
-            this.map.putAll(map);
-        }
-
-        public int compare(Character s1, Character s2) {
-            if(map.get(s1) >= map.get(s2)){
-                return -1;
-            }else{
-                return 1;
-            }
-        }
-
-    }
-
     public String frequencySort(String s) {
-
-        HashMap<Character,Integer> frequency = new HashMap<>();
-
-        for (Character c : s.toCharArray()) {
-            if(!frequency.containsKey(c)) {
-                frequency.put(c,1);
-            } else {
-                int newFreq = frequency.get(c)+1;
-                frequency.put(c,newFreq);
+        int[] count = new int[256];
+        int max = 0;
+        for(char c: s.toCharArray()) {
+            count[c]++;
+            max = Math.max(count[c],max);
+        }
+        List<Character>[] arr = new List[max+1]; // Bucket of occurrences.
+        for(int i=0;i<256;i++) {
+            if(count[i]!=0) {
+                if(arr[count[i]]==null) {
+                    arr[count[i]]=new ArrayList<>();
+                }
+                arr[count[i]].add((char)i);
             }
         }
-
-        TreeMap<Character,Integer> treeMap = new TreeMap<>(new ValueComparator(frequency));
-        treeMap.putAll(frequency);
-
         StringBuilder sb = new StringBuilder();
-
-        for (Map.Entry entry : treeMap.entrySet()) {
-
-            Character key = (Character)entry.getKey();
-            Integer value = (Integer) entry.getValue();
-
-            for (int i=0;i<value;i++) {
-                sb.append(key);
+        for(int i=max;i>=1;i--) {
+            List<Character> list = arr[i];
+            if(list!=null) {
+                for(char c :list) {
+                    for (int k=0;k<i;k++) {
+                        sb.append(c);
+                    }
+                }
             }
-
         }
-
         return sb.toString();
-
     }
 
 }
+
+/*
+
+TreeMap Sol:
+
+public String frequencySort(String s) {
+        HashMap<Character,Integer> map = new HashMap<>();
+        for(char c : s.toCharArray()) {
+            map.put(c,map.getOrDefault(c,0)+1);
+        }
+        TreeMap<Integer,List<Character>> treeMap = new TreeMap<>((a, b)->(b-a));
+        for(Map.Entry<Character,Integer> entry : map.entrySet()) {
+            if(!treeMap.containsKey(entry.getValue())) {
+                treeMap.put(entry.getValue(),new ArrayList<>());
+            }
+            treeMap.get(entry.getValue()).add(entry.getKey());
+        }
+        StringBuilder sb = new StringBuilder();
+        for(Map.Entry<Integer,List<Character>> entry : treeMap.entrySet()) {
+            for (char c : entry.getValue()) {
+                for (int k =0;k<entry.getKey();k++) {
+                    sb.append(c);
+                }
+            }
+        }
+        return sb.toString();
+    }
+
+ */
