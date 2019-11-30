@@ -34,42 +34,27 @@ The number of keys in all rooms combined is at most 3000.
  */
 package bfsdfs.medium;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by poorvank.b on 27/05/18.
  */
 public class KeysAndRooms {
 
+    Set<Integer> visited;
     public boolean canVisitAllRooms(List<List<Integer>> rooms) {
-
-        if(rooms==null || rooms.size()==0) {
-            return true;
-        }
-
-        boolean[] visited = new boolean[rooms.size()];
-        dfs(rooms,visited,0);
-
-        for (boolean visit : visited) {
-            if(!visit) {
-                return false;
+        visited = new HashSet<>();
+        dfs(rooms,0);
+        return visited.size()==rooms.size();
+    }
+    private void dfs(List<List<Integer>> rooms, int start) {
+        visited.add(start);
+        for(int x : rooms.get(start)) {
+            if(!visited.contains(x)) {
+                dfs(rooms,x);
             }
         }
-
-        return true;
-
     }
-
-    private void dfs(List<List<Integer>> rooms,boolean[] visited,int room) {
-
-        visited[room]=true;
-
-        for (Integer key : rooms.get(room)) {
-            if(!visited[key]) {
-                dfs(rooms,visited,key);
-            }
-        }
-
-    }
-
 }
