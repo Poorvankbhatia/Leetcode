@@ -49,104 +49,48 @@ import java.util.*;
 public class OpenTheLocks {
 
     public int openLock(String[] deadends, String target) {
-
-        Set<String> set = new HashSet<>();
-
-        if(deadends!=null) {
-            Collections.addAll(set, deadends);
-        }
-
-        if(target==null || set.contains(target) || set.contains("0000")) {
+        Set<String> deadSet = new HashSet<>();
+        Collections.addAll(deadSet, deadends);
+        if(deadSet.contains("0000")) {
             return -1;
         }
-
         Queue<String> queue = new LinkedList<>();
         queue.add("0000");
-        Set<String> covered = new HashSet<>();
-        covered.add("0000");
-
-        int result=0;
-
-        while (!queue.isEmpty()) {
-
-            int size=queue.size();
-
-            for (int i=0;i<size;i++) {
-                String current = queue.remove();
-
-                if(current.equals(target)) {
-                    return result;
+        int step=0;
+        while(!queue.isEmpty()) {
+            int size = queue.size();
+            for(int i=0;i<size;i++) {
+                String pop = queue.poll();
+                if(pop.equals(target)) {
+                    return step;
                 }
-
-                if(set.contains(current)) {
-                    continue;
-                }
-
-                List<String> list = getNext(set,current);
-
-                for (String nextLock : list) {
-                    if(!covered.contains(nextLock)) {
-                        queue.add(nextLock);
-                        covered.add(nextLock); // This addition is done here because 1100 can be reached from both 0100 and 1000, So only visited once.
+                for(int k=0;k<pop.length();k++) {
+                    int c = (int) pop.charAt(k)-'0';
+                    String left="",right="";
+                    if(c==0) {
+                        left = pop.substring(0,k)+""+9+""+pop.substring(k+1);
+                        right = pop.substring(0,k)+""+1+""+pop.substring(k+1);
+                    } else if(c==9) {
+                        left = pop.substring(0,k)+""+8+""+pop.substring(k+1);
+                        right = pop.substring(0,k)+""+0+""+pop.substring(k+1);
+                    } else {
+                        left = pop.substring(0,k)+""+(c-1)+""+pop.substring(k+1);
+                        right = pop.substring(0,k)+""+(c+1)+""+pop.substring(k+1);
+                    }
+                    if(!deadSet.contains(left)) {
+                        queue.add(left);
+                        deadSet.add(left); // Add to deadset so that we don't visit that combination again.
+                    }
+                    if(!deadSet.contains(right)) {
+                        queue.add(right);
+                        deadSet.add(right);
                     }
                 }
+
             }
-
-            result++;
-
+            step++;
         }
-
         return -1;
-
-
-    }
-
-    private List<String> getNext(Set<String> set,String start) {
-
-        List<String> list = new ArrayList<>();
-
-        if(!set.contains(start)) {
-            StringBuilder sb = new StringBuilder(start);
-            for (int i=0;i<4;i++) {
-                Character c = sb.charAt(i);
-                if(c=='0') {
-
-                    sb.setCharAt(i,'9');
-                    list.add(sb.toString());
-
-                    sb.setCharAt(i,'1');
-                    list.add(sb.toString());
-
-                    sb.setCharAt(i,c);
-
-                } else if(c=='9') {
-
-                    sb.setCharAt(i,'0');
-                    list.add(sb.toString());
-
-                    sb.setCharAt(i,'8');
-                    list.add(sb.toString());
-
-                    sb.setCharAt(i,c);
-
-                } else {
-
-                    char next = (char) ((int)c + 1);
-                    sb.setCharAt(i,next);
-                    list.add(sb.toString());
-
-                    char prev = (char) ((int)c - 1);
-                    sb.setCharAt(i,prev);
-                    list.add(sb.toString());
-
-                    sb.setCharAt(i,c);
-                }
-            }
-
-        }
-
-        return list;
-
     }
 
     public static void main(String[] args) {
@@ -156,3 +100,40 @@ public class OpenTheLocks {
     }
 
 }
+
+/*
+
+Bidirectional Search:
+
+public int openLock(String[] deadends, String target) {
+        Set<String> begin = new HashSet<>();
+        Set<String> end = new HashSet<>();
+        Set<String> deads = new HashSet<>(Arrays.asList(deadends));
+        begin.add("0000");
+        end.add(target);
+        int level = 0;
+        while(!begin.isEmpty() && !end.isEmpty()) {
+            Set<String> temp = new HashSet<>();
+            for(String s : begin) {
+                if(end.contains(s)) return level;
+                if(deads.contains(s)) continue;
+                deads.add(s);
+                StringBuilder sb = new StringBuilder(s);
+                for(int i = 0; i < 4; i ++) {
+                    char c = sb.charAt(i);
+                    String s1 = sb.substring(0, i) + (c == '9' ? 0 : c - '0' + 1) + sb.substring(i + 1);
+                    String s2 = sb.substring(0, i) + (c == '0' ? 9 : c - '0' - 1) + sb.substring(i + 1);
+                    if(!deads.contains(s1))
+                        temp.add(s1);
+                    if(!deads.contains(s2))
+                        temp.add(s2);
+                }
+            }
+            level ++;
+            begin = end;
+            end = temp;
+        }
+        return -1;
+    }
+
+ */
