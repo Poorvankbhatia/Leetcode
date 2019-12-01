@@ -37,19 +37,42 @@ import java.util.*;
  */
 public class RedundantConnection {
 
+    int[] parent;
+    int[] size;
     public int[] findRedundantConnection(int[][] edges) {
-
-        int n = edges.length;
-        UnionFind uf =  new UnionFind(n+1);
-        List<int[]> list = new ArrayList<>();
-        for(int[] edge : edges) {
-            if(uf.isConnected(edge[0],edge[1])) {
-                list.add(edge);
-            }
-            uf.union(edge[0],edge[1]);
+        parent = new int[1001];
+        size = new int[1001];
+        for(int i=0;i<1001;i++) {
+            parent[i]=i;
+            size[i]=1;
         }
-        return list.get(list.size()-1);
-
+        for(int[] edge : edges) {
+            if(getParent(edge[0])==getParent(edge[1])) {
+                return edge;
+            }
+            union(edge[0],edge[1]);
+        }
+        return new int[0];
+    }
+    private int getParent(int x) {
+        while(x!=parent[x]) {
+            parent[x] = parent[parent[x]];
+            x = parent[x];
+        }
+        return x;
+    }
+    private void union(int a,int b) {
+        int pA = getParent(a);
+        int pB = getParent(b);
+        if(pA!=pB) {
+            if(size[pA]>size[pB]) {
+                parent[pB]=parent[pA];
+                size[pA]+=size[pB];
+            } else {
+                parent[pA]=parent[pB];
+                size[pB]+=size[pA];
+            }
+        }
     }
 
     public static void main(String[] args) {
