@@ -76,7 +76,7 @@ bfs and djikstra are very similar problems.
 It's just that djikstra cost is different compared with bfs, so use priorityQueue instead a Queue for a standard bfs search.
 There could be one node with different distances in the PriorityQ, but PriorityQ will always give you the shortest distance one.
 
-DP Solution:
+DP Solution(Bellman Ford):
 
 public int networkDelayTime(int[][] times, int N, int K) {
         List<int[]>[] arr = new List[N+1];
