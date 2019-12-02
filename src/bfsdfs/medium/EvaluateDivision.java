@@ -28,27 +28,20 @@ import java.util.*;
 public class EvaluateDivision {
     public double[] calcEquation(List<List<String>> equations, double[] values, List<List<String>> queries) {
         double[] arr = new double[queries.size()];
-
         Map<String,Map<String,Double>> map = buildGraph(equations,values);
         for (int i = 0; i < queries.size(); i++) {
             arr[i] = dfs(queries.get(i).get(0), queries.get(i).get(1), map, new HashSet<>());
         }
-
         return arr;
-
-
     }
 
     private double dfs(String start, String end, Map<String,Map<String,Double>> map, Set<String> visited) {
-
         if(!map.containsKey(start)) {
             return -1.0;
         }
-
         if(map.get(start).containsKey(end)) {
             return map.get(start).get(end);
         }
-
         visited.add(start);
         for(Map.Entry<String,Double> entry : map.get(start).entrySet()) {
             if(!visited.contains(entry.getKey())) {
@@ -58,15 +51,12 @@ public class EvaluateDivision {
                 }
             }
         }
-
         return -1.0;
 
     }
 
     private Map<String,Map<String,Double>> buildGraph(List<List<String>> equations, double[] values) {
-
         Map<String, Map<String,Double>> map = new HashMap<>();
-
         for(int i=0;i<equations.size();i++) {
             String start = equations.get(i).get(0);
             String end = equations.get(i).get(1);
@@ -75,9 +65,7 @@ public class EvaluateDivision {
             map.putIfAbsent(end,new HashMap<>());
             map.get(end).put(start,1/values[i]);
         }
-
         return map;
-
     }
 }
 
