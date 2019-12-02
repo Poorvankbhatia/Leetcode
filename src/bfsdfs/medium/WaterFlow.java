@@ -31,6 +31,7 @@ Return:
 package bfsdfs.medium;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -38,132 +39,63 @@ import java.util.List;
  */
 public class WaterFlow {
 
-    private class Reachable {
-        private boolean reachAtlantic;
-        private boolean reachPacific;
-
-        public Reachable(boolean reachAtlantic, boolean reachPacific) {
-            this.reachAtlantic = reachAtlantic;
-            this.reachPacific = reachPacific;
+    private int[][] dir = new int[][]{{0,1},{0,-1},{-1,0},{1,0}};
+    public List<List<Integer>> pacificAtlantic(int[][] matrix) {
+        List<List<Integer>> result = new ArrayList<>();
+        if(matrix==null || matrix.length==0) {
+            return result;
         }
+        int m = matrix.length;
+        int n = matrix[0].length;
 
-        public boolean isReachable() {
-            return reachAtlantic && reachPacific;
+        Boolean[][] pacificFlow = new Boolean[m][n];
+        Boolean[][] atlanticFLow = new Boolean[m][n];
+
+        for(int i=0;i<m;i++) { // Mark top
+            pacificFlow[i][0]=true;
         }
-    }
-
-    private int[] xMove = new int[]{0, 1, -1, 0};
-    private int[] yMove = new int[]{1, 0, 0, -1};
-
-    public List<int[]> pacificAtlantic(int[][] matrix) {
-
-        List<int[]> list = new ArrayList<>();
-
-        if(matrix.length==0) {
-            return list;
+        for(int j=0;j<n;j++) { // Mark Left
+            pacificFlow[0][j]=true;
         }
-
-        int row = matrix.length;
-        int col = matrix[0].length;
-        Reachable[][] reachable = new Reachable[row][col];
-        boolean[][] visited = new boolean[row][col];
-
-
-
-        for (int i = 0; i < row; i++) {
-            for (int j = col - 1; j >= 0; j--) {
-                reachable[i][j] = new Reachable(false, false);
-                reachable[i][j].reachAtlantic = reachAtlantic(matrix, visited, i, j, row, col, reachable);
-                reachable[i][j].reachPacific = reachPacific(matrix, visited, i, j, row, col, reachable);
-                if (reachable[i][j].isReachable()) {
-                    int[] arr = new int[]{i, j};
-                    list.add(arr);
+        for(int i=m-1;i>=0;i--) { // Mark Bottom
+            atlanticFLow[i][n-1]=true;
+        }
+        for(int j=n-1;j>=0;j--) { // Mark Right
+            atlanticFLow[m-1][j]=true;
+        }
+        boolean[][] visited = new boolean[m][n];
+        for (int i=0;i<m;i++) {
+            for (int j=0;j<n;j++) {
+                pacificFlow[i][j] = isFlowPossible(i,j,pacificFlow,matrix,visited);
+                atlanticFLow[i][j] = isFlowPossible(i,j,atlanticFLow,matrix,visited);
+                if(pacificFlow[i][j] && atlanticFLow[i][j]) {
+                    List<Integer> list = Arrays.asList(i,j);
+                    result.add(list);
                 }
             }
-
         }
 
-        /*for (int[] arr : children) {
-            System.out.print(Arrays.toString(arr) +  " ");
-        }*/
-
-        return list;
-
-
+        return result;
     }
 
-
-    private boolean reachAtlantic(int[][] matrix, boolean[][] visited, int x, int y, int row, int col, Reachable[][] reachable) {
-
-        if (reachable[x][y]!=null && (reachable[x][y]).reachAtlantic) {
-            return true;
+    private boolean isFlowPossible(int i, int j, Boolean[][] flow, int[][] matrix, boolean[][] visited) {
+        if(flow[i][j]!=null) {
+            return flow[i][j];
         }
-
-        if (x == row - 1 || y == col - 1) {
-            return true;
-        }
-
-        /*
-        So that the marked array is not visited again
-         */
-        visited[x][y] = true;
-
-        for (int i = 0; i < 4; i++) {
-
-            int newX = x + xMove[i];
-            int newY = y + yMove[i];
-
-            if (isSafe(row, col, newX, newY, matrix[x][y], matrix,visited)) {
-                if (reachAtlantic(matrix, visited, newX, newY, row, col, reachable)) {
-                    visited[x][y] = false;
+        visited[i][j]=true;
+        for(int k=0;k<4;k++) {
+            int nextX = dir[k][0]+i;
+            int nextY = dir[k][1]+j;
+            if(nextX>=0 && nextY>=0 && nextX<matrix.length && nextY<matrix[0].length && !visited[nextX][nextY] && matrix[i][j]>=matrix[nextX][nextY]) {
+                if(isFlowPossible(nextX,nextY,flow,matrix,visited)) { // If get true once just return.
+                    visited[i][j]=false;
+                    flow[i][j]=true;
                     return true;
                 }
             }
-
         }
-
-        visited[x][y] = false;
+        visited[i][j]=false;
         return false;
-
-    }
-
-    private boolean reachPacific(int[][] matrix, boolean[][] visited, int x, int y, int row, int col, Reachable[][] reachable) {
-
-        /*
-            If an index is already reachable return true
-         */
-        if (reachable[x][y]!=null &&(reachable[x][y]).reachPacific) {
-            return true;
-        }
-
-        if (x == 0 || y == 0) {
-            return true;
-        }
-
-        visited[x][y] = true;
-
-        for (int i = 0; i < 4; i++) {
-
-            int newX = x + xMove[i];
-            int newY = y + yMove[i];
-
-            if (isSafe(row, col, newX, newY, matrix[x][y], matrix,visited)) {
-                if (reachPacific(matrix, visited, newX, newY, row, col, reachable)) {
-                    visited[x][y] = false;
-                    return true;
-                }
-            }
-
-        }
-
-        visited[x][y] = false;
-        return false;
-
-    }
-
-
-    private boolean isSafe(int row, int col, int x, int y, int currentVal, int[][] matrix,boolean[][] visited) {
-        return (x >= 0 && y >= 0 && x < row && y < col && !visited[x][y] && currentVal >= matrix[x][y]);
     }
 
     public static void main(String[] args) {
@@ -181,3 +113,71 @@ public class WaterFlow {
     }
 
 }
+
+/*
+
+Explanation:
+
+The matrix is the continent with water on it and the boundaries are the oceans. Left and top being Pacific and right and bottom being the Atlantic.
+The water on the continent (in the matrix) wants to flow out in the ocean. (Nature huh.)
+The numbers in the matrix is the height of the water for that point.
+For every point you have to ask the question. Can the water at this point and this height flow out in both the oceans under
+the constraints of flowing through only four(up, down, right, left) directions and flow into channels with same height or less height?
+If yes you return the coordinate of that point. Else you ignore it.
+
+
+BFS:
+
+public class Solution {
+    int[][]dir = new int[][]{{1,0},{-1,0},{0,1},{0,-1}};
+    public List<int[]> pacificAtlantic(int[][] matrix) {
+        List<int[]> res = new LinkedList<>();
+        if(matrix == null || matrix.length == 0 || matrix[0].length == 0){
+            return res;
+        }
+        int n = matrix.length, m = matrix[0].length;
+        //One visited map for each ocean
+        boolean[][] pacific = new boolean[n][m];
+        boolean[][] atlantic = new boolean[n][m];
+        Queue<int[]> pQueue = new LinkedList<>();
+        Queue<int[]> aQueue = new LinkedList<>();
+        for(int i=0; i<n; i++){ //Vertical border
+            pQueue.offer(new int[]{i, 0});
+            aQueue.offer(new int[]{i, m-1});
+            pacific[i][0] = true;
+            atlantic[i][m-1] = true;
+        }
+        for(int i=0; i<m; i++){ //Horizontal border
+            pQueue.offer(new int[]{0, i});
+            aQueue.offer(new int[]{n-1, i});
+            pacific[0][i] = true;
+            atlantic[n-1][i] = true;
+        }
+        bfs(matrix, pQueue, pacific);
+        bfs(matrix, aQueue, atlantic);
+        for(int i=0; i<n; i++){
+            for(int j=0; j<m; j++){
+                if(pacific[i][j] && atlantic[i][j])
+                    res.add(new int[]{i,j});
+            }
+        }
+        return res;
+    }
+    public void bfs(int[][]matrix, Queue<int[]> queue, boolean[][]visited){
+        int n = matrix.length, m = matrix[0].length;
+        while(!queue.isEmpty()){
+            int[] cur = queue.poll();
+            for(int[] d:dir){
+                int x = cur[0]+d[0];
+                int y = cur[1]+d[1];
+                if(x<0 || x>=n || y<0 || y>=m || visited[x][y] || matrix[x][y] < matrix[cur[0]][cur[1]]){
+                    continue;
+                }
+                visited[x][y] = true;
+                queue.offer(new int[]{x, y});
+            }
+        }
+    }
+}
+
+ */
