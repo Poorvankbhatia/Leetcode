@@ -24,56 +24,38 @@ import java.util.*;
 public class NetworkDelayTime {
 
     public int networkDelayTime(int[][] times, int N, int K) {
-
-        if(times==null || times.length==0) {
-            return -1;
-        }
-
-        Map<Integer, Map<Integer, Integer>> map = new HashMap<>();
-        for(int[] time : times){
-            Map<Integer, Integer> sourceMap = map.get(time[0]);
-            if(sourceMap == null){
-                sourceMap = new HashMap<>();
-                map.put(time[0], sourceMap);
+        List<int[]>[] arr = new List[N+1];
+        for(int[] time : times) {
+            if(arr[time[0]]==null) {
+                arr[time[0]] = new ArrayList<>();
             }
-            Integer dis = sourceMap.get(time[1]);
-            if(dis == null || dis > time[2]){
-                sourceMap.put(time[1], time[2]);
-            }
-
+            arr[time[0]].add(new int[]{time[1],time[2]});
         }
-
-        Map<Integer,Integer> distanceMap = new HashMap<>();
-        distanceMap.put(K,0);
-        PriorityQueue<int[]> pq = new PriorityQueue<>((i1, i2) -> {return i1[1] - i2[1];});
+        int[] dp = new int[N+1];
+        Arrays.fill(dp,Integer.MAX_VALUE);
+        dp[K]=0;
+        PriorityQueue<int[]> pq = new PriorityQueue<>(Comparator.comparingInt(i -> i[1]));//Priority Queue: Dijikstra
         pq.offer(new int[]{K, 0});
-        int max = -1;
         while (!pq.isEmpty()) {
             int[] cur = pq.poll();
             int node = cur[0];
             int distance = cur[1];
-
-            Map<Integer, Integer> sourceMap = map.get(node);
-            if(sourceMap == null){
-                continue;
-            }
-            for(Map.Entry<Integer, Integer> entry : sourceMap.entrySet()){
-                int absoluteDistance = distance + entry.getValue();
-                int targetNode = entry.getKey();
-                if(distanceMap.containsKey(targetNode) && distanceMap.get(targetNode) <= absoluteDistance){
-                    continue;
+            if(arr[node]!=null) {
+                for (int[] x: arr[node]) {
+                    int absoluteDistance = distance + x[1];
+                    int targetNode = x[0];
+                    if(dp[targetNode]>absoluteDistance){
+                        dp[targetNode]=absoluteDistance;
+                        pq.offer(new int[]{targetNode, absoluteDistance});
+                    }
                 }
-                distanceMap.put(targetNode, absoluteDistance);
-                pq.offer(new int[]{targetNode, absoluteDistance});
             }
         }
-
-        for(int val : distanceMap.values()){
-            if(val > max){
-                max = val;
-            }
+        int max = Integer.MIN_VALUE;
+        for (int i=1;i<=N;i++) {
+            max = Math.max(max,dp[i]);
         }
-        return distanceMap.size() == N ? max : -1;
+        return max == Integer.MAX_VALUE ? -1 : max;
 
     }
 
@@ -87,12 +69,50 @@ public class NetworkDelayTime {
 
 /*
 
-It is a direct graph.
+time: O(Nlog(N) + E)
+space: O(N + E)
 
-Use Map<Integer, Map<Integer, Integer>> to store the source node, target node and the distance between them.
-Offer the node K to a PriorityQueue.
-Then keep getting the closest nodes to the current node and calculate the distance from the source (K)
-to this node (absolute distance). Use a Map to store the shortest absolute distance of each node.
-Return the node with the largest absolute distance.
+bfs and djikstra are very similar problems.
+It's just that djikstra cost is different compared with bfs, so use priorityQueue instead a Queue for a standard bfs search.
+There could be one node with different distances in the PriorityQ, but PriorityQ will always give you the shortest distance one.
+
+DP Solution:
+
+public int networkDelayTime(int[][] times, int N, int K) {
+        List<int[]>[] arr = new List[N+1];
+        for(int[] time : times) {
+            if(arr[time[0]]==null) {
+                arr[time[0]] = new ArrayList<>();
+            }
+            arr[time[0]].add(new int[]{time[1],time[2]});
+        }
+        int[] dp = new int[N+1];
+        Arrays.fill(dp,Integer.MAX_VALUE);
+        dp[K]=0;
+        boolean[] visited= new boolean[N+1];
+        dfs(arr,K,dp,0,visited);
+        int max = Integer.MIN_VALUE;
+        for (int i=1;i<=N;i++) {
+            max = Math.max(max,dp[i]);
+        }
+        return max==Integer.MAX_VALUE?-1:max;
+    }
+
+    private void dfs(List<int[]>[] arr,int K,int[] dp,int current,boolean[] visited) {
+        visited[K]=true;
+        if(arr[K]!=null) {
+            for (int[] x: arr[K]) {
+               if(!visited[x[0]]) {
+                   if(dp[x[0]]>x[1]+current) {
+                       dp[x[0]]=x[1]+current;
+                       dfs(arr,x[0],dp,dp[x[0]],visited);
+                   }
+               }
+            }
+        }
+        visited[K]=false;
+    }
+
+
 
  */
