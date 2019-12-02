@@ -29,59 +29,37 @@ import java.util.*;
 public class CourseSchedule2 {
 
     public int[] findOrder(int numCourses, int[][] prerequisites) {
-
-        if(numCourses==0 || null==prerequisites) {
-            return new int[]{};
+        int[] indegree = new int[numCourses];
+        List<Integer>[] arr = new List[numCourses];
+        for(int[] prerequisite : prerequisites) {
+            if(arr[prerequisite[1]]==null) {
+                arr[prerequisite[1]]=new ArrayList<>();
+            }
+            arr[prerequisite[1]].add(prerequisite[0]);
+            indegree[prerequisite[0]]++;
         }
-
-        int[] result = new int[numCourses];
-
-        int[] courseInDegree = new int[numCourses];
-
-        List<List<Integer>> lists = new ArrayList<>();
-
-        for (int i=0;i<numCourses;i++) {
-            lists.add(i,new ArrayList<>());
-        }
-
-        for (int[] prerequisite : prerequisites) {
-            lists.get(prerequisite[0]).add(prerequisite[1]);
-            courseInDegree[prerequisite[1]]++;
-        }
-
-        int count = numCourses;
-
         Queue<Integer> queue = new LinkedList<>();
-        for (int i=0;i<numCourses;i++) {
-            if(courseInDegree[i]==0) {
+        for(int i=0;i<numCourses;i++) {
+            if(indegree[i]==0) {
                 queue.add(i);
             }
         }
-
-        Stack<Integer> stack = new Stack<>();
-
-        while (!queue.isEmpty()) {
-            int current = queue.poll();
-            for (Integer dependency : lists.get(current)) {
-                //Add to queue only when no other dependency is there.
-                if(--courseInDegree[dependency]==0) {
-                    queue.add(dependency);
+        int[] result = new int[numCourses];
+        int i=0;
+        int count=0;
+        while(!queue.isEmpty()) {
+            int pop = queue.poll();
+            result[i++]=pop;
+            if(arr[pop]!=null) {
+                for(int x : arr[pop]) {
+                    if(--indegree[x]==0) {
+                        queue.add(x);
+                    }
                 }
             }
-            count--;
-            stack.push(current);
+            count++;
         }
-
-        if(count==0) {
-            int i=0;
-            while (!stack.isEmpty()) {
-                result[i] = stack.pop();
-                i++;
-            }
-            return result;
-        } else {
-            return new int[]{};
-        }
+        return count==numCourses?result:new int[0];
 
     }
 
