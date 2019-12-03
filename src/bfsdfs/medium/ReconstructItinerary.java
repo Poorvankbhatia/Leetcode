@@ -23,53 +23,44 @@ Another possible reconstruction is ["JFK","SFO","ATL","JFK","ATL","SFO"]. But it
 package bfsdfs.medium;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by poorvank.b on 16/03/17.
  */
 public class ReconstructItinerary {
 
-    public List<String> findItinerary(String[][] tickets) {
-
-        List<String> result = new ArrayList<>();
-
-        if(null==tickets) {
-            return result;
+    Map<String,PriorityQueue<String>> map;
+    List<String> result;
+    public List<String> findItinerary(List<List<String>> tickets) {
+        map = new HashMap<>();
+        for(List<String> list : tickets) {
+            map.putIfAbsent(list.get(0),new PriorityQueue<>()); // PriorityQ is used as there can be multiple edges in the same direction from one vertex to another.
+            map.get(list.get(0)).add(list.get(1));
         }
-
-        Map<String,PriorityQueue<String>> map = new HashMap<>();
-
-        for (String[] ticket : tickets) {
-            if(map.containsKey(ticket[0])) {
-                PriorityQueue<String> list = map.get(ticket[0]);
-                list.add(ticket[1]);
-                map.put(ticket[0],list);
-            } else {
-                PriorityQueue<String> list = new PriorityQueue<>();
-                list.add(ticket[1]);
-                map.put(ticket[0],list);
-            }
-        }
-        fillList(map,"JFK",result);
-
+        result = new ArrayList<>();
+        dfs("JFK");
         return result;
-
     }
 
-    private void fillList(Map<String,PriorityQueue<String>> map,String start,List<String> result) {
-        PriorityQueue<String> priorityQueue = map.get(start);
-        while (null!=priorityQueue && !priorityQueue.isEmpty()) {
-            String next = priorityQueue.poll();
-            fillList(map,next,result);
+    private void dfs(String start) {
+        if(map.containsKey(start)) {
+            PriorityQueue<String> pq = map.get(start);
+            while (pq!=null && !pq.isEmpty()) {
+                dfs(pq.poll());
+            }
         }
         //Once the path from a node is visited then only it is added to result
         result.add(0,start);
-
     }
 
     public static void main(String[] args) {
-        String[][] arr = {{"JFK","KUL"},{"JFK","NRT"},{"NRT","JFK"}};
-        System.out.println(new ReconstructItinerary().findItinerary(arr));
+        String[][] arr = {{"EZE","AXA"},{"TIA","ANU"},{"ANU","JFK"},{"JFK","ANU"},{"ANU","EZE"},{"TIA","ANU"},
+                {"AXA","TIA"},{"TIA","JFK"},{"ANU","TIA"},{"JFK","TIA"}};
+        List<List<String>> list = Arrays.stream(arr)
+                .map(Arrays::asList)
+                .collect(Collectors.toList());
+        System.out.println(new ReconstructItinerary().findItinerary(list));
     }
 
 }
