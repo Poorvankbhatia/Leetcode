@@ -40,7 +40,7 @@ In other words, any connected graph without simple cycles is a tree.”
 The height of a rooted tree is the number of edges on the longest downward path between the root and a leaf.
 
  */
-package binarysearch.medium;
+package graph.medium;
 
 import java.util.*;
 
@@ -54,7 +54,7 @@ public class MinimumHeightTrees {
         }
         int[] degree = new int[n];
         for(int i=0; i<n; i++) {
-            myGraph.add(new ArrayList<Integer>());
+            myGraph.add(new ArrayList<>());
         }
         for (int[] edge : edges) {
             myGraph.get(edge[0]).add(edge[1]);
@@ -64,12 +64,13 @@ public class MinimumHeightTrees {
         }
         Queue<Integer> queue = new LinkedList<>();
 
-        for(int i=0; i<n; i++)
+        for(int i=0; i<n; i++) {
             if (degree[i]==0)
                 return res;
             else if (degree[i]==1) {
                 queue.offer(i);
             }
+        }
 
         while (!queue.isEmpty()) {
             res = new ArrayList<>();
@@ -90,6 +91,13 @@ public class MinimumHeightTrees {
             }
         }
         return res;
+    }
+
+    public static void main(String[] args) {
+        int[][] a = new int[][]{
+                {1,0}
+        };
+        System.out.println(new MinimumHeightTrees().findMinHeightTrees(2,a));
     }
 }
 
