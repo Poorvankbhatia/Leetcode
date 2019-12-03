@@ -26,69 +26,84 @@ Visually, the graph looks like the following:
  */
 package graph.easy;
 
-import graph.UndirectedGraphNode;
-
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by poorvank on 19/09/16.
  */
 public class CloneGraph {
 
-    private HashMap<UndirectedGraphNode,UndirectedGraphNode> map;
+    private class Node {
+        public int val;
+        public List<Node> neighbors;
 
-    public UndirectedGraphNode cloneGraph(UndirectedGraphNode node) {
+        public Node() {}
 
-        if(node==null) {
-            return null;
+        public Node(int _val,List<Node> _neighbors) {
+            val = _val;
+            neighbors = _neighbors;
         }
+    };
 
+    Map<Node,Node> map;
+
+    public Node cloneGraph(Node node) {
         map = new HashMap<>();
-        fillMap(node);
-
-        for ( UndirectedGraphNode n : map.keySet()) {
-            cloneNodeUtil(n);
+        copyNodes(node);
+        for(Node n : map.keySet()) {
+            copyStructure(n);
         }
-
         return map.get(node);
-
     }
 
-
-    private void fillMap(UndirectedGraphNode node) {
-
-        if(!map.containsKey(node)) {
-
-            UndirectedGraphNode cloneNode = new UndirectedGraphNode(node.label);
-            map.put(node,cloneNode);
-
-            for (UndirectedGraphNode neighbour : node.neighbors) {
-                if(neighbour.label!=node.label) {
-                    fillMap(neighbour);
+    private void copyNodes(Node node) {
+        if(node!=null && !map.containsKey(node)) {
+            int val = node.val;
+            Node nodeCopy = new Node(val,new ArrayList<>());
+            map.put(node,nodeCopy);
+            if(node.neighbors!=null) {
+                for(Node next : node.neighbors) {
+                    copyNodes(next);
                 }
             }
-
         }
-
     }
 
-    private void cloneNodeUtil(UndirectedGraphNode node) {
-
-        UndirectedGraphNode cloneNode = map.get(node);
-
-        for (UndirectedGraphNode neighbour : node.neighbors) {
-            cloneNode.neighbors.add(map.get(neighbour));
+    private void copyStructure(Node node) {
+        if (node != null) {
+            if (node.neighbors != null) {
+                for (Node next : node.neighbors) {
+                    map.get(node).neighbors.add(map.get(next));
+                }
+            }
         }
-
     }
-
-    public static void main(String[] args) {
-        UndirectedGraphNode node = new UndirectedGraphNode(0);
-        node.neighbors.add(new UndirectedGraphNode(0));
-        node.neighbors.add(new UndirectedGraphNode(0));
-
-        System.out.println(new CloneGraph().cloneGraph(node).neighbors.size());
-    }
-
-
 }
+
+/*
+
+One Function call:
+
+private HashMap<Integer, UndirectedGraphNode> map = new HashMap<>();
+    public UndirectedGraphNode cloneGraph(UndirectedGraphNode node) {
+        return clone(node);
+    }
+
+    private UndirectedGraphNode clone(UndirectedGraphNode node) {
+        if (node == null) return null;
+
+        if (map.containsKey(node.label)) {
+            return map.get(node.label);
+        }
+        UndirectedGraphNode clone = new UndirectedGraphNode(node.label);
+        map.put(clone.label, clone);
+        for (UndirectedGraphNode neighbor : node.neighbors) {
+            clone.neighbors.add(clone(neighbor));
+        }
+        return clone;
+    }
+
+ */
