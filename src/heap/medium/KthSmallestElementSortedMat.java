@@ -27,59 +27,35 @@ import heap.MinPriorityQueue;
  */
 public class KthSmallestElementSortedMat {
 
-    private class Element implements Comparable<Element> {
-        private int x;
-        private int y;
-        private int value;
-
-        public Element(int x, int y, int value) {
-            this.x = x;
-            this.y = y;
-            this.value = value;
-        }
-
-        public int compareTo(Element e) {
-            if(this.value>e.value) {
-                return 1;
-            } else if(this.value<e.value) {
-                return -1;
+    public int kthSmallest(int[][] matrix, int k) {
+        int n = matrix.length;
+        int lo = matrix[0][0];
+        int hi = matrix[n-1][n-1];
+        while(lo<hi) {
+            int mid = lo+(hi-lo)/2;
+            if(count(mid,matrix)>=k) {
+                hi=mid;
             } else {
-                return 0;
+                lo=mid+1;
             }
         }
-
+        return lo;
     }
 
-    public int kthSmallest(int[][] matrix, int k) {
-
+    private int count(int val,int[][] matrix) {
+        int c=0;
         int n = matrix.length;
-
-        MinPriorityQueue<Element> minPriorityQueue = new MinPriorityQueue<>(n);
-
-        for (int i=0;i<n;i++) {
-            minPriorityQueue.insert(new Element(i,0,matrix[i][0]));
-        }
-
-        int kthSmallestValue=0;
-        for (int i=0;i<k;i++) {
-
-            Element e = minPriorityQueue.deleteMin();
-            kthSmallestValue = e.value;
-
-            int nextCol = e.y+1;
-
-            if(nextCol<n) {
-                e = new Element(e.x,nextCol,matrix[e.x][nextCol]);
-                minPriorityQueue.insert(e);
+        int j=n-1;
+        int i=0;
+        while(j>=0 && i<n) {
+            if(matrix[i][j]<=val) {
+                c+=j+1;
+                i++;
             } else {
-                e = new Element(e.x,nextCol,Integer.MAX_VALUE);
-                minPriorityQueue.insert(e);
+                j--;
             }
-
         }
-
-        return kthSmallestValue;
-
+        return c;
     }
 
     public static void main(String[] args) {
@@ -98,45 +74,64 @@ public class KthSmallestElementSortedMat {
 
 /*
 
-Time complexity  : O(n) + klog(n)
+Complexity:  O(N∗log(max−min))
 
-Binary Search method:
+Basically, the method in the solution is a variation of binary search to "find the first occurrence of an element".
 
-public int kthSmallest(int[][] matrix, int k) {
-    int m=matrix.length;
+The count is the number of elements less or equal to mid, given the "matrix[i][j] > mid "in the while condition.
+There are two scenarios:
+Single Kth smallest element in matrix.
+[1,2,3,5]
+[2,3,5,7]
+[3,5,8,9]
+[5,8,9,13]
+k = 11
+Result = 7
 
-    int lower = matrix[0][0];
-    int upper = matrix[m-1][m-1];
+This ensures count equals to k at a point, in which it includes the kth smallest element in the matrix. At the moment, binary search shrinks high boundary to mid,
+instead of returning mid in the regular binary search. You can imagine it as "hi" is waiting at the right spot for "lo" to meet him. (Like dating!)
 
-    while(lower<upper){
-        int mid = lower + ((upper-lower)>>1);
-        int count = count(matrix, mid);
-        if(count<k){
-            lower=mid+1;
-        }else{
-            upper=mid;
+Multiple Kth smallest element in matrix.
+[1,2,3,5]
+[2,3,5,7]
+[3,7,8,9]
+[7,8,9,13]
+k = 9
+Result = 7
+
+Count won't be equal to k, but "hi" is still guaranteed to stop at right spot. In the above example, the count is 11 when "mid" is 7. After "hi" shrinks to mid, it will not move until "lo" comes to him.
+
+To sum up, "lo" is ensured to reach an authentic element in the matrix, because "hi" will approach and sit at the right spot anyway.
+
+
+
+Heap Solution: O(min(K,N)+K∗logN)
+public class Solution {
+    public int kthSmallest(int[][] matrix, int k) {
+        int n = matrix.length;
+        PriorityQueue<Tuple> pq = new PriorityQueue<Tuple>();
+        for(int j = 0; j <= n-1; j++) pq.offer(new Tuple(0, j, matrix[0][j]));
+        for(int i = 0; i < k-1; i++) {
+            Tuple t = pq.poll();
+            if(t.x == n-1) continue;
+            pq.offer(new Tuple(t.x+1, t.y, matrix[t.x+1][t.y]));
         }
+        return pq.poll().val;
     }
-
-    return upper;
 }
 
-private int count(int[][] matrix, int target){
-    int m=matrix.length;
-    int i=m-1;
-    int j=0;
-    int count = 0;
-
-    while(i>=0&&j<m){
-        if(matrix[i][j]<=target){
-            count += i+1;
-            j++;
-        }else{
-            i--;
-        }
+class Tuple implements Comparable<Tuple> {
+    int x, y, val;
+    public Tuple (int x, int y, int val) {
+        this.x = x;
+        this.y = y;
+        this.val = val;
     }
 
-    return count;
+    @Override
+    public int compareTo (Tuple that) {
+        return this.val - that.val;
+    }
 }
 
  */
