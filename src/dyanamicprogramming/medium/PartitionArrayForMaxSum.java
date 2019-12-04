@@ -24,37 +24,32 @@ package dyanamicprogramming.medium;
 
 public class PartitionArrayForMaxSum {
 
+    int[] dp;
     public int maxSumAfterPartitioning(int[] A, int K) {
-        int[] dp = new int[A.length];
-        dp[0] = A[0];
+        int n = A.length;
+        dp = new int[n];// dp[i] = maximum sum from i to end.
+        return util(A,0,K);
+    }
 
-        for(int i=1;i<A.length;i++) {
-            int maxSum = A[i]+dp[i-1], maxVal = A[i];
-            for(int j=i-1;j>=0 && j>i-K;j--) {
-                maxVal = Math.max(maxVal, A[j]);
-                if(j==0) {
-                    maxSum = Math.max(maxSum, maxVal*(i-j+1));
-                } else {
-                    maxSum = Math.max(maxVal*(i-j+1)+dp[j-1], maxSum);
-                }
-
-            }
-            dp[i] = maxSum;
+    private int util(int[] A,int start,int K) {
+        if(start>=A.length) {
+            return 0;
         }
-
-        return dp[A.length-1];
+        if(start==A.length-1) {
+            return A[A.length-1];
+        }
+        if(dp[start]!=0) {
+            return dp[start];
+        }
+        int sum=0;
+        int max = A[start];
+        int c=1;
+        for(int i=start;i<start+K && i<A.length;i++) {
+            max = Math.max(A[i],max);
+            sum=Math.max(sum,(max*(c++))+util(A,i+1,K));
+        }
+        dp[start]=sum;
+        return sum;
     }
 
 }
-
-/*
-
-dp[i] record the maximum sum we can get considering A[0] ~ A[i]
-To get dp[i], we will try to change k last numbers separately to the maximum of them,
-where k = 1 to k = K.
-
-Time O(NK), Space O(N)
-
-
-
- */
