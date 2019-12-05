@@ -18,37 +18,27 @@ public class UglyNumber {
     public int nthUglyNumber(int n) {
 
         int[] ugly = new int[n];
-
-        int f2=0,f3=0,f5=0;
+        int index2=0,index3=0,index5=0;
         ugly[0] = 1;
         int i=1;
         while (i<n) {
-
-            int m2 = 2*ugly[f2];
-            int m3 = 3*ugly[f3];
-            int m5 = 5*ugly[f5];
-
+            int m2 = 2*ugly[index2];
+            int m3 = 3*ugly[index3];
+            int m5 = 5*ugly[index5];
             ugly[i] = Math.min(Math.min(m2,m3),m5);
-
             /*
-
             Generating ugly numbers from the nos which are already generated
-
              */
             if(m2==ugly[i]) {
-                f2++;
+                index2++;
             }
-
             if(m3==ugly[i]) {
-                f3++;
+                index3++;
             }
-
             if(m5==ugly[i]) {
-                f5++;
+                index5++;
             }
-
             i++;
-
         }
 
         return ugly[n-1];
