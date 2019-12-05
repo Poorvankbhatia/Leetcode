@@ -43,30 +43,24 @@ import java.util.PriorityQueue;
 
 public class KPairsWithSmallestSums {
 
-    public List<int[]> kSmallestPairs(int[] nums1, int[] nums2, int k) {
-        List<int[]> list = new ArrayList<>();
-        if(nums1==null || nums2==null || nums1.length==0 || nums2.length==0) {
-            return list;
-        }
-        PriorityQueue<int[]> pq = new PriorityQueue<>(new Comparator<int[]>() {
-            @Override
-            public int compare(int[] a,int[] b) {
-                return (a[0]+a[1])-(b[1]+b[0]);
+    public List<List<Integer>> kSmallestPairs(int[] nums1, int[] nums2, int k) {
+        PriorityQueue<int[]> pq = new PriorityQueue<>((a,b)->(a[0]+a[1]-b[0]-b[1]));
+        for (int i : nums1) {
+            for (int j : nums2) {
+                pq.add(new int[]{i, i});
             }
-        });
-        for(int i=0; i<nums1.length && i<k; i++) {
-            pq.offer(new int[]{nums1[i], nums2[0], 0});
         }
-        while (!pq.isEmpty() && k-->0) {
-            int[] poll = pq.poll();
-            list.add(new int[]{poll[0],poll[1]}); // Because the integer arrays are in ascending order.
-            if(poll[2]==nums2.length-1) {
-                continue;
-            }
-            pq.add(new int[]{poll[0],nums2[poll[2]+1],poll[2]+1});
+        int i=0;
+        List<List<Integer>> result = new ArrayList<>();
+        while(!pq.isEmpty() && i<k) {
+            List<Integer> list = new ArrayList<>();
+            list.add(pq.peek()[0]);
+            list.add(pq.peek()[1]);
+            pq.poll();
+            result.add(list);
+            i++;
         }
-
-        return list;
+        return result;
     }
 }
 /*
@@ -77,5 +71,39 @@ Use min_heap to keep track on next minimum pair sum, and we only need to maintai
 
 Some observations: For every numbers in nums1, its best partner(yields min sum) always strats from nums2[0] since arrays are all sorted;
 And for a specific number in nums1, its next candidate should be [this specific number] + nums2[current_associated_index + 1], unless out of boundary;)
+
+
+Because both array are sorted, so we can keep track of the paired index.
+Therefore, we do not need to go through all combinations when k < nums1.length + num2.length.
+Time complexity is O(k*m) where m is the length of the shorter array.
+
+public List<int[]> kSmallestPairs(int[] nums1, int[] nums2, int k) {
+        List<int[]> ret = new ArrayList<int[]>();
+        if (nums1.length == 0 || nums2.length == 0 || k == 0) {
+            return ret;
+        }
+
+        int[] index = new int[nums1.length];
+        while (k-- > 0) {
+            int min_val = Integer.MAX_VALUE;
+            int in = -1;
+            for (int i = 0; i < nums1.length; i++) {
+                if (index[i] >= nums2.length) {
+                    continue;
+                }
+                if (nums1[i] + nums2[index[i]] < min_val) {
+                    min_val = nums1[i] + nums2[index[i]];
+                    in = i;
+                }
+            }
+            if (in == -1) {
+                break;
+            }
+            int[] temp = {nums1[in], nums2[index[in]]};
+            ret.add(temp);
+            index[in]++;
+        }
+        return ret;
+    }
 
  */
