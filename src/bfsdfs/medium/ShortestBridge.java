@@ -37,77 +37,61 @@ import java.util.*;
  */
 public class ShortestBridge {
 
+    int[][] dir = new int[][]{{0,1},{0,-1},{1,0},{-1,0}};
     public int shortestBridge(int[][] A) {
         int m = A.length;
         int n = A[0].length;
-        int k = 2;
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                if (A[i][j] == 1) {
-                    Set<String> visited = new HashSet<>();
-                    dfs(A, i, j, visited, k++);
+        int k=2;
+        boolean[][] visited = new boolean[m][n];
+        for(int i=0;i<m;i++) {
+            for(int j=0;j<n;j++) {
+                if(A[i][j]==1 && !visited[i][j]) {
+                    dfs(A,i,j,visited,k++);
                 }
             }
         }
-        int[][] distance = new int[m][n];
-
-        for (int i = 0; i < m; i++) {
-            Arrays.fill(distance[i], -1);
-        }
-
-        Queue<String> q = new LinkedList<>();
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                if (A[i][j] == 2) {
-                    q.add(i + "," + j + "," + 0);
-                    distance[i][j] = 0;
+        Queue<int[]> queue = new LinkedList<>();
+        for(int i=0;i<m;i++) {
+            for(int j=0;j<n;j++) {
+                if(A[i][j]==2) {
+                    queue.add(new int[]{i,j,0});
                 }
             }
         }
-        return bfs(A, distance, q) - 1;
-
+        return bfs(queue,A);
     }
 
-
-    public int bfs(int[][] A, int[][] output, Queue<String> queue) {
-        int min = Integer.MAX_VALUE;
-        int[] dx = {1, -1, 0, 0};
-        int[] dy = {0, 0, 1, -1};
-        while (!queue.isEmpty()) {
-            String[] curr = queue.poll().split(",");
-            int u = Integer.parseInt(curr[0]);
-            int v = Integer.parseInt(curr[1]);
-            int distance = Integer.parseInt(curr[2]);
-            for (int i = 0; i < dx.length; i++) {
-                int x = u + dx[i];
-                int y = v + dy[i];
-                if (x < 0 || x > A.length - 1 || y > A[0].length - 1 || y < 0 || output[x][y] != -1) {
-                    continue;
+    private int bfs(Queue<int[]> queue,int[][] A) {
+        boolean[][] visited = new boolean[A.length][A[0].length];
+        visited[queue.peek()[0]][queue.peek()[1]]=true;
+        while(!queue.isEmpty())  {
+            int size = queue.size();
+            for(int i=0;i<size;i++) {
+                int[] pop = queue.poll();
+                if(A[pop[0]][pop[1]]==3) {
+                    return pop[2]-1;
                 }
-                if (A[x][y] == 3) {
-                    min = Math.min(min, distance + 1);
-                } else {
-                    output[x][y] = distance + 1;
-                    queue.offer(x + "," + y + "," + output[x][y]);
+                for(int k=0;k<4;k++) {
+                    int nextX = dir[k][0]+pop[0];
+                    int nextY = dir[k][1]+pop[1];
+                    if(nextX>=0 && nextY>=0 && nextX<A.length && nextY<A[0].length && !visited[nextX][nextY]) {
+                        queue.add(new int[]{nextX,nextY,pop[2]+1});
+                        visited[nextX][nextY]=true;
+                    }
                 }
             }
-
         }
-        return min;
+        return -1;
     }
 
-    public void dfs(int[][] A, int u, int v, Set<String> visited, int n) {
-        visited.add(u + "" + v);
-        A[u][v] = n;
-        int[] dx = {1, -1, 0, 0};
-        int[] dy = {0, 0, 1, -1};
-
-        for (int i = 0; i < dx.length; i++) {
-            int x = u + dx[i];
-            int y = v + dy[i];
-            if (x < 0 || x > A.length - 1 || y > A[0].length - 1 || y < 0 || visited.contains(x + "," + y)) continue;
-            if (A[x][y] == 1) {
-                dfs(A, x, y, visited, n);
+    private void dfs(int[][] A,int x,int y,boolean[][] visited,int k) {
+        A[x][y]=k;
+        visited[x][y]=true;
+        for(int i=0;i<4;i++) {
+            int nextX = dir[i][0]+x;
+            int nextY = dir[i][1]+y;
+            if(nextX>=0 && nextY>=0 && nextX<A.length && nextY<A[0].length && !visited[nextX][nextY] && A[nextX][nextY]==1) {
+                dfs(A,nextX,nextY,visited,k);
             }
         }
     }
