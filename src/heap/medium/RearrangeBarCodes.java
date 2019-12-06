@@ -28,49 +28,56 @@ import java.util.*;
 
 public class RearrangeBarCodes {
 
+    Map<Integer,Integer> map;
     public int[] rearrangeBarcodes(int[] barcodes) {
-
-        HashMap<Integer,Integer> count = new HashMap<>();
-        for (int c : barcodes) {
-            if(!count.containsKey(c)) {
-                count.put(c,0);
-            }
-            count.put(c,count.get(c)+1);
+        map = new HashMap<>();
+        for(int barcode : barcodes) {
+            map.put(barcode,map.getOrDefault(barcode,0)+1);
         }
-
-        PriorityQueue<Map.Entry<Integer,Integer>> priorityQueue = new PriorityQueue<>(
-                (a,b) -> !Objects.equals(a.getValue(), b.getValue()) ? b.getValue() - a.getValue() : a.getKey() - b.getKey());
-
-        priorityQueue.addAll(count.entrySet());
-
+        PriorityQueue<Map.Entry<Integer,Integer>> pq = new PriorityQueue<>((a,b)->(b.getValue()-a.getValue()));
+        pq.addAll(map.entrySet());
         int[] result = new int[barcodes.length];
-
-        Queue<Map.Entry<Integer,Integer>> queue = new LinkedList<>();
-
         int i=0;
-        while (!priorityQueue.isEmpty()) {
-
-            Map.Entry<Integer, Integer> entry = priorityQueue.poll();
-            entry.setValue(entry.getValue() - 1);
-            queue.offer(entry);
-            result[i]=entry.getKey();
-            i++;
-
+        Queue<Map.Entry<Integer,Integer>> queue = new LinkedList<>();
+        while(pq.size()>0) {
+            Map.Entry<Integer,Integer> entry = pq.poll();
+            result[i++]=entry.getKey();
+            entry.setValue(entry.getValue()-1);
+            queue.add(entry);
             if(queue.size()<2) {
                 continue;
             }
-
-            Map.Entry<Integer, Integer> front = queue.poll();
-
+            Map.Entry<Integer,Integer> front = queue.poll();
             if(front!=null && front.getValue()>0) {
-                priorityQueue.offer(front);
+                pq.add(front);
             }
-
         }
-
         return result;
-
-
     }
 
 }
+
+/*
+
+O(n) Sol:
+
+public int[] rearrangeBarcodes(int[] barcodes) {
+        int maxFreqCode = 0, i = 0, n = barcodes.length;
+        int[] freq = new int[10001];
+        int[] ans = new int[n];
+        for (int c : barcodes) { // count the frequency of each code.
+            if (++freq[c] > freq[maxFreqCode]) { // update the code of max frequency.
+                maxFreqCode = c;
+            }
+        }
+        for (int j = 0; j < 10001; j++) {
+            int code = (j == 0)?maxFreqCode : j; // fill in most frequent code first.
+            while (freq[code]-- > 0) { // fill codes of positive frequencies.
+                ans[i] = code;
+                i = i + 2 < n ? i + 2 : 1; // fill even indices first, if depleted, use odd ones.
+            }
+        }
+        return ans;
+    }
+
+ */
