@@ -26,44 +26,30 @@ import java.util.*;
  */
 public class ReorganizeString {
 
+    Map<Character,Integer> map;
     public String reorganizeString(String S) {
-        HashMap<Character,Integer> characterCount = new HashMap<>();
-        for (char c : S.toCharArray()) {
-            if(!characterCount.containsKey(c)) {
-                characterCount.put(c,0);
-            }
-            characterCount.put(c,characterCount.get(c)+1);
+        map = new HashMap<>();
+        for(char c : S.toCharArray()) {
+            map.put(c,map.getOrDefault(c,0)+1);
         }
-
-        PriorityQueue<Map.Entry<Character,Integer>> priorityQueue = new PriorityQueue<>(
-                (a,b) -> !Objects.equals(a.getValue(), b.getValue()) ? b.getValue() - a.getValue() : a.getKey() - b.getKey());
-
-        priorityQueue.addAll(characterCount.entrySet());
-
-        StringBuilder result = new StringBuilder();
+        PriorityQueue<Map.Entry<Character,Integer>> pq = new PriorityQueue<>((a,b)->(b.getValue()-a.getValue()));
+        pq.addAll(map.entrySet());
         Queue<Map.Entry<Character,Integer>> queue = new LinkedList<>();
-
-        while (!priorityQueue.isEmpty()) {
-
-            Map.Entry<Character, Integer> entry = priorityQueue.poll();
-            entry.setValue(entry.getValue() - 1);
-            queue.offer(entry);
+        StringBuilder result = new StringBuilder();
+        while(!pq.isEmpty()) {
+            Map.Entry<Character,Integer> entry = pq.poll();
+            entry.setValue(entry.getValue()-1);
             result.append(entry.getKey());
-
-
+            queue.offer(entry);
             if(queue.size()<2) {
                 continue;
             }
-
-            Map.Entry<Character, Integer> front = queue.poll();
-
-            if(front.getValue()>0) {
-                priorityQueue.offer(front);
+            Map.Entry<Character,Integer> front = queue.poll();
+            if(front!=null && front.getValue()>0) {
+                pq.add(front);
             }
-
         }
-
-        return result.length() == S.length() ? result.toString() : "";
+        return result.length()==S.length()?result.toString():"";
     }
 
     public static void main(String[] args) {
@@ -71,3 +57,37 @@ public class ReorganizeString {
     }
 
 }
+
+/*
+
+O(n) solution:
+
+public String reorganizeString(String S) {
+        int[] freq = new int[26];
+        int n = S.length();
+        char maxOccurring = 'a';
+        for(char c : S.toCharArray()) {
+            if(++freq[c-'a']>freq[maxOccurring-'a']) {
+                maxOccurring = c;
+            }
+        }
+        if((freq[maxOccurring-'a']>(n+1)/2)) {
+            return "";
+        }
+        int k =0;
+        char[] arr = new char[S.length()];
+        while (freq[maxOccurring-'a']-->0) {
+            arr[k] = maxOccurring;
+            k=(k+2<S.length())?k+2:1;
+        }
+        for(int i=0;i<26;i++) {
+            char start = (char) (i+'a');
+            while(freq[start-'a']-->0) {
+                arr[k] = start;
+                k=(k+2<S.length())?k+2:1;
+            }
+        }
+        return new String(arr);
+    }
+
+ */

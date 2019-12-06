@@ -60,7 +60,7 @@ public class RearrangeBarCodes {
 /*
 
 O(n) Sol:
-
+//10011
 public int[] rearrangeBarcodes(int[] barcodes) {
         int maxFreqCode = 0, i = 0, n = barcodes.length;
         int[] freq = new int[10001];
