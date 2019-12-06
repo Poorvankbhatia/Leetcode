@@ -42,24 +42,39 @@ package binarysearch.medium;
 public class KokoEatingBananas {
 
     public int minEatingSpeed(int[] piles, int H) {
-        int l = 1, r = Integer.MIN_VALUE;
-        for(int val : piles)
-            r = Math.max(val, r);
-        while(l != r){
-            int mid = (l)+(r-l)/2;
-            if(isPossible(mid, H, piles))
-                r = mid;
-            else
-                l = mid+1;
+        int minRate=1;
+        int maxRate=Integer.MIN_VALUE;
+        for(int p : piles) {
+            maxRate = Math.max(p,maxRate);
         }
-        return l;
+        while(minRate<maxRate) {
+            int mid = minRate+(maxRate-minRate)/2;
+            int hoursReq = hoursRequired(mid,piles);
+            if(hoursReq>H) { // if hoursReq are greater than rate is less.
+                minRate = mid+1;
+            } else {
+                maxRate = mid;
+            }
+        }
+        return minRate;
     }
 
-    private boolean isPossible(int mid, int H, int[] piles){
-        for(int val : piles){
-            H -= (int)Math.ceil(val * (1.0 / mid));
+    private int hoursRequired(int banana, int[] piles) {
+        int count=0;
+        for(int p : piles) {
+            if(p<=banana) {
+                count++;
+            } else {
+                count+=(p/banana)+1;
+            }
         }
-        return H >= 0;
+        return count;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(new KokoEatingBananas().minEatingSpeed(new int[]{332484035, 524908576, 855865114, 632922376, 222257295, 690155293, 112677673,
+                        679580077, 337406589, 290818316, 877337160, 901728858, 679284947, 688210097, 692137887, 718203285, 629455728, 941802184},
+                823855818)); // 14
     }
 
 }
