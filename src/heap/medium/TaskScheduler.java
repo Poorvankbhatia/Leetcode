@@ -20,8 +20,6 @@ The integer n is in the range [0, 100].
  */
 package heap.medium;
 
-import heap.MaxPriorityQueue;
-
 import java.util.*;
 
 /**
