@@ -69,4 +69,25 @@ Track the current capacity and return false if negative
 Complexity
 Time O(NlogN)
 Space O(N)
+
+O(N) sol:
+
+public boolean carPooling(int[][] trips, int capacity) {
+  int stops[] = new int[1001];
+  for (int t[] : trips) {
+      stops[t[1]] += t[0];
+      stops[t[2]] -= t[0];
+  }
+  for (int i = 0; capacity >= 0 && i < 1001; ++i) capacity -= stops[i];
+  return capacity >= 0;
+}
+
+Since we only have 1,001 stops, we can just figure out how many people get it and out in each location.
+
+Solution
+Process all trips, adding passenger count to the start location, and removing it from the end location.
+After processing all trips, a positive value for the specific location tells that we are getting more passengers; negative - more empty seats.
+
+Finally, scan all stops and check if we ever exceed our vehicle capacity.
+
  */
