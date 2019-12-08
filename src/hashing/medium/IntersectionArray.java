@@ -20,35 +20,28 @@ import java.util.HashSet;
  */
 public class IntersectionArray {
     public int[] intersection(int[] nums1, int[] nums2) {
-
         if(nums1==null || nums2==null || nums1.length==0 || nums2.length==0) {
             return new int[]{};
         }
-
         HashSet<Integer> set = new HashSet<>();
         HashSet<Integer> result = new HashSet<>();
-
-
-        for (int aNums1 : nums1) {
-            set.add(aNums1);
+        for (int n : nums1) {
+            set.add(n);
         }
 
-        for (int j=0;j<nums2.length;j++) {
-            if(set.contains(nums2[j]) && !result.contains(nums2[j])) {
-                result.add(nums2[j]);
+        for (int i : nums2) {
+            if (set.contains(i)) {
+                result.add(i);
             }
         }
 
         int[] resultArr = new int[result.size()];
-
         int j=0;
         for (Integer element : result) {
             resultArr[j] = element;
             j++;
         }
-
         return resultArr;
-
     }
 
     public static void main(String[] args) {
