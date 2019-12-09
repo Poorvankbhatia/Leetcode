@@ -21,75 +21,30 @@ import java.util.*;
  */
 public class KFrequent {
 
-    private class Num implements Comparable<Num> {
-        private int value;
-        private int frequency;
-
-        public Num(int value, int frequency) {
-            this.value = value;
-            this.frequency = frequency;
-        }
-
-        public int compareTo(Num num) {
-            if(this.frequency>num.frequency) {
-                return 1;
-            } else if(this.frequency<num.frequency) {
-                return -1;
-            } else {
-                return 0;
-            }
-        }
-
-        public String toString() {
-            return value+"~"+frequency;
-        }
-    }
-
-    private HashMap<Integer,Num> frequencyMap = new HashMap<>();
-
     public List<Integer> topKFrequent(int[] nums, int k) {
-
-        List<Integer> result = new ArrayList<>();
-        List<Num> list = new ArrayList<>();
-        for (int number : nums) {
-            if (frequencyMap.containsKey(number)) {
-                Num n = frequencyMap.get(number);
-                n.frequency++;
-                frequencyMap.put(number, n);
-            } else {
-                Num n = new Num(number,1);
-                frequencyMap.put(number, n);
+        Map<Integer,Integer> map = new HashMap<>();
+        List<Integer> list = new ArrayList<>();
+        for(int n : nums) {
+            if(!map.containsKey(n)) {
                 list.add(n);
             }
+            map.put(n,map.getOrDefault(n,0)+1);
         }
-
-
-        System.out.println(frequencyMap);
-
-        MinPriorityQueue<Num> minPriorityQueue = new MinPriorityQueue<>(k);
-
-        for (int i=0;i<k && i<list.size();i++) {
-            minPriorityQueue.insert(list.get(i));
+        PriorityQueue<int[]> pq = new PriorityQueue<>(Comparator.comparingInt(o -> o[1]));
+        for(int i=0;i<k;i++) {
+            pq.add(new int[]{list.get(i),map.get(list.get(i))});
         }
-
-
-        for (int i=k;i<list.size();i++) {
-            if(list.get(i).frequency>minPriorityQueue.getMinimumElement().frequency) {
-                minPriorityQueue.replaceRoot(list.get(i));
+        for(int i=k;i<list.size();i++) {
+            if(map.get(list.get(i))>pq.peek()[1]) {
+                pq.poll();
+                pq.add(new int[]{list.get(i),map.get(list.get(i))});
             }
         }
-
-        Stack<Integer> stack = new Stack<>();
-        for (Num n : minPriorityQueue) {
-            stack.push(n.value);
+        List<Integer> result = new ArrayList<>();
+        while(!pq.isEmpty()) {
+            result.add(pq.poll()[0]);
         }
-
-        while (!stack.empty()) {
-            result.add(stack.pop());
-        }
-
         return result;
-
     }
 
     public static void main(String[] args) {
@@ -99,3 +54,37 @@ public class KFrequent {
     }
 
 }
+
+/*
+
+O(N) sol:
+
+Bucket sort.
+
+public List<Integer> topKFrequent(int[] nums, int k) {
+        List<Integer>[] bucket = new List[nums.length + 1];
+        Map<Integer, Integer> frequencyMap = new HashMap<>();
+
+        for (int n : nums) {
+            frequencyMap.put(n, frequencyMap.getOrDefault(n, 0) + 1);
+        }
+
+        for (Map.Entry<Integer,Integer> entry : frequencyMap.entrySet()) {
+            int frequency = entry.getValue();
+            if (bucket[frequency] == null) {
+                bucket[frequency] = new ArrayList<>();
+            }
+            bucket[frequency].add(entry.getKey());
+        }
+
+        List<Integer> res = new ArrayList<>();
+
+        for (int pos = bucket.length - 1; pos >= 0 && res.size() < k; pos--) {
+            if (bucket[pos] != null) {
+                res.addAll(bucket[pos]);
+            }
+        }
+        return res;
+    }
+
+ */
