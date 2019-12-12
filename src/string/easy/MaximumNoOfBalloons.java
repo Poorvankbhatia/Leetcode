@@ -29,15 +29,27 @@ package string.easy;
 public class MaximumNoOfBalloons {
 
     public int maxNumberOfBalloons(String text) {
-        int[] cnt = new int[26], cntBaloon = new int[26];
-        for (int i = 0; i < text.length(); ++i)
-            ++cnt[text.charAt(i) - 'a'];
-        int min = text.length();
-        for (char c : "balloon".toCharArray())
-            ++cntBaloon[c - 'a'];
-        for (char c : "balloon".toCharArray())
-            min = Math.min(min, cnt[c - 'a'] / cntBaloon[c - 'a']);
+        int[] sCount = getCount("balloon");
+        int[] tCount = getCount(text);
+        int min = Integer.MAX_VALUE;
+        for(int i=0;i<26;i++) {
+            if(sCount[i]!=0) {
+                if(tCount[i]<sCount[i]) {
+                    return 0;
+                } else {
+                    min = Math.min(min,tCount[i]/sCount[i]); // if b occurs 3 times but o only occurs 4 then answer should be 2
+                }
+            }
+        }
         return min;
+    }
+
+    private int[] getCount(String s) {
+        int[] count = new int[26];
+        for(char c : s.toCharArray()) {
+            count[c-'a']++;
+        }
+        return count;
     }
 
 }
