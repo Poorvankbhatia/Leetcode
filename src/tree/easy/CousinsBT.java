@@ -44,3 +44,46 @@ public class CousinsBT {
     }
 
 }
+
+/*
+
+Level Order Sol:
+
+public boolean isCousins(TreeNode root, int x, int y) {
+        Queue<TreeNode> queue = new LinkedList<>();
+        Map<Integer,Integer> heightMap = new HashMap<>();
+        queue.add(root);
+        heightMap.put(root.val,0);
+        int parentX=-1;int parentY=-1;
+        while(!queue.isEmpty()) {
+            int size = queue.size();
+            while(size>0) {
+                TreeNode pop = queue.poll();
+                if(pop.left!=null) {
+                    queue.add(pop.left);
+                    if(pop.left.val==x) {
+                        parentX=pop.val;
+                    } else if(pop.left.val==y) {
+                        parentY = pop.val;
+                    }
+                    heightMap.put(pop.left.val,heightMap.get(pop.val)+1);
+                }
+                if(pop.right!=null) {
+                    queue.add(pop.right);
+                    if(pop.right.val==x) {
+                        parentX=pop.val;
+                    } else if(pop.right.val==y) {
+                        parentY = pop.val;
+                    }
+                    heightMap.put(pop.right.val,heightMap.get(pop.val)+1);
+                }
+                size--;
+            }
+            if(heightMap.containsKey(x) && heightMap.containsKey(y) && parentX!=-1 && parentY!=-1) {
+                return heightMap.get(x).equals(heightMap.get(y)) && (parentX!=parentY);
+            }
+        }
+        return false;
+    }
+
+ */
