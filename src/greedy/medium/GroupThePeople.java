@@ -56,3 +56,32 @@ public class GroupThePeople {
     }
 
 }
+
+/*
+
+Map Implementation:
+
+public List<List<Integer>> groupThePeople(int[] groupSizes) {
+        Map<Integer,List<Integer>> map = new HashMap<>();
+        for(int i=0;i<groupSizes.length;i++) {
+            if(!map.containsKey(groupSizes[i])) {
+                map.put(groupSizes[i],new ArrayList<>());
+            }
+            map.get(groupSizes[i]).add(i);
+        }
+
+        List<List<Integer>> result = new ArrayList<>();
+        for(Map.Entry<Integer,List<Integer>> entry : map.entrySet()) {
+            int start=0;
+            int end=entry.getKey();
+            while(entry.getValue().size()>=end) {
+                List<Integer> list = entry.getValue().subList(start,end);
+                result.add(list);
+                start = end;
+                end +=entry.getKey();
+            }
+        }
+        return result;
+    }
+
+ */
