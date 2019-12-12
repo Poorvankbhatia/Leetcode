@@ -58,3 +58,39 @@ public class WordsFormedByCharacter {
     }
 
 }
+
+
+/*
+
+Another Sol:
+
+public int countCharacters(String[] words, String chars) {
+        int[] charCount = getCount(chars);
+        int sum=0;
+        for(String s : words) {
+            int[] sCount = getCount(s);
+            if(compare(sCount,charCount)) {
+                sum+=s.length();
+            }
+        }
+        return sum;
+    }
+
+    private boolean compare(int[] a,int[] b) {
+        for(int i=0;i<26;i++) {
+            if(b[i]<a[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private int[] getCount(String s) {
+        int[] val = new int[26];
+        for(char c : s.toCharArray()) {
+            val[c-'a']++;
+        }
+        return val;
+    }
+
+ */
