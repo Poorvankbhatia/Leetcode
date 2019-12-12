@@ -71,6 +71,9 @@ public class KnightMoves {
 }
 
 /*
+
+O(1) Formula.
+
 The crux of the problem is to notice the patterns that emerge when you draw the board.
 The minimum number of moves needed to reach any square
 
