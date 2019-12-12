@@ -62,17 +62,7 @@ public class MaxDiff {
 }
 
 /*
-Long soln :
- private class Result {
-        private int max;
-        private int min;
-
-        public Result(int max, int min) {
-            this.max = max;
-            this.min = min;
-        }
-    }
-
+Another soln :
     private int ans=0;
 
     public int maxAncestorDiff(TreeNode root) {
@@ -80,22 +70,22 @@ Long soln :
         return ans;
     }
 
-    private Result util(TreeNode root) {
+    private int[] util(TreeNode root) {
         if (root == null) {
-            return new Result(Integer.MIN_VALUE, Integer.MAX_VALUE);
+            return new int[]{Integer.MIN_VALUE, Integer.MAX_VALUE};
         }
         if (root.left == null && root.right == null) {
-            return new Result(root.val, root.val);
+            return new int[]{root.val, root.val};
         }
-        Result r = util(root.right);
-        Result l = util(root.left);
+        int[] r = util(root.right);
+        int[] l = util(root.left);
 
-        int leftDiff = (Math.max(Math.abs(root.val-l.min),Math.abs(root.val-l.max)));
-        int rightDiff = (Math.max(Math.abs(root.val-r.max),Math.abs(root.val-r.min)));
+        int leftDiff = (Math.max(Math.abs(root.val-l[1]),Math.abs(root.val-l[0])));
+        int rightDiff = (Math.max(Math.abs(root.val-r[0]),Math.abs(root.val-r[1])));
 
         ans = Math.max(Math.max(leftDiff>100000?0:leftDiff,rightDiff>100000?0:rightDiff),ans);
-        int min = Math.min(Math.min(root.val, r.min), l.min);
-        int max = Math.max(Math.max(root.val, r.max), l.max);
-        return new Result(max, min);
+        int min = Math.min(Math.min(root.val, r[1]), l[1]);
+        int max = Math.max(Math.max(root.val, r[0]), l[0]);
+        return new int[]{max, min};
     }
  */
