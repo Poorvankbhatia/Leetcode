@@ -33,43 +33,28 @@ It is guaranteed that the answer fits into a 32-bit signed integer (ie. it is le
  */
 package dyanamicprogramming.medium;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class MinimumCostTreeFromLeafValues {
 
-    private Map<String, Integer> resultMap; // Stores result of minimum value for a given index range
-    private Map<String, Integer> highestValMap;// Store highest leaf node for a given index range.
-
+    int[][] sum;
+    int[][] smallestLeaf;
     public int mctFromLeafValues(int[] arr) {
-        if (arr == null || arr.length == 0) {
-            return 0;
-        }
-        int start = 0;
-        int end = arr.length - 1;
-        resultMap = new HashMap<>();
-        highestValMap = new HashMap<>();
-
-        return util(start, end, arr);
+        sum = new int[41][41];
+        smallestLeaf = new int[41][41];
+        return util(arr,0,arr.length-1)[0];
     }
 
-    private int util(int start, int end, int[] arr) {
-        String key = start + "_" + end; // Key of the map : Comprising of start & end index.
-        if (resultMap.containsKey(key)) {
-            return resultMap.get(key);
-        } else if (start == end) {
-            int value = 0;
-            resultMap.put(key, value);
-            highestValMap.put(key, arr[start]);
-            return value;
-        } else if (start + 1 == end) {
-            int value = arr[start] * arr[end];
-            resultMap.put(key, value);
-            highestValMap.put(key, Math.max(arr[start], arr[end]));
-            return value;
+    private int[] util(int[] arr,int start,int end) {
+        if(start==end) {
+            return new int[]{0,arr[start]};
         }
-        int minValue = Integer.MAX_VALUE;
-        int i = 0;
+        if(start+1==end) {
+            return new int[]{arr[start]*arr[end],Math.max(arr[start],arr[end])};
+        }
+        if(sum[start][end]!=0 && smallestLeaf[start][end]!=0) {
+            return new int[]{sum[start][end], smallestLeaf[start][end]};
+        }
+        int min=Integer.MAX_VALUE;
+        int leaf=Integer.MIN_VALUE;
         /**
          * Lets say the size of the array is 5[0,4]: To find minimum result , Group array as
          * (0,0) (1,4)
@@ -77,21 +62,15 @@ public class MinimumCostTreeFromLeafValues {
          * (0,2) (3,4)
          * (0,3) (4,4)
          */
-        while (i < end - start) {
-            int left = util(start, start + i, arr);
-            int leftHighest = highestValMap.get(start + "_" + (start + i));
-            int right = util(start + i + 1, end, arr);
-            int rightHighest = highestValMap.get(((start + i + 1) + "_" + end));
-            int val = (left + right) + (leftHighest * rightHighest);
-            if (val < minValue) {
-                minValue = val;
-                resultMap.put(key, minValue);
-                highestValMap.put(key, Math.max(rightHighest, leftHighest));
-            }
-            i++;
+        for(int i=start;i<end;i++) {
+            int[] left = util(arr,start,i);
+            int[] right = util(arr,i+1,end);
+            min = Math.min(min,(left[0]+right[0])+(left[1]*right[1]));
+            leaf = Math.max(leaf,Math.max(left[1],right[1]));
         }
-
-        return minValue;
+        sum[start][end]=min;
+        smallestLeaf[start][end]=leaf;
+        return new int[]{min,leaf}; // First Value is the minimum Sum, Second value is the smallest leaf within the range.
     }
 
     public static void main(String[] args) {
@@ -141,6 +120,6 @@ public int mctFromLeafValues(int[] A) {
         return res;
     }
 
- O(N) : The problem can be translated into removing all local minium values while finding the first greater element on the left and on the right.
+ O(N) : The problem can be translated into removing all local minimum values while finding the first greater element on the left and on the right.
 
  */
