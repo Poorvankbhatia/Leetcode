@@ -5,8 +5,6 @@ the most significant bit.  For example, if the path is 0 -> 1 -> 1 -> 0 -> 1, th
 
 For all leaves in the tree, consider the numbers represented by the path from the root to that leaf.
 
-Return the sum of these numbers modulo 10^9 + 7.
-
  */
 package tree.easy;
 
@@ -14,43 +12,22 @@ import tree.TreeNode;
 
 public class RootToLeaf {
     public int sumRootToLeaf(TreeNode root) {
-        return dfs(0, root);
+        return util(root,0);
     }
-    private int mod = 1000000007;
-    public int dfs(int parent, TreeNode node) {
-        if(null == node) {
-            return parent%mod;
+    private int util(TreeNode root,int val) {
+        if(root==null) {
+            return 0;
         }
-        int value = (parent * 2 + node.val)%mod;
-        if(node.left == null && node.right == null) {
-            return value%mod;
+        val = (val*2)+root.val;
+        if(root.left==null && root.right==null) {
+            return val;
         }
-        int sum = 0;
-        if(null != node.left) {
-            sum += dfs(value, node.left);
-        }
-        if(null != node.right) {
-            sum += dfs(value, node.right);
-        }
-        return sum%mod;
+        return util(root.left,val)+util(root.right,val);
     }
-
 }
 
 /*
 
-We recursively pass the current value of path to the children.
-If root == null, no value, return 0.
-If root != null,
-we double the value from its parent and add the node's value,
-like the process of transforming base 2 to base 10.
-
-In the end of recursion,
-if root.left == root.right == null,
-return the current val.
-
-
-Time Complexity:
-O(N) time, O(logN) for recursion.
+Same as : SumRootToLeafNumbers
 
  */
