@@ -34,26 +34,16 @@ public class SmallestString {
         if(root==null) {
             return suffix;
         }
-        suffix= "" + ((char) ('a'+root.val)) + suffix;
-
-        if(root.left==null && root.right==null) {
-            return suffix;
-        }
-
+        String current = (char)(root.val+'a')+suffix;
         if(root.left==null) {
-            return dfs(root.right,suffix);
+            return dfs(root.right,current);
+        } else if(root.right==null) {
+            return dfs(root.left,current);
+        } else {
+            String left = dfs(root.left,current);
+            String right = dfs(root.right,current);
+            return left.compareTo(right)>=0?right:left;
         }
-        if(root.right==null) {
-            return dfs(root.left,suffix);
-        }
-
-        String left = dfs(root.left,suffix);
-        String right = dfs(root.right,suffix);
-
-        System.out.println(left+" "+right);
-
-        return (left.compareTo(right)>0?right:left);
-
     }
 
 }
@@ -67,4 +57,16 @@ Case :  [4,0,1,1]
       a  b
      /
     b
+
+    Another:
+
+       z
+      /
+     b
+    / \
+   a  a
+  /
+ b
+ /
+a
  */
