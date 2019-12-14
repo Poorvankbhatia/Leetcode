@@ -42,8 +42,6 @@ s only contains lower case English letters.
  */
 package bfsdfs.medium;
 
-import bfsdfs.UnionFind;
-
 import java.util.*;
 
 public class SmallestStringWithSwaps {
