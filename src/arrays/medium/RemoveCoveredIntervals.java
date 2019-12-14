@@ -24,12 +24,11 @@ intervals[i] != intervals[j] for all i != j
 package arrays.medium;
 
 import java.util.Arrays;
-import java.util.Comparator;
 
 public class RemoveCoveredIntervals {
 
     public int removeCoveredIntervals(int[][] intervals) {
-        Arrays.sort(intervals, Comparator.comparingInt(a -> a[0]));
+        Arrays.sort(intervals, (a,b)->(a[0]-b[0]!=0?a[0]-b[0]:b[1]-a[1]));
         int n = intervals.length;
         int[] first = intervals[0];
         int count=1;
@@ -48,11 +47,8 @@ public class RemoveCoveredIntervals {
 
     public static void main(String[] args) {
         int[][] a = new int[][]{
-                {15875,91969},
-                {29673,66453},
-                {34335,39239},
-                {40618,93111},
-                {53548,69161},
+                {1,4},
+                {1,6}
         };
         System.out.println(new RemoveCoveredIntervals().removeCoveredIntervals(a));
     }
