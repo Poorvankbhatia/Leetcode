@@ -70,41 +70,41 @@ import java.util.Stack;
 public class DinnerPlates {
 
     Map<Integer, Stack<Integer>> map;
-    int cap;
-    int curr;
-    int last;
+    int capacity;
+    int pushIndex;
+    int popIndex;
     int count;
 
     public DinnerPlates(int capacity) {
-        cap = capacity;
-        curr = 0; //where to push element
-        last = 0; //where to pop element
+        this.capacity = capacity;
+        pushIndex = 0; //where to push element
+        popIndex = 0; //where to pop element
         count = 0; //number of elements
         map = new HashMap<>();
-        map.put(curr, new Stack<>());
+        map.put(pushIndex, new Stack<>());
     }
 
     public void push(int val) {
         //do some preprocessing to update current index
-        while (map.containsKey(curr) && map.get(curr).size() == cap) {
-            curr++;
+        while (map.containsKey(pushIndex) && map.get(pushIndex).size() == capacity) {
+            pushIndex++;
         }
-        if (!map.containsKey(curr)) {
-            map.put(curr, new Stack<>());
+        if (!map.containsKey(pushIndex)) {
+            map.put(pushIndex, new Stack<>());
         }
-        map.get(curr).push(val);
-        last = Math.max(last, curr);
+        map.get(pushIndex).push(val);
+        popIndex = Math.max(popIndex, pushIndex);
         count++;
     }
 
     public int pop() {
         if (count == 0) return -1;
-        while (last >= 0 && map.get(last).isEmpty()) {
-            last--;
+        while (popIndex >= 0 && map.get(popIndex).isEmpty()) {
+            popIndex--;
         }
         count--;
-        curr = Math.min(curr, last);
-        return map.get(last).pop();
+        pushIndex = Math.min(pushIndex, popIndex);
+        return map.get(popIndex).pop();
     }
 
     public int popAtStack(int index) {
@@ -112,7 +112,7 @@ public class DinnerPlates {
             return -1;
         }
         count--;
-        curr = Math.min(curr, index);
+        pushIndex = Math.min(pushIndex, index);
         return map.get(index).pop();
     }
 
