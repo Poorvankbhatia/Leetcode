@@ -48,35 +48,75 @@ import java.util.*;
 
 public class SmallestStringWithSwaps {
 
-    public String smallestStringWithSwaps(String s, List<List<Integer>> swaps) {
-        int N = s.length();
-
-        UnionFind uf = new UnionFind(N);
-        for (List<Integer> swap : swaps) {
-            uf.union(swap.get(0), swap.get(1));
+    Map<Integer,Integer> parentMap;
+    Map<Integer,Integer> sizeMap;
+    Map<Integer, PriorityQueue<Character>> map;
+    int count;
+    public String smallestStringWithSwaps(String s, List<List<Integer>> pairs) {
+        if(pairs==null || pairs.size()==0) {
+            return s;
+        }
+        parentMap = new HashMap<>();
+        sizeMap = new HashMap<>();
+        map = new HashMap<>();
+        for(int i=0;i<s.length();i++) {
+            sizeMap.put(i,1);
+            parentMap.put(i,i);
+        }
+        count = s.length();
+        for(List<Integer> list : pairs) {
+            if(parent(list.get(0))!=parent(list.get(1))) {
+                union(list.get(0),list.get(1));
+            }
+        }
+        for (Map.Entry<Integer,Integer> entry : parentMap.entrySet()) {
+            if(!map.containsKey(parent(entry.getValue()))) {
+                map.put(parent(entry.getValue()),new PriorityQueue<>());
+            }
+            map.get(parent(entry.getValue())).add(s.charAt(entry.getKey()));
         }
 
-
-        Map<Integer, List<Character>> graphs = new HashMap<>();
-        for (int i = 0; i < N; i++) {
-            int head = uf.find(i);
-            List<Character> characters = graphs.computeIfAbsent(head, (dummy) -> new ArrayList<>());
-            characters.add(s.charAt(i));
+        StringBuilder result = new StringBuilder();
+        for (int i=0;i<s.length();i++) {
+            result.append(map.get(parent(i)).poll());
         }
+        return result.toString();
+    }
 
-        for (List<Character> characters : graphs.values()) {
-            Collections.sort(characters);
+    private int parent(int i) {
+        while(i!=parentMap.get(i)) {
+            parentMap.put(parentMap.get(i),parentMap.get(parentMap.get(i)));
+            i=parentMap.get(i);
         }
+        return i;
+    }
 
-        StringBuilder sb = new StringBuilder(N);
-        for (int i = 0; i < N; i++) {
-            List<Character> characters = graphs.get(uf.find(i));
-            char currentMin = characters.remove(0);
-            sb.append(currentMin);
+    private void union(int i,int j) {
+        int parentI = parent(i);
+        int parentJ = parent(j);
+        if(parentI==parentJ) {
+            return;
         }
-        return sb.toString();
+        if(sizeMap.get(parentI)>sizeMap.get(parentJ)) {
+            parentMap.put(parentJ,parentI);
+            sizeMap.put(parentI,sizeMap.get(parentI)+sizeMap.get(parentJ));
+        } else {
+            parentMap.put(parentI,parentJ);
+            sizeMap.put(parentJ,sizeMap.get(parentJ)+sizeMap.get(parentI));
+        }
+        count--;
+    }
 
-
+    public static void main(String[] args) {
+        String s = "udyyek";
+        List<List<Integer>> l = new ArrayList<>();
+        l.add(Arrays.asList(3,3));
+        l.add(Arrays.asList(3,0));
+        l.add(Arrays.asList(5,1));
+        l.add(Arrays.asList(3,1));
+        l.add(Arrays.asList(3,4));
+        l.add(Arrays.asList(3,5));
+        System.out.println(new SmallestStringWithSwaps().smallestStringWithSwaps(s,l)); // deykuy
     }
 
 }
