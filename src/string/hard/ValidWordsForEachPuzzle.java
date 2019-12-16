@@ -111,4 +111,24 @@ n = len(puzzles);
 m = len(words);
 k = len(single word)
 
+
+
+The question asks for the number of words that satisfy the condition for each puzzle. Let M = words.size(), N = words.size().
+It seems that the time complexity is at least O(MN) without considering the overhead of processing each word/puzzle as one have to verify each pair,
+but we should seek alternative ways to retrive answer.
+
+Before that, we first think about how should we process these words and puzzles. A brute-force solution is to save whether a character exists
+in a word/puzzle, which takes a space of O(26(M+N)), and when it comes to verification, one needs O(26) (but it is still a constant) for each pair.
+
+To save memory space, observe that for all 26 alphabets, the status is either true(exist) or false, and 2^26 < INT_MAX, so one can use one
+integer to represent each word. Note that there might exist some words that have the same integer representation, and by using a map or unordered_map we
+can potentially reduce the running time. Let s[i] denote the number of words of the same integer representation i.
+
+We now think about how should we find the solution for each puzzle. Observe that N <= 10^5 and M < 10^4, it is infeasible to use an algorithm of O(MN).
+Then observe that puzzles[i].length == 7, then for each puzzle, there are at most 2^6 feasible integer representation (note the first requirement:
+word contains the first letter of puzzle). So eventually, for each puzzle, we can enumerate all feasible integers i and sum over all s[i].
+
+The time complexity for processing all words is O(kM) assuming we are using unordered_map with time complexity O(1) for each find and add operation,
+and k = words[i].length <= 50, and for find solutions for each word O(mN), where m= 2^6. It is a total of O(kM + mN).
+
  */
