@@ -59,4 +59,6 @@ public class MinimumFallingPathSum2 {
 For every element in every column starting from second last row,
 count minimum on the left & minimum on the right.
 
+Same as Paint House 2.
+
  */
