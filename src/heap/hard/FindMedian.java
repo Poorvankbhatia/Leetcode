@@ -20,6 +20,12 @@ findMedian() -> 1.5
 addNum(3)
 findMedian() -> 2
 
+
+Follow up:
+
+If all integer numbers from the stream are between 0 and 100, how would you optimize it?
+If 99% of all integer numbers from the stream are between 0 and 100, how would you optimize it?
+
  */
 
 package heap.hard;
@@ -85,3 +91,37 @@ public class FindMedian {
     }
 
 }
+
+/*
+
+1. If all integer numbers from the stream are between 0 and 100, how would you optimize it?
+
+We can maintain an integer array of length 100 to store the count of each number along with a total count.
+Then, we can iterate over the array to find the middle value to get our median.
+
+Time and space complexity would be O(100) = O(1).
+
+2. If 99% of all integer numbers from the stream are between 0 and 100, how would you optimize it?
+
+In this case, we need an integer array of length 100 and a hashmap for these numbers that are not in [0,100].
+
+
+class MedianFinder {
+        int A[] = new int[100], n = 0;
+
+        public void addNum(int num) {
+            A[num]++;
+            n++;
+        }
+
+        public double findMedian() {
+            int count = 0, i = 0;
+            while (count < n/2) count += A[i++];
+            int j = i;
+            while (count < n/2+1) count += A[j++];
+            return (n%2 == 1) ? j-1 : (i+j-2) / 2.0;
+        }
+    }
+Insert - O(1), Find O(1), Space Complexity O(1)
+
+ */
