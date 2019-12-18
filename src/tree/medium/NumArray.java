@@ -23,100 +23,70 @@ package tree.medium;
  */
 public class NumArray {
 
-    private class SegmentTree {
+    private class Node {
+        private Node left;
+        private Node right;
+        private int sum;
+        private int[] range;
 
-        private int inputSize;
-        public int[] tree;
-        private int[] inputArray;
-
-        public SegmentTree(int[] nums) {
-            inputSize = nums.length;
-            inputArray = nums;
-            int size = (int) Math.ceil(Math.log(inputSize)/Math.log(2));
-            int maxSize = 2*((int) Math.pow(2,size))-1;
-            if(maxSize<=0) {
-                return;
-            }
-            tree = new int[maxSize];
-            constructTreeUtil(nums,0,inputSize-1,0);
+        Node(Node left, Node right, int sum, int[] range) {
+            this.left = left;
+            this.right = right;
+            this.sum = sum;
+            this.range = range;
         }
-
-
-        private int getMid(int low,int high) {
-            return low+(high-low)/2;
-        }
-
-        private int constructTreeUtil(int[] arr,int start,int end,int pos) {
-            if(start==end) {
-                tree[pos] = arr[start];
-                return tree[pos];
-            }
-
-            int mid = getMid(start,end);
-            tree[pos] = constructTreeUtil(arr,start,mid,(2*pos+1)) + constructTreeUtil(arr,mid+1,end,(2*pos+2));
-            return tree[pos];
-        }
-
-        public int getSum(int qStart,int qEnd) {
-            if(qStart<0 && qEnd>=inputSize) {
-                System.out.println("Invalid input");
-                return -1;
-            }
-            return getSumUtil(0,inputSize-1,qStart,qEnd,0);
-        }
-
-        private int getSumUtil(int start,int end,int qStart,int qEnd,int pos) {
-            if(qEnd<start || qStart>end) {
-                return 0;
-            }
-
-            if(qEnd>=end && qStart<=start) {
-                return tree[pos];
-            }
-
-            int mid = getMid(start,end);
-            return getSumUtil(start,mid,qStart,qEnd,(2*pos)+1) + getSumUtil(mid+1,end,qStart,qEnd,(2*pos)+2);
-
-        }
-
-        public void updateValue(int index,int val) {
-
-            int diff = val-inputArray[index];
-            inputArray[index] = val;
-
-            updateValueUtil(0,diff,0,inputSize-1,index);
-
-        }
-
-        private void updateValueUtil(int pos,int diff,int start,int end,int indexUpdated) {
-
-            if(indexUpdated<start || indexUpdated>end) {
-                return;
-            }
-
-            tree[pos] += diff;
-            if(start!=end) {
-                int mid = getMid(start,end);
-                updateValueUtil((2*pos+1),diff,start,mid,indexUpdated);
-                updateValueUtil((2*pos+2),diff,mid+1,end,indexUpdated);
-            }
-
-        }
-
     }
 
-    private SegmentTree segmentTree;
-
+    Node root;
+    int n;
+    int[] nums;
     public NumArray(int[] nums) {
-        segmentTree = new SegmentTree(nums);
+        this.nums = nums;
+        n = nums.length;
+        if (n!=0) {
+            root = constructTree(0,n-1,nums);
+        }
+    }
+
+    private Node constructTree(int start,int end,int[] nums) {
+        if(start==end) {
+            return new Node(null,null,nums[start],new int[]{start,end});
+        }
+        int mid = (start)+(end-start)/2;
+        Node left = constructTree(start,mid,nums);
+        Node right = constructTree(mid+1,end,nums);
+        return new Node(left,right,left.sum+right.sum,new int[]{left.range[0],right.range[1]});
     }
 
     public void update(int i, int val) {
-        segmentTree.updateValue(i,val);
+        if(i<n && i>=0) {
+            int diff = val-nums[i];
+            nums[i]=val;
+            updateIndex(diff,i,root);
+        }
+    }
+
+    private void updateIndex(int diff,int index,Node root) {
+        if(root==null || index<root.range[0] || index>root.range[1]) {
+            return;
+        }
+        root.sum+=diff;
+        updateIndex(diff,index,root.left);
+        updateIndex(diff,index,root.right);
     }
 
     public int sumRange(int i, int j) {
-        return segmentTree.getSum(i,j);
+        return sumUtil(i,j,root);
+    }
+
+    private int sumUtil(int i,int j,Node root) {
+        if(root==null || i>root.range[1] || j<root.range[0]) {
+            return 0;
+        }else if(i<=root.range[0] && root.range[1]<=j) {
+            return root.sum;
+        } else {
+            return sumUtil(i,j,root.left)+ sumUtil(i,j,root.right);
+        }
     }
 
     public static void main(String[] args) {
@@ -128,3 +98,9 @@ public class NumArray {
     }
 
 }
+
+/*
+
+SEGMENT TREE
+
+ */
