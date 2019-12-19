@@ -60,6 +60,20 @@ public class MyCalender2 {
         root = new SegmentNode(0,new int[]{0,1000000000});
     }
 
+    /*
+
+    Check if the query range is invalid or out of range with respect to current segment -- if so, simply return 0.
+
+    Check if the query range covers current segment -- if so, simply return the k value of current segment node.
+
+    Normalize the segment tree node -- the node may have been marked as lazy from previous steps,
+    so we need to remove the laziness in order to see the most recent values.
+
+    Recurse to the left and right subtrees -- simply call the query function on the two child nodes of current segment node with the same query range [i, j].
+
+    Return the combined results of the left and right subtrees -- in this case, it will be the larger one of the two, since we need the maximum integer k.
+     */
+
     private int query(SegmentNode root,int start,int end) {
 
         if(start>end || root==null || root.range[1]<start || root.range[0]>end) {
@@ -74,6 +88,21 @@ public class MyCalender2 {
         return Math.max(query(root.left,start,end),query(root.right,start,end));
     }
 
+    /*
+
+    Check if the query range is invalid or out of range with respect to current segment -- if so, simply return.
+
+    Check if the query range covers current segment -- if so, update the property and lazy fields of current segment node, then return.
+
+    Normalize the segment tree node -- the node may have been marked as lazy from previous steps, so we need to remove the laziness in order
+    to avoid overwriting prior updates.
+
+    Recurse to the left and right subtrees -- simply call the update function on the two child nodes of current segment node with the same query range [i, j].
+
+    Propagate the results of the left and right subtrees back to the parent node -- in this case,
+    the k value of the parent node will be set to the larger one of the two subtree nodes.
+
+     */
     private void update(SegmentNode node, int start,int end,int val) {
 
         if(start>end || node==null || start>node.range[1] || end<node.range[0]) {
@@ -95,6 +124,16 @@ public class MyCalender2 {
 
     }
 
+    /*
+
+    Push down the laziness to the child nodes
+        1a. First make sure current segment node is not a leaf node (a leaf node has l == r)
+        1b. If the two child nodes are null, we initialize them with the value of current node
+        1c. Otherwise we simply update their propery and lazy fields (by adding the lazy field of current node).
+
+    Reset the laziness of current segment node so as to normalize it (by resetting its lazy field to 0).
+
+     */
     private void normalise(SegmentNode node) {
         if(node.range[0]<node.range[1]) {
             int mid = node.range[0] + (node.range[1]-node.range[0])/2;
