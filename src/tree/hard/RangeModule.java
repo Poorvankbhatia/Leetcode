@@ -66,4 +66,12 @@ public class RangeModule {
         intervals.subMap(left, true, right, false).clear();
     }
 
+    public static void main(String[] args) {
+        RangeModule rm = new RangeModule();
+        rm.addRange(1,4);
+        rm.addRange(6,10);
+        rm.addRange(12,14);
+        rm.addRange(3,15);
+    }
+
 }
