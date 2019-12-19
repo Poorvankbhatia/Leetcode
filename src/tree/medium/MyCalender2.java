@@ -33,15 +33,111 @@ In calls to MyCalendar.book(start, end), start and end are integers in the range
  */
 package tree.medium;
 
-import java.util.Map;
-import java.util.TreeMap;
-
 /**
  * Created by poorvank.b on 20/11/17.
  */
 public class MyCalender2 {
 
-    TreeMap<Integer,Integer> map;
+    private class SegmentNode {
+        private SegmentNode left;
+        private SegmentNode right;
+        private int bookingCount;
+        private int[] range;
+        private int lazy;
+
+        SegmentNode(int bookingCount, int[] range) {
+            this.left = null;
+            this.right = null;
+            this.bookingCount = bookingCount;
+            this.range = range;
+            this.lazy = 0;
+        }
+    }
+
+
+    private SegmentNode root;
+    public MyCalender2() {
+        root = new SegmentNode(0,new int[]{0,1000000000});
+    }
+
+    private int query(SegmentNode root,int start,int end) {
+
+        if(start>end || root==null || root.range[1]<start || root.range[0]>end) {
+            return 0;
+        }
+
+        if(start<=root.range[0] && end>=root.range[1]) {
+            return root.bookingCount;
+        }
+        normalise(root);
+
+        return Math.max(query(root.left,start,end),query(root.right,start,end));
+    }
+
+    private void update(SegmentNode node, int start,int end,int val) {
+
+        if(start>end || node==null || start>node.range[1] || end<node.range[0]) {
+            return;
+        }
+
+        if(start<=node.range[0] && node.range[1]<=end) {
+            node.bookingCount+=val;
+            node.lazy+=val;
+            return;
+        }
+
+        normalise(node);
+
+        update(node.left,start,end,val);
+        update(node.right,start,end,val);
+
+        node.bookingCount = Math.max(node.left.bookingCount,node.right.bookingCount);
+
+    }
+
+    private void normalise(SegmentNode node) {
+        if(node.range[0]<node.range[1]) {
+            int mid = node.range[0] + (node.range[1]-node.range[0])/2;
+            if(node.left==null && node.right==null) {
+                node.left = new SegmentNode(node.bookingCount,new int[]{node.range[0],mid});
+                node.right = new SegmentNode(node.bookingCount,new int[]{mid+1,node.range[1]});
+            } else if(node.lazy>0) {
+                node.left.lazy+=node.lazy;
+                node.left.bookingCount+=node.lazy;
+                node.right.lazy+=node.lazy;
+                node.right.bookingCount+=node.lazy;
+            }
+        }
+        node.lazy=0;
+    }
+
+    public boolean book(int start, int end) {
+
+        int k = query(root,start,end-1);
+        if(k>=2) {
+            return false;
+        }
+
+        update(root,start,end-1,1);
+        return true;
+    }
+
+    public static void main(String[] args) {
+        MyCalender2 myCalender = new MyCalender2();
+        myCalender.book(10,20);
+        myCalender.book(50,60);
+        myCalender.book(10,15);
+        myCalender.book(5,15);
+    }
+
+}
+/*
+
+SEGMENT TREE
+
+TreeMap Sol:
+
+TreeMap<Integer,Integer> map;
     public MyCalender2() {
         map = new TreeMap<>();
     }
@@ -60,17 +156,6 @@ public class MyCalender2 {
         }
         return true;
     }
-
-    public static void main(String[] args) {
-        MyCalender2 myCalender = new MyCalender2();
-        myCalender.book(10,20);
-        myCalender.book(50,60);
-        myCalender.book(10,15);
-        myCalender.book(5,15);
-    }
-
-}
-/*
 
 For each time point, store how the number of booked events changes. For each booking attempt, book it and undo the booking if it
 causes a triple booking (as determined by going through the time line, keeping track of the number of booked events).
