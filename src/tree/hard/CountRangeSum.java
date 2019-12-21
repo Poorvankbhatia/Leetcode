@@ -86,6 +86,28 @@ public class CountRangeSum {
             sum -= (long) nums[i];
             ans += getCount(root, (long)lower+sum, (long)upper+sum);
         }
+
+        /*
+        Another Method:
+        Cause we need to find previous prefixSum that is
+
+        lower <= currentPrefixSum - previousPrefixSum <= upper
+        ========>
+        currentPrefixSum-upper <= previousPrefixSum <= currentPrefixSum-lower
+
+        updateSegmentTree(root, sum); will add previousPrefixSum into counts.
+        Then query the segment tree to get how many previousPrefixSums that are within the required range.
+
+        ans += nums[0] >= lower && nums[0] <= upper ? 1 : 0;
+        sum = nums[0];
+        for(int i = 1; i<nums.length; i++) {
+            updateSegmentTree(root, sum);
+           sum += nums[i];
+           ans += sum >= lower && sum <= upper ? 1 : 0;
+           ans += getCount(root, (long)sum-upper, (long)sum-lower);
+        }
+        */
+
         return ans;
     }
 
