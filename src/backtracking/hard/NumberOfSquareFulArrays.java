@@ -36,9 +36,9 @@ public class NumberOfSquareFulArrays {
         return res;
     }
 
-    private void dfs(int[] A, int cnt, int prev) {
+    private void dfs(int[] A, int count, int prev) {
         // already visited all the numbers
-        if (cnt == A.length) {
+        if (count == A.length) {
             res++;
             return;
         }
@@ -56,13 +56,13 @@ public class NumberOfSquareFulArrays {
 
             int tmp = A[i]; // remember the number
             A[i] = -1;      // then make it as visited (use -1)
-            dfs(A, cnt + 1, tmp);
+            dfs(A, count + 1, tmp);
             A[i] = tmp;     // restore the number
         }
     }
 
     public static void main(String[] args) {
-        int[] arr = new int[]{2,2,2};
+        int[] arr = new int[]{0,2,2};
         System.out.println(new NumberOfSquareFulArrays().numSquarefulPerms(arr));
     }
 }

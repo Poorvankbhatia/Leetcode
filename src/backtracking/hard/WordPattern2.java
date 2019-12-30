@@ -37,7 +37,7 @@ public class WordPattern2 {
         return isMatch(str, 0, pattern, 0, map, set);
     }
 
-    boolean isMatch(String str, int i, String pat, int j, Map<Character, String> map, Set<String> set) {
+    private boolean isMatch(String str, int i, String pat, int j, Map<Character, String> map, Set<String> set) {
         // base case
         if (i == str.length() && j == pat.length()) return true;
         if (i == str.length() || j == pat.length()) return false;
@@ -82,6 +82,10 @@ public class WordPattern2 {
 
         // we've tried our best but still no luck
         return false;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(new WordPattern2().wordPatternMatch("aba","ttsst"));
     }
 
 

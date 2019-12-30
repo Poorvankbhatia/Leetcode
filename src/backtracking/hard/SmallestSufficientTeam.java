@@ -66,7 +66,7 @@ public class SmallestSufficientTeam {
         if(cur==req_skills.length){
             if(team.size()<teamSize){
                 teamSize = team.size();
-                resTeam = new HashSet<Integer>();
+                resTeam = new HashSet<>();
                 resTeam.addAll(team);
             }
             return;

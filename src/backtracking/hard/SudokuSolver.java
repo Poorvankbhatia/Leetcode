@@ -18,18 +18,13 @@ public class SudokuSolver {
     private static int row,col;
 
     public void solveSudoku(char[][] board) {
-
         if(solveSudokuUtil(board)) {
             print(board);
         }
-
-
     }
-
 
     public void print(char[][] board) {
         for (int i=0;i<N;i++) {
-
             for (int j=0;j<N;j++) {
                 System.out.print(board[i][j] +" ");
             }
@@ -38,11 +33,9 @@ public class SudokuSolver {
     }
 
     private boolean solveSudokuUtil(char[][] board) {
-
         if (unAssigned(board)) {
             return true;
         }
-
         /*
 
         We are not looping over all the rows and colums.
@@ -52,7 +45,6 @@ public class SudokuSolver {
         rather every time we use the unAssigned function to calculate the cell with '.'
 
          */
-
         for (char c = '1'; c <= '9'; c++) {
             if (isSafe(c, board)) {
                 board[row][col] = c;
@@ -72,37 +64,28 @@ public class SudokuSolver {
     }
 
     private boolean isSafe(char c,char[][] board) {
-
         return !usedInRow(c,board) && !usedInCol(c,board) && !usedInBox(c,row-row%3,col-col%3,board);
-
     }
 
     private boolean usedInRow(char c,char[][] board) {
-
         for (int j=0;j<N;j++) {
             if(board[row][j]==c) {
                 return true;
             }
         }
-
         return false;
-
     }
 
     private boolean usedInCol(char c,char[][] board) {
-
         for (int i=0;i<N;i++) {
             if(board[i][col]==c) {
                 return true;
             }
         }
-
         return false;
-
     }
 
     private boolean usedInBox(char c,int boxStartR,int boxStartC,char[][] board) {
-
         for (int i=0;i<3;i++) {
             for (int j=0;j<3;j++) {
                 if(board[i+boxStartR][j+boxStartC]==c) {
@@ -110,12 +93,10 @@ public class SudokuSolver {
                 }
             }
         }
-
         return false;
     }
 
     private boolean unAssigned(char[][] board) {
-
         for (int i=0;i<N;i++) {
             for (int j=0;j<N;j++) {
                 if(board[i][j]=='.') {
@@ -125,13 +106,10 @@ public class SudokuSolver {
                 }
             }
         }
-
         return true;
-
     }
 
     public static void main(String[] args) {
-
         char[][] grid = new char[][]{{'3', '.', '6', '5', '.', '8', '4', '.', '.'},
                                      {'5', '2', '.', '.', '.', '.', '.', '.', '.'},
                                      {'.', '8', '7', '.', '.', '.', '.', '3', '1'},
@@ -141,9 +119,7 @@ public class SudokuSolver {
                                      {'1', '3', '.', '.', '.', '.', '2', '5', '.'},
                                      {'.', '.', '.', '.', '.', '.', '.', '7', '4'},
                                      {'.', '.', '5', '2', '.', '6', '3', '.', '.'}};
-
         new SudokuSolver().solveSudoku(grid);
-
     }
 
 
