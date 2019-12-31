@@ -37,7 +37,7 @@ package binarysearch.hard;
 public class NthMagicalNumber {
 
     int mod = (int)(Math.pow(10,9))+7;
-    private long gcd(long a,long b) {
+    private int gcd(int a,int b) {
         if(a==0) {
             return b;
         }
@@ -45,7 +45,7 @@ public class NthMagicalNumber {
     }
 
     private int lcm(int a,int b) {
-        return (a*b)/(int) gcd(a,b);
+        return (a*b)/gcd(a,b);
     }
 
     private long count(long num,int A,int B,int lcm) {
@@ -70,7 +70,7 @@ public class NthMagicalNumber {
     }
 
     public static void main(String[] args) {
-        System.out.println(new NthMagicalNumber().nthMagicalNumber(3,6,4));
+        System.out.println(new NthMagicalNumber().nthMagicalNumber(100000000,40000,40000));
     }
 
 }
