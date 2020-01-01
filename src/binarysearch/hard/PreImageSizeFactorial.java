@@ -26,39 +26,41 @@ package binarysearch.hard;
  */
 public class PreImageSizeFactorial {
 
-
     public int preimageSizeFZF(int K) {
-         /*
+        /*
         findRange(K)- All elements factorial <= Kzeroes
 
         findRange(K-1) -All elements factorial <= K-1 zeroes
 
         */
-        return (int)(binarySearch(K) - binarySearch(K - 1));
+        return util(K)-util(K-1);
     }
 
-    private long binarySearch(int K) {
-        long l = 0, r =  Long.MAX_VALUE;
-
-        while (l <= r) {
-            long m = l + (r - l) / 2;
-            long k = numOfTrailingZeros(m);
-
-            if (k <= K) {
-                l = m + 1;
+    private int util(int K) {
+        if(K<0) {
+            return 0;
+        }
+        long small = 0;
+        long high = Long.MAX_VALUE;
+        long res=0;
+        while(small<=high) {
+            long mid = small+(high-small)/2;
+            if(countZeroes(mid)<=K) {
+                res=mid;
+                small=mid+1;
             } else {
-                r = m - 1;
+                high = mid-1;
             }
         }
-
-        return l;
+        return (int)res+1; // For 0!
     }
 
-    private long numOfTrailingZeros(long x) {
+    private long countZeroes(long x) {
         long res = 0;
 
-        for (; x > 0; x /= 5) {
-            res += x/5;
+        while (x>0) {
+            res+=(x/5);
+            x = x/5;
         }
 
         return res;
