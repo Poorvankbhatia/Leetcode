@@ -21,38 +21,46 @@ public class MaximumSumSubMatrix {
 
     public int maxSumSubmatrix(int[][] matrix, int k) {
         int m = matrix.length;
-        if(m==0) {
-            return 0;
-        }
         int n = matrix[0].length;
-        int ans=Integer.MIN_VALUE;
-        for(int j = 0; j < n; j++) {
-            int[] sum = new int[m];
-            for(int current = j; current < n; current++) {
-                for(int i = 0; i < m; i++) {
-                    sum[i] += matrix[i][current];
+        int result = Integer.MIN_VALUE;
+        if(m>n) {
+            for(int j=0;j<n;j++) {
+                int[] sub = new int[m];
+                for(int current=j;current<n;current++) {
+                    for(int i=0;i<m;i++) {
+                        sub[i]+=matrix[i][current];
+                    }
+                    result = Math.max(result,getSmallestSum(sub,k));
                 }
-                int temp = maxSumLessThanK(sum, k);
-                ans = Math.max(temp, ans);
+            }
+        } else {
+            for(int i=0;i<m;i++) {
+                int[] sub = new int[n];
+                for(int current=i;current<m;current++) {
+                    for(int j=0;j<n;j++) {
+                        sub[j]+=matrix[current][j];
+                    }
+                    result = Math.max(result,getSmallestSum(sub,k));
+                }
             }
         }
-        return ans;
+        return result;
     }
 
-    private int maxSumLessThanK(int[] arr,int k) {
+    private int getSmallestSum(int[] arr,int k) {
         TreeSet<Integer> set = new TreeSet<>();
-        int result=Integer.MIN_VALUE;
-        set.add(0);
         int sum=0;
-        for (int a : arr) {
-            sum = sum + a;
-            Integer ceiling = set.ceiling(sum - k);
-            if (ceiling != null) {
-                result = Math.max(result, sum - ceiling);
+        set.add(0);
+        int res=Integer.MIN_VALUE;
+        for(int a : arr) {
+            sum+=a;
+            Integer ceil = set.ceiling(sum-k);
+            if(ceil!=null) {
+                res = Math.max(res,sum-ceil);
             }
             set.add(sum);
         }
-        return result;
+        return res;
     }
 
     public static void main(String[] args) {
@@ -72,5 +80,8 @@ compute the cumulative sum of the array
 find a pair of i and j, constrained to i<j, and cum[j]-cum[i]<=k
 do some trick, the inequation above is actually cum[j]-k<=cum[i],
 we need to find the minimum value of cum[i] in order to maximize cum[j]-cum[i], that is, find TreeSet.ceiling(cum[j]-k)
+
+The time complexity will be O(r^2clogc) where r is the number of rows and c is the number of columns.
+If r is much larger than c, the complexity can be O(c^2rlogr) by creating a row-sum array instead of column-sum array
 
  */
