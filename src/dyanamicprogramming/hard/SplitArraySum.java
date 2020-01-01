@@ -31,65 +31,45 @@ package dyanamicprogramming.hard;
 public class SplitArraySum {
 
     public int splitArray(int[] nums, int m) {
-
-        if(null == nums || nums.length==0) {
-            return 0;
+        long small = Long.MIN_VALUE;
+        long high = 0;
+        for (int x : nums) {
+            small = Math.max(small, x);
+            high += x;
         }
-
-        int lo = getMax(nums);
-        int hi = getSum(nums);
-
-        while (lo<hi) {
-            int mid = lo + (hi-lo)/2;
-            int currentPartitions  = getPartitionCount(nums,mid);
-            if(currentPartitions<=m) {
-                hi = mid;
-            } else {
-                lo = mid+1;
+        while (small < high) {
+            long mid = (small) + (high - small) / 2;
+            int c = countSplits(nums,mid);
+            if (c>m){ // If split count is higher it means we need to increase the mid value to reduce it.
+                small=mid+1;
+            } else{
+                high = mid;
             }
         }
-
-        return lo;
-
-    }
-
-    private int getPartitionCount(int[] nums,int val) {
-        int total = 0,count = 1;
-        for (Integer element : nums) {
-            total += element;
-            if(total>val) {
-                total = element;
-                count++;
-            }
-        }
-        return count;
+        return small>Integer.MAX_VALUE?Integer.MAX_VALUE:(int) small;
     }
 
 
-    private int getMax(int[] nums) {
-        int max=Integer.MIN_VALUE;
-        for (Integer element: nums) {
-            if(max<element) {
-                max = element;
+    private int countSplits(int[] nums, long val) {
+        int split = 0;
+        long sum = 0;
+        int i=0;
+        while (i<nums.length) {
+            sum += nums[i];
+            if (sum > val) {
+                sum = 0;
+                split++;
+                continue;
             }
+            i++;
         }
-
-        return max;
-    }
-
-
-    private int getSum(int[] nums) {
-        int sum = 0;
-        for (Integer element : nums) {
-            sum += element;
-        }
-        return sum;
+        return split+1;
     }
 
 
     public static void main(String[] args) {
-        int[] arr = new int[]{7,2,5,10,8};
-        int m = 2;
+        int[] arr = new int[]{1,4,4};
+        int m = 3;
         System.out.println(new SplitArraySum().splitArray(arr,m));
     }
 
