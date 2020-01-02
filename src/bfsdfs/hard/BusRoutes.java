@@ -31,65 +31,53 @@ import java.util.*;
 public class BusRoutes {
 
     public int numBusesToDestination(int[][] routes, int S, int T) {
-
         if(routes==null || routes.length==0 || S==T) {
             return 0;
         }
-
-        Map<Integer,List<Integer>> stopBusMapping = new HashMap<>();
-
-        for (int i = 0; i < routes.length; i++) {
-            for (int j = 0; j < routes[i].length; j++) {
-                if (stopBusMapping.containsKey(routes[i][j])) {
-                    stopBusMapping.get(routes[i][j]).add(i);
-                } else {
-                    List<Integer> list = new ArrayList<>();
-                    list.add(i);
-                    stopBusMapping.put(routes[i][j], list);
+        List<Integer>[] stopBusList = new List[100001];
+        for(int i=0;i<routes.length;i++) {
+            for(int j=0;j<routes[i].length;j++) {
+                int stop = routes[i][j];
+                if(stopBusList[stop]==null) {
+                    stopBusList[stop] = new ArrayList<>();
                 }
+                stopBusList[stop].add(i);
             }
         }
-
-        Set<Integer> visitedBus = new HashSet<>();
-        Set<Integer> visitedStop = new HashSet<>();
-
+        boolean[] visitedStop = new boolean[100001];
+        boolean[] visitedBus = new boolean[501];
         Queue<Integer> queue = new LinkedList<>();
-        queue.add(S);
-
         int busCount=0;
-
-        while (!queue.isEmpty()) {
-
+        if(stopBusList[S]!=null && stopBusList[S].size()>0) {
             busCount++;
+            queue.add(S);
+        }
+        while(!queue.isEmpty()) {
             int size = queue.size();
-
-            for (int i=0;i<size;i++) {
-                int stop = queue.poll();
-                visitedStop.add(stop);
-
-                List<Integer> buses = stopBusMapping.get(stop);
-
-                for (Integer bus : buses) {
-                    if(!visitedBus.contains(bus)) {
-                        visitedBus.add(bus);
-                        for (int k = 0; k < routes[bus].length; k++) {
-                            if (routes[bus][k] == T) {
+            for(int i=0;i<size;i++) {
+                int stop=queue.poll();
+                List<Integer> busList = new ArrayList<>();
+                if(stopBusList[stop]!=null) {
+                    busList = stopBusList[stop];
+                }
+                for(int bus : busList) {
+                    if(!visitedBus[bus]) {
+                        visitedBus[bus]=true;
+                        for(int k=0;k<routes[bus].length;k++) {
+                            if(routes[bus][k]==T) {
                                 return busCount;
                             }
-                            if(!visitedStop.contains(routes[bus][k])) {
+                            if(!visitedStop[routes[bus][k]]) {
+                                visitedStop[routes[bus][k]]=true;
                                 queue.add(routes[bus][k]);
                             }
                         }
-
                     }
                 }
-
             }
-
+            busCount++;
         }
-
         return -1;
-
     }
 
     public static void main(String[] args) {
