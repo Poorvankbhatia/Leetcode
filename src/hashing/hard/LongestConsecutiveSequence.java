@@ -19,42 +19,35 @@ import java.util.HashSet;
 public class LongestConsecutiveSequence {
 
     public int longestConsecutive(int[] nums) {
-
+        if(nums.length==0) {
+            return 0;
+        }
         HashSet<Integer> set = new HashSet<>();
-
         for (Integer n : nums) {
             set.add(n);
         }
-
         int max = 1;
         for (int num : nums) {
-
             int left = num - 1;
             int right = num + 1;
             int count = 1;
-
             while (set.contains(left)) {
                 set.remove(left);
                 count++;
                 left--;
             }
-
             while (set.contains(right)) {
                 set.remove(right);
                 count++;
                 right++;
             }
-
             max = Math.max(count, max);
-
         }
-
         return max;
-
     }
 
     public static void main(String[] args) {
-        int[] arr = new int[]{-1,1,2,0};
+        int[] arr = new int[0];
         System.out.print(new LongestConsecutiveSequence().longestConsecutive(arr));
     }
 
