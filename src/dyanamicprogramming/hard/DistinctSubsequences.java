@@ -18,24 +18,21 @@ package dyanamicprogramming.hard;
 public class DistinctSubsequences {
 
     public int numDistinct(String s, String t) {
-
-        int[][] dpTable = new int[s.length()+1][t.length()+1];
-
-        for (int i=0;i<=s.length();i++) {
-            dpTable[i][0] = 1;
-        }
-
-        for (int i=1;i<=s.length();i++) {
-            for (int j=1;j<=t.length();j++) {
-                if(s.charAt(i-1)==t.charAt(j-1)) {
-                    dpTable[i][j] = dpTable[i-1][j-1] + dpTable[i-1][j];
-                } else {
-                    dpTable[i][j] = dpTable[i-1][j];
+        int[][] dp = new int[s.length()+1][t.length()+1];
+        for(int i=0;i<=s.length();i++) {
+            for(int j=0;j<=t.length();j++) {
+                if(j==0) {
+                    dp[i][j]=1;
+                } else if(i!=0) {
+                    if(s.charAt(i-1)==t.charAt(j-1)) {
+                        dp[i][j] = dp[i-1][j-1]+dp[i-1][j];
+                    } else {
+                        dp[i][j] = dp[i-1][j];
+                    }
                 }
             }
         }
-
-        return dpTable[s.length()][t.length()];
+        return dp[s.length()][t.length()];
     }
 
 
