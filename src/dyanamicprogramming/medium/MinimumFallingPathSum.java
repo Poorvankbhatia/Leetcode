@@ -37,38 +37,20 @@ import java.util.Map;
 public class MinimumFallingPathSum {
 
     public int minFallingPathSum(int[][] A) {
-        int m = A.length;
-        int n = A[0].length;
-
-        Map<Integer, Integer> sumMap = new HashMap<>();
-
-        for (int j = 0; j < n; j++) {
-            sumMap.put(((m-1)*(n)+j), A[m - 1][j]);
+        if(A==null || A.length==0) {
+            return 0;
         }
-
-        for (int i = m - 2; i >= 0; i--) {
-            for (int j = 0; j < n; j++) {
-
-                int left = Integer.MAX_VALUE, right = Integer.MAX_VALUE;
-                if (j - 1 >= 0) {
-                    left = sumMap.get(((i+1)*(n))+(j-1));
-                }
-                if (j + 1 < n) {
-                    right = sumMap.get(((i+1)*(n))+(j+1));
-                }
-                int mid = sumMap.get(((i+1)*(n))+(j));
-                sumMap.put(((i)*(n))+(j), Math.min(Math.min(left, right), mid)+A[i][j]);
-
+        for (int i=1;i<A.length;i++) {
+            for (int j=0;j<A.length;j++) {
+                A[i][j]+=Math.min(A[i-1][j],Math.min(j>0?A[i-1][j-1]:Integer.MAX_VALUE,j<A.length-1?A[i-1][j+1]:Integer.MAX_VALUE));
             }
         }
-        int res=Integer.MAX_VALUE;
-
-        for (int j=0;j<n;j++) {
-            res = Math.min(sumMap.get(j),res);
+        int ans=Integer.MAX_VALUE;
+        for (int j=0;j<A.length;j++) {
+            ans = Math.min(ans,A[A.length-1][j]);
         }
 
-        return res;
-
+        return ans;
     }
 
     public static void main(String[] args) {
