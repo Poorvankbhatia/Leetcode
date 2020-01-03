@@ -32,56 +32,40 @@ package bfsdfs.hard;
  * Created by poorvank on 18/11/16.
  */
 public class LongestIncreasingPath {
-    private int[] XMOVE = {0, 1, -1, 0};
-    private int[] YMOVE = {1, 0, 0, -1};
-
+    int[][] dir = new int[][]{{0,1},{0,-1},{1,0},{-1,0}};
     public int longestIncreasingPath(int[][] matrix) {
-        int rows = matrix.length;
-        if (rows == 0) {
+        int m = matrix.length;
+        if(m==0) {
             return 0;
         }
-        int cols = matrix[0].length;
-        int res = 0;
-        boolean[][] visited = new boolean[rows][cols];
-        int[][] count = new int[rows][cols];
-
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                res = Math.max(getMaxPath(i, j, rows, cols, 0, matrix, visited, count), res);
+        int n = matrix[0].length;
+        int[][] dp = new int[m][n];
+        int max = 1;
+        boolean[][] visited = new boolean[m][n];
+        for(int i=0;i<m;i++) {
+            for(int j=0;j<n;j++) {
+                max = Math.max(max,dfs(matrix,dp,visited,i,j));
             }
         }
-        return res;
-
+        return max;
     }
-
-    private int getMaxPath(int i, int j, int rows, int cols, int maxValue, int[][] matrix, boolean[][] visited, int[][] count) {
-        visited[i][j] = true;
-
-        /*
-        If count[i][j] !=0 it means that there is a path starting from it which has been
-        already calculated so no need to do repeated computations.
-         */
-        if (count[i][j] != 0) {
-            visited[i][j] = false;
-            return maxValue + count[i][j];
+    private int dfs(int[][] matrix,int[][] dp,boolean[][] visited,int i,int j) {
+        visited[i][j]=true;
+        if(dp[i][j]>0) {
+            visited[i][j]=false;
+            return dp[i][j];
         }
-        maxValue++;
         int loopMax = 0;
-        for (int k = 0; k < 4; k++) {
-            int nextX = i + XMOVE[k];
-            int nextY = j + YMOVE[k];
-            if (isValid(nextX, nextY, rows, cols, visited, matrix, matrix[i][j])) {
-                loopMax = Math.max(loopMax, getMaxPath(nextX, nextY, rows, cols, 0, matrix, visited, count));
+        for (int[] ints : dir) {
+            int nextX = i + ints[0];
+            int nextY = j + ints[1];
+            if (nextX >= 0 && nextY >= 0 && nextX < matrix.length && nextY < matrix[0].length && !visited[nextX][nextY] && matrix[nextX][nextY] > matrix[i][j]) {
+                loopMax = Math.max(loopMax, dfs(matrix, dp, visited, nextX, nextY));
             }
         }
-        maxValue = maxValue + loopMax;
-        count[i][j] = maxValue;
-        visited[i][j] = false;
-        return maxValue;
-    }
-
-    private boolean isValid(int x, int y, int rows, int cols, boolean[][] visited, int[][] matrix, int currentValue) {
-        return (x >= 0 && y >= 0 && x < rows && y < cols && !visited[x][y] && (matrix[x][y] > currentValue));
+        dp[i][j]=loopMax+1;
+        visited[i][j]=false;
+        return dp[i][j];
     }
 
     public static void main(String[] args) {
