@@ -29,27 +29,28 @@ package dyanamicprogramming.hard;
 
 public class MinimumFallingPathSum2 {
 
-    public int minFallingPathSum(int[][] arr) {
-        int n = arr.length;
-        for (int row=n-2;row>=0;row--) {
-            for (int col=0;col<n;col++) {
-                int min = Integer.MAX_VALUE;
-                // Values to the left.
-                for(int k=0;k<col;k++) {
-                    min = Math.min(arr[row+1][k],min);
+    public int minFallingPathSum(int[][] A) {
+        if(A==null || A.length==0) {
+            return 0;
+        }
+        for (int i=1;i<A.length;i++) {
+            for (int j=0;j<A.length;j++) {
+                int leftMin = Integer.MAX_VALUE;
+                for (int k=0;k<j;k++) {
+                    leftMin = Math.min(A[i-1][k],leftMin);
                 }
-                // values to the right.
-                for (int k=col+1;k<n;k++) {
-                    min = Math.min(arr[row+1][k],min);
+                int rightMin = Integer.MAX_VALUE;
+                for (int k=j+1;k<A.length;k++) {
+                    rightMin = Math.min(A[i-1][k],rightMin);
                 }
-                arr[row][col]+= min;
+                A[i][j]+=Math.min(leftMin,rightMin);
             }
         }
-        int result = Integer.MAX_VALUE;
-        for (int i = 0; i < n; ++i) {
-            result = Math.min(result, arr[0][i]);
+        int ans = Integer.MAX_VALUE;
+        for (int a : A[A.length-1]) {
+            ans = Math.min(a,ans);
         }
-        return result;
+        return ans;
     }
 
 }
