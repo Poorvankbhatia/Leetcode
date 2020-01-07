@@ -24,18 +24,16 @@ package dyanamicprogramming.medium;
 public class PaintHouse2 {
 
     public int minCostII(int[][] costs) {
-        if (costs != null && costs.length == 0)
+        if (costs == null || costs.length == 0) {
             return 0;
-
+        }
         int preMin = 0, preSecondMin = 0, preColor = -1;
-
         for (int i = 0; i < costs.length; i++) {
             int curMin = Integer.MAX_VALUE;
             int curSecondMin = Integer.MAX_VALUE;
             int curColor = -1;
             for (int j = 0; j < costs[0].length; j++) {
                 costs[i][j] = costs[i][j] + (preColor == j ? preSecondMin : preMin);
-
                 if (costs[i][j] < curMin) {
                     curSecondMin = curMin;
                     curMin = costs[i][j];

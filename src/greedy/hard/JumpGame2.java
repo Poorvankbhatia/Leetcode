@@ -12,14 +12,45 @@ Given array A = [2,3,1,1,4]
 The minimum number of jumps to reach the last index is 2. (Jump 1 step from index 0 to 1, then 3 steps to the last index.)
 
  */
-package dyanamicprogramming.hard;
+package greedy.hard;
 
 /**
  * Created by poorvank on 02/01/17.
  */
 public class JumpGame2 {
 
-    public int jump(int[] nums) {
+    public int jump(int[] A) {
+        /*
+
+        The main idea is based on greedy. Let's say the range of the current jump is [curBegin, curEnd],
+        curFarthest is the farthest point that all points in [curBegin, curEnd] can reach. Once the current point
+        reaches curEnd, then trigger another jump, and set the new curEnd with curFarthest
+
+         */
+        int jumps = 0, curEnd = 0, curFarthest = 0;
+        for (int i = 0; i < A.length - 1; i++) {
+            curFarthest = Math.max(curFarthest, i + A[i]);
+            if (i == curEnd) {
+                jumps++;
+                curEnd = curFarthest;
+            }
+        }
+        return jumps;
+    }
+
+    public static void main(String[] args) {
+        int[] nums = new int[]{2,3,1,1,4};
+
+        System.out.println(new JumpGame2().jump(nums));
+    }
+
+}
+
+/*
+
+Another Approach:
+
+ public int jump(int[] nums) {
 
         if(nums.length==1) {
             return 0;
@@ -47,16 +78,6 @@ public class JumpGame2 {
         return -1;
 
     }
-
-    public static void main(String[] args) {
-        int[] nums = new int[]{2,3,1,1,4};
-
-        System.out.println(new JumpGame2().jump(nums));
-    }
-
-}
-
-/*
 
 Try to change this problem to a BFS problem, where nodes in level i are all the nodes that can be reached in i-1th jump.
 for example. 2 3 1 1 4 , is

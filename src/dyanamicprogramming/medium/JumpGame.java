@@ -21,21 +21,17 @@ package dyanamicprogramming.medium;
 public class JumpGame {
 
     public boolean canJump(int[] nums) {
-
-        int n = nums.length;
-
-        int reachMax = 0;
-
-        for (int i=0;i<n;i++) {
-            if(i>reachMax) {
+        int maximumReach=0;
+        for(int i=0;i<nums.length;i++) {
+            if(i>maximumReach) {
                 return false;
-            } else {
-                reachMax = Math.max(i+nums[i],reachMax);
+            }
+            maximumReach = Math.max(maximumReach,nums[i]+i);
+            if(maximumReach>=nums.length-1) {
+                return true;
             }
         }
-
-        return true;
-
+        return false;
     }
 
     public static void main(String[] args) {
