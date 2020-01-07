@@ -28,7 +28,39 @@ import java.util.Map;
  */
 public class OutOfBoundary {
 
-    private Map<String,Integer> map;
+    int mod = (int)Math.pow(10,9)+7;
+    int[][][] dp = new int[51][51][51];
+    public int findPaths(int m, int n, int N, int i, int j) {
+        for (int a=0;a<51;a++) {
+            for (int b=0;b<51;b++) {
+                for (int c=0;c<51;c++) {
+                    dp[a][b][c]=-1;
+                }
+            }
+        }
+        return (int)(util(m,n,N,i,j));
+    }
+
+    private long util(int m,int n,int N,int i,int j) {
+        if(i<0 || i>=m || j<0 || j>=n) {
+            return 1;
+        }
+        if(N<=0) {
+            return 0;
+        }
+        if(dp[i][j][N]!=-1) {
+            return (dp[i][j][N]);
+        }
+        long ans = (util(m,n,N-1,i,j-1)%mod+util(m,n,N-1,i-1,j)%mod+util(m,n,N-1,i+1,j)%mod+util(m,n,N-1,i,j+1)%mod)%mod;
+        dp[i][j][N]=(int) ans;
+        return dp[i][j][N];
+    }
+
+}
+
+/*
+
+private Map<String,Integer> map;
     public int findPaths(int m, int n, int N, int i, int j) {
         map = new HashMap<>();
         return count(m,n,N,i,j);
@@ -60,4 +92,6 @@ public class OutOfBoundary {
 
     }
 
-}
+
+
+ */
