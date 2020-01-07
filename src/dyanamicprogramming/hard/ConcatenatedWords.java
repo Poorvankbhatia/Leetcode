@@ -25,40 +25,33 @@ import java.util.*;
  */
 public class ConcatenatedWords {
 
-    public static List<String> findAllConcatenatedWordsInADict(String[] words) {
+    public List<String> findAllConcatenatedWordsInADict(String[] words) {
         List<String> result = new ArrayList<>();
-        Set<String> preWords = new HashSet<>();
         Arrays.sort(words, Comparator.comparingInt(String::length));
-
-        int max = 0;
-        String maxWord = "";
-
-        for (String word : words) {
-            if (possibleFormation(word, preWords)) {
-                if(word.length()>max) {
-                    max = word.length();
-                    maxWord = word;
-                }
+        Set<String> usedWords = new HashSet<>();
+        for(String word : words) {
+            if(isConcatenated(word,usedWords)) {
                 result.add(word);
             }
-            preWords.add(word);
+            usedWords.add(word);
         }
-
-        System.out.print("Longest word - " + maxWord);
-
         return result;
     }
 
-    private static boolean possibleFormation(String word, Set<String> dict) {
-        if (dict.isEmpty()) return false;
-        boolean[] dp = new boolean[word.length() + 1];
-        dp[0] = true;
-        for (int i = 1; i <= word.length(); i++) {
-            for (int j = 0; j < i; j++) {
-                if (!dp[j]) continue;
-                if (dict.contains(word.substring(j, i))) {
-                    dp[i] = true;
-                    break;
+    private boolean isConcatenated(String word,Set<String> usedWords) {
+        if(usedWords.size()==0) {
+            return false;
+        }
+        boolean[] dp = new boolean[word.length()+1];
+        dp[0]=true;
+        for(int i=1;i<=word.length();i++) {
+            for (int j=0;j<i;j++) {
+                if(dp[j]) {
+                    String sub = word.substring(j,i);
+                    if(usedWords.contains(sub)) {
+                        dp[i]=true;
+                        break;
+                    }
                 }
             }
         }
@@ -67,8 +60,7 @@ public class ConcatenatedWords {
 
     public static void main(String[] args) {
         String[] words = new String[]{"cat", "cats", "catsdogcats", "catxdogcatsrat", "dog", "dogcatsdog", "hippopotamuses", "rat", "ratcat", "ratcatdog", "ratcatdogcat"};
-
-        System.out.println(findAllConcatenatedWordsInADict(words));
+        System.out.println(new ConcatenatedWords().findAllConcatenatedWordsInADict(words));
     }
 
 }
@@ -77,5 +69,42 @@ public class ConcatenatedWords {
 /*
 
 SIMILAR TO WORD BREAK
+
+Faster Sol:
+
+public List<String> findAllConcatenatedWordsInADict(String[] words) {
+        Arrays.sort(words, (a, b) -> a.length() - b.length());
+        List<String> res = new ArrayList<>();
+        Set<String> set = new HashSet<>();
+        for(int i = 0; i < words.length; i++) {
+            if(words[i].length() != 0 && helper(set, words[i])) {
+                res.add(words[i]);
+
+            }
+            set.add(words[i]);
+        }
+        return res;
+    }
+
+    public boolean helper(Set<String> set, String word) {
+        if(word == null || word.length() == 0) {
+            return true;
+        }
+        if(set.contains(word)) return true;
+        int len = word.length();
+        for(int i = 1; i <= len; i++) {
+            String temp = word.substring(0, i);
+            if(set.contains(temp)) {
+               if(helper(set, word.substring(i))) {
+                   set.add(word);
+                   return true;
+               }
+            }
+        }
+        return false;
+    }
+
+
+    Time is O(N * L^3) where L is the word length if we count the time to compute hashcode.
 
  */
