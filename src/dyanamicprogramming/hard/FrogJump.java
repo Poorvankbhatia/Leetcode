@@ -36,53 +36,48 @@ the gap between the 5th and 6th stone is too large.
  */
 package dyanamicprogramming.hard;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by poorvank.b on 03/01/19.
  */
 public class FrogJump {
-
     public boolean canCross(int[] stones) {
-
-        if(stones==null || stones.length==0) {
-            return true;
+        if(stones == null || stones.length == 0) {
+            return false;
         }
-
-        Map<Integer,HashSet<Integer>> map = new HashMap<>();
-        int n = stones.length;
-        for (int stone1 : stones) {
-            map.put(stone1, new HashSet<>());
+        HashSet<Integer> set = new HashSet<>();
+        for(int i: stones)  {
+            set.add(i);
         }
-        map.get(0).add(1);
-
-        for(int i=0;i<n-1;i++) {
-
-            int stone = stones[i];
-
-            for(int step : map.get(stones[i])) {
-                int reach = step+stone;
-                if(reach==stones[n-1]) {
+        int len = stones.length;
+        Queue<int[]> pos = new LinkedList<>();
+        pos.offer(new int[]{0,0});
+        while(!pos.isEmpty()){
+            int[] cur = pos.poll();
+            //System.out.println(Arrays.toString(cur));
+            int curPos = cur[0];
+            int lastStep = cur[1];
+            for(int i = -1; i <=1; i++){
+                int nextStep = lastStep + i;
+                int nextPos = curPos + nextStep;
+                if(nextPos == stones[len-1]) {
                     return true;
                 }
-                if(map.containsKey(reach)) {
-                    map.get(reach).add(step);
-                    map.get(reach).add(step+1);
-                    if(step>1) {
-                        map.get(reach).add(step-1);
-                    }
+                // check if nextPos is available and whether it is out of boundary
+                if(nextStep > 0 && set.contains(nextPos) && nextPos + nextStep - 1 <= stones[len-1]){
+                    pos.offer(new int[]{nextPos,nextStep});
+                    set.remove(nextPos);
+                    //remove the stone that has been reached
                 }
             }
-
         }
-
         return false;
-
-
     }
 
+    public static void main(String[] args) {
+        System.out.println(new FrogJump().canCross(new int[]{0,1,3,6,10,13,15,18}));
+    }
 }
 /*
 

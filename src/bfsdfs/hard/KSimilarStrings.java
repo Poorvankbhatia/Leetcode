@@ -56,7 +56,7 @@ public class KSimilarStrings {
                     i++;
                 }
                 for (int j = i + 1; j < s.length(); j++) {
-                    if (s.charAt(i) == B.charAt(j)) {
+                    if (s.charAt(j) == B.charAt(i)) {
                         String temp = swap(s, i, j);
                         if (temp.equals(B)) {
                             return res+1;
@@ -81,7 +81,7 @@ public class KSimilarStrings {
     }
 
     public static void main(String[] args) {
-        System.out.println(new KSimilarStrings().kSimilarity("abc","bca"));
+        System.out.println(new KSimilarStrings().kSimilarity("aabc","abca"));
     }
 
 }
