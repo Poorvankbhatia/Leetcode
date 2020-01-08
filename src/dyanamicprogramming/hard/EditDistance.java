@@ -17,50 +17,29 @@ package dyanamicprogramming.hard;
 public class EditDistance {
 
     public int minDistance(String word1, String word2) {
-
-        if(word1.length()==0) {
+        if(word1==null || word1.length()==0) {
             return word2.length();
-        } else if(word2.length()==0) {
+        }
+        if(word2==null || word2.length()==0) {
             return word1.length();
         }
-
         int m = word1.length();
         int n = word2.length();
-
-        // Create a table to store results of subproblems
-        int dp[][] = new int[m+1][n+1];
-
-        // Fill d[][] in bottom up manner
-        for (int i=0; i<=m; i++)
-        {
-            for (int j=0; j<=n; j++)
-            {
-                // If first string is empty, only option is to
-                // insert all characters of second string
-                if (i==0)
-                    dp[i][j] = j;  // Min. operations = j
-
-                    // If second string is empty, only option is to
-                    // remove all characters of second string
-                else if (j==0)
-                    dp[i][j] = i; // Min. operations = i
-
-                    // If last characters are same, ignore last char
-                    // and recur for remaining string
-                else if (word1.charAt(i-1) == word2.charAt(j-1))
-                    dp[i][j] = dp[i-1][j-1];
-
-                    // If last character are different, consider all
-                    // possibilities and find minimum
-                else
-                    dp[i][j] = 1 + min(dp[i][j-1],  // Insert
-                            dp[i-1][j],  // Remove
-                            dp[i-1][j-1]); // Replace
+        int[][] dp = new int[m+1][n+1];
+        for(int i=0;i<=m;i++) {
+            for(int j=0;j<=n;j++) {
+                if(i==0) {
+                    dp[i][j]=j;
+                } else if(j==0) {
+                    dp[i][j]=i;
+                } else if(word1.charAt(i-1)==word2.charAt(j-1)) {
+                    dp[i][j]=dp[i-1][j-1];
+                } else {
+                    dp[i][j]=Math.min(Math.min(dp[i-1][j],dp[i][j-1]),dp[i-1][j-1])+1;
+                }
             }
         }
-
         return dp[m][n];
-
     }
 
     private int min(int x,int y,int z) {
