@@ -26,24 +26,18 @@ public class DecodeWays {
         if(s == null || s.length() == 0) {
             return 0;
         }
-        int n = s.length();
-        int[] dp = new int[n+1];
-        // Empty string can be decoded in one way.
-        dp[0] = 1;
-        dp[1] = s.charAt(0) != '0' ? 1 : 0;
-        for(int i = 2; i <= n; i++) {
-            int first = Integer.valueOf(s.substring(i-1, i));
-            int second = Integer.valueOf(s.substring(i-2, i));
-            // If the last digit is non-zero, recur for remaining (n-1) digits and add the result to total count.
-            if(first >= 1 && first <= 9) {
-                dp[i] += dp[i-1];
+        int[] dp = new int[s.length()+1];
+        dp[0]=1;
+        dp[1]=s.charAt(0)=='0'?0:1;
+        for(int i=2;i<=s.length();i++) {
+            if(s.charAt(i-1)>'0' && s.charAt(i-1)<='9') {
+                dp[i]+=dp[i-1];
             }
-            //If the last two digits form a valid character (or smaller than 27), recur for remaining (n-2)
-            if(second >= 10 && second <= 26) {
-                dp[i] += dp[i-2];
+            if(s.charAt(i-2)=='1' || (s.charAt(i-1)<='6' && s.charAt(i-2)=='2')) {
+                dp[i]+=dp[i-2];
             }
         }
-        return dp[n];
+        return dp[s.length()];
     }
 
 
@@ -81,4 +75,28 @@ public int numDecodings(String s) {
 
     }
 
+
+  public int numDecodings(String s) {
+        if(s == null || s.length() == 0) {
+            return 0;
+        }
+        int n = s.length();
+        int[] dp = new int[n+1];
+        // Empty string can be decoded in one way.
+        dp[0] = 1;
+        dp[1] = s.charAt(0) != '0' ? 1 : 0;
+        for(int i = 2; i <= n; i++) {
+            int first = Integer.valueOf(s.substring(i-1, i));
+            int second = Integer.valueOf(s.substring(i-2, i));
+            // If the last digit is non-zero, recur for remaining (n-1) digits and add the result to total count.
+            if(first >= 1 && first <= 9) {
+                dp[i] += dp[i-1];
+            }
+            //If the last two digits form a valid character (or smaller than 27), recur for remaining (n-2)
+            if(second >= 10 && second <= 26) {
+                dp[i] += dp[i-2];
+            }
+        }
+        return dp[n];
+    }
  */
