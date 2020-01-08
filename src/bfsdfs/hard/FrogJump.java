@@ -34,7 +34,7 @@ Return false. There is no way to jump to the last stone as
 the gap between the 5th and 6th stone is too large.
 
  */
-package dyanamicprogramming.hard;
+package bfsdfs.hard;
 
 import java.util.*;
 
