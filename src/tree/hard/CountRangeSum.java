@@ -122,6 +122,8 @@ public class CountRangeSum {
 
 /*
 
+SEGMENT TREE
+
 we have the formula:
 lower<= sums[i] - sums[j] <= upper (sums[k] is the sum of nums[0...k]), which is
 lower+sums[j] <= sums[i] <= upper+sums[j],

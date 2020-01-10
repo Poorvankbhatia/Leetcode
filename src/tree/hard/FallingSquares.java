@@ -86,7 +86,7 @@ public class FallingSquares {
 
     private SegmentNode root;
     public List<Integer> fallingSquares(int[][] positions) {
-        root = new SegmentNode(new int[]{0,1000000000},0);
+        root = new SegmentNode(new int[]{0,Integer.MAX_VALUE},0);
         List<Integer> result = new ArrayList<>();
         int best=0;
         for (int[] pos : positions) {
