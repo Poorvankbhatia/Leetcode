@@ -209,4 +209,44 @@ class Solution {
     }
 }
 
+Perform Coordinate Compression:
+
+ public List<Integer> fallingSquares(int[][] positions) {
+        int n = positions.length;
+        Map<Integer, Integer> cc = coorCompression(positions);
+        int best = 0;
+        List<Integer> res = new ArrayList<>();
+        SegmentTree tree = new SegmentTree(cc.size());
+        for (int[] pos : positions) {
+            int L = cc.get(pos[0]);
+            int R = cc.get(pos[0] + pos[1] - 1);
+            int h = tree.query(L, R) + pos[1];
+            tree.update(L, R, h);
+            best = Math.max(best, h);
+            res.add(best);
+        }
+        return res;
+    }
+
+    private Map<Integer, Integer> coorCompression(int[][] positions) {
+        Set<Integer> set = new HashSet<>();
+        for (int[] pos : positions) {
+            set.add(pos[0]);
+            set.add(pos[0] + pos[1] - 1);
+        }
+        List<Integer> list = new ArrayList<>(set);
+        Collections.sort(list);
+        Map<Integer, Integer> map = new HashMap<>();
+        int t = 0;
+        for (int pos : list) map.put(pos, t++);
+        return map;
+    }
+
+Coordinate compression is a procedure that takes some points and reassigns their coordinates to remove "gaps".
+For example, if point P1 is located at x = 5, point P2 is located at x = 27, and point P3 is located at x = 65,
+then, after coordinate compression, P1 may be located at x = 0, P2 may be located at x = 1, and P3 may be located at x = 2.
+The reason we compress coordinates is to get rid of all the "empty space" between points. This makes it easier to, say,
+use the coordinates as indices into an array. If we used the original numbers, we'd waste a lot of entries.
+
+
  */
