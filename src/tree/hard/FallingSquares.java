@@ -71,78 +71,83 @@ import java.util.List;
  * Created by poorvank.b on 06/10/18.
  */
 public class FallingSquares {
+    private class SegmentNode {
+        private SegmentNode left;
+        private SegmentNode right;
+        private int[] range;
+        private int height;
+        private int lazy;
 
-    class Node {
-        public int l;
-        public int r;
-        public int max;
-        public int height;
-        public Node left;
-        public Node right;
-
-        public Node (int l, int r, int max, int height) {
-            this.l = l;
-            this.r = r;
-            this.max = max;
+        public SegmentNode(int[] range, int height) {
+            this.range = range;
             this.height = height;
         }
     }
 
-
-    private boolean intersect(Node n, int l, int r) {
-        if (r <= n.l || l >= n.r) {
-            return false;
+    private SegmentNode root;
+    public List<Integer> fallingSquares(int[][] positions) {
+        root = new SegmentNode(new int[]{0,1000000000},0);
+        List<Integer> result = new ArrayList<>();
+        int best=0;
+        for (int[] pos : positions) {
+            int left = pos[0];
+            int right = pos[0]+pos[1]-1;
+            int h = query(root,left,right)+pos[1];
+            best = Math.max(best,h);
+            result.add(best);
+            update(root,left,right,h);
         }
-        return true;
+        return result;
     }
 
-    private Node insert(Node root, int l, int r, int height) {
-        if (root == null) {
-            return new Node(l, r, r, height);
+    private void update(SegmentNode node,int l,int r,int height) {
+        if(node==null || l>node.range[1] || r<node.range[0]) {
+            return;
         }
-
-        if (l <= root.l) {
-            root.left = insert(root.left, l, r, height);
-        } else {
-            // l > root.l
-            root.right = insert(root.right, l, r, height);
+        if(l<=node.range[0] && node.range[1]<=r) {
+            node.height=height;
+            node.lazy=height;
+            return;
         }
-        root.max = Math.max(r, root.max);
-        return root;
+        normalize(node);
+        update(node.left,l,r,height);
+        update(node.right,l,r,height);
+        node.height = Math.max(node.left.height,node.right.height);
     }
 
-    // return the max height for interval (l, r)
-    private int maxHeight(Node root, int l, int r) {
-        if (root == null || l >= root.max) {
+    private int query(SegmentNode node,int l,int r) {
+        if(node==null || l>node.range[1] || r<node.range[0]) {
             return 0;
         }
-
-        int res = 0;
-        if (intersect(root, l, r)) {
-            res = root.height;
+        if(l<=node.range[0] && node.range[1]<=r) {
+            return node.height;
         }
-        if (r > root.l) {
-            res = Math.max(res, maxHeight(root.right, l, r));
-        }
-        res = Math.max(res, maxHeight(root.left, l, r));
-        return res;
+        normalize(node);
+        return Math.max(query(node.left,l,r),query(node.right,l,r));
     }
 
-    public List<Integer> fallingSquares(int[][] positions) {
-        Node root = null;
-        List<Integer> res = new ArrayList<>();
-        int prev = 0;
-
-        for (int[] position : positions) {
-            int l = position[0];
-            int r = position[0] + position[1];
-            int currentHeight = maxHeight(root, l, r);
-            root = insert(root, l, r, currentHeight + position[1]);
-            prev = Math.max(prev, currentHeight + position[1]);
-            res.add(prev);
+    private void normalize(SegmentNode node) {
+        if(node.range[0]<node.range[1]) {
+            if(node.left==null || node.right==null) {
+                int mid = node.range[0]+(node.range[1]-node.range[0])/2;
+                node.left = new SegmentNode(new int[]{node.range[0],mid},node.height);
+                node.right = new SegmentNode(new int[]{mid+1,node.range[1]},node.height);
+            } else if(node.lazy>0) {
+                node.left.height=node.lazy;
+                node.right.height=node.lazy;
+                node.left.lazy=node.lazy;
+                node.right.lazy=node.lazy;
+            }
         }
+        node.lazy=0;
+    }
 
-        return res;
+    public static void main(String[] args) {
+        int[][] a = new int[][]{{9,7},{1,9},{3,1}};//[7,16,17]
+        //int[][] a = new int[][]{{2,1},{2,9},{1,8}};
+       // int[][] a = new int[][]{{6,4},{2,7},{6,9}}; //[4,11,20]
+        //int[][] a = new int[][]{{4,9},{8,8},{6,8},{8,2},{1,2}}; //[9,17,25,27,27]
+        System.out.println(new FallingSquares().fallingSquares(a));
     }
 
 }
