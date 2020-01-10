@@ -29,12 +29,12 @@ import java.util.Map;
 
 class WordFilter {
 
-    private Trie trie;
+    private Trie<Integer> trie;
 
     Map<String,Integer> map;
 
     public WordFilter(String[] words) {
-        trie = new Trie<Integer>();
+        trie = new Trie<>();
         map=new HashMap<>();;
         for (int i=0;i<words.length;i++) {
             trie.put(words[i],i);

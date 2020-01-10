@@ -149,6 +149,8 @@ public class FallingSquares {
 
 /*
 
+SEGMENT TREE
+
 The squares divide the number line into many segments with different heights.
 Therefore we can use a TreeMap to store the number line.
 The key is the starting point of each segment and the value is the height of the segment.

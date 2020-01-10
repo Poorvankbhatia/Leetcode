@@ -34,70 +34,81 @@ import tree.Interval;
  */
 public class MyCalendar {
 
-    private class BookingNode {
-        BookingNode left;
-        BookingNode right;
-        Integer max;
-        Interval interval;
+    private class SegmentNode {
+        private SegmentNode left;
+        private SegmentNode right;
+        private int bookingCount;
+        private int[] range;
+        private int lazy;
 
-        public BookingNode(Interval interval) {
-            this.interval = interval;
-            this.max = interval.high;
+        SegmentNode(int bookingCount, int[] range) {
+            this.left = null;
+            this.right = null;
+            this.bookingCount = bookingCount;
+            this.range = range;
+            this.lazy = 0;
         }
     }
 
-    BookingNode root;
 
+    private SegmentNode root;
     public MyCalendar() {
-        root = null;
+        root = new SegmentNode(0,new int[]{0,1000000000});
+    }
+
+    private int query(int start,int end,SegmentNode node) {
+        if(start>end || root==null || node.range[1]<start || node.range[0]>end) {
+            return 0;
+        }
+
+        if(start<=node.range[0] && end>=node.range[1]) {
+            return node.bookingCount;
+        }
+        normalise(node);
+
+        return Math.max(query(start,end,node.left),query(start,end,node.right));
+    }
+
+    private void update(SegmentNode node, int start,int end,int val) {
+        if(node ==null || start>end || start>node.range[1] || end<node.range[0]) {
+            return;
+        }
+
+        if(start<=node.range[0] && node.range[1]<=end) {
+            node.bookingCount+=val;
+            node.lazy+=val;
+            return;
+        }
+        normalise(node);
+        update(node.left,start,end,val);
+        update(node.right,start,end,val);
+        node.bookingCount=Math.max(node.left.bookingCount,node.right.bookingCount);
+
+    }
+    private void normalise(SegmentNode node) {
+        if(node.range[0]<node.range[1]) {
+            int mid = node.range[0] + (node.range[1]-node.range[0])/2;
+            if(node.left==null || node.right==null) {
+                node.left = new SegmentNode(node.bookingCount,new int[]{node.range[0],mid});
+                node.right = new SegmentNode(node.bookingCount,new int[]{mid+1,node.range[1]});
+            } else if(node.lazy>0) {
+                node.left.lazy+=node.lazy;
+                node.left.bookingCount+=node.lazy;
+                node.right.lazy+=node.lazy;
+                node.right.bookingCount+=node.lazy;
+            }
+        }
+        node.lazy=0;
     }
 
     public boolean book(int start, int end) {
-        Interval interval = new Interval(start,end);
-        if(root!=null) {
-            if(shouldInsert(root,interval)) {
-                return false;
-            }
-        }
-        root = insertBooking(root,interval);
-        System.out.println("Inserted - " + interval.toString() + " max " + root.max);
-        return true;
-    }
 
-    private boolean checkIntervalOverlapping(Interval i1, Interval i2) {
-        return i1.low<i2.high && i1.high>i2.low;
-    }
-
-    private boolean shouldInsert(BookingNode root, Interval interval) {
-
-        if(root==null) {
+        if(query(start,end-1,root)>0) {
             return false;
         }
 
-        if(checkIntervalOverlapping(root.interval,interval)) {
-            return true;
-        } else if(root.left!=null && root.left.max>=interval.low) {
-            return shouldInsert(root.left,interval);
-        } else {
-            return shouldInsert(root.right,interval);
-        }
-
-    }
-
-    private BookingNode insertBooking(BookingNode rootNode,Interval i) {
-        if(rootNode==null) {
-            rootNode = new BookingNode(i);
-        } else if(i.low<rootNode.interval.low) {
-            rootNode.left = insertBooking(rootNode.left,i);
-        } else {
-            rootNode.right = insertBooking(rootNode.right,i);
-        }
-
-        if(rootNode.max<i.high) {
-            rootNode.max = i.high;
-        }
-
-        return rootNode;
+        update(root,start,end-1,1);
+        return true;
     }
 
     public static void main(String[] args) {
