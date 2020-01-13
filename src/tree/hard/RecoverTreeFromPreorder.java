@@ -58,4 +58,8 @@ public class RecoverTreeFromPreorder {
         }
         return stack.pop();
     }
+
+    public static void main(String[] args) {
+        System.out.println(new RecoverTreeFromPreorder().recoverFromPreorder("1-401--349---90--88"));
+    }
 }
