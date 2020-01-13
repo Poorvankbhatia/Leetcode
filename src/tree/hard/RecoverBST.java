@@ -28,26 +28,16 @@ public class RecoverBST {
         } else if (first != null && middle != null) {
             swap(first, middle);
         }
-
-
     }
-
     private static void swap(TreeNode n1, TreeNode n2) {
-
         int temp = n1.val;
         n1.val = n2.val;
         n2.val = temp;
-
     }
-
     private static void correctTreeUtil(TreeNode root) {
-
         if (root != null) {
-
             correctTreeUtil(root.left);
-
             if (previous != null && root.val < previous.val) {
-
                 if (first == null) {
                     first = previous;
                     middle = root;
@@ -55,16 +45,9 @@ public class RecoverBST {
                 } else {
                     last = root;
                 }
-
             }
-
             previous = root;
             correctTreeUtil(root.right);
-
         }
-
     }
-
-
-
 }

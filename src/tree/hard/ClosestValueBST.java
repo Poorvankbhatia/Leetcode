@@ -15,6 +15,7 @@ import tree.TreeNode;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.PriorityQueue;
 import java.util.Stack;
 
 /**
@@ -22,47 +23,39 @@ import java.util.Stack;
  */
 public class ClosestValueBST {
 
-    public List<Integer> closestKValues(TreeNode root,int k,double target) {
+    public List<Integer> closestKValues(TreeNode root, double target, int k) {
+        List<Integer> res = new ArrayList<>();
 
+        Stack<Integer> s1 = new Stack<>(); // predecessors
+        Stack<Integer> s2 = new Stack<>(); // successors
 
-        List<Integer> result = new ArrayList<>();
+        inorder(root, target, false, s1);
+        inorder(root, target, true, s2);
 
-        Stack<TreeNode> stack = new Stack<>();
-
-        TreeNode node = root;
-        int count=0;
-
-        MinPriorityQueue<Integer> minPriorityQueue = new MinPriorityQueue<>();
-
-        while (!stack.isEmpty() || node!=null) {
-
-            while (node!=null) {
-                stack.push(node);
-                node = node.left;
-            }
-
-            node = stack.pop();
-
-            if(count<k) {
-                minPriorityQueue.insert(node.val);
-            } else {
-                if(Math.abs(minPriorityQueue.getMinimumElement()-target)>Math.abs(node.val-target)) {
-                    minPriorityQueue.replaceRoot(node.val);
-                } else {
-                    break;
-                }
-            }
-
-            count++;
-            node = node.right;
+        while (k-- > 0) {
+            if (s1.isEmpty())
+                res.add(s2.pop());
+            else if (s2.isEmpty())
+                res.add(s1.pop());
+            else if (Math.abs(s1.peek() - target) < Math.abs(s2.peek() - target))
+                res.add(s1.pop());
+            else
+                res.add(s2.pop());
         }
 
-        while (!minPriorityQueue.isEmpty()) {
-            result.add(minPriorityQueue.deleteMin());
-        }
+        return res;
+    }
 
-        return result;
+    // inorder traversal
+    void inorder(TreeNode root, double target, boolean reverse, Stack<Integer> stack) {
+        if (root == null) return;
 
+        inorder(reverse ? root.right : root.left, target, reverse, stack);
+        // early terminate, no need to traverse the whole tree
+        if ((reverse && root.val <= target) || (!reverse && root.val > target)) return;
+        // track the value of current node
+        stack.push(root.val);
+        inorder(reverse ? root.left : root.right, target, reverse, stack);
     }
 
     public static void main(String[] args) {
@@ -73,58 +66,12 @@ public class ClosestValueBST {
         root.left.right = new TreeNode(36);
         root.right.left = new TreeNode(49);
         root.right.right = new TreeNode(60);
-        System.out.println(new ClosestValueBST().closestKValues(root,2,55));
+        System.out.println(new ClosestValueBST().closestKValues(root,32,4));
     }
 
 }
 
 /*
-
-The straight-forward solution would be to use a heap. We just treat the BST just as a usual array and do a in-order traverse.
- Then we compare the current element with the minimum element in the heap, the same as top k problem.
-
-The time complexity would be O(k + (n - k) logk).
-Space complexity is O(k).
-
-http://buttercola.blogspot.in/2015/09/leetcode-closest-binary-search-tree_8.html
-
-Another method :
-
-public List<Integer> closestKValues(TreeNode root, double target, int k) {
-  List<Integer> res = new ArrayList<>();
-
-  Stack<Integer> s1 = new Stack<>(); // predecessors
-  Stack<Integer> s2 = new Stack<>(); // successors
-
-  inorder(root, target, false, s1);
-  inorder(root, target, true, s2);
-
-  while (k-- > 0) {
-    if (s1.isEmpty())
-      res.add(s2.pop());
-    else if (s2.isEmpty())
-      res.add(s1.pop());
-    else if (Math.abs(s1.peek() - target) < Math.abs(s2.peek() - target))
-      res.add(s1.pop());
-    else
-      res.add(s2.pop());
-  }
-
-  return res;
-}
-
-// inorder traversal
-void inorder(TreeNode root, double target, boolean reverse, Stack<Integer> stack) {
-  if (root == null) return;
-
-  inorder(reverse ? root.right : root.left, target, reverse, stack);
-  // early terminate, no need to traverse the whole tree
-  if ((reverse && root.val <= target) || (!reverse && root.val > target)) return;
-  // track the value of current node
-  stack.push(root.val);
-  inorder(reverse ? root.left : root.right, target, reverse, stack);
-}
-
 
 The idea is to compare the predecessors and successors of the closest node to the target, we can use two stacks to track
 the predecessors and successors, then like what we do in merge sort, we compare and pick the closest one to the target

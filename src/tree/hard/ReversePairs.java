@@ -19,75 +19,58 @@ All the numbers in the input array are in the range of 32-bit integer.
  */
 package tree.hard;
 
-import java.util.Arrays;
-
 /**
  * Created by poorvank.b on 02/12/17.
  */
 public class ReversePairs {
 
-    private static class Node {
-        Node left, right;
-        long val;
-        int cnt;
-
-        Node(long val) {
-            this.val = val;
-        }
-
-        void add(long n) {
-            if(n <= val) {
-                cnt++;
-            }
-            if(n > val) {
-                right.add(n);
-            }
-            if(n < val) {
-                left.add(n);
-            }
-        }
-
-        int count(long n) {
-            return n > val ? cnt + (right == null ? 0 : right.count(n))
-                    : (left == null ? 0 : left.count(n));
-        }
-    }
-
     public int reversePairs(int[] nums) {
-        int n = nums.length;
-        if(n == 0)
-            return 0;
-
-        long[] doubles = new long[n];
-        for(int i = 0; i < n; i++)
-            doubles[i] = 2L * nums[i];
-        Arrays.sort(doubles);
-        int j = 0;
-        for(int i = 1; i < n; i++)
-            if(doubles[j] != doubles[i])
-                doubles[++j] = doubles[i];
-
-        Node root = build(doubles, 0, j);
-
-        int res = 0;
-        for(int i = n - 1; i >= 0; i--) {
-            assert root != null;
-            res += root.count(nums[i]);
-            root.add(2L * nums[i]);
+        int res=0;
+        int n=nums.length;
+        SegmentNode segmentNode = new SegmentNode(Integer.MIN_VALUE, Integer.MAX_VALUE);
+        for (int j = 1; j < n; j++) {
+            add(segmentNode, nums[j-1]);
+            res += count(nums[j]*2L+1L,segmentNode);
         }
-
         return res;
     }
 
-    private Node build(long[] nums, int st, int en) {
-        if(st > en)
-            return null;
+    private class SegmentNode {
+        private long min, max;
+        private int count;
+        private SegmentNode left, right;
 
-        int mi = st + (en - st) / 2;
-        Node n = new Node(nums[mi]);
-        n.left = build(nums, st, mi - 1);
-        n.right = build(nums, mi + 1, en);
-        return n;
+        public SegmentNode(long min, long max) {
+            this.min = min;
+            this.max = max;
+            count = 0;
+            left = right = null;
+        }
+    }
+
+    public void add(SegmentNode node,long n) {
+        node.count++;
+        if (node.min==node.max)return;
+        long mid = node.min+(node.max-node.min)/2;
+        if (n <= mid) {
+            if (node.left ==null) {
+                node.left = new SegmentNode(node.min, mid);
+            }
+            add(node.left,n);
+        } else {
+            if (node.right ==null) {
+                node.right = new SegmentNode(mid+1,node.max);
+            }
+            add(node.right,n);
+        }
+    }
+
+    public int count(long n,SegmentNode node) {
+        if (node.min>=n) return node.count;
+        if (node.max<n) return 0;
+        return
+                (node.left ==null?0:count(n,node.left))+
+                        (node.right ==null?0:count(n,node.right));
     }
 
     public static void main(String[] args) {
@@ -96,3 +79,14 @@ public class ReversePairs {
     }
 
 }
+
+/*
+
+SEGMENT TREE
+
+With the segment tree we can ask, "how many elements in the tree have value >= X?"
+The segment tree contains all values that could be used as i.
+
+It is worth noting that this is NOT O(n log(n)). The height of the segment tree is not based on nums.length. This is more like O(n log(Integer.MAX_VALUE)).
+
+ */

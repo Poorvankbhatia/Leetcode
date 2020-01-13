@@ -44,7 +44,6 @@ public class RangeModule {
             right = intervals.get(end);
         }
         intervals.put(left, right);
-
         intervals.subMap(left, false, right, true).clear();
     }
 
