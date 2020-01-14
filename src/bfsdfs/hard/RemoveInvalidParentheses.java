@@ -20,51 +20,35 @@ import java.util.*;
 public class RemoveInvalidParentheses {
 
     public List<String> removeInvalidParentheses(String s) {
-
         List<String> result = new ArrayList<>();
-
         if(s==null) {
             return result;
         }
-
         Set<String> visited = new HashSet<>();
-
-
         Queue<String> queue = new LinkedList<>();
         boolean reachedFirstLevel = false;
-
         queue.add(s);
         visited.add(s);
-
         while (!queue.isEmpty()) {
             String current = queue.poll();
-
             if(isValidString(current)) {
                 result.add(current);
                 reachedFirstLevel = true;
             }
-
             if(reachedFirstLevel) {
                 continue;
             }
-
             for (int i=0;i<current.length();i++) {
-
-
                 if(!isParenthesis(current.charAt(i))) {
                     continue;
                 }
-
                 String next = current.substring(0,i)+current.substring(i+1);
                 if(!visited.contains(next)) {
                     queue.add(next);
                     visited.add(next);
                 }
-
             }
-
         }
-
         return result;
 
     }
@@ -74,11 +58,7 @@ public class RemoveInvalidParentheses {
     }
 
     private boolean isValidString(String s) {
-
         Stack<Character> stack = new Stack<>();
-
-        //System.out.println(s);
-
         for (char c : s.toCharArray()) {
             if(c=='(') {
                 stack.push(c);
@@ -89,9 +69,7 @@ public class RemoveInvalidParentheses {
                 stack.pop();
             }
         }
-
         return stack.isEmpty();
-
     }
 
     public static void main(String[] args) {

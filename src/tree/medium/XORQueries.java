@@ -102,6 +102,8 @@ public class XORQueries {
 
 /*
 
+SEGMENT TREE
+
 Better Solution:
 Prefix XOR:
 // We have:
