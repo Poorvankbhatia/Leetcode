@@ -46,7 +46,7 @@ public class SnapshotArray {
         arr = new ArrayList<>();
 
         for (int i = 0; i < length; i++) {
-            arr.add(i, new TreeMap<Integer, Integer>());
+            arr.add(i, new TreeMap<>());
             arr.get(i).put(0, 0);
         }
     }

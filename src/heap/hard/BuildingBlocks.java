@@ -46,7 +46,7 @@ import java.util.PriorityQueue;
 public class BuildingBlocks {
 
     public int minBuildTime(int[] blocks, int split) {
-        PriorityQueue <Integer> pq = new PriorityQueue();
+        PriorityQueue <Integer> pq = new PriorityQueue<>();
         for (int block : blocks) {
             pq.offer(block);
         }
