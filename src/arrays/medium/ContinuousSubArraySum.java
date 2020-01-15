@@ -29,7 +29,8 @@ public class ContinuousSubArraySum {
 
     public boolean checkSubarraySum(int[] nums, int k) {
 
-        Map<Integer, Integer> map = new HashMap<Integer, Integer>(){{put(0,-1);}}; //{0,0} k=0
+        Map<Integer, Integer> map = new HashMap<>();
+        map.put(0,-1); //{0,0} k=0
         int runningSum = 0;
         for (int i=0;i<nums.length;i++) {
             runningSum += nums[i];
@@ -49,8 +50,8 @@ public class ContinuousSubArraySum {
     }
 
     public static void main(String[] args) {
-        int[] arr = new int[]{3,0};
-        int k = 6; // 6*0=0
+        int[] arr = new int[]{1,5};
+        int k = -6; // 6*0=0
         System.out.println(new ContinuousSubArraySum().checkSubarraySum(arr, k));
     }
 
@@ -61,5 +62,15 @@ public class ContinuousSubArraySum {
 We iterate through the input array exactly once, keeping track of the running sum mod k of the elements in the process.
 If we find that a running sum value at index j has been previously seen before in some earlier index i in the array,
 then we know that the sub-array (i,j] contains a desired sum.
+
+[0], 0 -> false;
+[5, 2, 4], 5 -> false;
+[0, 0], 100 -> true;
+[1,5], -6 -> true;
+
+Running sum from first element to index i : sum_i. If we mod k, it will be some format like : sum_i = k * x + modk_1
+Running sum from first element to index j : sum_j. If we mod k, it will be some format like : sum_j = k * y + modk_2
+If they have the same mod, which is modk_1 == modk_2, subtracting these two running sum we get the difference
+sum_i - sum_j = (x - y) * k = constant * k, and the difference is the sum of elements between index i and j, and the value is a multiple of k.
 
  */
