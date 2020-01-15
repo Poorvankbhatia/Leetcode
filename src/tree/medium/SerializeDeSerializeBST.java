@@ -25,57 +25,39 @@ public class SerializeDeSerializeBST {
 
     // Encodes a tree to a single string.
     public String serialize(TreeNode root) {
-
         if(root==null) {
             return "";
         }
-
-
         StringBuilder result = new StringBuilder();
-
         Stack<TreeNode> stack = new Stack<>();
-
         stack.push(root);
-
         while (!stack.isEmpty()) {
-
             TreeNode popVal = stack.pop();
             result.append(popVal.val).append("_");
-
             if(popVal.right!=null) {
                 stack.push(popVal.right);
             }
-
             if(popVal.left!=null) {
                 stack.push(popVal.left);
             }
-
         }
-
-
         return result.toString();
-
     }
 
     // Decodes your encoded data to tree.
     public TreeNode deserialize(String data) {
-
         if(data.equals("")) {
             return null;
         }
-
         String[] arr = data.split("_");
         Stack<TreeNode> stack = new Stack<>();
         TreeNode root = new TreeNode(Integer.parseInt(arr[0]));
         stack.push(root);
-
         for (int i=1;i<arr.length;i++) {
-
             TreeNode temp=null;
             while (!stack.isEmpty() && Integer.parseInt(arr[i])>stack.peek().val) {
                 temp = stack.pop();
             }
-
             if(temp!=null) {
                 temp.right = new TreeNode(Integer.parseInt(arr[i]));
                 stack.push(temp.right);
@@ -84,11 +66,8 @@ public class SerializeDeSerializeBST {
                 temp.left = new TreeNode(Integer.parseInt(arr[i]));
                 stack.push(temp.left);
             }
-
         }
-
         return root;
-
     }
 
     public static void main(String[] args) {
