@@ -4,6 +4,7 @@ Given an array of meeting time intervals consisting of start and end times [[s1,
 package greedy.medium;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.PriorityQueue;
 
 /**
@@ -15,43 +16,34 @@ public class MeetingRooms2 {
     private static class Interval {
         int start;
         int end;
-
         Interval() {
             start = 0;
             end = 0;
         }
-
         Interval(int s, int e) {
             start = s;
             end = e;
         }
-
         public String toString() {
             return start+" "+end;
         }
     }
 
     public int minMeetingRooms(Interval[] intervals) {
-        if (intervals == null || intervals.length == 0)
+        if(intervals==null||intervals.length==0)
             return 0;
-
-        Arrays.sort(intervals, (i1, i2) -> i1.start - i2.start);
-
-        PriorityQueue<Integer> queue = new PriorityQueue<Integer>();
-        int count = 1;
+        Arrays.sort(intervals, Comparator.comparingInt(i2 -> i2.start));
+        PriorityQueue<Integer> queue = new PriorityQueue<>();
+        int count=1;
         queue.offer(intervals[0].end);
-
-        for (int i = 1; i < intervals.length; i++) {
-            if (intervals[i].start < queue.peek()) {
+        for(int i=1; i<intervals.length; i++){
+            if(intervals[i].start<queue.peek()){
                 count++;
-
-            } else {
+            }else{
                 queue.poll();
             }
-
             queue.offer(intervals[i].end);
         }
-
         return count;
     }
 
