@@ -21,19 +21,35 @@ import java.util.Random;
  */
 public class KthLargest {
     public int findKthLargest(int[] nums, int k) {
-        if(nums==null || nums.length==0) {
-            return Integer.MAX_VALUE;
-        }
+        int n = nums.length;
         shuffle(nums);
-        return quickSelect(nums,0,nums.length-1,nums.length-k);
+        return util(nums,0,nums.length-1,n-k);
     }
-
-    private int quickSelect(int[] nums,int start,int end,int target) {
-
+    /*
+        Sorting an already sorted array is worst case in quicksort, because whenever you pick a pivot,
+        you discover that all the elements get placed on the same side of the pivot, so you don't split into two roughly equal halves at all.
+        And often in practice this already sorted case will turn up more often than other cases.
+        Randomly shuffling the data first is a quick way of ensuring that you really do end up with all cases turning up with equal probability,
+        and therefore that this worst case will be as rare as any other case.
+        It's worth noting that there are other strategies that deal well with already sorted data, such as choosing the middle element as the pivot.
+    */
+    private void shuffle(int[] nums) {
+        Random random = new Random();
+        for(int i=nums.length-1;i>=0;i--) {
+            int ind = random.nextInt(i+1);
+            swap(nums,i,ind);
+        }
+    }
+    private void swap(int[] nums,int i,int j) {
+        int temp = nums[i];
+        nums[i]=nums[j];
+        nums[j]=temp;
+    }
+    private int util(int[] nums,int start,int end,int target) {
         int left = start;
         int pivot = nums[end];
-        for (int i=start;i<end;i++) {
-            if(nums[i]<=pivot) {
+        for(int i=start;i<=end;i++) {
+            if(nums[i]<pivot) {
                 swap(nums,left++,i);
             }
         }
@@ -41,33 +57,9 @@ public class KthLargest {
         if(left==target) {
             return nums[left];
         } else if(left>target) {
-            return quickSelect(nums,start,left-1,target);
+            return util(nums,start,left-1,target);
         } else {
-            return quickSelect(nums,left+1,end,target);
-        }
-
-    }
-
-    private void swap(int[] nums,int i1,int i2) {
-        int temp = nums[i1];
-        nums[i1]=nums[i2];
-        nums[i2]=temp;
-    }
-
-    /*
-Sorting an already sorted array is worst case in quicksort, because whenever you pick a pivot,
-you discover that all the elements get placed on the same side of the pivot, so you don't split into two roughly equal halves at all.
-And often in practice this already sorted case will turn up more often than other cases.
-Randomly shuffling the data first is a quick way of ensuring that you really do end up with all cases turning up with equal probability,
-and therefore that this worst case will be as rare as any other case.
-It's worth noting that there are other strategies that deal well with already sorted data, such as choosing the middle element as the pivot.
-     */
-    private void shuffle(int a[]) {
-
-        Random random = new Random();
-        for(int ind = 1; ind < a.length; ind++) {
-            int r = random.nextInt(ind + 1);
-            swap(a, ind, r);
+            return util(nums,left+1,end,target);
         }
     }
 
@@ -103,24 +95,18 @@ For binary search it is 1 + 1 + ... (log(N) times) = O(logN)
 Using heap:
 
 public int findKthLargest(int[] nums, int k) {
-        Integer[] newArray = new Integer[nums.length];
-        int i = 0;
-        for (int value : nums) {
-            newArray[i++] = value;
+        int n = nums.length;
+        PriorityQueue<Integer> pq = new PriorityQueue<>();
+        for(int i=0;i<k;i++) {
+            pq.offer(nums[i]);
         }
-        System.out.println(Arrays.toString(newArray));
-        MaxPriorityQueue<Integer> pq =new MaxPriorityQueue<>(newArray);
-
-        int kthLargestElement = -1;
-
-        while (k!=0) {
-            if(!pq.isEmpty()) {
-                kthLargestElement = pq.deleteMax();
+        for(int i=k;i<n;i++) {
+            if(nums[i]>pq.peek()) {
+                pq.poll();
+                pq.offer(nums[i]);
             }
-            k--;
         }
-
-        return kthLargestElement;
+        return pq.poll();
     }
 
  */

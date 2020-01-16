@@ -30,31 +30,23 @@ import java.util.*;
 public class AlienDictionary {
 
     public String alienOrder(String[] words) {
-
         if(words==null || words.length==0) {
             return "";
         }
-
         Map<Character,List<Character>> map = new HashMap<>();
-
         Set<Character> set = new HashSet<>();
         for (String word : words) {
             for (char c : word.toCharArray()) {
                 set.add(c);
             }
         }
-
         int charCount = set.size();
         int[] inDegree = new int[26];
-
         for (int i=0;i<words.length-1;i++) {
-
             String first = words[i];
             String second = words[i+1];
-
             for (int j=0;j<Math.min(first.length(),second.length());j++) {
                 if(first.charAt(j)!=second.charAt(j)) {
-
                     if(!map.containsKey(first.charAt(j))) {
                         map.put(first.charAt(j),new ArrayList<>());
                     }
@@ -63,11 +55,8 @@ public class AlienDictionary {
                     break;
                 }
             }
-
         }
-
         Queue<Character> queue = new LinkedList<>();
-
         for (Character c : set) {
             if(inDegree[c-'a']==0) {
                 queue.offer(c);
@@ -76,9 +65,7 @@ public class AlienDictionary {
                 map.put((c),new ArrayList<>());
             }
         }
-
         StringBuilder sb = new StringBuilder();
-
         while (!queue.isEmpty()) {
             Character current = queue.poll();
             sb.append(current);
@@ -91,14 +78,11 @@ public class AlienDictionary {
                 charCount--;
             }
         }
-
-
         if(charCount==0) {
             return sb.toString();
         } else {
             return "";
         }
-
     }
 
     public static void main(String[] args) {
