@@ -34,9 +34,7 @@ Note:
  */
 package heap.easy;
 
-import java.util.Collections;
-import java.util.PriorityQueue;
-import java.util.Queue;
+import java.util.*;
 
 /**
  * Created by poorvank.b on 17/01/19.
@@ -44,6 +42,58 @@ import java.util.Queue;
 public class KClosestPoints {
 
     public int[][] kClosest(int[][] points, int K) {
+        int n = points.length;
+        shuffle(points);
+        return util(0,n-1,points,K-1);
+    }
+    private int[][] util(int start,int end,int[][] points,int target) {
+        int left = start;
+        int[] pivot = points[end];
+        int pivotDistance = distance(pivot);
+        for(int i=start;i<=end;i++) {
+            if(distance(points[i])<pivotDistance) {
+                swap(points,i,left++);
+            }
+        }
+        swap(points,left,end);
+        if(left==target) {
+            return Arrays.copyOfRange(points, 0,left+1);
+        } else if(left>target) {
+            return util(start,left-1,points,target);
+        } else {
+            return util(left+1,end,points,target);
+        }
+    }
+    private int distance(int[] d) {
+        return d[0]*d[0]+d[1]*d[1];
+    }
+    private void shuffle(int[][] points) {
+        Random random = new Random();
+        for(int i=points.length-1;i>=0;i--) {
+            int ind = random.nextInt(i+1);
+            swap(points,i,ind);
+        }
+    }
+    private void swap(int[][] points,int i,int j) {
+        int[] temp = points[i];
+        points[i]=points[j];
+        points[j]=temp;
+    }
+    public static void main(String[] args) {
+        int[][] a = new int[][]{
+                {1,3},{-2,2}
+        };
+        new KClosestPoints().kClosest(a,1);
+    }
+
+}
+
+/*
+
+
+Using Heap:
+
+public int[][] kClosest(int[][] points, int K) {
         PriorityQueue<int[]> pq = new PriorityQueue<>((a,b)->((b[0]*b[0]+b[1]*b[1])-(a[0]*a[0]+a[1]*a[1])));//Using Max PQ
         for(int i=0;i<K;i++) {
             pq.add(points[i]);
@@ -65,51 +115,6 @@ public class KClosestPoints {
         }
         return res;
     }
-
-}
-
-/*
-
-
-Using Quick Select:
-
-public int[][] kClosest(int[][] points, int K) {
-        int len =  points.length, l = 0, r = len - 1;
-        while (l <= r) {
-            int mid = helper(points, l, r);
-            if (mid == K) break;
-            if (mid < K) {
-                l = mid + 1;
-            } else {
-                r = mid - 1;
-            }
-        }
-        return Arrays.copyOfRange(points, 0, K);
-    }
-
-    private int helper(int[][] A, int start, int end) {
-
-        int left = start;
-        int[] pivot = A[end];
-        for (int i=start;i<end;i++) {
-            if(compare(A[i],pivot)<0) {
-                swap(A,left++,i);
-            }
-        }
-        swap(A,left,end);
-        return left;
-    }
-
-    private void swap(int[][] nums,int i1,int i2) {
-        int[] temp = nums[i1];
-        nums[i1]=nums[i2];
-        nums[i2]=temp;
-    }
-
-    private int compare(int[] p1, int[] p2) {
-        return p1[0] * p1[0] + p1[1] * p1[1] - p2[0] * p2[0] - p2[1] * p2[1];
-    }
-}
 
 
 In the quick sort, we will always choose a pivot to compare with other elements.
