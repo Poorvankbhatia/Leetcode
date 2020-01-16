@@ -26,90 +26,68 @@ public class ShortestDistance {
 
     public int shortestDistance(int[][] grid) {
 
+        //This is a bfs solution, bfs needs queue generally.
+
         if(grid==null || grid.length==0) {
-            return 0;
+            return -1;
         }
 
-        int m = grid.length;
-        int n = grid[0].length;
+        int row = grid.length;
+        int col = grid[0].length;
+        int buildingCount = 0;
 
-        // Distance array fills the distance of each "0"(house) from all the buildings
-        int[][] distance = new int[m][n];
-        // Indicates if the house can be reached by all the buildings
-        int[][] reach = new int[m][n];
-        int numBuildings=0;
+        int[][] dis = new int[row][col]; // distance sum of all bulding to dis[x][y];
+        int[][] num = new int[row][col]; // how many buildings can reach num[x][y]
 
-        // step 1: BFS and calculate the min dist from each building
-        for (int i=0;i<m;i++) {
-            for (int j=0;j<n;j++) {
-                if(grid[i][j]==1) {
-                    Queue<Integer> queue = new LinkedList<>();
-                    boolean[][] visited = new boolean[m][n];
-                    shortestDistance(distance,i,j,reach,queue,0,visited,grid);
-                    numBuildings++;
+        for(int i=0 ; i< row; i++){
+            for(int j = 0; j< col; j++){
+                if(grid[i][j] == 1){
+                    buildingCount++;
+                    bfs(grid, dis, num, i, j);
                 }
             }
         }
 
-        // step 2: calculate the minimum distance
-        int minDist = Integer.MAX_VALUE;
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                if (grid[i][j] == 0 && reach[i][j] == numBuildings) {
-                    minDist = Math.min(minDist, distance[i][j]);
+        int min = Integer.MAX_VALUE;
+        for(int i=0; i<row; i++){
+            for(int j=0; j<col; j++){
+                if(grid[i][j] == 0 && dis[i][j] != 0 && num[i][j] == buildingCount){
+                    min = Math.min(min, dis[i][j]);
+                }
+            }
+        }
+        if(min < Integer.MAX_VALUE) return min;
+        return -1;
+    }
+
+    private void bfs(int[][] grid, int[][] dis, int[][] num, int x, int y){
+        int row = grid.length;
+        int col = grid[0].length;
+        int[][] dir = {{1,0},{-1,0},{0,1},{0,-1}};
+        Queue<int[]> queue = new LinkedList<>();
+        queue.offer(new int[]{x, y});
+
+        boolean[][] visited = new boolean[row][col];
+        int dist = 0;
+        while(!queue.isEmpty()){
+            dist++;
+            int size = queue.size();// all size number of node, their neigbors belongs to next dist, which for distance.
+            for(int i=0 ; i<size; i++){
+                int[] top = queue.poll();
+                for(int j=0; j< 4;j++){
+                    int k = top[0] + dir[j][0];
+                    int l = top[1] + dir[j][1];
+                    if(k>=0 && k< row && l >= 0 && l < col && grid[k][l] == 0 && !visited[k][l]){
+                        visited[k][l] = true;
+                        dis[k][l] += dist;
+                        num[k][l]++;
+                        queue.add(new int[]{k,l});
+                    }
                 }
             }
         }
 
-        return minDist == Integer.MAX_VALUE ? -1 : minDist;
-
     }
-
-
-    private void shortestDistance(int[][] distance,int x,int y,int[][] reach,Queue<Integer> queue,int currentDistance,boolean[][] visited,int[][] grid) {
-
-        fill(distance,x, x, y, y,visited,queue, currentDistance, reach,grid);
-
-        int m = grid.length;
-        int n = grid[0].length;
-
-        while (!queue.isEmpty()) {
-            int size = queue.size();
-            currentDistance++;
-            for (int sz = 0; sz < size; sz++) {
-                int cord = queue.poll();
-                int i = cord / n;
-                int j = cord % n;
-
-                fill(distance,i - 1,x, y, j, visited, queue, currentDistance, reach,grid);
-                fill(distance,i + 1,x, y, j, visited, queue, currentDistance, reach,grid);
-                fill(distance,i ,x, y,  j-1, visited, queue, currentDistance, reach,grid);
-                fill(distance,i, x, y, j+1, visited, queue, currentDistance, reach,grid);
-            }
-        }
-
-    }
-
-    private void fill(int[][] distance,int x,int origX,int origY,int y,boolean[][] visited,Queue<Integer> queue,int currentDist,int[][] reach,int[][] grid){
-        int m = distance.length;
-        int n = distance[0].length;
-        if (x < 0 || x >= m || y < 0 || y >= n || visited[x][y]) {
-            return;
-        }
-
-        if ((x != origX || y != origY) && grid[x][y] != 0) {
-            return;
-        }
-
-        visited[x][y] = true;
-
-        distance[x][y] += currentDist;
-        reach[x][y]++;
-
-        queue.offer(x * n + y);
-
-    }
-
 }
 
 /*
