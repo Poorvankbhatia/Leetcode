@@ -84,3 +84,8 @@ public class MinimumNumberTaps {
 
 }
 
+/*
+
+Same as Video Stitching.
+
+ */

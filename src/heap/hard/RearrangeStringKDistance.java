@@ -23,50 +23,32 @@ import java.util.*;
 public class RearrangeStringKDistance {
 
     public String rearrangeString(String str, int k) {
-
         if(k==0 || k>str.length() || k==1) {
             return str;
         }
-
         HashMap<Character,Integer> characterCount = new HashMap<>();
         for (char c : str.toCharArray()) {
-            if(!characterCount.containsKey(c)) {
-                characterCount.put(c,0);
-            }
-            characterCount.put(c,characterCount.get(c)+1);
+            characterCount.put(c,characterCount.getOrDefault(c,0)+1);
         }
-
         PriorityQueue<Map.Entry<Character,Integer>> priorityQueue = new PriorityQueue<>(
                 (a,b) -> !Objects.equals(a.getValue(), b.getValue()) ? b.getValue() - a.getValue() : a.getKey() - b.getKey());
-
         priorityQueue.addAll(characterCount.entrySet());
-
         StringBuilder result = new StringBuilder();
-
         Queue<Map.Entry<Character,Integer>> queue = new LinkedList<>();
-
         while (!priorityQueue.isEmpty()) {
-
             Map.Entry<Character, Integer> entry = priorityQueue.poll();
             entry.setValue(entry.getValue() - 1);
             queue.offer(entry);
             result.append(entry.getKey());
-
-
             if(queue.size()<k) {
                 continue;
             }
-
             Map.Entry<Character, Integer> front = queue.poll();
-
             if(front!=null && front.getValue()>0) {
                 priorityQueue.offer(front);
             }
-
         }
-
         return result.length() == str.length() ? result.toString() : "";
-
     }
 
     public static void main(String[] args) {

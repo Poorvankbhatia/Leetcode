@@ -53,28 +53,23 @@ import java.util.Comparator;
 
 public class VideoStiching {
     public int videoStitching(int[][] clips, int T) {
-        Arrays.sort(clips, new Comparator<int[]>() {
-            public int compare(int[] a, int[] b) {
-                return a[0]-b[0];
-            }
-        });
+        Arrays.sort(clips, Comparator.comparingInt(a -> a[0]));
         int count = 0;
-        int curend = 0;
-
+        int start = 0;
+        int end = -1;
         for(int i = 0; i < clips.length; ) {
-            if(clips[i][0] > curend) {
+            if(clips[i][0] > start) {
                 return -1;
             }
-            int maxend = curend;
-            while(i < clips.length && clips[i][0] <= curend) { // while one clip's start is before or equal to current end
-                maxend = Math.max(maxend, clips[i][1]); // find out the one with the max possible end
+            while(i < clips.length && clips[i][0] <= start) { // while one clip's start is before or equal to start
+                end = Math.max(end, clips[i][1]); // find the max possible end
                 i++;
             }
             count++;
-            curend = maxend;
-            if(curend >= T) {
+            if(end>=T) {
                 return count;
             }
+            start = end;
         }
         return -1;
     }
@@ -83,6 +78,6 @@ public class VideoStiching {
 /*
 First, you can sort the clips according to the start time. Then, for the first one, you must find a start time of 0. Otherwise, you can't meet the requirements.
 Then, for the start time is 0, you must find the end with the most. Cost effective
-After finding a curend, then look for it in all start<= curend. At this time, you can also use greedy thoughts, and choose the most cost-effective in these.
+After finding a end, then look for it in all start<= curend. At this time, you can also use greedy thoughts, and choose the most cost-effective in these.
 Loop until you find curend>=T
  */
