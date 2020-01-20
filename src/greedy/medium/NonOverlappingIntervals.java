@@ -38,19 +38,30 @@ public class NonOverlappingIntervals {
         if(intervals.length==0) {
             return 0;
         }
-        Arrays.sort(intervals, Comparator.comparingInt(o -> o[1]));
-        int end = Integer.MIN_VALUE;
-        int count = 0;
-        for (int[] interval : intervals) {
-            if (interval[0] >= end) {
-                end = interval[1];
-            }
-            else {
+        Arrays.sort(intervals, Comparator.comparingInt(a -> a[0])); //Sort the intervals by their start time.
+        int end=intervals[0][1];
+        int count = 1;
+        for (int i=1;i<intervals.length;i++) {
+            if(intervals[i][0]>=end) {
                 count++;
+                end = intervals[i][1]; // If two intervals overlap, the interval with larger end
+                // time will be removed so as to have as little impact on subsequent intervals as possible.
+            } else {
+                end = Math.min(end,intervals[i][1]);
             }
         }
-
-        return count;
+        return intervals.length-count;
     }
 
 }
+
+/*
+
+rder intervals by start point.
+Record the end of the last valid interval.
+For each interval, if is start point is >= the end of the last valid interval, increment the count of valid intervals,
+and move the end point to the end of the current interval. Otherwise just set the new end point to the minimum between the two overlapping intervals.
+
+Return the difference between the number of intervals in the input array and the number of valid intervals you found in the previous way.
+
+ */
