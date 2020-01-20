@@ -34,51 +34,23 @@ import java.util.Comparator;
   Created by poorvank on 30/11/16.
  */
 public class NonOverlappingIntervals {
-
-    public class Interval {
-        int start;
-        int end;
-
-        Interval() {
-            start = 0;
-            end = 0;
+    public int eraseOverlapIntervals(int[][] intervals) {
+        if(intervals.length==0) {
+            return 0;
         }
-
-        Interval(int s, int e) {
-            start = s;
-            end = e;
-        }
-    }
-
-    
-    public int eraseOverlapIntervals(Interval[] intervals) {
-
-        Arrays.sort(intervals, new Comparator<Interval>() {
-            @Override
-            public int compare(Interval o1, Interval o2) {
-                if(o1.start>o2.start) {
-                    return 1;
-                } else if(o1.start<o2.start) {
-                    return -1;
-                } else {
-                    return 0;
-                }
-            }
-        });
-
-        int end=intervals[0].end;
+        Arrays.sort(intervals, Comparator.comparingInt(o -> o[1]));
+        int end = Integer.MIN_VALUE;
         int count = 0;
-
-        for (int i=1;i<intervals.length;i++) {
-            if(intervals[i].start<end) {
-                count++;
-                intervals[i].end = Math.min(intervals[i].end,end);
+        for (int[] interval : intervals) {
+            if (interval[0] >= end) {
+                end = interval[1];
             }
-            end = intervals[i].end;
+            else {
+                count++;
+            }
         }
 
         return count;
-
     }
 
 }
