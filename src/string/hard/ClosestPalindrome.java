@@ -17,7 +17,7 @@ package string.hard;
 /**
  * Created by poorvank on 24/04/17.
  */
-public class ClosestPalindrome {
+public class    ClosestPalindrome {
 
     public String nearestPalindromic(String n) {
         if (n.length() >= 2 && checkNine(n)) {

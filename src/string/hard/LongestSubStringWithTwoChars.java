@@ -19,35 +19,27 @@ import java.util.HashMap;
 public class LongestSubStringWithTwoChars {
 
     public int lengthOfLongestSubstringTwoDistinct(String s) {
-
         if(s==null || s.length()==0) {
             return 0;
         }
-
         HashMap<Character,Integer> map = new HashMap<>();
-
         int start=0;
         int end=0;
         int begin=0;
         int maxLength = 0;
-
         for (int i=0;i<s.length();i++) {
-
             char c = s.charAt(i);
             if(map.containsKey(c)) {
                 map.put(c,map.get(c)+1);
             } else {
                 map.put(c,1);
             }
-
             if(map.size()>2) {
-
                 if(maxLength<i-start) {
                     maxLength = i-start;
                     begin = start;
                     end = i;
                 }
-
                 while (map.size()>2) {
                     char leftMostChar = s.charAt(start);
                     if(map.get(leftMostChar)==1) {
@@ -55,23 +47,17 @@ public class LongestSubStringWithTwoChars {
                     } else {
                         map.put(leftMostChar,map.get(leftMostChar)-1);
                     }
-
                     start++;
                 }
-
             }
-
         }
-
         if(s.length()-start>maxLength) {
             maxLength = s.length()-start;
             begin = start;
             end = s.length();
         }
-
         System.out.println("Max String - " + s.substring(begin,end));
         return maxLength;
-
     }
 
     public static void main(String[] args) {
