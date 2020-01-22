@@ -33,30 +33,19 @@ package bfsdfs.hard;
 public class ReachingPoints {
 
     public boolean reachingPoints(int sx, int sy, int tx, int ty) {
-
-
-        while (tx >= sx && ty >= sy) {
-            if (tx == ty)  {
-                break;
-            }
-            if (tx > ty) {
-                if (ty > sy) {
-                    tx %= ty;
-                }
-                else {
-                    return (tx - sx) % ty == 0;
-                }
-            } else {
-                if (tx > sx) {
-                    ty %= tx;
-                }
-                else {
-                    return (ty - sy) % tx == 0;
-                }
-            }
+        if(sx==tx && sy==ty) {
+            return true;
         }
-        return (tx == sx && ty == sy);
-
+        if(sx>tx || sy>ty) {
+            return false;
+        }
+        if(tx>=ty) {
+            int jumpFactor = Math.max((tx-sx)/ty,1);
+            return reachingPoints(sx,sy,tx-(jumpFactor)*ty,ty);
+        } else {
+            int jumpFactor = Math.max((ty-sy)/tx,1);
+            return reachingPoints(sx,sy,tx,ty-(jumpFactor)*tx);
+        }
     }
 
     public static void main(String[] args) {
@@ -67,22 +56,24 @@ public class ReachingPoints {
 
 /*
 
-we work backwards to find the answer, trying to transform the target point to the starting point via applying the parent operation
-(x, y) -> (x-y, y) or (x, y-x) [depending on which one doesn't have negative coordinates.]
+The obvious way is to go with a DFS or BFS like approach. Starting from the point (sx, sy),
+we can go in two possible directions (sx + sy, sy) and (sx, sx + sy) and then each of these points can go in
+two possible directions and so on. Note that the paths will form a tree like structure as we are going in either
+right or upward direction, so we will never encounter the same point twice along a path.
 
-Say tx > ty. We know that the next parent operations will be to subtract ty from tx,
-until such time that tx = tx % ty. When both tx > ty and ty > sy, we can perform
-all these parent operations in one step, replacing while tx > ty: tx -= ty with tx %= ty.
+SEE Images
 
-Otherwise, if say tx > ty and ty <= sy, then we know ty will not be changing (it can only decrease).
-Thus, only tx will change, and it can only change by subtracting by ty. Hence, (tx - sx) % ty == 0 is a necessary
-and sufficient condition for the problem's answer to be True.
 
-The analysis above was for the case tx > ty, but the case ty > tx is similar. When tx == ty, no more moves can be made.
+instead of jumping only ty from tx or tx from ty in one step,
+how much can we jump and to what point, so that we can still reach (sx, sy) without overshooting it ?
 
-Time Complexity: O(log(max(tx,ty))). The analysis is similar to the analysis of the
-Euclidean algorithm, and we assume that the modulo operation can be done in O(1) time.
+Let's call this the 'jump_factor'.
 
-Space Complexity: O(1)O(1).
+tx−jump_factor∗ty>=sx for tx>=ty and
+
+ty−jump_factor∗tx>=sy for tx<ty
+
+Note that the jump factor cannot be 0, else we would be stuck in one place, hence that 'max' factor.
+
 
  */
