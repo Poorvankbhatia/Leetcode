@@ -15,40 +15,27 @@ package dyanamicprogramming.hard;
 public class PalindromePartitioning2 {
 
     public int minCut(String s) {
-
         if(null==s || s.length()==0) {
             return 0;
         }
-
         int n = s.length();
-
         int[] cut = new int[n];
-
         boolean[][] isPalindrome = new boolean[n][n];
-
         for (int i=0;i<n;i++) {
             isPalindrome[i][i] = true;
         }
-
         for (int gap=2;gap<=n;gap++) {
-
             for (int i=0;i<n-gap+1;i++) {
-
                 int j = i+gap-1;
-
                 boolean b = s.charAt(i) == s.charAt(j);
                 if(b && gap==2) {
                     isPalindrome[i][j] = true;
                 } else if(b) {
                     isPalindrome[i][j] = isPalindrome[i+1][j-1];
                 }
-
             }
-
         }
-
         for (int i=0;i<n;i++) {
-
             if(isPalindrome[0][i]) {
                 cut[i] = 0;
             } else {
@@ -60,11 +47,7 @@ public class PalindromePartitioning2 {
                     }
                 }
             }
-
         }
-
-
-
         return cut[n-1];
 
     }

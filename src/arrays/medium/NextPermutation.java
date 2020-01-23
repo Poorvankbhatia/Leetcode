@@ -39,4 +39,8 @@ public class NextPermutation {
         while(i < j) swap(A, i++, j--);
     }
 
+    public static void main(String[] args) {
+        new NextPermutation().nextPermutation(new int[]{3,2,1});
+    }
+
 }

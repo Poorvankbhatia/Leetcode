@@ -50,15 +50,7 @@ public class MergeIntervals {
             return intervals;
         }
 
-        Collections.sort(intervals, (o1, o2) -> {
-            if(o1.start>o2.start) {
-                return 1;
-            } else if(o1.start<o2.start) {
-                return -1;
-            }else {
-                return 0;
-            }
-        });
+        intervals.sort(Comparator.comparingInt(o -> o.start));
 
         result.add(0,intervals.get(0));
         int k=0;

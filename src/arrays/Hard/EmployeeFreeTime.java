@@ -61,16 +61,10 @@ public class EmployeeFreeTime {
 
         List<Interval> intervalList = new ArrayList<>();
         for (List<Interval> intervals : schedule) {
-            for (Interval interval : intervals) {
-                intervalList.add(interval);
-            }
+            intervalList.addAll(intervals);
         }
 
-        Collections.sort(intervalList, (o1, o2) -> {
-            return Integer.compare(o1.start, o2.start);
-
-
-        });
+        intervalList.sort(Comparator.comparingInt(o -> o.start));
 
         int k =0;
 

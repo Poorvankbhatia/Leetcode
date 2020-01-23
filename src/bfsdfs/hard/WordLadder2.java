@@ -35,11 +35,9 @@ import java.util.*;
 public class WordLadder2 {
 
     class Word {
-
         String value;
         List<String> predecessors;
         int level;
-
         public Word(String value, List<String> predecessors, int level) {
             this.value = value;
             this.predecessors = predecessors;
@@ -48,25 +46,16 @@ public class WordLadder2 {
     }
 
     public List<List<String>> findLadders(String beginWord, String endWord, List<String> wordList) {
-
         List<List<String>> result = new ArrayList<>();
-
         HashMap<String,List<String>> wordMap = new HashMap<>();
-
         Set<String> set = new HashSet<>(wordList);
-
-        if(!set.contains(beginWord)) {
-            set.add(beginWord);
-        }
-
+        set.add(beginWord);
         /*
             Preprocess entire children to find words which are only one character away.
          */
         for (String word : set) {
-
             for (int i = 0; i < word.length(); i++) {
                 char[] arr = word.toCharArray();
-
                 for (char c = 'a'; c <= 'z'; c++) {
                     char temp = arr[i];
                     if (arr[i] != c) {
@@ -86,11 +75,8 @@ public class WordLadder2 {
                         }
                     }
                     arr[i] = temp;
-
                 }
-
             }
-
         }
         ladderUtil(beginWord,endWord,set,result,wordMap);
         return result;
@@ -98,31 +84,21 @@ public class WordLadder2 {
     }
 
 
-    private void ladderUtil(String beginWord,String endWord,Set<String>
-            wordList,List<List<String>> result,HashMap<String,List<String>> wordMap) {
-
-
-        if(!wordList.contains(endWord)) {
-            wordList.add(endWord);
-        }
+    private void ladderUtil(String beginWord,String endWord,Set<String> set,List<List<String>> result,HashMap<String,List<String>> wordMap) {
+        set.add(endWord);
         Queue<Word> queue = new LinkedList<>();
         queue.add(new Word(beginWord,null,1));
-
         //The shortest reach value is stored here
         int firstReach = -1;
         //Once a word is used , it should not be used again
         HashSet<String> usedWords = new HashSet<>();
-
         while (!queue.isEmpty()) {
-
             Word current = queue.poll();
             List<String> list = new ArrayList<>();
-
             //As soon as a word is visited once remove it form the set, so that it is not visited again
-            if(wordList.contains(current.value)) {
+            if(set.contains(current.value)) {
                 usedWords.add(current.value);
             }
-
             //When final word is reached
             if(current.value.equals(endWord)) {
                 List<String> finalList= new ArrayList<>(current.predecessors);
@@ -137,17 +113,13 @@ public class WordLadder2 {
                 }
                 continue;
             }
-
             if(current.predecessors !=null) {
                 list = new ArrayList<>(current.predecessors);
             }
-
             List<String> reachList = wordMap.get(current.value);
-
             if(reachList==null) {
                 continue;
             }
-
             for (String oneStepWords : reachList) {
                 if(usedWords.contains(oneStepWords)) {
                     continue;
@@ -157,14 +129,10 @@ public class WordLadder2 {
                 Word newWord = new Word(oneStepWords,parentList,current.level+1);
                 queue.add(newWord);
             }
-
-
         }
-
     }
 
     public static void main(String[] args) {
-
         String beginWord =  "red";
         String endWord =  "tax";
         List<String> list = Arrays.asList("ted","tex","red","tax","tad","den","rex","pee");
