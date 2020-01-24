@@ -59,18 +59,15 @@ public class Maze2 {
         if(maze == null || maze.length == 0 || maze[0].length == 0) {
             return -1;
         }
-
         int m = maze.length;
         int n = maze[0].length;
         int[][] dp = new int[m][n];
         Queue<Pair> que = new LinkedList<>();
-
         que.offer(new Pair(start[0], start[1], 0));
         for(int i = 0; i < m; i++) {
             Arrays.fill(dp[i], Integer.MAX_VALUE);
         }
-
-
+        dp[start[0]][start[1]] = 0;
         while(!que.isEmpty()) {
             Pair cur = que.poll();
             for(int[] dir : dirs) {
@@ -86,22 +83,18 @@ public class Maze2 {
                 nextX -= dir[0];
                 nextY -= dir[1];
                 len--;
-
                 // avoid going through unnecessary cases.
                 if(len > dp[destination[0]][destination[1]]) {
                     continue;
                 }
-
                 if(len < dp[nextX][nextY]) {
                     dp[nextX][nextY] = len;
                     que.offer(new Pair(nextX, nextY, len));
                 }
             }
         }
-
         return dp[destination[0]][destination[1]] == Integer.MAX_VALUE ? -1 : dp[destination[0]][destination[1]];
     }
-
     class Pair {
         int x;
         int y;
@@ -112,10 +105,7 @@ public class Maze2 {
             this.len = len;
         }
     }
-
-
     public static void main(String[] args) {
-
         int[][] arr = new int[][]{
                 {0,0,1,0,0},
                 {0,0,0,0,0},

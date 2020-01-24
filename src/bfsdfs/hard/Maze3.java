@@ -66,7 +66,7 @@ import java.util.PriorityQueue;
 
 public class Maze3 {
 
-    class Point implements Comparable<Point> {
+    class Point {
         int dist;  // distance from ball
         int row;
         int col;
@@ -77,33 +77,26 @@ public class Maze3 {
             this.col = col;
             this.dir = dir;
         }
-        public int compareTo(Point other) {
-            return this.dist == other.dist ? this.dir.compareTo(other.dir) : this.dist - other.dist;
-        }
     }
     public String findShortestWay(int[][] maze, int[] ball, int[] hole) {
         boolean[][] visited = new boolean[maze.length][maze[0].length];
-
-        PriorityQueue<Point> pq = new PriorityQueue<>();
+        PriorityQueue<Point> pq = new PriorityQueue<>((a,b)->(a.dist!=b.dist)?a.dist-b.dist:a.dir.compareTo(b.dir));
         pq.offer(new Point(0, ball[0], ball[1], ""));
 
         // arrays used for exploring 4 directions from a point
         char[] dstr = {'d', 'l', 'r', 'u'};
         int[][] dirs = {{1,0},{0,-1},{0,1},{-1,0}};
-
         while (!pq.isEmpty()) {
-            Point pt = pq.poll();
-            if (pt.row == hole[0] && pt.col == hole[1]) {
-                return pt.dir;
+            Point point = pq.poll();
+            if (point.row == hole[0] && point.col == hole[1]) {
+                return point.dir;
             }
-            visited[pt.row][pt.col] = true;
-
+            visited[point.row][point.col] = true;
             for (int i = 0; i < dirs.length; i++) {
-                int newRow = pt.row;
-                int newCol = pt.col;
-                int dist = pt.dist;
-                String ds = pt.dir;
-
+                int newRow = point.row;
+                int newCol = point.col;
+                int dist = point.dist;
+                String ds = point.dir;
                 // Explore current direction until hitting a wall or the hole
                 while (newRow + dirs[i][0] >= 0 &&
                         newRow + dirs[i][0] < maze.length &&
