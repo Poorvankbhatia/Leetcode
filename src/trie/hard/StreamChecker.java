@@ -53,6 +53,7 @@ public class StreamChecker {
         root = new TrieNode();
         for (String w : words) {
             size = Math.max(w.length(), size);
+            // reverse insertion.
             insert(w, root, w.length() - 1);
         }
     }
@@ -84,6 +85,13 @@ public class StreamChecker {
             }
         }
         return false;
+    }
+
+    public static void main(String[] args) {
+        StreamChecker streamChecker = new StreamChecker(new String[]{"cd"});
+        System.out.println(streamChecker.query('b'));
+        System.out.println(streamChecker.query('c'));
+        System.out.println(streamChecker.query('d'));
     }
 
 }

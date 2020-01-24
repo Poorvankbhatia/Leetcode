@@ -41,9 +41,8 @@ import java.util.*;
  */
 public class RandomizedCollection {
 
-    private Map<Integer,LinkedHashSet<Integer>> map;
-    private List<Integer> list;
-
+    Map<Integer,LinkedHashSet<Integer>> map;
+    List<Integer> list;
     /** Initialize your data structure here. */
     public RandomizedCollection() {
         map = new HashMap<>();
@@ -53,10 +52,8 @@ public class RandomizedCollection {
     /** Inserts a value to the collection. Returns true if the collection did not already contain the specified element. */
     public boolean insert(int val) {
         if(map.containsKey(val)) {
-            LinkedHashSet<Integer> set = map.get(val);
-            set.add(list.size());
+            map.get(val).add(list.size());
             list.add(val);
-            map.put(val,set);
             return false;
         } else {
             LinkedHashSet<Integer> set = new LinkedHashSet<>();
@@ -69,41 +66,26 @@ public class RandomizedCollection {
 
     /** Removes a value from the collection. Returns true if the collection contained the specified element. */
     public boolean remove(int val) {
-        if(!map.containsKey(val)) {
-            return false;
-        } else {
+        if(map.containsKey(val)) {
             LinkedHashSet<Integer> set = map.get(val);
             int indexToBeReplaced = set.iterator().next();
-            int lastVal = list.get(list.size() - 1);
-            list.set(indexToBeReplaced, lastVal);
-            if(set.size()==1) {
-                map.remove(val);
-                // We need to update the positions of the different last element
-                if(indexToBeReplaced!=list.size()-1) {
-                    LinkedHashSet<Integer> lastElementSet = map.get(lastVal);
-                    lastElementSet.remove(list.size()-1);
-                    lastElementSet.add(indexToBeReplaced);
-                    map.put(lastVal,lastElementSet);
-                }
-                list.remove(list.size()-1);
-
+            int lastVal = list.get(list.size()-1);
+            list.set(indexToBeReplaced,lastVal);
+            if(lastVal==val) {
+                set.remove(list.size()-1);
+            } else {
+                LinkedHashSet<Integer> newSet = map.get(lastVal);
+                newSet.add(indexToBeReplaced);
+                newSet.remove(list.size()-1);
+                set.remove(indexToBeReplaced);
             }
-            else {
-                if(lastVal==val) {
-                    set.remove(list.size()-1);
-                } else {
-                    //Updating positions of last element as above
-                    LinkedHashSet<Integer> lastElementSet = map.get(lastVal);
-                    lastElementSet.remove(list.size()-1);
-                    lastElementSet.add(indexToBeReplaced);
-                    map.put(lastVal,lastElementSet);
-                    set.remove(indexToBeReplaced);
-                }
-                map.put(val,set);
-                list.remove(list.size()-1);
+            list.remove(list.size()-1);
+            if(map.get(val).size()==0) {
+                map.remove(val);
             }
             return true;
         }
+        return false;
     }
 
     /** Get a random element from the collection. */
@@ -114,17 +96,17 @@ public class RandomizedCollection {
     public static void main(String[] args) {
         RandomizedCollection randomizedCollection = new RandomizedCollection();
 
-        System.out.println(randomizedCollection.insert(9));
-        System.out.println(randomizedCollection.insert(9));
         System.out.println(randomizedCollection.insert(1));
         System.out.println(randomizedCollection.insert(1));
         System.out.println(randomizedCollection.insert(2));
         System.out.println(randomizedCollection.insert(1));
+        System.out.println(randomizedCollection.insert(2));
+        System.out.println(randomizedCollection.insert(2));
+        System.out.println(randomizedCollection.remove(1));
         System.out.println(randomizedCollection.remove(2));
-        System.out.println(randomizedCollection.remove(1));
-        System.out.println(randomizedCollection.remove(1));
-        System.out.println(randomizedCollection.insert(9));
-        System.out.println(randomizedCollection.remove(1));
+        System.out.println(randomizedCollection.remove(2));
+        System.out.println(randomizedCollection.remove(2));
+        //System.out.println(randomizedCollection.remove(1));
     }
 
 }
