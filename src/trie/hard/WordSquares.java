@@ -71,54 +71,41 @@ import java.util.*;
 public class WordSquares {
 
     Trie<String> trie;
-
     public List<List<String>> wordSquares(String[] words) {
-
         List<List<String>> result = new ArrayList<>();
-
         trie = new Trie<>();
         for (String word : words) {
             trie.put(word,word);
         }
-
         int length = words[0].length();
-
         List<String> list = new ArrayList<>();
         for (String word : words) {
             list.add(word);
             dfs(length,result,list);
             list.remove(list.size()-1);
         }
-
         return result;
-
     }
 
     private void  dfs(int length,List<List<String>> result,List<String> list) {
-
         if(list.size()==length) {
             result.add(new ArrayList<>(list));
             return;
         }
-
         int index = list.size();
         StringBuilder newPrefix = new StringBuilder();
         for (String w : list) {
             newPrefix.append(w.charAt(index));
         }
-
         List<String> nextWords = trie.keysWithPrefix(newPrefix.toString());
         if(nextWords.isEmpty()) {
             return;
         }
-
-
         for (String nextWord : nextWords) {
             list.add(nextWord);
             dfs(length, result, list);
             list.remove(list.size()-1);
         }
-
     }
 
     public static void main(String[] args) {

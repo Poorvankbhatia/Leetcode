@@ -39,7 +39,6 @@ public class SurroundedRegions {
                 }
             }
         }
-
         for (int i=0;i<m;i++) {
             for (int j=0;j<n;j++) {
                 if(board[i][j]=='B') {
@@ -49,9 +48,7 @@ public class SurroundedRegions {
                 }
             }
         }
-
     }
-
     private void dfs(char[][] grid,int i,int j,boolean[][] visited) {
         if(i<0 || j<0 || i>=grid.length || j>=grid[0].length || visited[i][j] || grid[i][j]=='X') {
             return;
@@ -66,7 +63,6 @@ public class SurroundedRegions {
             dfs(grid,nextX,nextY,visited);
         }
     }
-
     public static void main(String[] args) {
         char[][] board = {
                 {'X','O','O','X'},
@@ -76,8 +72,6 @@ public class SurroundedRegions {
         };
         new SurroundedRegions().solve(board);
     }
-
-
 }
 
 

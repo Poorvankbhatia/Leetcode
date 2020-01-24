@@ -43,6 +43,10 @@ public class SolveEquation {
     }
 
     private int[] evaluate(String str){
+        /*
+        str.split(""); split exp by 0-length string ("a+b-c" to "a", "+", "b", "-", "c")
+        str.split("(?=[-+])");split exp by 0-length string only if they are follow by "-" or "+" ("a+b-c" to "a", "+b", "-c")
+         */
         String[] tokens = str.split("(?=[+-])");  // ()for match group; ?= for match and include in res; [+-] means + or -;
         int[] res = new int[2]; // coefficient for x;  coefficient for constant
         for(String token : tokens) {

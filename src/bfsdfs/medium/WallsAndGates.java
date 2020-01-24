@@ -28,20 +28,14 @@ package bfsdfs.medium;
  * Created by poorvank.b on 31/12/17.
  */
 public class WallsAndGates {
-
     private static int INF = Integer.MAX_VALUE;
-
     public void wallsAndGates(int[][] rooms) {
-
         if(rooms==null || rooms.length==0) {
             return;
         }
-
         int m = rooms.length;
         int n = rooms[0].length;
-
         boolean[][] visited = new boolean[m][n];
-
         for (int i=0;i<m;i++) {
             for (int j=0;j<n;j++) {
                if(rooms[i][j]==0) {
@@ -49,30 +43,19 @@ public class WallsAndGates {
                }
             }
         }
-
-
     }
-
-
     private void dfs(int x,int y,int distance,boolean[][] visited,int[][] rooms,int m,int n) {
-
         if(x<0 || x>=m || y<0 || y>=n || visited[x][y] || rooms[x][y]==-1 || distance>rooms[x][y]) {
             return;
         }
-
         visited[x][y] = true;
         rooms[x][y] = distance;
-
         dfs(x,y+1,distance+1,visited,rooms,m,n);
         dfs(x,y-1,distance+1,visited,rooms,m,n);
         dfs(x+1,y,distance+1,visited,rooms,m,n);
         dfs(x-1,y,distance+1,visited,rooms,m,n);
-
         visited[x][y] = false;
-
-
     }
-
     public static void main(String[] args) {
         int[][] rooms = new int[][] {
                 {INF,-1,0,INF},
@@ -88,9 +71,7 @@ public class WallsAndGates {
             System.out.println();
         }
     }
-
 }
-
 /*
 
  We can start from each gate (0 point), and searching for its neighbors. We can either use DFS or BFS solution.
