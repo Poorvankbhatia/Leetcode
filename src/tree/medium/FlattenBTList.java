@@ -37,43 +37,30 @@ import java.util.Stack;
 public class FlattenBTList {
 
     public void flatten(TreeNode root) {
-
         if(root==null) {
             return;
         }
-
         Stack<TreeNode> stack = new Stack<>();
         stack.push(root);
-
         TreeNode prev = null;
-
         while (!stack.isEmpty()) {
-
             TreeNode current = stack.pop();
-
             if(prev!=null) {
                 prev.right = current;
                 prev.left = null;
             }
-
             prev = current;
-
             if(current.right!=null) {
                 stack.push(current.right);
             }
-
             if(current.left!=null) {
                 stack.push(current.left);
             }
-
-
         }
-
         while (root!=null) {
             System.out.println(root.right);
             root = root.right;
         }
-
     }
 
 }
