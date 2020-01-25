@@ -19,23 +19,17 @@ package dyanamicprogramming.hard;
 public class InterleavingStrings {
 
     public boolean isInterleave(String s1, String s2, String s3) {
-
         if(s3.length()!=s1.length()+s2.length()) {
             return false;
         }
-
         int m = s1.length();
         int n = s2.length();
-
         boolean[][] invalid = new boolean[m+1][n+1];
         return util(s1,s2,s3,0,0,0,invalid);
-
-
     }
 
     private boolean util(String s1,String s2,String s3,int i,int j,
                          int k,boolean[][] invalid){
-
         if(invalid[i][j]) {
             return false;
         }
@@ -44,13 +38,10 @@ public class InterleavingStrings {
         }
         boolean valid =  (i<s1.length() &&s1.charAt(i)==s3.charAt(k) && util(s1,s2,s3,i+1,j,k+1,invalid)) ||
                 (j<s2.length() && s2.charAt(j)==s3.charAt(k) && util(s1,s2,s3,i,j+1,k+1,invalid));
-
         if(!valid) {
             invalid[i][j]=true;
         }
-
         return valid;
-
     }
 
     public static void main(String[] args) {
@@ -60,6 +51,15 @@ public class InterleavingStrings {
 }
 
 /*
+
+To solve this problem, let's look at if s1[0 ~ i] s2[0 ~ j] can be interleaved to s3[0 ~ k].
+
+Start from indices0, 0, 0 and compare s1[i] == s3[k] or s2[j] == s3[k]
+Return valid only if either i or j match k and the remaining is also valid
+Caching is the key to performance. This is very similar to top down dp
+Only need to cache invalid[i][j] since most of the case s1[0 ~ i] and s2[0 ~ j] does not form s3[0 ~ k]. Also tested caching valid[i][j] the run time is also 1ms
+
+
 "aa"
 "ab"
 "aaba"
