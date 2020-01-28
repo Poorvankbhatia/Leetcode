@@ -55,7 +55,6 @@ public class UniquePaths3 {
         }
         int m = grid.length;
         int n = grid[0].length;
-
         int[] start = new int[2];
         int[] end = new int[2];
         int space=0;
@@ -72,21 +71,16 @@ public class UniquePaths3 {
                 }
             }
         }
-
         return util(grid,start,end,space,-1);
-
     }
 
     private int util(int[][] grid,int[] start,int[] end,int space,int current) {
-
         if(start[0]==end[0] && start[1]==end[1] && current==space) {
             return 1;
         }
-
         if(start[0]==end[0] && start[1]==end[1]) {
             return 0;
         }
-
         int count=0;
         int val = grid[start[0]][start[1]];
         grid[start[0]][start[1]]=-1;
@@ -97,10 +91,8 @@ public class UniquePaths3 {
                 count+=util(grid,new int[]{nextX,nextY},end,space,current+1);
             }
         }
-
         grid[start[0]][start[1]]=val;
         return count;
-
     }
 
     public static void main(String[] args) {
@@ -111,5 +103,4 @@ public class UniquePaths3 {
         };
         System.out.println(new UniquePaths3().uniquePathsIII(a));
     }
-
 }
