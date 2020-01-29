@@ -20,6 +20,10 @@ Input: x = 5, y = 5
 Output: 4
 Explanation: [0, 0] → [2, 1] → [4, 2] → [3, 4] → [5, 5]
 
+Constraints:
+
+|x| + |y| <= 300
+
  */
 package bfsdfs.medium;
 
@@ -37,10 +41,8 @@ public class KnightMoves {
         int[] dr = new int[]{-1, -1, 1, 1, -2, -2, 2, 2};
         int[] dc = new int[]{-2, 2, -2, 2, -1, 1, -1, 1};
         HashSet<Integer> visited = new HashSet<>();
-
         while(!queue.isEmpty()) {
             int size = queue.size();
-
             while(size-- > 0) {
                 int[] curr = queue.remove();
                 if(curr[0] == x && curr[1] == y) {

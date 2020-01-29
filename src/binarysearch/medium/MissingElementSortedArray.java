@@ -36,40 +36,33 @@ package binarysearch.medium;
 public class MissingElementSortedArray {
 
     public int missingElement(int[] nums, int k) {
-        int n = nums.length;
-        int l = 0;
-        int h = n - 1;
-        int missingNum = nums[n - 1] - nums[0] + 1 - n;
 
-        if (missingNum < k) {
-            return nums[n - 1] + k - missingNum;
+        // assume nums is not empty
+        int left = 0;
+        int right = nums.length-1;
+        int count = getMissingCount(nums, right);
+        if(k > count) {
+            return nums[right] + k - count;
         }
-
-        while (l < h - 1) {
-            int m = l + (h - l) / 2;
-            int missing = nums[m] - nums[l] - (m - l);
-
-            if (missing >= k) {
-                // when the number is larger than k, then the index won't be located in (m, h]
-                h = m;
+        while(left < right) {
+            int mid = left + (right - left) /2 ;
+            count = getMissingCount(nums, mid);
+            if(count >= k){
+                right = mid;
             } else {
-                // when the number is smaller than k, then the index won't be located in [l, m), update k -= missing
-                k -= missing;
-                l = m;
+                left = mid + 1;
             }
         }
+        return nums[left-1] + k - getMissingCount(nums, left-1);
+    }
 
-        return nums[l] + k;
+    /*Total range of numbers present - n */
+    private int getMissingCount(int[] nums, int index){
+        return nums[index] - nums[0] - index;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(new MissingElementSortedArray().missingElement(new int[]{4,7,9,10,13,15,16,18,19},4));
     }
 
 }
-
-/*
-
-Let missingNum be amount of missing number in the array. Two cases that need to be handled:
-
-missingNum < k, then return nums[n - 1] + k - missingNum
-missingNum >= k, then use binary search(during the search k will be updated) to find the index in the array,
-where the kth missing number will be located in (nums[index], nums[index + 1]), return nums[index] + k
-
- */
