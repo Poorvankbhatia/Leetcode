@@ -45,48 +45,40 @@ import java.util.List;
 public class PancakeSorting {
 
     public List<Integer> pancakeSort(int[] A) {
-        List<Integer> result = new ArrayList<>();
-        if(A==null || A.length==0) {
-            return result;
+        List<Integer> list = new ArrayList<>();
+        for(int end = A.length - 1; end >= 0; end--){
+            int largest = findLargest(A, end);
+            if(largest == end) {
+                continue;
+            }
+            swap(A, largest);
+            swap(A, end);
+            list.add(largest + 1);
+            list.add(end + 1);
         }
-        int n = A.length;
-        for(int i=n-1;i>=0;i--) {
-
-            int maxIndex = findMax(A,i);
-            if(maxIndex!=i) {
-
-                if(maxIndex!=0) {
-                    result.add(maxIndex+1);
-                    rev(A,maxIndex);
-                }
-
-                result.add(i+1);
-                rev(A,i);
-
+        return list;
+    }
+    private int findLargest(int[]A, int lastIdx){
+        int max = Integer.MIN_VALUE, index = 0;
+        for(int i = 0; i <= lastIdx; i++){
+            if(A[i] > max){
+                max = A[i];
+                index = i;
             }
         }
-        return result;
+        return index;
     }
-
-    private int findMax(int[] array, int n) {
-        int maxIndex = 0;
-        for (int i = 1; i <= n; i++) {
-            if (array[maxIndex] < array[i]) {
-                maxIndex = i;
-            }
-        }
-        return maxIndex;
-    }
-
-    private void rev(int[] array, int i) {
+    private void swap(int[] A, int end){
         int start = 0;
-        while (start < i) {
-            int temp = array[start];
-            array[start] = array[i];
-            array[i] = temp;
-            start++;
-            i--;
+        while(start < end){
+            int tmp = A[0];
+            A[start++] = A[end];
+            A[end--] = tmp;
         }
+    }
+
+    public static void main(String[] args) {
+        System.out.println(new PancakeSorting().pancakeSort(new int[]{3,2,4,1}));
     }
 
 }
