@@ -63,6 +63,9 @@ public class CarPooling {
 
 }
 /*
+
+SIMILAR TO MY CALENDER.
+
 Save all time points and the change on current capacity
 Sort all the changes on the key of time points.
 Track the current capacity and return false if negative
@@ -73,14 +76,19 @@ Space O(N)
 O(N) sol:
 
 public boolean carPooling(int[][] trips, int capacity) {
-  int stops[] = new int[1001];
-  for (int t[] : trips) {
-      stops[t[1]] += t[0];
-      stops[t[2]] -= t[0];
-  }
-  for (int i = 0; capacity >= 0 && i < 1001; ++i) capacity -= stops[i];
-  return capacity >= 0;
-}
+        int[] arr = new int[10001];
+        for(int[] trip : trips){
+            arr[trip[1]]-=trip[0];
+            arr[trip[2]]+=trip[0];
+        }
+        for(int i=0;i<10001;i++) {
+            capacity+= arr[i];
+            if(capacity<0) {
+                return false;
+            }
+        }
+        return true;
+    }
 
 Since we only have 1,001 stops, we can just figure out how many people get it and out in each location.
 
