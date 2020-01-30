@@ -60,20 +60,3 @@ public class LongestArithmeticSequence {
         return max+1; // Since the first Diff is not stored.
     }
 }
-
-/*
-
-Each cell is a hashmap with difference as key and length as value.
-Without using extra space:
-
-public int longestSubsequence(int[] arr, int difference) {
-		HashMap<Integer, Integer> dp = new HashMap<>();
-		int longest = 0;
-		for(int i=0; i<arr.length; i++) {
-			dp.put(arr[i], dp.getOrDefault(arr[i] - difference, 0) + 1);
-			longest = Math.max(longest, dp.get(arr[i]));
-		}
-		return longest;
-	}
-
- */
