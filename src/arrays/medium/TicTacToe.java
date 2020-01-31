@@ -88,7 +88,7 @@ public class TicTacToe {
             diagonal += toAdd;
         }
 
-        if (col == (cols.length - row - 1))
+        if (col == (cols.length - row - 1)) // or we can also use (row+col==n-1)
         {
             antiDiagonal += toAdd;
         }
