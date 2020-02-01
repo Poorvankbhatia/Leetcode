@@ -62,6 +62,13 @@ public class InsertIntoCyclicSortedList {
                 || ((curr.next.val < curr.val) && (insertVal <= curr.next.val || insertVal >= curr.val));
     }
 
+    public static void main(String[] args) {
+        InsertIntoCyclicSortedList insertIntoCyclicSortedList = new InsertIntoCyclicSortedList();
+        Node head = insertIntoCyclicSortedList.insert(null,2);
+        insertIntoCyclicSortedList.insert(head,1);
+        insertIntoCyclicSortedList.insert(head,3);
+    }
+
 }
 /*
 

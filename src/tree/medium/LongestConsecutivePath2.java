@@ -30,42 +30,30 @@ import tree.TreeNode;
  * Created by poorvank.b on 09/04/17.
  */
 public class LongestConsecutivePath2 {
-
     private int max = 0;
-
     private class Result {
-
         TreeNode node;
         int increasing;
         int decreasing;
-
-        public Result() {
-        }
     }
 
     public int longestConsecutive(TreeNode root) {
-
         if(root==null) {
             return 0;
         }
-
         longestConsecutiveUtil(root);
         return max;
 
     }
 
     private Result longestConsecutiveUtil(TreeNode node) {
-
         if (node == null) return null;
-
         Result left = longestConsecutiveUtil(node.left);
         Result right = longestConsecutiveUtil(node.right);
-
         Result current = new Result();
         current.node = node;
         current.increasing = 1;
         current.decreasing = 1;
-
         if (left != null) {
             if (node.val - left.node.val == 1) {
                 current.decreasing = Math.max(current.decreasing, left.decreasing + 1);
@@ -74,7 +62,6 @@ public class LongestConsecutivePath2 {
                 current.increasing = Math.max(current.increasing, left.increasing + 1);
             }
         }
-
         if (right != null) {
             if (node.val - right.node.val == 1) {
                 current.decreasing = Math.max(current.decreasing, right.decreasing + 1);
@@ -83,11 +70,8 @@ public class LongestConsecutivePath2 {
                 current.increasing = Math.max(current.increasing, right.increasing + 1);
             }
         }
-
         max = Math.max(max, current.increasing + current.decreasing - 1);
-
         return current;
-
     }
 
 

@@ -1,4 +1,4 @@
-/*
+  /*
 
 Given a nested list of integers, return the sum of all integers in the list weighted by their depth.
 
