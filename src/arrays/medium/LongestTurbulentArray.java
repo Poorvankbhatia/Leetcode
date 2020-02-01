@@ -58,6 +58,8 @@ public class LongestTurbulentArray {
 
 /*
 
+Similar to wiggle subsequence
+
 inc: The length of sequence which ends with two incresing numbers
 dec: The length of sequence which ends with two decreasing numbers
 
