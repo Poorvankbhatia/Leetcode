@@ -30,66 +30,19 @@ import java.util.Arrays;
  * Created by poorvank on 29/11/16.
  */
 public class Arrows {
-
-    private class Balloon implements Comparable<Balloon> {
-        int start;
-        int end;
-
-        public Balloon(int start, int end) {
-            this.start = start;
-            this.end = end;
-        }
-
-        public int compareTo(Balloon balloon) {
-            if(this.end>balloon.end) {
-                return 1;
-            } else if(this.end<balloon.end) {
-                return -1;
-            } else {
-                if(this.start>balloon.start) {
-                    return 1;
-                } else if(this.start<balloon.start) {
-                    return -1;
-                } else {
-                    return 0;
-                }
-            }
-        }
-
-    }
-
     public int findMinArrowShots(int[][] points) {
-
-        int rows = points.length;
-
-        if(rows==0){
-            return 0;
-        }
-
-        Balloon[] balloons = new Balloon[rows];
-
-        for (int i=0;i<rows;i++) {
-            balloons[i] = new Balloon(points[i][0],points[i][1]);
-        }
-
-        Arrays.sort(balloons);
-
-        int minArrows = 1;
-        int end = balloons[0].end;
-
-        for (int i=1;i<balloons.length;i++) {
-            if(balloons[i].start<=end) {
-                continue;
-            } else {
-                minArrows++;
-                end = balloons[i].end;
+        if(points.length==0) return 0;
+        Arrays.sort(points,(a,b)->(b[1]!=a[1]?a[1]-b[1]:b[0]-a[0]));
+        int count=1;
+        int end=points[0][1];
+        for(int i=1;i<points.length;i++) {
+            if(points[i][0]>end) {
+                count++;
+                end = points[i][1];
             }
         }
-
-        return minArrows;
-
+        return count;
     }
-
 }
 
 /*
@@ -97,6 +50,11 @@ public class Arrows {
 1.Sort balloon diameter by ending points
 2.Only count valid intervals we need, and skip overlapping intervals
 return the count
+
+Merge Intervals
+Non-overlapping Intervals
+Meeting Rooms
+Meeting Rooms II
 
  */
 
