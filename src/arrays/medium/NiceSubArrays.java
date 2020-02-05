@@ -59,8 +59,14 @@ public class NiceSubArrays {
         return count;
     }
 
+    public static void main(String[] args) {
+        System.out.println(new NiceSubArrays().numberOfSubarrays(new int[]{3, 2, 3, 2},1));
+    }
+
 }
 /*
+
+Also check SubArraysWithKDistinctIntegers.
 
 Another solution:
 public int numberOfSubarrays(int[] nums, int k) {

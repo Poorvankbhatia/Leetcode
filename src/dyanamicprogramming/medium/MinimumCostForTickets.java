@@ -66,7 +66,7 @@ public class MinimumCostForTickets {
             }
             int min;
             min = minCost[day-1] + costs[0];
-            min =Math.min(min, minCost[Math.max(0, day-7)] + costs[1]);
+            min = Math.min(min, minCost[Math.max(0, day-7)] + costs[1]);
             min = Math.min(min, minCost[Math.max(0, day-30)] + costs[2]);
             minCost[day] = min;
         }

@@ -112,6 +112,16 @@ public class OptimalAccountBalancing {
             }
         }
     }
+
+    public static void main(String[] args) {
+        int[][] a = new int[][]{
+                {1,0,5},
+                {1,2,20},
+                {3,4,2},
+                {3,5,1}
+        };
+        System.out.println(new OptimalAccountBalancing().minTransfers(a));
+    }
 }
 
 /*

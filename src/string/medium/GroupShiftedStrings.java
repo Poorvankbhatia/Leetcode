@@ -22,8 +22,6 @@ public class GroupShiftedStrings {
 
     public List<List<String>> groupStrings(String[] strings) {
 
-        List<List<String>> result = new ArrayList<>();
-
         Map<String,List<String>> map = new HashMap<>();
         for (String string : strings) {
             String h = hash(string);
@@ -40,9 +38,7 @@ public class GroupShiftedStrings {
             Collections.sort(entry.getValue());
         }
 
-        result.addAll(map.values());
-
-        return result;
+        return new ArrayList<>(map.values());
     }
 
     private String hash(String s) {

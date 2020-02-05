@@ -124,9 +124,13 @@ A ? ? A ? ? A
 We can see that A separated slots into (count(A) - 1) = 2 parts, each part has length n.
 With the fact that A is the task with most frequency, it should need more idles than any
 other tasks. In this case if we can get how many idles we need to arrange A, we will also
-get number of idles needed to arrange all tasks. Calculating this is not hard, we first
-get number of parts separated by A: partCount = count(A) - 1; then we can know number of
-empty slots: emptySlots = partCount * n; we can also get how many tasks we have to put
+get number of idles needed to arrange all tasks.
+
+Calculating this is not hard, we first
+get number of parts separated by A: partCount = count(A) - 1;
+then we can know number of
+empty slots: emptySlots = partCount * n;
+we can also get how many tasks we have to put
 into those slots: availableTasks = tasks.length - count(A). Now if we have emptySlots > availableTasks
 which means we have not enough tasks available to fill all empty slots, we must fill them with idles.
 Thus we have idles = max(0, emptySlots - availableTasks);

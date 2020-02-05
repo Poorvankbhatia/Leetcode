@@ -41,7 +41,9 @@ public class MutatedArrayClosestToTarget {
             sum += a;
             max = Math.max(max, a);
         }
-        if (sum == target) return max;
+        if (sum == target) {
+            return max;
+        }
         int min = 0, res = 1,diff = Integer.MAX_VALUE;
         // The answer would lie between 0 and maximum value in the array.
         while (min <= max) {

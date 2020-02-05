@@ -28,6 +28,7 @@ package arrays.Hard;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Map;
 
 public class SubMatrixSum {
 
@@ -50,25 +51,21 @@ public class SubMatrixSum {
         return ans;
     }
 
-    private int subCount(int[] temp,int target) {
-        HashMap<Integer, Integer> prevSum = new HashMap<>();
+    private int subCount(int[] input,int k) {
+        int sum = 0, result = 0;
+        Map<Integer, Integer> preSum = new HashMap<>();
+        preSum.put(0, 1);
 
-        int res = 0;
-        int currentSum = 0;
-
-        for (int t : temp) {
-
-            currentSum += t;
-            if (currentSum == target) {
-                res++;
+        for (int anInput : input) {
+            sum += anInput;
+            if (preSum.containsKey(sum - k)) {
+                result += preSum.get(sum - k);
             }
-            if (prevSum.containsKey(currentSum - target)) {
-                res += prevSum.get(currentSum - target);
-            }
-            prevSum.merge(currentSum, 1, (a, b) -> a + b);
+            // for cases like [0,0,0,0,0,0,0,0,0]
+            preSum.put(sum, preSum.getOrDefault(sum, 0) + 1);
         }
 
-        return res;
+        return result;
     }
 
     public static void main(String[] args) {

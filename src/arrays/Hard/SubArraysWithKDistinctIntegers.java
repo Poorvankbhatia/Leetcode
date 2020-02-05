@@ -72,6 +72,8 @@ public class SubArraysWithKDistinctIntegers {
 }
 /*
 
+Also check nice subarrays.
+
 to get the number of subarrays with at most K distinct elements.
 Then f(exactly K) = f(atMost K) - f(atMost K-1).
 
