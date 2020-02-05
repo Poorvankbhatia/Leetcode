@@ -30,24 +30,20 @@ public class StudentAttendanceRecord2 {
     public int checkRecord(int n) {
         long[] EndingWithP = new long[n+1];
         long[] EndingWithL = new long[n+1];
-
-        EndingWithP[0]=1L;EndingWithL[0]=0L;EndingWithP[1]=1L;EndingWithL[1]=1L;
-
+        EndingWithP[0]=1L;
+        EndingWithL[0]=0L;
+        EndingWithP[1]=1L;
+        EndingWithL[1]=1L;
         for(int i=2;i<=n;i++) {
             EndingWithP[i]=(EndingWithP[i-1]+EndingWithL[i-1])%mod;
             EndingWithL[i]=(EndingWithP[i-1]+EndingWithP[i-2])%mod;
         }
-
         long ans = (EndingWithP[n]+EndingWithL[n])%mod;
-
         for(int i=0;i<n;i++) {
             long temp = ((EndingWithP[i]+EndingWithL[i])%mod * (EndingWithP[n-i-1]+EndingWithL[n-i-1])%mod)%mod;
             ans=(ans+temp)%mod;
         }
-
         return (int)ans;
-
-
     }
 
     public static void main(String[] args) {
