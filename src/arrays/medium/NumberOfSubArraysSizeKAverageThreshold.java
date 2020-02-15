@@ -38,7 +38,7 @@ Constraints:
  */
 package arrays.medium;
 
-public class NumberOfSubArrays {
+public class NumberOfSubArraysSizeKAverageThreshold {
 
     public int numOfSubarrays(int[] arr, int k, int threshold) {
         int count = 0;
@@ -58,7 +58,7 @@ public class NumberOfSubArrays {
     }
 
     public static void main(String[] args) {
-        System.out.println(new NumberOfSubArrays().numOfSubarrays(new int[]{7,7,7,7,7,7,7},7,7));
+        System.out.println(new NumberOfSubArraysSizeKAverageThreshold().numOfSubarrays(new int[]{7,7,7,7,7,7,7},7,7));
     }
 
 }

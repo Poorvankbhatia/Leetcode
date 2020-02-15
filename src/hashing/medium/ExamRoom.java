@@ -51,13 +51,10 @@ public class ExamRoom {
     }
 
     public int seat() {
-
         int pos=0;
         if(set.size()>0) {
-
             Integer prev=null;
             int d = set.first();
-
             for (int p : set) {
                 if(prev!=null) {
                     int distance = (p-prev)/2;
@@ -68,19 +65,26 @@ public class ExamRoom {
                 }
                 prev=p;
             }
-
             if(N-1-set.last()>d) {
                 pos=N-1;
             }
-
         }
         set.add(pos);
         return pos;
-
     }
 
     public void leave(int p) {
         set.remove(p);
+    }
+
+    public static void main(String[] args) {
+        ExamRoom er = new ExamRoom(9);
+        System.out.println(er.seat());
+        System.out.println(er.seat());
+        System.out.println(er.seat());
+        System.out.println(er.seat());
+        System.out.println(er.seat());
+        System.out.println(er.seat());
     }
 
 }

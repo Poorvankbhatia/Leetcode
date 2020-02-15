@@ -64,15 +64,11 @@ public class PathSum4 {
     private int util(int prevSum,int left,int right) {
 
         int leftSum = 0,rightSum=0;
-        if(!map.containsKey(left)) {
-            leftSum = 0;
-        } else {
+        if (map.containsKey(left)) {
             leftSum = util(map.get(left)+prevSum,getLeftIndex(left),getRightIndex(left));
         }
 
-        if(!map.containsKey(right)) {
-            rightSum = 0;
-        } else {
+        if (map.containsKey(right)) {
             rightSum =  util(map.get(right)+prevSum,getLeftIndex(right),getRightIndex(right));
         }
 
