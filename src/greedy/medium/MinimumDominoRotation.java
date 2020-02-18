@@ -9,7 +9,8 @@ Return the minimum number of rotations so that all the values in A are the same,
 
 If it cannot be done, return -1.
 
-Input: A = [2,1,2,4,2,2], B = [5,2,6,2,3,2]
+Input: A = [2,1,2,4,2,2],
+       B = [5,2,6,2,3,2]
 Output: 2
 Explanation:
 The first figure represents the dominoes as given by A and B: before we do any rotations.

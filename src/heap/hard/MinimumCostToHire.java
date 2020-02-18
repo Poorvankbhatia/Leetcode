@@ -52,7 +52,7 @@ public class MinimumCostToHire {
             qualityRatio[i][1] = (double) wage[i] / quality[i];
         }
 
-        Arrays.sort(qualityRatio, (a, b) -> Double.compare(a[1], b[1]));
+        Arrays.sort(qualityRatio, Comparator.comparingDouble(a -> a[1]));
         double minSumSalary = Integer.MAX_VALUE;
         int sumQuality = 0;;
 

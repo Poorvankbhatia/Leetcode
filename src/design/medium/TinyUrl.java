@@ -17,7 +17,6 @@ public class TinyUrl {
 
     // Encodes a URL to a shortened URL.
     public String encode(String longUrl) {
-
         String conversionString = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         int currentId = id;
         StringBuilder stringBuilder = new StringBuilder();
@@ -26,24 +25,16 @@ public class TinyUrl {
             stringBuilder.append(conversionString.charAt(mod));
             currentId /= 62;
         }
-
         map.put(id,longUrl);
-
-
         id++;
-
         return stringBuilder.reverse().toString();
-
     }
 
     // Decodes a shortened URL to its original URL.
     public String decode(String shortUrl) {
         int id = 0,k=62;
-
         for (int i=0;i<shortUrl.length();i++) {
-
             char c = shortUrl.charAt(i);
-
             if('a'<= c && c<='z') {
                 id += (id*k) + c-'a';
             }
@@ -53,11 +44,8 @@ public class TinyUrl {
             if('0'<= c && c<='9') {
                 id += (id*k) + c-'0' + 52;
             }
-
         }
-
         return map.get(id);
-
     }
 
     public static void main(String[] args) {
