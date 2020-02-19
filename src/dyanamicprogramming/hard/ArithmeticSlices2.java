@@ -47,16 +47,17 @@ public class ArithmeticSlices2 {
 
     public int numberOfArithmeticSlices(int[] A) {
         int n = A.length;
-        Map<Integer,Integer>[] maps = new Map[n];
         int res=0;
-        for (int i=0;i<n;i++) {
-            maps[i]=new HashMap<>();
-            for (int j=0;j<i;j++) {
-                if((long)A[i]-A[j]>Integer.MAX_VALUE) continue;
-                if((long)A[i]-A[j]<Integer.MIN_VALUE) continue;
+        Map<Integer,Integer>[] arr = new Map[n];
+        for(int i=0;i<n;i++) {
+            arr[i] = new HashMap<>();
+            for(int j=0;j<i;j++) {
+                if((long)A[i]-A[j]>Integer.MAX_VALUE || (long)A[i]-A[j]<Integer.MIN_VALUE) {
+                    continue;
+                }
                 int diff = A[i]-A[j];
-                int count = maps[j].getOrDefault(diff,0);
-                maps[i].put(diff,maps[i].getOrDefault(diff,0)+count+1);
+                int count = arr[j].getOrDefault(diff,0);
+                arr[i].put(diff,arr[i].getOrDefault(diff,0)+count+1);
                 res+=count;
             }
         }
