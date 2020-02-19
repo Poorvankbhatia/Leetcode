@@ -46,7 +46,7 @@ public class ConstructArrayWithMultipleSums {
             return false;
         }
         long sum = 0;
-        Queue<Long> pq = new PriorityQueue<Long>((a, b) ->{return (int) (b - a);});
+        Queue<Long> pq = new PriorityQueue<>((a, b) -> (int) (b - a));
         for (int a : A) {
             pq.offer((long)a);
             sum += a;

@@ -45,4 +45,8 @@ public class ArithmeticSlices {
         return sum;
     }
 
+    public static void main(String[] args) {
+        System.out.println(new ArithmeticSlices().numberOfArithmeticSlices(new int[]{2,4,6,8,10}));
+    }
+
 }
