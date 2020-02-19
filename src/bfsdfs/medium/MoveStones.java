@@ -39,59 +39,52 @@ import java.util.Map;
  */
 public class MoveStones {
 
-    private int count=0;
-    private Map<String,String> parent = new HashMap<>();
-    private Map<String,Integer> size = new HashMap<>();
+    private Map<int[],int[]> parentMap = new HashMap<>();
+    private Map<int[],Integer> sizeMap = new HashMap<>();
+    private int count;
     public int removeStones(int[][] stones) {
         count = stones.length;
-
         for(int[] stone : stones) {
-            String s = stone[0]+" "+stone[1];
-            parent.put(s,s);
-            size.put(s,1);
+            parentMap.put(stone,stone);
+            sizeMap.put(stone,1);
         }
-
-        for (int[] stone : stones) {
-            for (int[] stone1 : stones) {
-                if (stone[0] == stone1[0] || stone[1] == stone1[1]) {
-                    union(parent, stone, stone1);
+        for(int[] s1 : stones) {
+            for(int[] s2: stones) {
+                if(s1[0]==s2[0] || s1[1]==s2[1]) {
+                    union(s1,s2);
                 }
             }
         }
-        System.out.println(count);
 
         return stones.length-count;
-
     }
 
-    private String find(String p) {
-        while(!p.equals(parent.get(p))) {
-            parent.put(parent.get(p),parent.get(parent.get(p)));
-            p=parent.get(p);
+    private int[] parent(int[] p) {
+        while(p!=parentMap.get(p)) {
+            parentMap.put(p,parentMap.get(parentMap.get(p)));
+            p = parentMap.get(p);
         }
         return p;
     }
 
-    private void union(Map<String,String> map,int[] stone1,int[] stone2) {
-        String s1 = stone1[0]+" "+stone1[1];
-        String s2 = stone2[0]+" "+stone2[1];
+    private void union(int[] a,int[] b) {
+        int[] pA = parent(a);
+        int[] pB = parent(b);
 
-        String parent1 = find(s1);
-        String parent2 = find(s2);
-
-        if(parent1.equals(parent2)) {
+        if(pA==pB) {
             return;
-        }
-
-        if(size.get(parent1)>=size.get(parent2)) {
-            parent.put(parent2,parent1);
-            size.put(parent1,size.get(parent1)+size.get(parent2));
         } else {
-            parent.put(parent1,parent2);
-            size.put(parent2,size.get(parent2)+size.get(parent1));
+            if(sizeMap.get(pA)>=sizeMap.get(pB)) {
+                parentMap.put(pB,pA);
+                sizeMap.put(pA,sizeMap.get(pB)+1);
+            } else {
+                parentMap.put(pA,pB);
+                sizeMap.put(pB,sizeMap.get(pA)+1);
+            }
         }
 
         count--;
+
     }
 
     public static void main(String[] args) {
