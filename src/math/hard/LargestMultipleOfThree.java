@@ -90,6 +90,7 @@ public class LargestMultipleOfThree {
         Remove one item from queue2.
         If queue2 is empty, remove two items from queue1.
         If queue1 contains less than two items, the number is not possible.
+        8,8,6,0,3
          */
         else if (sum % 3 == 2)
         {
