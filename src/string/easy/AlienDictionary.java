@@ -54,23 +54,16 @@ public class AlienDictionary {
 
     }
 
-    private int compare(String s1,String s2,int[] count) {
-        int i;
-        for(i=0;i<Math.min(s1.length(),s2.length());i++) {
-            if(count[s1.charAt(i)-'a']<count[s2.charAt(i)-'a']) {
-                return 1;
-            } else if(count[s1.charAt(i)-'a']>count[s2.charAt(i)-'a']) {
-                return -1;
-            }
-        }
+    private int compare(String s1,String s2,int[] count) { //
+        int n = s1.length(), m = s2.length();
 
-        if(i==s1.length() && i==s2.length()) {
-            return 0;
-        } else if(i==s1.length()) {
-            return 1;
-        }else {
-            return -1;
-        }
+        for(int i = 0, j = 0; i < n && j < m; i++, j++) {
+            int pos1 = count[ s1.charAt(i) - 'a' ];
+            int pos2 = count[ s2.charAt(j) - 'a' ];
 
+            if (pos1 != pos2)
+                return pos2 - pos1;
+        }
+        return m - n;
     }
 }
