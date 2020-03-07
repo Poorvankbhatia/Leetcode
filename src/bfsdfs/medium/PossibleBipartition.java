@@ -48,9 +48,11 @@ public class PossibleBipartition {
 
     class Solution {
         public boolean possibleBipartition(int N, int[][] dislikes) {
-            int[] color = new int[N + 1];
+            int[] color = new int[N + 1]; // because numbered from 1 to N
             List<List<Integer>> adj = new ArrayList<>(N + 1);
-            for(int i = 0; i <= N; i++) adj.add(new ArrayList<>());
+            for(int i = 0; i <= N; i++) {
+                adj.add(new ArrayList<>());
+            }
             for(int[] d : dislikes) {
                 adj.get(d[0]).add(d[1]);
                 adj.get(d[1]).add(d[0]);
