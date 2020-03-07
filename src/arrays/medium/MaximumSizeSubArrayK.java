@@ -26,39 +26,25 @@ import java.util.Map;
 public class MaximumSizeSubArrayK {
 
     public int maxSubArrayLen(int[] nums, int k) {
-
         if(nums==null || nums.length==0) {
             return 0;
         }
-
         Map<Integer,Integer> sumIndexMap = new HashMap<>();
-
         int sum=0;
         int maxLen = Integer.MIN_VALUE;
-
         for (int i=0;i<nums.length;i++) {
-
             sum+=nums[i];
-
             if(sum==k) {
                 maxLen=Math.max(maxLen,i+1);
             }
-
             if(sumIndexMap.containsKey(sum-k)) {
                 maxLen = Math.max(maxLen,i-sumIndexMap.get(sum-k));
             }
-
-
             if(!sumIndexMap.containsKey(sum)) {
                 sumIndexMap.put(sum,i);
             }
-
         }
-
         return maxLen<0?0:maxLen;
-
-
-
     }
 
 
