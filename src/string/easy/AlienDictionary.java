@@ -54,15 +54,15 @@ public class AlienDictionary {
 
     }
 
-    private int compare(String s1,String s2,int[] count) { //
-        int n = s1.length(), m = s2.length();
+    private int compare(String current,String prev,int[] count) { //
+        int n = current.length(), m = prev.length();
 
         for(int i = 0, j = 0; i < n && j < m; i++, j++) {
-            int pos1 = count[ s1.charAt(i) - 'a' ];
-            int pos2 = count[ s2.charAt(j) - 'a' ];
+            int c = count[ current.charAt(i) - 'a' ];
+            int p = count[ prev.charAt(j) - 'a' ];
 
-            if (pos1 != pos2)
-                return pos2 - pos1;
+            if (c != p)
+                return p - c;
         }
         return m - n;
     }
