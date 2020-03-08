@@ -78,12 +78,13 @@ O(N) sol:
 public boolean carPooling(int[][] trips, int capacity) {
         int[] arr = new int[10001];
         for(int[] trip : trips){
-            arr[trip[1]]-=trip[0];
-            arr[trip[2]]+=trip[0];
+            arr[trip[1]]+=trip[0];
+            arr[trip[2]]-=trip[0];
         }
+        int sum=0;
         for(int i=0;i<10001;i++) {
-            capacity+= arr[i];
-            if(capacity<0) {
+            sum+=arr[i];
+            if(sum>capacity) {
                 return false;
             }
         }
