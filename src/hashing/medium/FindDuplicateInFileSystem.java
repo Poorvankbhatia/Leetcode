@@ -53,9 +53,7 @@ public class FindDuplicateInFileSystem {
                 if (content.length()!=0) {
                     String currentPath = splitPaths[0] + "/" + splitPaths[i].substring(0, splitPaths[i].indexOf("("));
                     if (contentToPathMapping.containsKey(content)) {
-                        List<String> list = contentToPathMapping.get(content);
-                        list.add(currentPath);
-                        contentToPathMapping.put(content, list);
+                        contentToPathMapping.get(content).add(currentPath);
                     } else {
                         List<String> list = new ArrayList<>();
                         list.add(currentPath);
