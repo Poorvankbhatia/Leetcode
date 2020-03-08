@@ -37,15 +37,11 @@ import java.util.List;
 public class FindDuplicateInFileSystem {
 
     public List<List<String>> findDuplicate(String[] paths) {
-
         List<List<String>> lists = new ArrayList<>();
-
         if(paths==null || paths.length==0) {
             return lists;
         }
-
         HashMap<String,List<String>> contentToPathMapping = new HashMap<>();
-
         for (String path : paths) {
             String[] splitPaths = path.split(" ");
             for (int i=1;i<splitPaths.length;i++) {
@@ -63,18 +59,13 @@ public class FindDuplicateInFileSystem {
 
             }
         }
-
-
         for (String key : contentToPathMapping.keySet()) {
             if(contentToPathMapping.get(key).size()>1) {
                 lists.add(contentToPathMapping.get(key));
             }
         }
-
-
         return lists;
     }
-
 
     private String getStringBetweenBraces(String s) {
         if(s.contains("(")) {
