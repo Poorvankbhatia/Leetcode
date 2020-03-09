@@ -87,8 +87,8 @@ public class MaximumSumBST {
 
         // Check If the subtree rooted under the current node is a Binary Search Tree
         if (leftTree.isBST && rightTree.isBST && leftTree.max < root.val && rightTree.min > root.val) {
-            bstInfo.max = Math.max(root.val, Math.max(leftTree.max, rightTree.max));
-            bstInfo.min = Math.min(root.val, Math.min(leftTree.min, rightTree.min));
+            bstInfo.max = Math.max(root.val, Math.max(leftTree.max, rightTree.max)); // In case it has no right subtree.
+            bstInfo.min = Math.min(root.val, Math.min(leftTree.min, rightTree.min)); // In case it has no left subtree.
             maxSum = Math.max(maxSum, rightTree.sum + root.val + leftTree.sum);
             bstInfo.sum = rightTree.sum + root.val + leftTree.sum;
             // Update the current maximum sum
