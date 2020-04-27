@@ -28,7 +28,7 @@ public class MaximalSquare {
         int cols = matrix[0].length;
 
         if (cols == 1 && rows == 1) {
-           return matrix[0][0];
+            return matrix[0][0]-'0';
         } else if (cols == 1) {
             for (char[] aMatrix : matrix) {
                 if (aMatrix[0] == '1') {
