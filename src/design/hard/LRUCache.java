@@ -111,3 +111,9 @@ public class LRUCache {
     }
 
 }
+
+/*
+
+Also check out FirstUnique.
+
+ */
