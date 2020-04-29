@@ -23,9 +23,11 @@ import tree.TreeNode;
  */
 public class MaxPathSum {
 
-    private static int finalResult  = Integer.MIN_VALUE;
+    private int finalResult;
 
     public int maxPathSum(TreeNode root) {
+
+        finalResult = Integer.MIN_VALUE;
 
         if(root==null) {
             return 0;
