@@ -17,7 +17,7 @@ The length of the given array will not exceed 50,000.
 All the numbers in the input array are in the range of 32-bit integer.
 
  */
-package tree.hard;
+package segmenttree.hard;
 
 /**
  * Created by poorvank.b on 02/12/17.

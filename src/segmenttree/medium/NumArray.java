@@ -16,7 +16,7 @@ You may assume the number of calls to update and sumRange function is distribute
 
  */
 
-package tree.medium;
+package segmenttree.medium;
 
 /**
  * Created by poorvank on 06/08/17.

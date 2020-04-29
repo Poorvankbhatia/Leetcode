@@ -25,9 +25,7 @@ The number of calls to MyCalendar.book per test case will be at most 1000.
 In calls to MyCalendar.book(start, end), start and end are integers in the range [0, 10^9].
 
  */
-package tree.medium;
-
-import tree.Interval;
+package segmenttree.medium;
 
 /**
  * Created by poorvank.b on 19/11/17.

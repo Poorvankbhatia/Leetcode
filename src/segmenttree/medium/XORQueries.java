@@ -35,7 +35,7 @@ queries[i].length == 2
 0 <= queries[i][0] <= queries[i][1] < arr.length
 
  */
-package tree.medium;
+package segmenttree.medium;
 
 import java.util.Arrays;
 

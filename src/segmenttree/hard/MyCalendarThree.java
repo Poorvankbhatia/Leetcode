@@ -30,9 +30,7 @@ The number of calls to MyCalendarThree.book per test case will be at most 400.
 In calls to MyCalendarThree.book(start, end), start and end are integers in the range [0, 10^9].
 
  */
-package tree.hard;
-
-import java.util.Arrays;
+package segmenttree.hard;
 
 /**
  * Created by poorvank on 30/11/17.

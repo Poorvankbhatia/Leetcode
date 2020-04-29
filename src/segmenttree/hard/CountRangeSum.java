@@ -13,7 +13,7 @@ Output: 3
 Explanation: The three ranges are : [0,0], [2,2], [0,2] and their respective sums are: -2, -1, 2.
 
  */
-package tree.hard;
+package segmenttree.hard;
 
 import java.util.Arrays;
 import java.util.HashSet;

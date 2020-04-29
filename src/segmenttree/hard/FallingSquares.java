@@ -62,7 +62,7 @@ Note:
 1 <= positions[i][1] <= 10^6.
 
  */
-package tree.hard;
+package segmenttree.hard;
 
 import java.util.ArrayList;
 import java.util.List;

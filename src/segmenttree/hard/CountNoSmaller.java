@@ -15,7 +15,7 @@ Return the array [2, 1, 1, 0].
 
  */
 
-package tree.hard;
+package segmenttree.hard;
 import java.util.LinkedList;
 import java.util.List;
 
