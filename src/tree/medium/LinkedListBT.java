@@ -55,6 +55,8 @@ public class LinkedListBT {
 
 /*
 
+Also check IsValidSequence
+
 Time: O(m * min(n, h)), where n is size of binary tree, m is size of linked list
 Space: O(h), h is height of the binary tree.
 
