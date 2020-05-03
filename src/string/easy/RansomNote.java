@@ -1,4 +1,4 @@
-/*
+    /*
 
 Given an arbitrary ransom note string and another string containing letters from all the magazines,
  write a function that will return true if the ransom note can be constructed from the magazines ; otherwise, it will return false.
@@ -38,7 +38,7 @@ public class RansomNote {
         }
 
         for (int i=0;i<ransomNote.length();i++) {
-            if(--count[magazine.charAt(i)-'a']<0) {
+            if(--count[ransomNote.charAt(i)-'a']<0) {
                 return false;
             }
         }
