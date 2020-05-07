@@ -28,7 +28,7 @@ schedule and schedule[i] are lists with lengths in range [1, 50].
 
 
  */
-package arrays.Hard;
+package arrays.hard;
 
 import java.util.*;
 

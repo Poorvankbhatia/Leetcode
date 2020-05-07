@@ -37,7 +37,7 @@ Explanation:
 It's impossible to make all the three washing machines have the same number of dresses.
 
  */
-package arrays.Hard;
+package arrays.hard;
 
 /**
  * Created by poorvank.b on 19/02/17.

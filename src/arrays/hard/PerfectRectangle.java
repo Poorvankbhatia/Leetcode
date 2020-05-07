@@ -55,7 +55,7 @@ Return false. Because two of the rectangles overlap with each other.
  */
 
 
-package arrays.Hard;
+package arrays.hard;
 
 import java.util.HashSet;
 import java.util.Set;

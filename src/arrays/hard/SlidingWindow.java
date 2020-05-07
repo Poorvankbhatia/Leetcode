@@ -20,7 +20,7 @@ Note:
 You may assume k is always valid, ie: 1 ≤ k ≤ input array's size for non-empty array.
 
  */
-package arrays.Hard;
+package arrays.hard;
 
 import java.util.*;
 

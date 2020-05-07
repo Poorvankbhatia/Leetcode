@@ -20,7 +20,7 @@ AB = | -1 0 3 | x | 0 0 0 | = | -7 0 3 |
                   | 0 0 1 |
 
  */
-package arrays.Hard;
+package arrays.hard;
 
 /**
  * Created by poorvank.b on 31/12/17.

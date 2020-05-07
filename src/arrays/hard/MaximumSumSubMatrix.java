@@ -14,7 +14,7 @@ The rectangle inside the matrix must have an area > 0.
 What if the number of rows is much larger than the number of columns?
 
  */
-package arrays.Hard;
+package arrays.hard;
 import java.util.TreeSet;
 
 public class MaximumSumSubMatrix {

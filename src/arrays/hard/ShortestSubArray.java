@@ -27,7 +27,7 @@ Note:
 1 <= K <= 10 ^ 9
 
  */
-package arrays.Hard;
+package arrays.hard;
 
 import java.util.ArrayDeque;
 import java.util.Deque;

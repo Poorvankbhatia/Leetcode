@@ -27,7 +27,7 @@ For each query, 2 * threshold > right - left + 1
 The number of queries is at most 10000
 
  */
-package arrays.Hard;
+package arrays.hard;
 
 public class MajorityChecker {
 

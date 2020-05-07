@@ -10,7 +10,7 @@ Your algorithm should run in O(n) time and uses constant space.
 
  */
 
-package arrays.Hard;
+package arrays.hard;
 
 import java.util.Arrays;
 

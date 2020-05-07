@@ -24,7 +24,7 @@ Note:
 -1000 <= matrix[i] <= 1000
 -10^8 <= target <= 10^8
  */
-package arrays.Hard;
+package arrays.hard;
 
 import java.util.Arrays;
 import java.util.HashMap;

@@ -32,7 +32,7 @@ Each grid[i][j] will be either 0 or 1.
 The number of 1s in the grid will be at most 6000.
 
  */
-package arrays.Hard;
+package arrays.hard;
 
 /**
  * Created by poorvank.b on 17/12/17.

@@ -20,7 +20,7 @@ You may assume the number of calls to update and sumRegion function is distribut
 You may assume that row1 ≤ row2 and col1 ≤ col2
 
  */
-package arrays.Hard;
+package arrays.hard;
 
 /**
  * Created by poorvank.b on 09/06/18.

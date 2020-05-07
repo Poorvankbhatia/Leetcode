@@ -27,7 +27,7 @@ Note:
 1 <= K <= A.length
 
  */
-package arrays.Hard;
+package arrays.hard;
 
 import java.util.HashMap;
 import java.util.Map;

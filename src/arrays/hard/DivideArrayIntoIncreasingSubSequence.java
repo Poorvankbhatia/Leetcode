@@ -26,7 +26,7 @@ Note:
 1 <= nums[i] <= 10^5
 
  */
-package arrays.Hard;
+package arrays.hard;
 
 public class DivideArrayIntoIncreasingSubSequence {
 

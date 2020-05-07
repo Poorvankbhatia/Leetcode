@@ -18,7 +18,7 @@ k will be between 1 and floor(nums.length / 3).
 
 
  */
-package arrays.Hard;
+package arrays.hard;
 
 import java.util.Arrays;
 

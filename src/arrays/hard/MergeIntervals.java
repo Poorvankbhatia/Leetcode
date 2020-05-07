@@ -9,10 +9,9 @@ return [1,6],[8,10],[15,18].
 
 
  */
-package arrays.Hard;
+package arrays.hard;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
