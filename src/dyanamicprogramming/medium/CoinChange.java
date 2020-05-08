@@ -12,6 +12,10 @@ Example 2:
 coins = [2], amount = 3
 return -1.
 
+Example 3:
+coins = [1,3,4], amount = 6
+return {3,3} and not {4,1,1}.
+
 Note:
 You may assume that you have an infinite number of each kind of coin.
 
