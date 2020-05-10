@@ -40,28 +40,33 @@ import java.util.List;
 public class CollectApplesInTree {
     public int minTime(int n, int[][] edges, List<Boolean> hasApple) {
         List<Integer>[] lists = new List[n]; // Lists of vertices and neighbours.
-        for (int[] edge : edges) {
-            if(lists[edge[0]]==null) {
-                lists[edge[0]]= new ArrayList<>();
-            }
-            lists[edge[0]].add(edge[1]);
+        for (int i=0;i<n;i++) {
+            lists[i]=new ArrayList<>();
         }
-        return dfs(0,0,lists,hasApple);
+        for (int[] edge : edges) {
+            lists[edge[0]].add(edge[1]);
+            lists[edge[1]].add(edge[0]);
+        }
+        boolean[] visited = new boolean[n];
+        return dfs(0,0,lists,hasApple,visited);
     }
 
-    private int dfs(int start,int time,List<Integer>[] lists,List<Boolean> hasApple) {
+    private int dfs(int start,int time,List<Integer>[] lists,List<Boolean> hasApple,boolean[] visited) {
         int totalTime = time;
-        if(lists[start]!=null) {
-            for (int next : lists[start]) {
-                totalTime=dfs(next,totalTime+1,lists,hasApple); // Every iteration pass totalTime+1 to visit children.
+        visited[start]=true;
+        for (int next : lists[start]) {
+            if(!visited[next]) {
+                totalTime=dfs(next,totalTime+1,lists,hasApple,visited); // Every iteration pass totalTime+1 to visit children.
             }
         }
+        visited[start]=false;
         if(hasApple.get(start) || totalTime>time) { // if current vertex has an apple or any child has an apple/
             return start==0?totalTime:totalTime+1; //return totalTime+1 to add one to return time after visiting apple vertex.
             // Don't add one for start==0 (starting vertex)
         }
         return start==0?totalTime:time-1;// Return time-1 since this should not be visited.
     }
+
 }
 
 
