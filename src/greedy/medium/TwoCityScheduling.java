@@ -30,10 +30,11 @@ It is guaranteed that costs.length is even.
 package greedy.medium;
 
 import java.util.Arrays;
+import java.util.Comparator;
 
 public class TwoCityScheduling {
     public int twoCitySchedCost(int[][] costs) {
-        Arrays.sort(costs,(a, b)->(a[1]-a[0])-(b[1]-b[0]));
+        Arrays.sort(costs, Comparator.comparingInt(a -> (a[1] - a[0])));
         int cost=0;
         for(int i=0;i<costs.length/2;i++) {
             cost+=costs[i][1]+costs[costs.length-i-1][0];

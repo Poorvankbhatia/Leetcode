@@ -54,6 +54,8 @@ public class Search2DMatrix {
 
 Another solution:
 
+ runtime O(log(m) + log(n)), or in other words, O(log(mn)).
+
 class Solution {
     public boolean searchMatrix(int[][] matrix, int target) {
 
