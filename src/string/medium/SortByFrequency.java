@@ -69,9 +69,7 @@ public class SortByFrequency {
             List<Character> list = arr[i];
             if(list!=null) {
                 for(char c :list) {
-                    for (int k=0;k<i;k++) {
-                        sb.append(c);
-                    }
+                    sb.append(String.valueOf(c).repeat(i));
                 }
             }
         }
