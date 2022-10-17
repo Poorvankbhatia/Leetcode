@@ -77,7 +77,7 @@ public class CountSubArraysWithFixedBounds {
 
  To calculate the number of subarrays that have min=minK and max=maxK, we use count_1 - count_2 - count_3 + count_4.
 
- count_4 is beacause this window is present in both count_2 and count_3, and is subtracted 2 times.
- Hence it has to be added 1 time to get the correct answer.
+ count_4 is because this window is present in both count_2 and count_3, and is subtracted 2 times.
+ Hence, it has to be added 1 time to get the correct answer.
 
  */
