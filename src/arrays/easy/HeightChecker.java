@@ -25,7 +25,7 @@ package arrays.easy;
 
 import java.util.Arrays;
 
-public class HeighrChecker {
+public class HeightChecker {
     public int heightChecker(int[] heights) {
         int[] h = new int[heights.length];
         int i=0;
