@@ -128,4 +128,6 @@ In order to prevent duplicate paths from being visited, we use a Set<Tuple> to s
 
 There are 2^n * n possible states. time complexity is also n*(2^n), because each node may be visited 2^n times.
 
+https://leetcode.com/problems/shortest-path-visiting-all-nodes/discuss/549233/Breadth-First-Search(BFS)with-intuitive-approach-Thinking-process-or-13-ms
+
  */
