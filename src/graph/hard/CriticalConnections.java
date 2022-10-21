@@ -29,60 +29,65 @@ import java.util.List;
 public class CriticalConnections {
 
     public List<List<Integer>> criticalConnections(int n, List<List<Integer>> connections) {
-        int[] disc = new int[n], low = new int[n];
-        // use adjacency list instead of matrix will save some memory, adjmatrix will cause MLE
-        ArrayList<Integer>[] graph = new ArrayList[n];
-        List<List<Integer>> res = new ArrayList<>();
-        Arrays.fill(disc, -1); // use disc to track if visited (disc[i] == -1)
-        for (int i = 0; i < n; i++) {
-            graph[i] = new ArrayList<>();
-        }
-        // build graph
+        List<Integer>[] arr= new List[n];
         for (List<Integer> connection : connections) {
-            int from = connection.get(0), to = connection.get(1);
-            graph[from].add(to);
-            graph[to].add(from);
-        }
-
-        for (int i = 0; i < n; i++) {
-            if (disc[i] == -1) {
-                dfs(i, low, disc, graph, res, 0);
+            int start = connection.get(0);
+            int end = connection.get(1);
+            if(arr[start] == null) {
+                arr[start] = new ArrayList<>();
             }
+            arr[start].add(end);
+            if(arr[end] == null) {
+                arr[end] = new ArrayList<>();
+            }
+            arr[end].add(start);
         }
-        return res;
+        List<List<Integer>> result = new ArrayList<>();
+        fillCriticalConnections(0,-1,0,arr,result,new int[n],new  boolean[n],new int[n]);
+        return result;
     }
 
-    int time = 0; // time when discover each vertex
-
-    private void dfs(int u, int[] low, int[] disc, List<Integer>[] graph, List<List<Integer>> res, int pre) {
-        disc[u] = low[u] = ++time; // discover u
-        for (int j = 0; j < graph[u].size(); j++) {
-            int v = graph[u].get(j);
-            if (v == pre) {
-                continue; // if parent vertex, ignore
+    private void fillCriticalConnections(int id, int prevNode, int node ,List<Integer>[] arr, List<List<Integer>> result,
+                                         int[] ids, boolean[] visited, int[] lowLinks) {
+        ids[node]=id;
+        visited[node] =true;
+        lowLinks[node] = id;
+        id++;
+        for (int next : arr[node]) {
+            /*
+            Consider a--critical edge-->b & lowValue[b]>lowValue[a] , if this is not done, since it is an undirected
+            graph, after visiting b, a can
+            come up again, setting the lowValue[b] to lowValue[a]. quite possible that might fail if id[a]==lowValue[a].
+             */
+            if(next == prevNode) {
+                continue;
             }
-            if (disc[v] == -1) { // if not discovered
-                dfs(v, low, disc, graph, res, u);
-                low[u] = Math.min(low[u], low[v]);
-                if (low[v] > disc[u]) {
-                    // u - v is critical, there is no path for v to reach back to u or previous vertices of u
-                    res.add(Arrays.asList(u, v));
+            if(!visited[next]) {
+                fillCriticalConnections(id,node, next,arr,result,ids,visited,lowLinks);
+                lowLinks[node] = Math.min(lowLinks[node],lowLinks[next]);
+                if(ids[node]<lowLinks[next]) {
+                    result.add(Arrays.asList(node,next));
                 }
-            } else { // if v discovered and is not parent of u, update low[u], cannot use low[v] because u is not subtree of v
-                low[u] = Math.min(low[u], disc[v]);
+            } else {
+                lowLinks[node] = Math.min(lowLinks[node],ids[next]);
             }
         }
+
     }
+
+    public static void main(String[] args) {
+        List<Integer> l1 = Arrays.asList(0,1);
+        List<Integer> l2 = Arrays.asList(1,2);
+        List<Integer> l3 = Arrays.asList(2,0);
+        List<Integer> l4 = Arrays.asList(1,3);
+        System.out.println(new CriticalConnections().criticalConnections(4,Arrays.asList(l1,l2,l3,l4)));
+    }
+
+
 
 }
 
 /*
 
-Basically, it uses dfs to travel through the graph to find if current vertex u, can travel back to u or previous vertex
-low[u] records the lowest vertex u can reach
-disc[u] records the time when u was discovered
-
-
-https://www.geeksforgeeks.org/bridge-in-a-graph/
-
+https://emre.me/algorithms/tarjans-algorithm/
  */
