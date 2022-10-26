@@ -53,8 +53,18 @@ public class PeakElement {
 
     public static void main(String[] args) {
 
-        System.out.println(new PeakElement().findPeakElement(new int[]{1,2,3,1}));
+        System.out.println(new PeakElement().findPeakElement(new int[]{30,41,24,11,24,23,14,43,18,45,44,42,5,39,41,11,35,47,16,11,30,25,18,41,45}));
 
     }
 
 }
+
+/*
+we are essentially doing is going in the direction of the rising slope(by choosing the element which is greater
+than current). How does that guarantee the result? Think about it, there are 2 possibilities.
+a) rising slope has to keep rising till end of the array
+b) rising slope will encounter a lesser element and go down.
+In both scenarios we will have an answer.
+a) the answer is the end element because we take the boundary as -INFINITY
+b) the answer is the largest element before the slope falls.
+ */
