@@ -42,6 +42,11 @@ public class UnionFind {
         return find(p)==find(q);
     }
 
+    public void reset(int p) {
+        size[p]=1;
+        parent[p]=p;
+    }
+
 
     public int find(int p) {
 
@@ -76,10 +81,17 @@ public class UnionFind {
             maxSize = Math.max(size[pRoot],maxSize);
             return size[pRoot];
         } else {
-            parent[pRoot] = qRoot;
-            size[qRoot]+=size[pRoot];
-            maxSize = Math.max(size[qRoot],maxSize);
-            return size[qRoot];
+            if(pRoot<qRoot) {
+                parent[pRoot] = qRoot;
+                size[qRoot]+=size[pRoot];
+                maxSize = Math.max(size[qRoot],maxSize);
+                return size[qRoot];
+            } else {
+                parent[qRoot] = pRoot;
+                size[pRoot]+=size[qRoot];
+                maxSize = Math.max(size[pRoot],maxSize);
+                return size[pRoot];
+            }
         }
 
 
