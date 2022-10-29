@@ -28,27 +28,25 @@ public class CourseSchedule {
 
     public boolean canFinish(int numCourses, int[][] prerequisites) {
 
-        ArrayList[] graph = new ArrayList[numCourses];
+        List[] graph = new ArrayList[numCourses];
         for(int i=0;i<numCourses;i++)
-            graph[i] = new ArrayList();
+            graph[i] = new ArrayList<>();
 
         boolean[] visited = new boolean[numCourses];
         for (int[] prerequisite : prerequisites) {
             graph[prerequisite[1]].add(prerequisite[0]);
         }
 
-        long m = System.currentTimeMillis();
         for(int i=0; i<numCourses; i++){
             if(isCyclic(graph,visited,i))
                 return false;
         }
-        System.out.println(System.currentTimeMillis()-m);
 
         return true;
 
     }
 
-    private boolean isCyclic(ArrayList[] graph,boolean[] visited,int v) {
+    private boolean isCyclic(List[] graph,boolean[] visited,int v) {
         if(visited[v]) {
             return true;
         }
@@ -110,7 +108,7 @@ public boolean canFinish(int numCourses, int[][] prerequisites) {
                 2
                 |
                 |
-                \/
+               \/
             0-->1<--3
 
             indegree[0,3,0,0]
