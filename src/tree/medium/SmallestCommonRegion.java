@@ -36,7 +36,7 @@ package tree.medium;
 
 import java.util.*;
 
-public class SmallestCommonMedium {
+public class SmallestCommonRegion {
 
     public String findSmallestRegion(List<List<String>> regions, String region1, String region2) {
         Map<String, String> parents = new HashMap<>();
