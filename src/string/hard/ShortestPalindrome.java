@@ -81,7 +81,7 @@ public class ShortestPalindrome {
 So given a string, we can make it a palindrome by appending reverse of string to it.
 But it will contain some extra characters those characters can be removed.
 
-Those are the characters common to suffix of reverse and prefix of orgnal string.
+Those are the characters common to suffix of reverse and prefix of original string.
 For example:
 
 aaba - > rev - > abaa

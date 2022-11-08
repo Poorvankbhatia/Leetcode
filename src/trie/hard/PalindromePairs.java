@@ -50,11 +50,11 @@ public class PalindromePairs {
 
             String word = words[i];
             //Keys whose prefix is this word
-            List<String> keyWithWordPrefix = trie.keysWithPrefix(word);
+            List<String> keyWithWordAsPrefix = trie.keysWithPrefix(word);
             //Keys which are prefix of this word
             List<String> prefixKeysOfWord = trie.allPrefixKeys(word);
 
-            for (String key : keyWithWordPrefix) {
+            for (String key : keyWithWordAsPrefix) {
                 int keyVal = trie.get(key);
 
 

@@ -5,7 +5,9 @@
  Return the number of paths where the sum of the elements on the path is divisible by k.
  Since the answer may be very large, return it modulo 109 + 7.
 
- Input: grid = [[5,2,4],[3,0,5],[0,7,2]], k = 3
+ Input: grid = [[5,2,4],
+                [3,0,5],
+                [0,7,2]], k = 3
  Output: 2
  Explanation: There are two paths where the sum of the elements on the path is divisible by k.
  The first path highlighted in red has a sum of 5 + 2 + 4 + 5 + 2 = 18 which is divisible by 3.

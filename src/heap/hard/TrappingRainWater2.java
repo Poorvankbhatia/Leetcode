@@ -22,6 +22,9 @@ package heap.hard;
 
 import heap.MinPriorityQueue;
 
+import java.util.Comparator;
+import java.util.PriorityQueue;
+
 /**
  * Created by poorvank on 02/02/17.
  */
@@ -49,7 +52,7 @@ public class TrappingRainWater2 {
             return 0;
         }
 
-        MinPriorityQueue<Cell> minPriorityQueue = new MinPriorityQueue<>();
+        PriorityQueue<Cell> minPriorityQueue = new PriorityQueue<>(Comparator.comparingInt(a -> a.height));
         int rows = heightMap.length;
         int cols = heightMap[0].length;
 
@@ -58,16 +61,16 @@ public class TrappingRainWater2 {
         for (int i=0;i<rows;i++) {
             visited[i][0] = true;
             visited[i][cols-1] = true;
-            minPriorityQueue.insert(new Cell(i,0,heightMap[i][0]));
-            minPriorityQueue.insert(new Cell(i,cols-1,heightMap[i][cols-1]));
+            minPriorityQueue.add(new Cell(i,0,heightMap[i][0]));
+            minPriorityQueue.add(new Cell(i,cols-1,heightMap[i][cols-1]));
         }
 
 
         for (int i=1;i<cols-1;i++) {
             visited[0][i] = true;
             visited[rows-1][i] = true;
-            minPriorityQueue.insert(new Cell(0,i,heightMap[0][i]));
-            minPriorityQueue.insert(new Cell(rows-1,i,heightMap[rows-1][i]));
+            minPriorityQueue.add(new Cell(0,i,heightMap[0][i]));
+            minPriorityQueue.add(new Cell(rows-1,i,heightMap[rows-1][i]));
         }
 
 
@@ -75,14 +78,14 @@ public class TrappingRainWater2 {
         int[] ys = {1, -1, 0,  0};
         int sum = 0;
         while (!minPriorityQueue.isEmpty()) {
-            Cell cell = minPriorityQueue.deleteMin();
+            Cell cell = minPriorityQueue.poll();
             for (int i = 0; i < 4; i++) {
                 int nx = cell.x + xs[i];
                 int ny = cell.y + ys[i];
                 if (nx >= 0 && nx < rows && ny >= 0 && ny < cols && !visited[nx][ny]) {
                     visited[nx][ny] = true;
                     sum += Math.max(0, cell.height - heightMap[nx][ny]);
-                    minPriorityQueue.insert(new Cell(nx, ny, Math.max(heightMap[nx][ny], cell.height)));
+                    minPriorityQueue.add(new Cell(nx, ny, Math.max(heightMap[nx][ny], cell.height)));
                 }
             }
         }
@@ -119,7 +122,8 @@ What determines the amount of water can a bar can hold? It is the min height of 
 0 0 2 0 0
 0 0 3 0 0
 
-Just like 1-D two pointer approach, we need to find some boundary. Because all boundary cells cannot hold any water for sure, we use them as the initial boundary naturally.
+Just like 1-D two pointer approach, we need to find some boundary.
+Because all boundary cells cannot hold any water for sure, we use them as the initial boundary naturally.
 
 Then which bar to start? Find the min bar (let's call it A) on the boundary (heap is a natural choice), then do 1 BFS (4 directions). Why BFS?
 Because we are sure that the amount of water that A's neighbors can hold is only determined by A now for the same reason in 1D two-pointer approach.
