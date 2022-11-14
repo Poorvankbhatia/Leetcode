@@ -67,7 +67,7 @@ public class RecurringDecimal {
     }
 
     public static void main(String[] args) {
-        System.out.println(new RecurringDecimal().fractionToDecimal(4,11));
+        System.out.println(new RecurringDecimal().fractionToDecimal(5,3));
     }
 
 }

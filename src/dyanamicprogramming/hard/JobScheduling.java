@@ -106,8 +106,6 @@ public class JobScheduling {
      b) Return the maximum of following two profits.
          -> Maximum profit by excluding current job :  maxprofit(jobs, n-1)
          -> Maximum profit by including the current job
-   }
-
 Find Profit including current Job:
 Find the latest job before the current job (in sorted array) that doesn't conflict with current job 'jobs[n-1]'.
 Once found, we recur for all jobs till that job and add profit of current job to result.

@@ -116,6 +116,8 @@ K will be in range [0, heights.length - 1].
  */
 package arrays.medium;
 
+import java.util.Arrays;
+
 /**
  * Created by poorvank.b on 14/01/18.
  */
@@ -151,6 +153,10 @@ public class PourWater {
             V--;
         }
         return heights;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(Arrays.toString(new PourWater().pourWater(new int[]{2,1,1,2,1,2,2},4,3)));
     }
 
 }

@@ -60,7 +60,7 @@ public class NiceSubArrays {
     }
 
     public static void main(String[] args) {
-        System.out.println(new NiceSubArrays().numberOfSubarrays(new int[]{3, 2, 3, 2},1));
+        System.out.println(new NiceSubArrays().numberOfSubarrays(new int[]{3, 5,7,9},2));
     }
 
 }
