@@ -50,6 +50,9 @@ public class CheapestFlight {
         if(K<0) {
             return Integer.MAX_VALUE;
         }
+        if(dp[src][dst][K]!=0) {
+            return dp[src][dst][K];
+        }
         int max=Integer.MAX_VALUE;
         if(map.containsKey(src)) {
             for(int[] next : map.get(src)) {
