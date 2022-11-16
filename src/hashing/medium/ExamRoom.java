@@ -23,8 +23,7 @@ seat() -> 9, the student sits at the last seat number 9.
 seat() -> 4, the student sits at the last seat number 4.
 seat() -> 2, the student sits at the last seat number 2.
 leave(4) -> null
-seat() -> 5, the student​​​​​​​ sits at the last seat number 5.
-​​​​​​​
+seat() -> 5, the student sits at the last seat number 5.
 
 Note:
 

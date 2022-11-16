@@ -66,7 +66,7 @@ public class CoinChange {
 
 /*
 
-F(S) - minimum number of coins needed to make change for amount S using coin denominations [c0…c​n−1]
+F(S) - minimum number of coins needed to make change for amount S using coin denominations [c0…c(n−1)]
 
  F(3)=min{F(3−c1),F(3−c2),F(3−c3)}+1
        =min{F(3−1),F(3−2),F(3−3)}+1

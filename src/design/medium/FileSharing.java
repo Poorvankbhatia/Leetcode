@@ -67,42 +67,50 @@ package design.medium;
 import java.util.*;
 
 public class FileSharing {
-    Map< Integer, Set< Integer >> map; // User id, a list of blocks owned by the user
-    int uid = 1 ; // increase user id
-    PriorityQueue< Integer > leavedIds; // List of reusable user ids
+    Map<Integer, Set<Integer>> map; // User id, a list of blocks owned by the user
+    int userId = 1; // increase user id
+    PriorityQueue<Integer> leavedIds; // List of reusable user ids
+
     public FileSharing(int m) {
-        map=new TreeMap<>();
-        leavedIds=new PriorityQueue<>();
+        map = new TreeMap<>();
+        leavedIds = new PriorityQueue<>();
     }
+
     public int join(List<Integer> ownedChunks) {
-        int userID=uid; // use self-incremented user id by default
+        int userID = userId; // use self-incremented user id by default
         // If the reuse list is not empty, the smallest one in the taking list will be used first
-        if(leavedIds.size()>0) userID=leavedIds.poll();
-            // Otherwise, use auto-increment id, add one after use
-        else uid++;
+        if (leavedIds.size() > 0) {
+            userID = leavedIds.poll();
+        } else {
+            userId++;// Otherwise, use auto-increment id, add one after use
+        }
         // Save the current user and the list of blocks he owns into the map
         map.put(userID, new HashSet<>(ownedChunks));
         return userID;
     }
+
     public void leave(int userID) {
-        map. remove ( userID ) ; // delete the user information from the map
-        leavedIds. offer ( userID ) ; // add the user id to the queue list of reusable id
+        map.remove(userID); // delete the user information from the map
+        leavedIds.add(userID); // add the user id to the queue list of reusable id
     }
+
     public List<Integer> request(int userID, int chunkID) {
-        List < Integer > res = new ArrayList <>() ; // return result
-        for ( int user : map. keySet ()){ // loop the key (user id) in the map
+        List<Integer> result = new ArrayList<>(); // return result
+        for (int user : map.keySet()) { // loop the key (user id) in the map
             // If the current user owns the block, add the user to the returned result
-            if(map.get(user).contains(chunkID)) res.add(user);
+            if (map.get(user).contains(chunkID)) {
+                result.add(user);
+            }
         }
         // If the number of elements in the returned result is greater than 0,
         // Explain that the user userID can get the chunkID
-        if(res.size()>0){
+        if (result.size() > 0) {
             // Add chunkID to the user's block list of userID
-            Set<Integer> set=map.get(userID);
+            Set<Integer> set = map.get(userID);
             set.add(chunkID);
-            map.put(userID,set);
+            map.put(userID, set);
         }
-        return res;
+        return result;
     }
 
 

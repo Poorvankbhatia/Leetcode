@@ -85,7 +85,7 @@ public class WordPattern2 {
     }
 
     public static void main(String[] args) {
-        System.out.println(new WordPattern2().wordPatternMatch("aba","ttsstt"));
+        System.out.println(new WordPattern2().wordPatternMatch("aba","ttsst"));
     }
 
 
