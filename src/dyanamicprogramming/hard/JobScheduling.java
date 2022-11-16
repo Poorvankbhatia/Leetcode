@@ -39,9 +39,9 @@ import java.util.Comparator;
 
 public class JobScheduling {
 
-    private class Job {
+    private static class Job {
         int start, finish, profit;
-        Job(int start, int finish, int profit) {
+        public Job(int start, int finish, int profit) {
             this.start = start;
             this.finish = finish;
             this.profit = profit;
@@ -52,7 +52,7 @@ public class JobScheduling {
         int n = startTime.length;
         Job[] jobs = new Job[n];
         for(int i=0;i<n;i++) {
-            jobs[i] = new Job(startTime[i],endTime[i],profit[i]);
+            jobs[i] = new Job(startTime[i], endTime[i], profit[i]);
         }
         return scheduleApt(jobs);
     }
@@ -69,7 +69,7 @@ public class JobScheduling {
             // Profit including the current job
             int profit = jobs[i].profit;
             int l = search(jobs, i);
-            if (l != -1)
+            if (l != jobs.length)
                 profit += dp[l];
             // Store maximum of including and excluding
             dp[i] = Math.max(profit, dp[i-1]);
@@ -79,19 +79,19 @@ public class JobScheduling {
     }
 
     private int search(Job[] jobs, int index) {
-        int start = 0, end = index - 1;
+        int start = 0, end = jobs.length - 1, nextIndex = jobs.length;
+
         while (start <= end) {
             int mid = (start + end) / 2;
-            if (jobs[mid].finish <= jobs[index].start) {
-                if (jobs[mid + 1].finish <= jobs[index].start)
-                    start = mid + 1;
-                else
-                    return mid;
-            }
-            else
+
+            if (jobs[mid].finish > jobs[index].start) {
                 end = mid - 1;
+            } else {
+                nextIndex = mid;
+                start = mid + 1;
+            }
         }
-        return -1;
+        return nextIndex;
     }
 
 }

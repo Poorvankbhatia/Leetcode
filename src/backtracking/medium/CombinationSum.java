@@ -36,28 +36,25 @@ public class CombinationSum {
 
     }
 
-    private void combinationSumUtil(int[] candidates,int end,List<Integer> list,
-                                   List<List<Integer>> result,int arrayIndex) {
+    private void combinationSumUtil(int[] candidates,int target,List<Integer> list,
+                                    List<List<Integer>> result,int arrayIndex) {
 
-        if(end<0 || (end!=0 && candidates[arrayIndex]>end)) {
+        if(target<0 || (target!=0 && candidates[arrayIndex]>target)) {
             return;
         }
 
-        if(end==0) {
+        if(target==0) {
             result.add(new ArrayList<>(list));
             return;
         }
 
         for(int i=arrayIndex;i<candidates.length;i++) {
 
-            //while backtracking check further in array
-            if(candidates[i]>end /*|| (i>=1 && candidates[i]==candidates[i-1])*/) {
-                 continue;
+            if(candidates[i]>target) {
+                break;
             }
-            end = end-candidates[i];
             list.add(candidates[i]);
-            combinationSumUtil(candidates,end,list,result,i);
-            end = end+candidates[i];
+            combinationSumUtil(candidates,target-candidates[i],list,result,i);
             list.remove(list.size()-1);
         }
 
@@ -74,38 +71,3 @@ public class CombinationSum {
     }
 
 }
-
-/*
-
-public class Solution {
-    ArrayList<ArrayList<Integer>> result;
-    public ArrayList<ArrayList<Integer>> combinationSum(ArrayList<Integer> A, int B) {
-        result = new ArrayList<ArrayList<Integer>>();
-        Collections.sort(A);
-        getCombsWithSum(A, 0, 0, new ArrayList<Integer>(), B);
-        return result;
-    }
-
-    private void getCombsWithSum(ArrayList<Integer> A, int index, int sum,
-            ArrayList<Integer> curr, int B){
-        if(index >= A.size() || sum > B){
-            return;
-        }
-        if(sum == B){
-            result.add(new ArrayList<Integer>(curr));
-            return;
-        }
-
-        for(int i = index; i < A.size(); i++){
-            if(i == index || A.get(i) != A.get(i-1)){
-                curr.add(A.get(i));
-                getCombsWithSum(A, i, sum + A.get(i), curr, B);
-                curr.remove(curr.size()-1);
-            }
-
-        }
-    }
-}
-
-
- */

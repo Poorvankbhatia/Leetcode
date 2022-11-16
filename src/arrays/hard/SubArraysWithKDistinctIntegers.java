@@ -40,25 +40,25 @@ public class SubArraysWithKDistinctIntegers {
 
     // all subarrays with <= K distinct numbers are counted.
     private int atMostK(int[] A, int K) {
-        int i = 0, j = 0;
+        int start = 0, end = 0;
         int total = 0;
         int distinct = 0;   // count of distinct numbers in the window.
         Map<Integer, Integer> counter = new HashMap<>();
-        while (j < A.length) {
-            if (counter.getOrDefault(A[j], 0) == 0) {
+        while (end < A.length) {
+            if (counter.getOrDefault(A[end], 0) == 0) {
                 distinct++;
             }
-            counter.put(A[j], 1 + counter.getOrDefault(A[j], 0));
-            j++;
-            while (i < j && distinct > K) {  // shrink the left boundary of window.
-                counter.put(A[i], counter.get(A[i]) - 1);
-                if (counter.get(A[i]) == 0) {
+            counter.put(A[end], 1 + counter.getOrDefault(A[end], 0));
+            end++;
+            while (start < end && distinct > K) {  // shrink the left boundary of window.
+                counter.put(A[start], counter.get(A[start]) - 1);
+                if (counter.get(A[start]) == 0) {
                     distinct--;
                 }
-                i++;
+                start++;
             }
 
-            total += j - i;
+            total += end - start;
         }
 
         return total;

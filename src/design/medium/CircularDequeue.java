@@ -43,23 +43,23 @@ package design.medium;
  */
 public class CircularDequeue {
 
-    private class DoubleListNode {
-        DoubleListNode pre;
-        DoubleListNode next;
+    private static class DLLNode {
+        DLLNode pre;
+        DLLNode next;
         int val;
-        private DoubleListNode(int val) {
+        private DLLNode(int val) {
             this.val = val;
         }
     }
 
     private int size;
-    private int k;
-    private DoubleListNode head;
-    private DoubleListNode tail;
+    private final int k;
+    private final DLLNode head;
+    private final DLLNode tail;
     /** Initialize your data structure here. Set the size of the deque to be k. */
     public CircularDequeue(int k) {
-        head = new DoubleListNode(-1);
-        tail = new DoubleListNode(-1);
+        head = new DLLNode(-1);
+        tail = new DLLNode(-1);
         head.pre = tail;
         tail.next = head;
         this.k = k;
@@ -70,7 +70,7 @@ public class CircularDequeue {
     public boolean insertFront(int value) {
         if (size == k)
             return false;
-        DoubleListNode node = new DoubleListNode(value);
+        DLLNode node = new DLLNode(value);
         node.next = head;
         node.pre = head.pre;
         head.pre.next = node;
@@ -83,7 +83,7 @@ public class CircularDequeue {
     public boolean insertLast(int value) {
         if (size == k)
             return false;
-        DoubleListNode node = new DoubleListNode(value);
+        DLLNode node = new DLLNode(value);
         node.next = tail.next;
         tail.next.pre = node;
         tail.next = node;
