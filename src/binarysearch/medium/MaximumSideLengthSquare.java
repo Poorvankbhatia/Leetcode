@@ -41,7 +41,7 @@ public class MaximumSideLengthSquare {
         int min = 0;
         int max = Math.min(m,n);
         fillSumMatrix(mat);
-        int res=0;
+        /*int res=0;
         while(min<=max) {
             int mid = (min)+(max-min)/2;
             int val = count(mid,m,n);
@@ -52,7 +52,23 @@ public class MaximumSideLengthSquare {
                 min=mid+1;
             }
         }
-        return res;
+        return res;*/
+
+        while (max -min>1) {
+            int mid = min+(max-min)/2;
+            int val = count(mid,m,n);
+            // if count>threshold we need to reduce the length to find a square near to(=<) the threshold
+            if(val>threshold) {
+                max = mid - 1;
+            } else {
+                // else try and increase.
+                min = mid;
+            }
+        }
+
+        // since we need the max length, check max if it satisfies, if not return min.
+        return count(max,m,n)<=threshold?max:min;
+
     }
 
     private void fillSumMatrix(int[][] mat) {

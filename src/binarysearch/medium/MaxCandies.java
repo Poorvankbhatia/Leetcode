@@ -50,25 +50,24 @@ public class MaxCandies {
         hi = (int) Math.min(hi,(sum/k));
         int lo = 0;
         int ans = 0;
-        while (lo <= hi) {
+        while (hi-lo>1) {
             int mid = lo + (hi - lo)/2;
-            if(!possibleDivide(mid,candies,k)) {
-                hi = mid-1;
+            if(possibleDivide(mid,candies,k)) {
+                lo = mid;
             } else {
-                ans = mid;
-                lo = mid+1;
+                hi = mid-1;
             }
         }
-        return ans;
+        return possibleDivide(hi,candies,k)?hi:lo;
 
     }
 
     private boolean possibleDivide(int count, int[] candies, long k) {
         if(count==0) return true;
+        long d = 0;
         for(int c : candies) {
-            long d = c/count;
-            k-=d;
-            if(k<=0) return true;
+            d += c/count;
+            if(d>=k) return true;
         }
         return false;
     }
@@ -78,3 +77,13 @@ public class MaxCandies {
     }
 
 }
+
+/*
+
+Read about upper and lower bounds:
+https://medium.com/swlh/binary-search-find-upper-and-lower-bound-3f07867d81fb
+This is asking for an upper bound BS:
+
+https://www.youtube.com/watch?v=egRrgj8JOdY&ab_channel=Luv
+
+ */

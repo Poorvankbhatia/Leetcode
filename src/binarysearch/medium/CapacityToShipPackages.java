@@ -61,20 +61,24 @@ public class CapacityToShipPackages {
         int lo = getMax(weights);
         int hi = getSum(weights);
 
-        while (lo<hi) {
+        while (hi-lo>1) {
             int mid = lo + (hi-lo)/2;
-            int currentPartitions  = getPartitionCount(weights,mid);
-            if(currentPartitions<=D) {
+            // days to ship if the capacity is mid.
+            int days  = countDays(weights,mid);
+            // if with the current capacity the number of days <= required D then we can decrease the capacity
+            // to reach near D
+            if(days<=D) {
                 hi = mid;
             } else {
+                // increase capacity if  number of days> D
                 lo = mid+1;
             }
         }
 
-        return lo;
+        return countDays(weights,lo)>D?hi : lo;
     }
 
-    private int getPartitionCount(int[] weights,int val) {
+    private int countDays(int[] weights, int val) {
         int total = 0,count = 1;
         for (Integer element : weights) {
             total += element;

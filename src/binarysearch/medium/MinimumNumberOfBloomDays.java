@@ -61,7 +61,7 @@ public class MinimumNumberOfBloomDays {
             lo = Math.min(lo,x);
             hi = Math.max(hi,x);
         }
-        while(lo<hi) {
+        /*while(lo<hi) {
             int mid = lo + (hi - lo) /2 ;
             if(readyBouquets(bloomDay, mid, m, k)) {
                 hi = mid;
@@ -69,7 +69,20 @@ public class MinimumNumberOfBloomDays {
                 lo = mid+1;
             }
         }
-        return lo;
+        return lo;*/
+
+        while (hi-lo>1) {
+            int mid = lo + (hi-lo) / 2;
+            if(readyBouquets(bloomDay,mid,m,k)) {
+                hi = mid;
+            } else {
+                lo = mid+1;
+            }
+        }
+
+        // check for mlo first, as we need to find the minimum number of bloom days.
+        return readyBouquets(bloomDay,lo,m,k)?lo : hi;
+
     }
 
     private boolean readyBouquets(int[] bloomDay, int days, int m, int k) {
@@ -95,7 +108,6 @@ public class MinimumNumberOfBloomDays {
     }
 
     public static void main(String[] args) {
-        System.out.println((long) 89945*32127);
         System.out.println(new MinimumNumberOfBloomDays().minDays(new int[] {1,10,2,9,3,8,4,7,5,6},4,2));
     }
 

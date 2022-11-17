@@ -66,7 +66,7 @@ public class MutatedArrayClosestToTarget {
     private int getMutatedSum(int[] arr, int mid) {
         int sum = 0;
         for (int a : arr) {
-            sum += (a > mid) ? mid : a;
+            sum += Math.min(a, mid);
         }
         return sum;
     }

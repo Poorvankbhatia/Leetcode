@@ -47,7 +47,7 @@ public class KokoEatingBananas {
         for(int p : piles) {
             maxRate = Math.max(p,maxRate);
         }
-        while(minRate<maxRate) {
+        /*while(minRate<maxRate) {
             int mid = minRate+(maxRate-minRate)/2;
             int hoursReq = hoursRequired(mid,piles);
             if(hoursReq>H) { // if hoursReq are greater than rate is less.
@@ -56,7 +56,24 @@ public class KokoEatingBananas {
                 maxRate = mid;
             }
         }
-        return minRate;
+        return minRate;*/
+
+
+
+        while (maxRate-minRate>1) {
+            int mid = minRate+(maxRate-minRate)/2;
+            int currentHours = hoursRequired(mid,piles);
+            // if hours with the current rate > required hours, we need to increase the speed (rate of eating.)
+            if(currentHours>H) {
+                minRate = mid+1;
+            } else {
+                // if hours <= required rate, decrease the speed.
+                maxRate = mid;
+            }
+        }
+
+        return hoursRequired(minRate,piles)<=H?minRate:maxRate;
+
     }
 
     private int hoursRequired(int banana, int[] piles) {
@@ -65,16 +82,14 @@ public class KokoEatingBananas {
             if(p<=banana) {
                 count++;
             } else {
-                count+=(p/banana)+1;
+                count+=(p%banana==0)?p/banana:(p/banana)+1;
             }
         }
         return count;
     }
 
     public static void main(String[] args) {
-        System.out.println(new KokoEatingBananas().minEatingSpeed(new int[]{332484035, 524908576, 855865114, 632922376, 222257295, 690155293, 112677673,
-                        679580077, 337406589, 290818316, 877337160, 901728858, 679284947, 688210097, 692137887, 718203285, 629455728, 941802184},
-                823855818)); // 14
+        System.out.println(new KokoEatingBananas().minEatingSpeed(new int[]{1000000000},2)); // 14
     }
 
 }
