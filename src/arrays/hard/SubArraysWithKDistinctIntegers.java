@@ -34,34 +34,32 @@ import java.util.Map;
 
 public class SubArraysWithKDistinctIntegers {
 
-    public int subarraysWithKDistinct(int[] A, int K) {
-        return atMostK(A, K) - atMostK(A, K - 1);
+    public int subarraysWithKDistinct(int[] nums, int k) {
+        return atMost(nums,k)-atMost(nums,k-1);
     }
 
-    // all subarrays with <= K distinct numbers are counted.
-    private int atMostK(int[] A, int K) {
-        int start = 0, end = 0;
-        int total = 0;
-        int distinct = 0;   // count of distinct numbers in the window.
-        Map<Integer, Integer> counter = new HashMap<>();
-        while (end < A.length) {
-            if (counter.getOrDefault(A[end], 0) == 0) {
+    private int atMost(int[] nums, int k) {
+        int start = 0;
+        int end = 0;
+        Map<Integer,Integer> freq = new HashMap<>();
+        int distinct = 0;
+        int ans = 0;
+        while(end<nums.length) {
+            if(freq.getOrDefault(nums[end],0)==0) {
                 distinct++;
             }
-            counter.put(A[end], 1 + counter.getOrDefault(A[end], 0));
+            freq.put(nums[end],freq.getOrDefault(nums[end],0)+1);
             end++;
-            while (start < end && distinct > K) {  // shrink the left boundary of window.
-                counter.put(A[start], counter.get(A[start]) - 1);
-                if (counter.get(A[start]) == 0) {
+            while(start<end && distinct>k) {
+                if(freq.getOrDefault(nums[start],0)==1) {
                     distinct--;
                 }
+                freq.put(nums[start],freq.get(nums[start])-1);
                 start++;
             }
-
-            total += end - start;
+            ans+=(end-start);
         }
-
-        return total;
+        return ans;
     }
 
     public static void main(String[] args) {
