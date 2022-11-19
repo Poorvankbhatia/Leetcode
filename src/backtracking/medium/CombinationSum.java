@@ -71,3 +71,30 @@ public class CombinationSum {
     }
 
 }
+
+/*
+
+Without sorting:
+
+ public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        List<List<Integer>> result = new ArrayList<>();
+        dfs(result,candidates,target,new ArrayList<>(),0);
+        return result;
+    }
+
+    private void dfs(List<List<Integer>> result, int[] candidates, int target,
+                     List<Integer> list, int index) {
+        if(target<0) return;
+        if(target==0) {
+            result.add(new ArrayList<>(list));
+            return;
+        }
+        for(int i=index;i<candidates.length;i++) {
+            if(candidates[i]>target) continue;
+            list.add(candidates[i]);
+            dfs(result,candidates,target-candidates[i],list,i);
+            list.remove(list.size()-1);
+        }
+    }
+
+ */

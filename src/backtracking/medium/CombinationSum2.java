@@ -31,37 +31,28 @@ import java.util.List;
 public class CombinationSum2 {
 
     public List<List<Integer>> combinationSum2(int[] candidates, int target) {
-
         Arrays.sort(candidates);
-        List<List<Integer>> lists = new ArrayList<>();
-        combinationSum2Util(candidates,target,0,lists,new ArrayList<>());
-        return lists;
+        List<List<Integer>> result = new ArrayList<>();
+        backtrack(result,target,0,new ArrayList<>(),candidates);
+        return result;
     }
 
-    private void combinationSum2Util(int[] candidates,int end,int arrayIndex,List<List<Integer>>
-            result,List<Integer> list) {
-
-
-        if(end<0 || arrayIndex>candidates.length) {
-            return;
-        }
-
-        if(end==0) {
+    private void backtrack(List<List<Integer>> result, int target, int index, List<Integer> list,
+                           int[] candidates) {
+        if(target<0) return;
+        if(target==0) {
             result.add(new ArrayList<>(list));
             return;
         }
-
-        int lastCandidate = -1;
-        for (int i=arrayIndex;i<candidates.length;i++) {
-            if(lastCandidate==candidates[i]) {
-                continue;
-            }
+        int prev = -1;
+        for(int i=index;i<candidates.length;i++) {
+            if(prev==candidates[i]) continue;
+            if(candidates[i]>target) break;
             list.add(candidates[i]);
-            combinationSum2Util(candidates,end-candidates[i],i+1,result,list);
+            backtrack(result,target-candidates[i],i+1,list,candidates);
             list.remove(list.size()-1);
-            lastCandidate = candidates[i];
+            prev = candidates[i];
         }
-
     }
 
     public static void main(String[] args) {

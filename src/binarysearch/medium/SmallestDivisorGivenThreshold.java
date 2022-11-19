@@ -48,6 +48,20 @@ public class SmallestDivisorGivenThreshold {
             }
         }
         return min;
+        /*
+        Another way:
+        while(max-min>1) {
+            int mid = min+(max-min)/2;
+            if(isLessThanThreshold(nums,mid,threshold)) { // divisor sum is less, so we can increase the divisor or decrease the max.
+                max = mid;
+            } else {
+                min = mid+1;
+            }
+        }
+        return isLessThanThreshold(nums,min,threshold)?min:max;
+
+         */
+
     }
 
     private int sumOfDivision(int[] nums,int mid) {
