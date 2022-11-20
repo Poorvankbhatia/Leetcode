@@ -63,34 +63,47 @@ import java.util.Queue;
 
 public class MaxCandies {
 
+    private static final int STATUS_OPEN = 1;
+    private static final int STATUS_CLOSED = 0;
+
     public int maxCandies(int[] status, int[] candies, int[][] keys, int[][] containedBoxes, int[] initialBoxes) {
-        int n = status.length; // count of boxes
-        boolean[] opened = new boolean[n]; // this are used once
-        boolean[] toOpen = new boolean[n];// new box we found
+        final int N = status.length;
+        boolean[] opened = new boolean[N];
+        boolean[] toBeOpened = new boolean[N];
+
         Queue<Integer> queue = new LinkedList<>();
-        for (int v : initialBoxes) {
-            queue.add(v);
-            toOpen[v] = true; // initial boxes
+        for(int box: initialBoxes){
+            queue.offer(box);
+            toBeOpened[box] = true;
         }
-        int candy = 0;
-        while (!queue.isEmpty()) {
-            int cur = queue.poll();
-            if (status[cur] == 1 && !opened[cur]) { // not used and box open
-                candy += candies[cur];
-                opened[cur] = true;
-                for (int k : keys[cur]) { // all keys in that box
-                    status[k] = 1;
-                    if (toOpen[k]) {
-                        queue.add(k);// box was found and we have the key
-                    }
+
+        // to represent maximum candies as the answer to return
+        int most = 0;
+
+        while(!queue.isEmpty()){
+            int size = queue.size();
+            for(int i = 0; i < size; ++i){
+                int cur = queue.poll();
+                // to skip closed and previously opened boxes
+                if(status[cur] == STATUS_CLOSED || opened[cur]) {
+                    continue;
                 }
-                for (int k : containedBoxes[cur]) {// all boxes in cur box
-                    toOpen[k] = true;
-                    queue.add(k);
+                most += candies[cur];
+                opened[cur] = true;
+
+                for(int box: containedBoxes[cur]){
+                    toBeOpened[box] = true;
+                    queue.offer(box);
+                }
+                for(int box : keys[cur]){
+                    status[box] = STATUS_OPEN;
+                    if(toBeOpened[box]){
+                        queue.offer(box);
+                    }
                 }
             }
         }
-        return candy;
+        return most;
     }
 
     public static void main(String[] args) {
