@@ -85,7 +85,7 @@ public class DifferByOneChar {
 }
 
 /*
-
+O(nm)
 First, we compute a hash for each string i in [0, n) as
 hash[i] = a[0] * 26 ^ (m - 1) + a[1] * 26 ^ (m - 2) + ... + a[m - 2] * 26 + a[m - 1],
 where n is the number of strings, and m - the number of characters in a string.
@@ -97,9 +97,6 @@ Ideally, we should check for collisions as we are using mod to keep hashes withi
 Since the solution below is accepted, I am keeping it simple here.
 
 Note that in the second loop we are going right-to-left so it's easier to compute 26 ^ (m - j - 1).
-
-Update: added collision check to pass the newly added test case.
-
 Trie:
 
 class Solution {
@@ -162,5 +159,19 @@ class Solution {
     }
 }
 
+O(N * M * M)
+
+if the current node is not the same as our target char and diff == 0 we can divert to a different path,
+leading us to basically a new path. In the worst case, we may have to divert to a new path in every node
+(but one path can be diverted only once), which means that there might be M different paths we have to check for
+and iterating over M paths is O(M * M) Considering we do this for every word (there are N words).
+Time complexity becomes O(N * M * M)
+for visualization, different paths for a word length 5. every \ means we have to change the character at that node/index.
+
+|     \      |        |       |       |
+|      |      \       |       |       |
+|      |       |       \      |       |
+|      |       |        |      \      |
+|      |       |        |       |      \
 
  */

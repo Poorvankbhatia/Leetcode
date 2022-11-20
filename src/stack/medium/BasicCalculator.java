@@ -63,6 +63,10 @@ public class BasicCalculator {
         return re;
     }
 
+    public static void main(String[] args) {
+        System.out.println(new BasicCalculator().calculate("3+5/2"));
+    }
+
 }
 
 /*

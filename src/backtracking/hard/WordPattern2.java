@@ -62,6 +62,7 @@ public class WordPattern2 {
         for (int k = i; k < str.length(); k++) {
             String p = str.substring(i, k + 1);
 
+            // for cases wehre pattern="ab" and string ="aa", to avoid mapping the 2nd char to b.
             if (set.contains(p)) {
                 continue;
             }

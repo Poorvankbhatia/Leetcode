@@ -91,12 +91,18 @@ public class RobotBounded {
         return i == 0 && j == 0 || dir > 1;   // check the current position and direction and decide
     }
 
+    public static void main(String[] args) {
+        System.out.println(new RobotBounded().isRobotBounded("GLGLGLGRGLGLGLG"));
+    }
+
 }
 
 /*
 
 i=0, j=0, dir=1 starting position.
 dir can be 1 = North, 2 = East, 3 = South, 4 = West.
+
+Only when position is changed and direction did not change we won't have a cycle.
 
 So in question its given we are initially at 0, 0 at North directions. So we need to keep track of the points as well
 as the directions in which the robot travels. So we can have x, y = 0 and directions = North
@@ -117,7 +123,7 @@ as the directions in which the robot travels. So we can have x, y = 0 and direct
                                           is  South  West, them its counterclockwise south, same way for direction south,
                                           update direction by east.
                                           So just rememeber if character is L, then counterclockwise.
-    3. Next whetehr the character if R, then we already got it rememeber about clockwise direction and
+    3. Next whether the character if R, then we already got it remember about clockwise direction and
     update direction according to it
     Finally we check whether the robot get back to the position, if yes, return true as the robot won't go out of the circle.
     We check whether the direction is still North, then it will sure go out of the circle, so return false.

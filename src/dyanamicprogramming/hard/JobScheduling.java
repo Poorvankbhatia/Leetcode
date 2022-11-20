@@ -39,46 +39,46 @@ import java.util.Comparator;
 
 public class JobScheduling {
 
-    private static class Job {
-        int start, finish, profit;
-        public Job(int start, int finish, int profit) {
-            this.start = start;
-            this.finish = finish;
-            this.profit = profit;
-        }
-    }
-
     public int jobScheduling(int[] startTime, int[] endTime, int[] profit) {
         int n = startTime.length;
-        Job[] jobs = new Job[n];
+        int[][] jobs = new int[n][3];
         for(int i=0;i<n;i++) {
-            jobs[i] = new Job(startTime[i], endTime[i], profit[i]);
+            jobs[i] = new int[]{startTime[i],endTime[i],profit[i]};
         }
-        return scheduleApt(jobs);
-    }
-
-    private int scheduleApt(Job[] jobs) {
-        // Sort jobs according to finish time
-        Arrays.sort(jobs, Comparator.comparingInt(a -> a.finish));
-        // dp[i] stores the profit for jobs till jobs[i]
-        // (including jobs[i])
-        int n = jobs.length;
+        // Sort by finish time.
+        Arrays.sort(jobs, Comparator.comparingInt(a -> a[1]));
         int[] dp = new int[n];
-        dp[0] = jobs[0].profit;
-        for (int i=1; i<n; i++) {
-            // Profit including the current job
-            int profit = jobs[i].profit;
-            int l = search(jobs, i);
-            if (l != jobs.length)
-                profit += dp[l];
-            // Store maximum of including and excluding
-            dp[i] = Math.max(profit, dp[i-1]);
+        dp[0] = jobs[0][2];
+        for(int i=1;i<n;i++) {
+            // figure out the current profit.
+            int currentProfit = jobs[i][2];
+            // find the last non overlapping job if any.
+            int lastNonOverlappingJob = lastJob(jobs,i);
+            if(lastNonOverlappingJob!=-1) {
+                currentProfit += dp[lastNonOverlappingJob];
+            }
+            // get max of current or last.
+            dp[i] = Math.max(currentProfit,dp[i-1]);
         }
-
         return dp[n-1];
     }
 
-    private int search(Job[] jobs, int index) {
+    private int lastJob(int[][] jobs,int i) {
+        int start = 0;
+        int end = jobs.length-1;
+        while(end-start>1) {
+            int mid = start + (end-start)/2;
+            // if finish time of mid>start of current, it overlaps move left.
+            if(jobs[mid][1]>jobs[i][0]) {
+                end = mid-1;
+            } else {
+                start = mid;
+            }
+        }
+        return jobs[end][1]<=jobs[i][0]?end:jobs[start][1]<=jobs[i][0]?start:-1;
+    }
+
+    /*private int lastJob(Job[] jobs, int index) {
         int start = 0, end = jobs.length - 1, nextIndex = jobs.length;
 
         while (start <= end) {
@@ -92,11 +92,17 @@ public class JobScheduling {
             }
         }
         return nextIndex;
-    }
+    }*/
 
 }
 
 /*
+O(nlogn)
+
+starting from job index cur = jobs.length - 1, we might schedule the jobs[cur] or not.
+
+If we schedule jobs[cur], the problem becomes profit of jobs[cur] + max profit of scheduling jobs ending with nearest previous job index.
+If we don't schedule jobs[cur], the problem becomes max profit of scheduling jobs ending with cur - 1.
 
 -> Create a Job array for ease of calculation.
 -> Sort jobs according to finish time.
@@ -111,4 +117,53 @@ Find the latest job before the current job (in sorted array) that doesn't confli
 Once found, we recur for all jobs till that job and add profit of current job to result.
 
 Complexity : O(n Log n)
+
+Note:
+
+If we sort jobs by start time, starting from job index cur = 0, we might either schedule the jobs[cur] or not.
+
+If we schedule jobs[cur], the problem becomes profit of jobs[cur] + max profit of scheduling jobs starting from next available job index.
+If we don't schedule jobs[cur], the problem becomes max profit of scheduling jobs starting from cur + 1.
+
+class Solution {
+    private Map<Integer, Integer> dp;
+
+    public int jobScheduling(int[] startTime, int[] endTime, int[] profit) {
+        int[][] jobs = new int[startTime.length][3];
+        for (int i = 0; i < startTime.length; i++) {
+            jobs[i] = new int[]{startTime[i], endTime[i], profit[i]};
+        }
+        Arrays.sort(jobs, (a, b) -> a[0] - b[0]);
+
+        dp = new HashMap<>();
+        return dfs(0, jobs);
+    }
+
+    private int dfs(int cur, int[][] jobs) {
+        if (cur == jobs.length) {
+            return 0;
+        }
+
+        if (dp.containsKey(cur)) {
+            dp.get(cur);
+        }
+
+        int next = findNext(cur, jobs);
+        int inclProf = jobs[cur][2] + (next == -1 ? 0 : dfs(next, jobs));
+        int exclProf = dfs(cur + 1, jobs);
+
+        dp.put(cur, Math.max(inclProf, exclProf));
+        return Math.max(inclProf, exclProf);
+    }
+
+    int findNext(int cur, int[][] jobs) {
+        for (int next = cur + 1; next < jobs.length; next++) {
+            if (jobs[next][0] >= jobs[cur][1]) {
+                return next;
+            }
+        }
+        return -1;
+    }
+}
+
  */

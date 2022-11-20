@@ -17,66 +17,48 @@ import java.util.Arrays;
 public class RussianDollEnvelopes {
 
     public int maxEnvelopes(int[][] envelopes) {
-        if(envelopes==null || envelopes.length==0) {
-            return 0;
-        }
-
-        Arrays.sort(envelopes,(a,b)->(a[0]!=b[0])?a[0]-b[0]:b[1]-a[1]);
-
+        Arrays.sort(envelopes,(a, b)->a[0]!=b[0]?a[0]-b[0]:b[1]-a[1]);
         int n = envelopes.length;
-
         int[][] dp = new int[n][2];
-
         dp[0] = envelopes[0];
         int len=0;
-
         for(int i=1;i<n;i++) {
-            int pos = getpos(dp,len,envelopes[i]);
-            System.out.println(pos+" "+"("+envelopes[i][0]+","+envelopes[i][1]+")");
-            if(dp[pos][1]>envelopes[i][1]) {
-                dp[pos][0] = envelopes[i][0];
-                dp[pos][1] = envelopes[i][1];
+            int height = envelopes[i][1];
+            int pos = search(dp,height,len);
+            // if height at found pos>height replace with smaller height
+            if(dp[pos][1]>height) {
+                dp[pos] = envelopes[i];
             }
+            // update pos.
             if(pos>len) {
-                len=pos;
-                dp[len][0]=envelopes[i][0];
-                dp[len][1]=envelopes[i][1];
+                len = pos;
+                dp[len] = envelopes[i];
             }
         }
-
         return len+1;
-
     }
 
-    private int getpos(int[][] dp,int len,int[] envelope) {
-
-        int start=0;
+    private int search(int[][] dp, int currentHeight,int len) {
+        int start = 0;
         int end = len;
-
-        System.out.println("len "  + len);
-
-        if(dp[start][1]>envelope[1]) {
+        if (dp[start][1] > currentHeight) {
             return start;
         }
-
-        if(dp[end][1]<envelope[1]) {
-            return end+1;
+        if (dp[end][1] < currentHeight) {
+            return end + 1;
         }
-
-        while(start<end) {
-            int mid =start+(end-start)/2;
-            if(dp[mid][1]==envelope[1]) {
+        while (end - start > 1) {
+            int mid = start + (end - start) / 2;
+            // if mid found.
+            if (dp[mid][1] == currentHeight) {
                 return mid;
-            }
-            if(dp[mid][1]>envelope[1]) {
-                end=mid;
-            } else {
-                start=mid+1;
+            } else if (dp[mid][1] < currentHeight) { // if mid<currentHeight move right.
+                start = mid + 1;
+            } else { // move left if a mid is of a higher height.
+                end = mid;
             }
         }
-
-        return start;
-
+        return dp[start][1] >= currentHeight ? start : end;
     }
 
     public static void main(String[] args) {

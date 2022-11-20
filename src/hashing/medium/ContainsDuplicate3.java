@@ -59,7 +59,7 @@ public class ContainsDuplicate3 {
 			 * Returns: the greatest element less than or equal to e, or null if
 			 * there is no such element
 			 */
-            if (set.floor(val) != null && (set.floor(val) + t) >= val)
+            if (set.floor(val) != null && (val - set.floor(val)) <= t)
                 return true;
 			/*
 			 * Returns the least element in this set greater than or equal to
@@ -68,7 +68,7 @@ public class ContainsDuplicate3 {
 			 * Returns: the least element greater than or equal to e, or null if
 			 * there is no such element
 			 */
-            if (set.ceiling(val) != null && (set.ceiling(val) - t) <= val)
+            if (set.ceiling(val) != null && (set.ceiling(val) - val) <= t)
                 return true;
             set.add(val);
             if (i >= k)

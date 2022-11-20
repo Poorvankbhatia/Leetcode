@@ -50,6 +50,10 @@ public class BuildHouseOfCards {
         return count;
     }
 
+    public static void main(String[] args) {
+        System.out.println(new BuildHouseOfCards().houseOfCards(3));
+    }
+
 }
 
 
