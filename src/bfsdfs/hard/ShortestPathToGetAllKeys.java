@@ -42,24 +42,17 @@ import java.util.Set;
 /**
  * Created by poorvank.b on 12/07/18.
  */
+//if we have to find keys abc and now we have found ab, state is 110(2) = 6; If we have found ac, state is 101(2) = 5.
+// to unset the ith bit : key & !(1<<i)
 public class ShortestPathToGetAllKeys {
 
-    /*
+    private int[][] dir = new int[][]{{0,1},{1,0},{0,-1},{-1,0}};
 
-    Use Bit to represent the keys.
-    Use State to represent visited states.
-
-     */
-    class State {
-        int keys, i, j;
-        State(int keys, int i, int j) {
-            this.keys = keys;
-            this.i = i;
-            this.j = j;
-        }
-    }
     public int shortestPathAllKeys(String[] grid) {
-        int x = -1, y = -1, m = grid.length, n = grid[0].length(), max = -1;
+        int m = grid.length;
+        int n = grid[0].length();
+        int x = -1, y = -1;
+        int k = 0;
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
                 char c = grid[i].charAt(j);
@@ -67,51 +60,66 @@ public class ShortestPathToGetAllKeys {
                     x = i;
                     y = j;
                 }
-                if (c >= 'a' && c <= 'f') {
-                    max = Math.max(c - 'a' + 1, max);
+                else if (c >= 'a' && c <= 'f') {
+                    k++;
                 }
             }
         }
-        State start = new State(0, x, y);
-        Queue<State> q = new LinkedList<>();
-        Set<String> visited = new HashSet<>();
-        visited.add(0 + " " + x + " " + y);
-        q.offer(start);
-        int[][] dirs = new int[][]{{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
-        int step = 0;
-        while (!q.isEmpty()) {
-            int size = q.size();
-            while (size-- > 0) {
-                State cur = q.poll();
-                if (cur.keys == (1 << max) - 1) {
-                    return step;
+        int keys = 0;
+        for (int i = 0; i < k; i++) {
+            keys = addKey(keys, (char) ('a' + i));
+        }
+        Queue<int[]> queue = new LinkedList<>();
+        boolean[][][] visited = new boolean[m][n][keys + 1];
+        queue.offer(new int[]{x, y, 0});
+        //we may visit a point more than one times, so a 2D table is not enough
+        //to save the visited status. We need to save (x, y, keys) in a set 'visited'.
+        visited[x][y][0] = true;
+        int ans = 0;
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            for (int i = 0; i < size; i++) {
+                int[] curr = queue.poll();
+                if (curr[2] == keys) {
+                    return ans;
                 }
-                for (int[] dir : dirs) {
-                    int i = cur.i + dir[0];
-                    int j = cur.j + dir[1];
-                    int keys = cur.keys;
-                    if (i >= 0 && i < m && j >= 0 && j < n) {
-                        char c = grid[i].charAt(j);
-                        if (c == '#') {
-                            continue;
-                        }
-                        //if we have to find keys abc and now we have found ab, state is 110(2) = 6; If we have found ac, state is 101(2) = 5.
-                        if (c >= 'a' && c <= 'f') {
-                            keys = keys | 1 << (c - 'a'); // Same concept as Sum of all paths BT
-                        }
-                        if (c >= 'A' && c <= 'F' && ((keys >> (c - 'A')) & 1) == 0) {
-                            continue;
-                        }
-                        if (!visited.contains(keys + " " + i + " " + j)) {
-                            visited.add(keys + " " + i + " " + j);
-                            q.offer(new State(keys, i, j));
-                        }
+                for (int[] d : dir) {
+                    x = curr[0] + d[0];
+                    y = curr[1] + d[1];
+                    if (x < 0 || x >= m || y < 0 || y >= n || grid[x].charAt(y)=='#') {
+                        continue;
                     }
+                    char c = grid[x].charAt(y);
+                    int ks = addKey(curr[2], c);
+                    if (visited[x][y][ks]) {
+                        continue;
+                    }
+                    if (c >= 'A' && c <= 'F' && !unlock(curr[2], c)) {
+                        continue;
+                    }
+                    visited[x][y][ks] = true;
+                    queue.offer(new int[]{x, y, ks});
                 }
             }
-            step++;
+            ans++;
         }
         return -1;
+    }
+
+    // set the ith bit using key | (1<<i)
+    // 01010 | 00001 = 01011
+    public int addKey(int keys, char c) {
+        if (c >= 'a' && c <= 'f') {
+            int index = c - 'a';
+            return keys | (1 << index);
+        }
+        return keys;
+    }
+
+    // to check the ith bit : key & (1<<i)!=0
+    public boolean unlock(int keys, char c) {
+        int index = c - 'A';
+        return (keys & (1 << index)) != 0;
     }
 
     public static void main(String[] args) {
@@ -124,6 +132,10 @@ public class ShortestPathToGetAllKeys {
 }
 
 /*
+
+The number of possible vertices (x, y, keys) is |V| = O(m * n * 2 ^ 6) = O(m * n).
+Each vertex has at most 4 * 6 neighbors (edges), so |E| = O(m * n).
+In the BFS algorithm, each vertice and edge is visited at most once, so the time complexity is O(|E|+|V|) = O(m * n).
 
 Complexity : which is 2^k * m * n
 
@@ -160,7 +172,7 @@ class Solution {
         int numSteps = 0;
 
         Set<String> visited = new HashSet<>();
-        Deque<State> queue = new ArrayDeque<>();
+        Queue<State> queue = new LinkedList<>();
         State startState = new State(new StringBuilder(EMPTY_KEY_MASK.substring(0, numKeys)),
                                      startRow, startCol);
         queue.offer(startState);
