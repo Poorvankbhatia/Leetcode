@@ -30,6 +30,7 @@ All pairs (fromi, toi) are distinct.
 package graph.medium;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class MinVerticesToReachAllNodes {
@@ -44,6 +45,17 @@ public class MinVerticesToReachAllNodes {
             if(indegree[i]==0) result.add(i);
         }
         return result;
+    }
+
+    public static void main(String[] args) {
+        List<List<Integer>> vertices = new ArrayList<>();
+        vertices.add(Arrays.asList(5,4));
+        vertices.add(Arrays.asList(5,2));
+        vertices.add(Arrays.asList(2,1));
+        vertices.add(Arrays.asList(1,0));
+        vertices.add(Arrays.asList(0,1));
+        vertices.add(Arrays.asList(1,3));
+        System.out.println(new MinVerticesToReachAllNodes().findSmallestSetOfVertices(6,vertices));
     }
 
 }

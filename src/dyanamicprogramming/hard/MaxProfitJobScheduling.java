@@ -37,7 +37,7 @@ package dyanamicprogramming.hard;
 import java.util.Arrays;
 import java.util.Comparator;
 
-public class JobScheduling {
+public class MaxProfitJobScheduling {
 
     public int jobScheduling(int[] startTime, int[] endTime, int[] profit) {
         int n = startTime.length;

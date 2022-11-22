@@ -66,7 +66,7 @@ public class LongestAbsolutePath {
 
             // if s contains ".", we have found a file!
             if (s.contains(".")) {
-                result = curLen - 1 > result ? curLen - 1 : result;
+                result = Math.max(curLen - 1, result);
             }
             stack.push(len);
         }
