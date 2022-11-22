@@ -21,49 +21,50 @@ Output: 500
  */
 package graph.medium;
 
+import java.util.*;
+
 /**
  * Created by poorvank.b on 22/02/18.
  */
 public class CheapestFlight {
 
-    int[][] matrix;
+    Map<Integer, List<int[]>> map ;
     int[][][] dp; // Storing minimum cost to reach from a given point to destination.
-    int n;
     public int findCheapestPrice(int n, int[][] flights, int src, int dst, int K) {
-        this.n = n;
-        matrix = new int[n][n];
-        dp = new int[100][100][100];
-        for (int[] f : flights) {
-            matrix[f[0]][f[1]] = f[2];
+        map = new HashMap<>();
+        dp = new int[n][n][K+1];
+        for(int[] f : flights) {
+            if(!map.containsKey(f[0])) {
+                map.put(f[0],new ArrayList<>());
+            }
+            map.get(f[0]).add(new int[]{f[1],f[2]});
         }
-        int ans = util(src, dst, K);
-        return ans == Integer.MAX_VALUE ? -1 : ans;
+        int ans =  util(src,dst,K);
+        return ans==Integer.MAX_VALUE?-1:ans;
     }
 
-    private int util(int src, int dst, int K) {
-        if (src == dst) {
+    private int util(int src,int dst,int K) {
+        if(src==dst) {
             return 0;
         }
-        if (K < 0) {
+        if(K<0) {
             return Integer.MAX_VALUE;
         }
-        if (dp[src][dst][K] != 0) {
+        if(dp[src][dst][K]!=0) {
             return dp[src][dst][K];
         }
-        int max = Integer.MAX_VALUE;
-
-        for(int next=0;next<n;next++) {
-            if(matrix[src][next]>0) {
-                int currentPrice = matrix[src][next];
-                int val = util(next, dst, K - 1);
-                if (val == Integer.MAX_VALUE) {
+        int max=Integer.MAX_VALUE;
+        if(map.containsKey(src)) {
+            for(int[] next : map.get(src)) {
+                int currentPrice = next[1];
+                int val = util(next[0],dst,K-1);
+                if(val==Integer.MAX_VALUE) {
                     continue;
                 }
-                max = Math.min(max, currentPrice + val);
+                max = Math.min(max,currentPrice+val);
             }
         }
-
-        dp[src][dst][K] = max;
+        dp[src][dst][K]=max;
         return max;
     }
 
@@ -81,4 +82,65 @@ public class CheapestFlight {
 /*
 
 Also check MinimumCostToReachCityWithDiscount
+
+Dijikstra:
+
+// modified Dijkstra.
+    public int findCheapestPrice(int n, int[][] flights,
+                                 int src, int dst, int k) {
+        // Build graph.
+        // node i -> list of (node j, cost)
+        List<List<int[]>> graph = new ArrayList<>();
+        for (int i = 0; i < n; i++) graph.add(new ArrayList<>());
+
+        for (int[] f : flights) {
+            graph.get(f[0]).add(new int[]{f[1], f[2]});
+        }
+
+        // Queue node is int[] -> loc, cost, stops;
+        PriorityQueue<int[]> pq = new PriorityQueue<>((o1, o2) -> o1[1] - o2[1]);
+        pq.offer(new int[]{src, 0, 0});
+
+        // Min cost tracker.
+        // min cost for k stop arriving at n node.
+        int[][] minCost = new int[n][k+2];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < k+2; j++) {
+                minCost[i][j] = Integer.MAX_VALUE;
+            }
+        }
+
+        minCost[src][0] = 0;
+
+        // Best first search.
+        while (!pq.isEmpty()) {
+            int[] cur = pq.poll();
+
+            int curNode = cur[0];
+            int curCost = cur[1];
+            int curStops = cur[2];
+
+            if (curNode == dst) return curCost;
+
+            // No more stops possible, don't expand.
+            if (curStops == k + 1) continue;
+
+            // outdated values.
+            if (curCost > minCost[cur[0]][curStops]) continue;
+
+            // Expand cur best path.
+            for (int[] e : graph.get(curNode)) {
+                if (curCost + e[1] < minCost[e[0]][curStops+1]) {
+                    // cur -> e[0];
+                    minCost[e[0]][curStops + 1] = curCost + e[1];
+                    pq.offer(new int[]{e[0],
+                                       minCost[e[0]][curStops+1],
+                                       curStops + 1});
+                }
+            }
+        }
+
+        return -1;
+    }
+
  */
