@@ -93,6 +93,9 @@ public class PathInMatrixSumDivisibleK {
 }
 
 /**
+ *
+ * A%K + B%k = (A%K + B)%K
+ *
  * Let dp[i][j][value] represent the number of paths where the sum of the elements on
  * the path has a remainder of value when divided by k.
  */
