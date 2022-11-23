@@ -112,3 +112,24 @@ public class PalindromePairs {
     }
 
 }
+
+/*
+
+Time Complexity : O(k2*n)
+
+There were 2 major steps to the algorithm. Firstly, we needed to build the Trie. Secondly, we needed to look up each word in the Trie.
+
+Inserting each word into the Trie takes O(k) time. As well as inserting the word, we also checked at each letter
+whether or not the remaining part of the word was a palindrome. These checks had a cost of O(k), and with k of them,
+gave a total cost of O(k^2). With n words to insert, the total cost of building the Trie was therefore O(k^2 n)
+Checking for each word in the Trie had a similar cost.
+Each time we encountered a node with a word ending index, we
+needed to check whether or not the current word we were looking up had a
+palindrome remaining. In the worst case, we'd have to do this k times at a cost of k for each time.
+So like before, there is a cost of k^2
+
+This is the same as for the hash table approach.
+
+Space Complexity : O((k + n)^2)O((k+n)
+
+ */
