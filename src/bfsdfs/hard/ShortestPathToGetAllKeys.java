@@ -53,6 +53,7 @@ public class ShortestPathToGetAllKeys {
         int n = grid[0].length();
         int x = -1, y = -1;
         int k = 0;
+        Set<Character> set = new HashSet<>();
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
                 char c = grid[i].charAt(j);
@@ -61,16 +62,17 @@ public class ShortestPathToGetAllKeys {
                     y = j;
                 }
                 else if (c >= 'a' && c <= 'f') {
+                    set.add(c); // add all the available keys.
                     k++;
                 }
             }
         }
         int keys = 0;
-        for (int i = 0; i < k; i++) {
-            keys = addKey(keys, (char) ('a' + i));
+        for (char c : set) {
+            keys = addKey(keys,c);
         }
         Queue<int[]> queue = new LinkedList<>();
-        boolean[][][] visited = new boolean[m][n][keys + 1];
+        boolean[][][] visited = new boolean[m][n][/*(int) Math.pow(2,keys+1)*/keys+1];
         queue.offer(new int[]{x, y, 0});
         //we may visit a point more than one times, so a 2D table is not enough
         //to save the visited status. We need to save (x, y, keys) in a set 'visited'.
@@ -123,9 +125,9 @@ public class ShortestPathToGetAllKeys {
     }
 
     public static void main(String[] args) {
-        String[] s = new String[]{"@...a",
-                                  ".###A",
-                                  "b.BCc"};
+        String[] s = new String[]{"@.....a",
+                                  ".#####c",
+                                  ".b....d"};
         System.out.println(new ShortestPathToGetAllKeys().shortestPathAllKeys(s));
     }
 
