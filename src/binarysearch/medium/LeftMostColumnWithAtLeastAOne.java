@@ -24,7 +24,9 @@ n == mat[i].length
 mat[i][j] is either 0 or 1.
 mat[i] is sorted in a non-decreasing way.
  */
-package binarysearch.easy;
+package binarysearch.medium;
+
+import binarysearch.easy.BinaryMatrix;
 
 import java.util.List;
 public class LeftMostColumnWithAtLeastAOne {
