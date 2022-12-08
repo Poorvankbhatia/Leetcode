@@ -57,9 +57,7 @@ public class MergeIntervals {
         for (int i=1;i<intervals.size();i++) {
             //Compare current with the latest interval present in result
             if (intervals.get(i).start<=result.get(k).end) {
-                Interval merge = new Interval(result.get(k).start,intervals.get(i).end>result.get(k).end?
-                                                    intervals.get(i).end:result.get(k).end);
-
+                Interval merge = new Interval(result.get(k).start, Math.max(intervals.get(i).end, result.get(k).end));
                 //Remove old and merge
                 result.remove(k);
                 result.add(k,merge);

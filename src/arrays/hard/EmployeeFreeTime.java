@@ -37,7 +37,7 @@ import java.util.*;
  */
 public class EmployeeFreeTime {
 
-    private class Interval {
+    private static class Interval {
         int start;
         int end;
 
@@ -73,9 +73,7 @@ public class EmployeeFreeTime {
         for (int i=1;i<intervalList.size();i++) {
             //Compare current with the latest interval present in result
             if (intervalList.get(i).start<=list.get(k).end) {
-                Interval merge = new Interval(list.get(k).start,intervalList.get(i).end>list.get(k).end?
-                        intervalList.get(i).end:list.get(k).end);
-
+                Interval merge = new Interval(list.get(k).start, Math.max(intervalList.get(i).end, list.get(k).end));
                 //Remove old and merge
                 list.remove(k);
                 list.add(k,merge);
@@ -90,7 +88,7 @@ public class EmployeeFreeTime {
 
         k=0;
         for (int i=1;i<list.size();i++) {
-            Interval interval = new Interval(list.get(k).end,list.get(i).start);
+            Interval interval = new Interval(list.get(k).end, list.get(i).start);
             res.add(interval);
             k=i;
         }
